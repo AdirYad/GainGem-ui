@@ -22,8 +22,8 @@ axiosInstance.interceptors.request.use(
 );
 
 const axiosPlugin = {
-  install(Vue) {
-    Vue.prototype.$axios = axiosInstance;
+  install(app) {
+    app.config.globalProperties.$axios = axiosInstance;
   },
 };
 
