@@ -3,13 +3,20 @@ import { axiosInstance } from '@/_helpers/axios';
 
 export default createStore({
   state: {
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    user: localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user"))
+        : null,
     token: localStorage.getItem('token') || null,
+  },
+  getters: {
+    isLoggedIn(state) {
+      return typeof state.token === "string";
+    },
   },
   mutations: {
   },
   actions: {
   },
   modules: {
-  }
-})
+  },
+});

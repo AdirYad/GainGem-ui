@@ -3,29 +3,58 @@
 @tailwind utilities;
 
 :root {
-  --header-height: 60px;
+  --primary-color-rgb: 19, 160, 101;
+  --secondary-color-rgb: 244, 244, 248;
+  --primary-color: rgb(var(--primary-color-rgb));
+  --secondary-color: rgb(var(--secondary-color-rgb));
+  --header-height: 80px;
+  --header-unsigned-height: 100px;
 }
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
-#nav {
-  height: var(--header-height);
+.home-unsigned {
+  background: rgba(var(--primary-color-rgb), 0.9);
+
+  main {
+    margin-top: calc(0% - var(--header-unsigned-height));
+    height: 100vh;
+  }
+}
+
+.header-unsigned {
+  height: var(--header-unsigned-height);
 
   .logo {
-    height: calc(var(--header-height) - 10px);
+    height: calc(var(--header-unsigned-height) - 20px);
+  }
+}
+
+#header {
+  height: var(--header-height);
+  background: var(--primary-color);
+
+  .logo {
+    height: calc(var(--header-height) - 20px);
   }
 
-  & a {
+  .link-border {
+    border: 1px solid var(--secondary-color);
+  }
+
+  .register {
+    background: var(--secondary-color);
+  }
+
+  a {
     font-weight: bold;
     color: #2c3e50;
 
-    &.router-link-exact-active {
+    &.router-link-exact-active:not(.no-router-link-exact-active) {
       color: #42b983;
     }
   }
