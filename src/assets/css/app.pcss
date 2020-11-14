@@ -84,3 +84,28 @@ img {
   box-shadow: 0 0 0 3px var(--primary-color);
   border-color: transparent;
 }
+
+.authentication-form {
+  > img {
+    height: 80px;
+    margin-top: 80px;
+    margin-bottom: 40px;
+  }
+
+  > form {
+    width: 320px;
+  }
+}
+
+@media screen and (max-height: 580px) {
+  .authentication-form {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    justify-content: normal;
+
+    > img {
+      margin-top: 0 !important;
+      margin-bottom: 20px !important;
+    }
+  }
+}

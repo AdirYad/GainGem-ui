@@ -1,7 +1,7 @@
 <template>
-  <div class="tw-w-screen tw-h-screen tw-bg-secondary tw-flex tw-items-center tw-justify-center tw-flex-col">
+  <div class="authentication-form tw-w-screen tw-h-screen tw-bg-secondary tw-flex tw-items-center tw-justify-center tw-flex-col tw-overflow-auto tw-p-10">
     <img class="tw-mb-10" style="height: 80px; margin-top: -40px; margin-bottom: 40px;" alt="logo" src="@/assets/logo.png">
-    <form @submit.prevent="login" class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-px-10 tw-py-12" style="width: 320px">
+    <form @submit.prevent="login" class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-px-10 tw-py-12">
       <div class="tw-mb-4">
         <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="username">
           Username
