@@ -2,7 +2,7 @@
   <header id="header" class="md:tw-px-24 lg:tw-px-48 tw-px-8 tw-flex tw-m-auto tw-items-center">
     <nav class="tw-flex-1">
       <router-link :to="{name: 'Home'}">
-        <img class="logo tw-inline" alt="logo" src="@/assets/logo.png">
+        <img class="logo tw-inline" alt="logo" src="@/assets/images/Icon.png">
       </router-link>
     </nav>
 

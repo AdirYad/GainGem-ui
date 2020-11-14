@@ -6,9 +6,7 @@
   <div v-else class="home-unsigned tw-w-screen tw-h-screen">
     <header class="header-unsigned md:tw-px-24 lg:tw-px-48 tw-px-4 tw-flex tw-m-auto tw-items-center">
       <nav class="tw-flex-1">
-        <router-link :to="{name: 'Home'}">
-          <img class="logo tw-inline" alt="logo" src="@/assets/logo.png">
-        </router-link>
+        <div class="logo tw-inline-block tw-duration-300" />
       </nav>
 
       <nav>
