@@ -9,11 +9,14 @@
         <input id="email" type="text" placeholder="Email"
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.email"
-               :class="{ 'input-invalid tw-mb-3' : v$.email.$invalid }"
-               @keydown="v$.email.$reset()"
+               :class="{ 'input-invalid tw-mb-3' : v$.email.$invalid || errors.email }"
+               @keydown="resetErrors('email')"
         >
         <p v-if="v$.email.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ v$.email.$errors[0].$message }}
+        </p>
+        <p v-else-if="errors.email" class="tw-text-red-500 tw-text-xs tw-italic">
+          {{ errors.email[0] }}
         </p>
       </div>
       <div class="tw-mb-4">
@@ -23,11 +26,14 @@
         <input id="username" type="text" placeholder="Username"
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.username"
-               :class="{ 'input-invalid tw-mb-3' : v$.username.$invalid }"
-               @keydown="v$.username.$reset()"
+               :class="{ 'input-invalid tw-mb-3' : v$.username.$invalid || errors.username }"
+               @keydown="resetErrors('username')"
         >
         <p v-if="v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ v$.username.$errors[0].$message }}
+        </p>
+        <p v-else-if="errors.username" class="tw-text-red-500 tw-text-xs tw-italic">
+          {{ errors.username[0] }}
         </p>
       </div>
       <div class="tw-mb-6">
@@ -37,12 +43,15 @@
         <input id="password" type="password" placeholder="******************"
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.password"
-               :class="{ 'input-invalid tw-mb-3' : v$.password.$invalid }"
-               @keydown="v$.password.$reset()"
+               :class="{ 'input-invalid tw-mb-3' : v$.password.$invalid || errors.password }"
+               @keydown="resetErrors('password')"
                @change="v$.confirmPassword.sameAsPassword.$params.equalTo = auth.password"
         >
         <p v-if="v$.password.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ v$.password.$errors[0].$message }}
+        </p>
+        <p v-else-if="errors.password" class="tw-text-red-500 tw-text-xs tw-italic">
+          {{ errors.password[0] }}
         </p>
       </div>
       <div class="tw-mb-6">
@@ -53,7 +62,7 @@
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.confirmPassword"
                :class="{ 'input-invalid tw-mb-3' : v$.confirmPassword.$invalid }"
-               @keydown="v$.confirmPassword.$reset()"
+               @keydown="resetErrors('confirmPassword')"
         >
         <p v-if="v$.confirmPassword.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           <template v-if="v$.confirmPassword.sameAsPassword.$invalid">
@@ -79,18 +88,24 @@
 <script>
 import { required, minLength, maxLength, email, sameAs } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
-import { reactive, toRef } from "@vue/reactivity";
+import router from "@/router";
+import { useStore } from 'vuex';
+import { reactive, ref, toRef } from "@vue/reactivity";
 
 export default {
   name: 'Register',
 
   setup() {
+    const store = useStore();
+
     const auth = reactive({
       username: '',
       email: '',
       password: '',
       confirmPassword: '',
     })
+
+    const errors = ref({});
 
     const rules = {
       username: {
@@ -131,13 +146,32 @@ export default {
         return;
       }
 
-      console.log(auth)
+      store.dispatch('register', auth).then(() => {
+        router.push({ name: 'Home' });
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          if (err.response.data.errors) {
+            errors.value = err.response.data.errors;
+          } else {
+            errors.value = {
+              'password': [err.response.data.message],
+            }
+          }
+        }
+      });
+    }
+
+    const resetErrors = (key) => {
+      v$.value[key].$reset();
+      delete errors.value[key];
     }
 
     return {
-      auth,
-      register,
       v$,
+      auth,
+      errors,
+      register,
+      resetErrors,
     }
   },
 }
