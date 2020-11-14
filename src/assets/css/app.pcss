@@ -12,17 +12,17 @@
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .home-unsigned {
-  background: rgba(var(--primary-color-rgb), 0.9);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.15)), url('../images/survey.jpg') no-repeat 50%;
+  background-size: cover;
 
   main {
     margin-top: calc(0% - var(--header-unsigned-height));
-    height: 100vh;
   }
 }
 
@@ -30,7 +30,13 @@
   height: var(--header-unsigned-height);
 
   .logo {
-    height: calc(var(--header-unsigned-height) - 20px);
+    height: calc(var(--header-unsigned-height) - 40px);
+  }
+  
+  @media (min-width: 768px) {
+    .logo {
+      height: calc(var(--header-unsigned-height) - 20px);
+    }
   }
 }
 
@@ -58,4 +64,23 @@
       color: #42b983;
     }
   }
+}
+
+img {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.input-invalid {
+  box-shadow: 0 0 0 3px #f56565 !important;
+  border-color: transparent;
+}
+
+.input:active, .input:focus, .input:hover {
+  box-shadow: 0 0 0 3px var(--primary-color);
+  border-color: transparent;
 }
