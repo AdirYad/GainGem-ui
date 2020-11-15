@@ -1,9 +1,31 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from "@/store";
 import routes from './routes';
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const { authorize } = to.meta;
+  const authenticatedUser = store.state.user;
+
+  if (authorize) {
+    if (authorize.length && authenticatedUser === null) {
+      return next({ name: 'Home' });
+    }
+
+    if (authorize.length) {
+      return next();
+    }
+
+    if (store.getters.isLoggedIn) {
+      return next({ name: 'Home' });
+    }
+  }
+
+  next();
 });
 
 export default router;

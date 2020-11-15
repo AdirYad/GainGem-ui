@@ -1,10 +1,17 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import AxiosPlugin, { axiosInstance } from '@/_helpers/axios';
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+import AxiosPlugin from '@/_helpers/axios';
 
-createApp(App)
+if (store.state.token !== null) {
+    store.dispatch('getLoggedUser');
+} else if (store.state.user) {
+    store.commit('removeUser');
+    store.commit('removeToken');
+}
+
+const app = createApp(App)
     .use(AxiosPlugin)
     .use(store)
     .use(router)

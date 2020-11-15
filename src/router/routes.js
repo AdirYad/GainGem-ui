@@ -1,14 +1,28 @@
-import Home from '../views/Home.vue'
-
 export default [
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: () => import('@/views/Home.vue'),
     },
     {
-        path: '/about',
-        name: 'About',
-        component: () => import('../views/About.vue'),
-    }
+        path: '/login',
+        name: 'Login',
+        component: () => import('@/views/Login.vue'),
+        meta: {
+            authorize: [],
+        },
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () => import('@/views/Register.vue'),
+        meta: {
+            authorize: [],
+        },
+    },
+    {
+        path: '/#',
+        name: '#',
+        component: () => import('@/views/Home.vue'),
+    },
 ];
