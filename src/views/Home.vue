@@ -19,16 +19,21 @@
       </nav>
     </header>
 
-    <main class="tw-container tw-h-screen tw-m-auto tw-flex tw-items-center tw-justify-center tw-flex-col tw-text-center tw-px-4">
-      <h1 class="tw-font-bold tw-text-3xl sm:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
-        Earn Points & Withdraw Anytime
-      </h1>
-      <p class="tw-text-lg sm:tw-text-xl md:tw-text-2xl tw-text-white tw-my-4">
-        Earn instant rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
-      </p>
-      <router-link :to="{name: 'Register'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
-        Get Started
-      </router-link>
+    <main class="landing-section tw-h-screen tw-flex tw-justify-center tw-items-center tw-flex-col md:tw-flex-row">
+      <div class="tw-w-10/12 md:tw-w-1/2 tw-text-center md:tw-text-left">
+          <h1 class="tw-font-bold tw-text-3xl lg:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
+            Earn Points & Withdraw Anytime
+          </h1>
+          <p class="tw-text-xl lg:tw-text-2xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
+            Earn instant rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
+          </p>
+          <router-link :to="{name: 'Register'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+            Get Started
+          </router-link>
+      </div>
+      <div id="survey-img" class="tw-w-1/2 tw-text-right tw-hidden md:tw-block">
+        <img alt="image" class="md:tw-w-3/4 lg:tw-w-8/12 tw-inline-block" src="../assets/images/survey.png">
+      </div>
     </main>
 
     <div class="landing-section tw-py-8 tw-bg-secondary">
@@ -59,27 +64,27 @@
       <div class="rewards-list tw-flex tw-justify-center tw-items-center tw-flex-wrap">
         <div class="reward-gap">
           <div class="reward reward-discord tw-flex tw-justify-center tw-items-center">
-            <img src="@/assets/images/rewards/discord.png" alt="discord">
+            <img src="../assets/images/rewards/discord.png" alt="discord">
           </div>
         </div>
         <div class="reward-gap">
           <div class="reward reward-netflix tw-flex tw-justify-center tw-items-center">
-            <img src="@/assets/images/rewards/netflix.png" alt="netflix">
+            <img src="../assets/images/rewards/netflix.png" alt="netflix">
           </div>
         </div>
         <div class="reward-gap">
           <div class="reward reward-xbox tw-flex tw-justify-center tw-items-center">
-            <img src="@/assets/images/rewards/xbox.png" alt="xbox">
+            <img src="../assets/images/rewards/xbox.png" alt="xbox">
           </div>
         </div>
         <div class="reward-gap">
           <div class="reward reward-psn tw-flex tw-justify-center tw-items-center">
-            <img src="@/assets/images/rewards/psn.png" alt="psn">
+            <img src="../assets/images/rewards/psn.png" alt="psn">
           </div>
         </div>
         <div class="reward-gap">
           <div class="reward reward-roblox tw-flex tw-justify-center tw-items-center">
-            <img src="@/assets/images/rewards/roblox.png" alt="roblox">
+            <img src="../assets/images/rewards/roblox.png" alt="roblox">
           </div>
         </div>
       </div>
