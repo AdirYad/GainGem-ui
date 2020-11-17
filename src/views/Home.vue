@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.getters.isLoggedIn" class="home">
+  <div v-if="$store.getters.isLoggedIn">
     test
   </div>
 

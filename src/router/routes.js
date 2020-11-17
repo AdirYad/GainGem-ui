@@ -9,7 +9,7 @@ export default [
         name: 'Login',
         component: () => import('@/views/Login.vue'),
         meta: {
-            authorize: [],
+            guestOnly: true,
         },
     },
     {
@@ -17,8 +17,32 @@ export default [
         name: 'Register',
         component: () => import('@/views/Register.vue'),
         meta: {
-            authorize: [],
+            guestOnly: true,
         },
+    },
+    {
+        path: '/withdraws',
+        name: 'Withdraws',
+        component: () => import('@/views/Register.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/referrals',
+        name: 'Referrals',
+        component: () => import('@/views/Register.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/support',
+        name: 'Support',
+        component: () => import('@/views/Register.vue'),
+        meta: {
+            authOnly: true
+        }
     },
     {
         path: '/#',

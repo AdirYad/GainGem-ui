@@ -4,6 +4,10 @@ import router from './router';
 import store from './store';
 import AxiosPlugin from '@/_helpers/axios';
 
+// Font Awesome
+import './font-awesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 if (store.state.token !== null) {
     store.dispatch('getLoggedUser');
 } else if (store.state.user) {
@@ -12,6 +16,7 @@ if (store.state.token !== null) {
 }
 
 const app = createApp(App)
+    .component('fa-icon', FontAwesomeIcon)
     .use(AxiosPlugin)
     .use(store)
     .use(router)
