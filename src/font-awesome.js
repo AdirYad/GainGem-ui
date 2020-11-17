@@ -7,6 +7,8 @@ import {
   faUser,
   faMoneyCheckAlt,
   faQuestion,
+  faMedal,
+  faCoins,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBuffer,
@@ -25,6 +27,8 @@ export default {
     faUser,
     faMoneyCheckAlt,
     faQuestion,
+    faMedal,
+    faCoins,
 
     // Brands
     faBuffer,
