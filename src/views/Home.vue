@@ -20,11 +20,11 @@
     </header>
 
     <main class="landing-section hero tw-h-screen tw-flex tw-justify-around xl:tw-justify-center tw-items-center tw-flex-col xl:tw-flex-row">
-      <div class="tw-w-10/12 md:tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
+      <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
           <h1 class="tw-font-bold tw-text-3xl lg:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
             Earn Points & Withdraw Anytime
           </h1>
-          <p class="tw-text-xl lg:tw-text-2xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
+          <p class="tw-text-sm xl:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
             Earn instant rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
           </p>
           <router-link :to="{name: 'Register'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
