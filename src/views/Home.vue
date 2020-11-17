@@ -19,8 +19,8 @@
       </nav>
     </header>
 
-    <main class="landing-section tw-h-screen tw-flex tw-justify-center tw-items-center tw-flex-col md:tw-flex-row">
-      <div class="tw-w-10/12 md:tw-w-1/2 tw-text-center md:tw-text-left">
+    <main class="landing-section hero tw-h-screen tw-flex tw-justify-around xl:tw-justify-center tw-items-center tw-flex-col xl:tw-flex-row">
+      <div class="tw-w-10/12 md:tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
           <h1 class="tw-font-bold tw-text-3xl lg:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
             Earn Points & Withdraw Anytime
           </h1>
@@ -31,8 +31,8 @@
             Get Started
           </router-link>
       </div>
-      <div id="survey-img" class="tw-w-1/2 tw-text-right tw-hidden md:tw-block">
-        <img alt="survey" class="md:tw-w-3/4 lg:tw-w-8/12 tw-inline-block" src="../assets/images/survey.png">
+      <div id="survey-img" class="tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden lg:tw-block">
+        <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/survey.png">
       </div>
     </main>
 

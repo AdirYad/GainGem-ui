@@ -18,7 +18,7 @@
 }
 
 .survey-bg {
-  background: linear-gradient(0deg, rgba(var(--primary-color-rgb), 0.60), rgba(var(--secondary-color-rgb), 0.15)), url('../images/background.jpeg') no-repeat fixed 50%;
+  background: linear-gradient(0deg, rgba(var(--primary-color-rgb), 0.65), rgba(var(--primary-color-rgb), 0.45), rgba(var(--primary-color-rgb), 0.25)), url('../images/background.jpeg') no-repeat fixed 50%;
   background-size: cover;
 }
 
@@ -133,24 +133,6 @@ img {
   }
 }
 
-@media (max-height: 580px) and (max-width: 768px) {
-  .home-unsigned {
-    main {
-      margin-top: 0;
-      height: calc(100vh - var(--header-unsigned-height));
-    }
-
-    .logo {
-      height: calc(var(--header-unsigned-height) - 25px);
-      width: calc(var(--header-unsigned-height) - 25px);
-    }
-  }
-
-  :root {
-    --header-unsigned-height: 75px;
-  }
-}
-
 .landing-section {
   padding-left: 6vw;
   padding-right: 6vw;
@@ -160,6 +142,13 @@ img {
   .landing-section {
     padding-left: 12vw;
     padding-right: 12vw;
+  }
+}
+
+@media (max-width: 1280px) {
+  .hero {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
   }
 }
 
