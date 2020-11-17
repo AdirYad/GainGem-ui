@@ -1,16 +1,18 @@
 <template>
-  <Header v-if="$store.getters.isLoggedIn" />
+  <div :class="{ 'lg:tw-flex' : $store.getters.isLoggedIn }">
+    <Navigation v-if="$store.getters.isLoggedIn" />
 
-  <router-view :key="$route.fullPath" />
+    <router-view :key="$route.fullPath" :class="{ 'lg:tw-p-10' : $store.getters.isLoggedIn }" />
+  </div>
 </template>
 
 <script>
-import Header from "@/components/Header";
+import Navigation from "@/components/Navigation";
 
 export default {
   name: 'App',
   components: {
-    Header,
+    Navigation,
   },
 }
 </script>
