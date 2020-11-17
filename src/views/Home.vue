@@ -32,7 +32,7 @@
           </router-link>
       </div>
       <div id="survey-img" class="tw-w-1/2 tw-text-right tw-hidden md:tw-block">
-        <img alt="image" class="md:tw-w-3/4 lg:tw-w-8/12 tw-inline-block" src="../assets/images/survey.png">
+        <img alt="survey" class="md:tw-w-3/4 lg:tw-w-8/12 tw-inline-block" src="../assets/images/survey.png">
       </div>
     </main>
 
