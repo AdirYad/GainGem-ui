@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar-menu tw-sticky tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-bg-primary">
+  <aside class="sidebar-menu tw-sticky tw-hidden lg:tw-flex tw-flex-col tw-min-h-screen tw-bg-primary">
     <section>
       <router-link :to="{ name: 'Home' }" class="logo-link tw-flex tw-justify-center tw-items-center">
         <div class="logo" />

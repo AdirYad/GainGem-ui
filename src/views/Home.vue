@@ -9,7 +9,7 @@
         <div class="logo tw-inline-block tw-duration-300" />
       </nav>
 
-      <nav>
+      <nav class="tw-z-10">
         <router-link :to="{name: 'Login'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-transparent hover:tw-border-primary hover:tw-text-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-2 md:tw-mr-4">
           <fa-icon icon="sign-in-alt" />
           Login
@@ -34,7 +34,7 @@
             Get Started
           </router-link>
       </div>
-      <div id="survey-img" class="tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden lg:tw-block">
+      <div class="tw-z-0 tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden lg:tw-block">
         <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/survey.png">
       </div>
     </main>
