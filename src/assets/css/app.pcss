@@ -17,10 +17,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.home-unsigned {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.15)), url('../images/survey.jpg') no-repeat 50%;
+.survey-bg {
+  background: linear-gradient(0deg, rgba(var(--primary-color-rgb), 0.65), rgba(var(--primary-color-rgb), 0.45), rgba(var(--primary-color-rgb), 0.25)), url('../images/background.jpeg') no-repeat fixed 50%;
   background-size: cover;
+}
 
+.home-unsigned {
   main {
     margin-top: calc(0% - var(--header-unsigned-height));
   }
@@ -35,13 +37,28 @@
     background: url("../images/Icon.png") no-repeat 50%;
     background-size: cover;
   }
-  
+
   @media (min-width: 768px) {
     .logo {
       height: calc(var(--header-unsigned-height) - 20px);
       width: 200px;
       background: url("../images/Logo.png") no-repeat 50%;
       background-size: cover;
+    }
+  }
+}
+
+footer {
+  .logo {
+    width: 200px;
+    height: 50px;
+    background: url("../images/Logo.png") no-repeat 50%;
+    background-size: cover;
+  }
+
+  .social:hover {
+    path {
+      fill: rgba(0, 0, 0, 0.7);
     }
   }
 }
@@ -113,5 +130,94 @@ img {
       margin-top: 0 !important;
       margin-bottom: 20px !important;
     }
+  }
+}
+
+.landing-section {
+  padding-left: 6vw;
+  padding-right: 6vw;
+}
+
+@media (min-width: 768px) {
+  .landing-section {
+    padding-left: 12vw;
+    padding-right: 12vw;
+  }
+}
+
+@media (max-width: 1280px) {
+  .hero {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+}
+
+.rewards-list {
+  min-height: 200px;
+
+  .reward-gap {
+    padding: 10px;
+
+    .reward {
+      background-color: black;
+      height: 150px;
+      width: 250px;
+      border-radius: 4px;
+      box-shadow: 0 6px 16px black;
+      overflow: hidden;
+
+      img {
+        max-height: 60px;
+        transition: 0.3s;
+      }
+
+      &:hover {
+        img {
+          transform: rotate(30deg) scale(1.2);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .reward {
+        height: 100px;
+        width: 175px;
+
+        img {
+          max-height: 40px;
+        }
+      }
+
+      .reward-roblox {
+        img {
+          max-height: 25px !important;
+        }
+      }
+    }
+  }
+
+  .reward-roblox {
+    background: linear-gradient(60deg, #ef311b -4.4%, #e2250f 96.69%) !important;
+    box-shadow: 0 6px 16px rgba(216, 31, 10, 0.4) !important;
+  }
+
+  .reward-discord {
+    background: linear-gradient(60deg, #6176e7 -4.4%, #8c9eff 96.69%) !important;
+    box-shadow: 0 6px 16px rgba(140, 158, 255, 0.4) !important;
+  }
+
+  .reward-psn {
+    background: linear-gradient(60deg, #0083ca -4.4%, #09b9ee 96.69%) !important;
+    box-shadow: 0 6px 16px rgba(9, 185, 238, 0.4) !important;
+  }
+
+  .reward-xbox {
+    background: linear-gradient(238.78deg, #3ccd10 -20.87%, #2b9a14 156.16%) !important;
+    box-shadow: 0 6px 16px rgba(60, 205, 16, 0.25) !important;
+  }
+
+  .reward-netflix {
+    background: linear-gradient(60deg, #b1060f -4.4%, #e50913 96.69%) !important;
+    box-shadow: 0 6px 16px rgba(229, 9, 19, 0.4) !important;
   }
 }
