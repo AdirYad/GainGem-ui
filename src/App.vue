@@ -1,7 +1,6 @@
 <template>
   <div :class="{ 'lg:tw-flex' : $store.getters.isLoggedIn }">
-<!--    $store.getters.isLoggedIn-->
-    <Navigation v-if="true" />
+    <Navigation v-if="$store.getters.isLoggedIn" />
 
     <router-view :key="$route.fullPath" :class="{ 'lg:tw-p-10' : $store.getters.isLoggedIn }" />
   </div>
