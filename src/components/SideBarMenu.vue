@@ -54,8 +54,13 @@
     </section>
   </aside>
 
-  <div class="navbar">
-
+  <div class="navbar tw-w-full tw-h-16 tw-bg-secondary tw-fixed tw-flex">
+    <div class="tw-p-2 tw-bg-primary tw-w-1/12 tw-text-center tw-items-center tw-shadow-inner tw-text-secondary">
+      Live Activity
+    </div>
+    <div class="triangle-right">
+    </div>
+this is start from here dont see it because there is a problem with height
   </div>
 </template>
 
