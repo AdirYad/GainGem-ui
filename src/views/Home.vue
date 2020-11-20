@@ -1,7 +1,6 @@
 <template>
   <div v-if="$store.getters.isLoggedIn">
     test
-    <div class="tw-h-screen" />
   </div>
 
   <div v-else class="home-unsigned survey-bg tw-h-screen">
@@ -105,10 +104,10 @@
     </div>
 
     <div class="landing-section survey-bg tw-py-8 tw-flex tw-justify-between tw-items-center tw-flex-wrap" style="min-height: 250px">
-      <div class="tw-w-full lg:tw-w-2/3 tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-white tw-font-bold tw-text-center lg:tw-text-left">
+      <div class="tw-w-full lg:tw-w-1/2 xl:tw-w-2/3 tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-white tw-font-bold tw-text-center lg:tw-text-left">
         Get Started Today & Start Earning
       </div>
-      <nav class="tw-flex tw-justify-center lg:tw-justify-end tw-w-full lg:tw-w-1/3">
+      <nav class="tw-flex tw-justify-center lg:tw-justify-end tw-w-full lg:tw-w-1/2 xl:tw-w-1/3">
         <router-link :to="{name: 'Login'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-transparent hover:tw-border-primary hover:tw-text-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-2 md:tw-mr-4">
           <fa-icon icon="sign-in-alt" />
           Login

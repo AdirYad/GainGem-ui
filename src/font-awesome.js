@@ -9,6 +9,7 @@ import {
   faQuestion,
   faMedal,
   faCoins,
+  faGift,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBuffer,
@@ -29,6 +30,7 @@ export default {
     faQuestion,
     faMedal,
     faCoins,
+    faGift,
 
     // Brands
     faBuffer,

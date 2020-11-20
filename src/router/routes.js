@@ -21,16 +21,62 @@ export default [
         },
     },
     {
-        path: '/withdraws',
-        name: 'Withdraws',
+        path: '/profile',
+        name: 'Profile',
+        component: () => import('@/views/Register.vue'),
+        children: [
+            {
+                path: '',
+                name: 'Profile/Details',
+                component: () => import('@/views/Register.vue'),
+            },
+            {
+                path: '/transactions',
+                name: 'Profile/Transactions',
+                component: () => import('@/views/Register.vue'),
+            },
+            {
+                path: '/referrals',
+                name: 'Profile/Referrals',
+                component: () => import('@/views/Register.vue'),
+            },
+            {
+                path: '/offer-history',
+                name: 'Profile/OfferHistory',
+                component: () => import('@/views/Register.vue'),
+            },
+        ],
+        meta: {
+            authOnly: true
+        },
+    },
+    {
+        path: '/rewards',
+        name: 'Rewards',
         component: () => import('@/views/Register.vue'),
         meta: {
             authOnly: true
         }
     },
     {
-        path: '/referrals',
-        name: 'Referrals',
+        path: '/invite',
+        name: 'Invite',
+        component: () => import('@/views/Register.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/invite',
+        name: 'Invite',
+        component: () => import('@/views/Register.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/giveaways',
+        name: 'Giveaways',
         component: () => import('@/views/Register.vue'),
         meta: {
             authOnly: true
