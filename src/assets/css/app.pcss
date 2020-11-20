@@ -11,16 +11,43 @@
   --header-unsigned-height: 100px;
 }
 
-.navbar{
-  padding-left: 250px;
-  box-shadow: 0.1px 0.1px 15px 0.1px var(--primary-color);
+::-webkit-scrollbar {
+  display: none;
 }
 
-.triangle-right {
-  border-top: 32px solid transparent;
-  border-left: 20px solid var(--primary-color);
-  border-bottom: 32px solid transparent;
- }
+.activity-items {
+  position: relative;
+  width: calc(100vw - var(--sidebar-width));
+  height: 70px;
+
+  .activity-item {
+    height: 60px;
+    transition: transform 1.5s, opacity 1.5s;
+  }
+
+  .user-activity {
+    max-width: 96px;
+  }
+
+  > div:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background: linear-gradient(to right, #26262C00 80%, var(--secondary-color) 95%);
+  }
+
+  @media (max-width: 1024px) {
+    width: 100vw;
+    height: 60px;
+
+    .activity-item {
+      height: 50px;
+    }
+  }
+}
 
 button:focus {
   outline:0;

@@ -1,6 +1,7 @@
 <template>
   <div v-if="$store.getters.isLoggedIn">
     test
+    <div class="tw-h-screen" />
   </div>
 
   <div v-else class="home-unsigned survey-bg tw-h-screen">

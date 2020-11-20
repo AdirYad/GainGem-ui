@@ -1,13 +1,24 @@
 <template>
-  <aside class="sidebar-menu tw-fixed tw-hidden lg:tw-flex tw-flex-col tw-min-h-screen tw-bg-primary">
+  <aside class="sidebar-menu tw-sticky tw-top-0 tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-bg-primary">
     <section>
       <router-link :to="{ name: 'Home' }" class="logo-link tw-flex tw-justify-center tw-items-center">
         <div class="logo" />
       </router-link>
     </section>
     <nav class="tw-flex-1 tw-flex tw-flex-col">
-      <div class="tw-cursor-pointer tw-h-20 tw-border-t tw-border-b border-secondary-3">
-
+      <div class="tw-cursor-pointer tw-border-t tw-border-b border-secondary-3 tw-flex tw-items-center tw-px-10 tw-py-4">
+        <div class="tw-h-10 tw-w-10 tw-flex">
+          <img class="tw-rounded-full" src="@/assets/images/user.png" :alt="$store.state.user.username">
+        </div>
+        <div class="tw-flex-1 tw-text-white tw-font-medium tw-ml-6 tw-truncate">
+          <div class="tw-truncate">
+            {{ $store.state.user.username }}
+          </div>
+          <div class="tw-truncate">
+            <fa-icon class="tw-h-4 fa-w-20" icon="coins" />
+            {{ $store.state.user.points }}
+          </div>
+        </div>
       </div>
       <ul class="tw-mt-6 tw-flex-1">
         <li>
@@ -53,15 +64,6 @@
       </button>
     </section>
   </aside>
-
-  <div class="navbar tw-w-full tw-h-16 tw-bg-secondary tw-fixed tw-flex">
-    <div class="tw-p-2 tw-bg-primary tw-w-1/12 tw-text-center tw-items-center tw-shadow-inner tw-text-secondary">
-      Live Activity
-    </div>
-    <div class="triangle-right">
-    </div>
-this is start from here dont see it because there is a problem with height
-  </div>
 </template>
 
 <script>
