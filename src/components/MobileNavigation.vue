@@ -10,18 +10,52 @@
           {{ $store.state.user.points }}
         </span>
       </div>
-      <div class="tw-h-10 tw-w-10">
+      <router-link :to="{ name: 'Profile/Details' }" class="tw-h-10 tw-w-10">
         <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-rounded-full" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
-      </div>
+      </router-link>
     </div>
-    <div class="navigation-bottom navigation tw-z-10 tw-fixed tw-right-0 tw-left-0 tw-bottom-0 tw-bg-white">
-      123123
+    <div class="navigation-bottom navigation tw-z-10 tw-fixed tw-right-0 tw-left-0 tw-bottom-0 tw-bg-primary tw-flex tw-justify-around sm:tw-justify-center tw-items-center tw-px-2 sm:tw-px-6 sm:tw-px-12">
+      <BottomNavigationRoute to="Rewards">
+        <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" icon="money-check-alt" />
+        <div class="tw-font-light">
+          Rewards
+        </div>
+      </BottomNavigationRoute>
+      <BottomNavigationRoute to="Invite">
+        <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" :icon="['far', 'handshake']" />
+        <div class="tw-font-light">
+          Invite
+        </div>
+      </BottomNavigationRoute>
+      <BottomNavigationRoute class="earn" to="Home">
+        <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" :icon="['fab', 'buffer']" />
+        <div class="tw-font-light">
+          Earn
+        </div>
+      </BottomNavigationRoute>
+      <BottomNavigationRoute to="Giveaways">
+        <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" icon="gift" />
+        <div class="tw-font-light">
+          Giveaways
+        </div>
+      </BottomNavigationRoute>
+      <BottomNavigationRoute to="Support">
+        <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" icon="question" />
+        <div class="tw-font-light">
+          Support
+        </div>
+      </BottomNavigationRoute>
     </div>
   </div>
 </template>
 
 <script>
+import BottomNavigationRoute from './BottomNavigationRoute';
+
 export default {
   name: 'MobileNavigation',
+  components: {
+    BottomNavigationRoute,
+  }
 }
 </script>

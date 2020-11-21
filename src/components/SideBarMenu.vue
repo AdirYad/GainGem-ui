@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar-menu tw-sticky tw-top-0 tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-bg-primary">
+  <aside class="sidebar-menu tw-sticky tw-shadow-lg tw-top-0 tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-bg-primary">
     <section>
       <router-link :to="{ name: 'Home' }" class="logo-link tw-flex tw-justify-center tw-items-center">
         <div class="logo" />
@@ -95,9 +95,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.fa-w-40 {
-  width: 40px;
-}
-</style>

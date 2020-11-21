@@ -100,15 +100,15 @@ button:focus {
         @apply text-white;
       }
     }
-  }
 
-  .router-link-exact-active {
-    color: white;
+    &.router-link-exact-active {
+      color: white;
 
-    div {
-      font-weight: bold !important;
+      div {
+        font-weight: bold !important;
 
-      @apply text-white;
+        @apply text-white;
+      }
     }
   }
 }
@@ -129,6 +129,44 @@ button:focus {
 
   &.navigation-bottom {
     box-shadow: 1px 0 5px 0 rgba(0, 0, 0, 0.1), 1px 0 5px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .router {
+    div {
+      font-size: 10px;
+    }
+
+    &.router-link-exact-active {
+      color: white;
+
+      div {
+        font-weight: bold !important;
+
+        @apply uppercase tracking-widest font-light;
+      }
+    }
+
+    &.earn {
+      color: var(--primary-color);
+
+      svg {
+        width: 45px;
+
+        @apply h-8;
+      }
+
+      background: var(--secondary-color);
+    }
+
+    @media (max-width: 400px) {
+      svg {
+        margin: 0;
+      }
+
+      div {
+        @apply hidden;
+      }
+    }
   }
 }
 
@@ -166,7 +204,7 @@ button:focus {
 footer {
   .logo {
     width: 200px;
-    height: 50px;
+    height: 55px;
     background: url("../images/Logo.png") no-repeat 50%;
     background-size: cover;
   }
@@ -313,4 +351,8 @@ img {
 
 .border-secondary-3 {
   border-color: rgba(var(--secondary-color-rgb), 0.3);
+}
+
+.fa-w-40 {
+  width: 40px !important;
 }

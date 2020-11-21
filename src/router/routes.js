@@ -41,8 +41,8 @@ export default [
                 component: () => import('@/views/Register.vue'),
             },
             {
-                path: '/offer-history',
-                name: 'Profile/OfferHistory',
+                path: '/offers-history',
+                name: 'Profile/OffersHistory',
                 component: () => import('@/views/Register.vue'),
             },
         ],
