@@ -10,7 +10,6 @@
   --sidebar-width: 250px;
   --navigation-height: 60px;
   --header-unsigned-height: 100px;
-  --live-activity-height: 60px;
 }
 
 ::-webkit-scrollbar {
@@ -18,27 +17,28 @@
 }
 
 .container {
-  min-height: calc(100vh - var(--live-activity-height));
+  min-height: 100vh;
+  background: var(--secondary-color);
 }
 
 @media (max-width: 1024px) {
   .page-container {
     margin-bottom: var(--navigation-height);
-    margin-top: var(--navigation-height)
   }
 
   .container {
-    min-height: calc(100vh - 2 * var(--navigation-height) - var(--live-activity-height));
+    min-height: calc(100vh - 2 * var(--navigation-height));
+    margin-top: var(--navigation-height)
   }
 }
 
 .activity-items {
   position: relative;
   width: calc(100vw - var(--sidebar-width));
-  height: var(--live-activity-height);
+  height: 60px;
 
   .activity-item {
-    height: calc(var(--live-activity-height) - 10px);
+    height: 50px;
     transition: transform 1.5s, opacity 1.5s;
   }
 
