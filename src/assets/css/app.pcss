@@ -115,6 +115,21 @@ button:focus {
 
 .navigation {
   height: var(--navigation-height);
+
+  .logo {
+    height: calc(var(--navigation-height) - 25px);
+    width: calc(var(--navigation-height) - 25px);
+    background: url("../images/Icon.png") no-repeat 50%;
+    background-size: cover;
+  }
+
+  &.navigation-top {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  &.navigation-bottom {
+    box-shadow: 1px 0 5px 0 rgba(0, 0, 0, 0.1), 1px 0 5px 0 rgba(0, 0, 0, 0.06);
+  }
 }
 
 .survey-bg {
