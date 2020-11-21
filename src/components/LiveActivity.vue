@@ -71,11 +71,11 @@ export default {
 
     setInterval(() => {
       activities.value.unshift(
-          {
-            id: i++,
-            username: 'asdasdassad',
-            earned: Math.floor(Math.random() * 2000)
-          });
+      {
+        id: i++,
+        username: 'asdasdassad',
+        earned: Math.floor(Math.random() * 2000)
+      });
     }, 3000);
 
     return {
