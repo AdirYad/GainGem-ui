@@ -32,6 +32,11 @@ export default createStore({
       state.user = null;
       localStorage.removeItem('user');
     },
+
+    tempEmailVerification(state) {
+      state.user.email_verified_at = 1;
+      localStorage.setItem('user', JSON.stringify(state.user));
+    },
   },
   actions: {
     login({ commit, getters }, payload) {
@@ -71,8 +76,32 @@ export default createStore({
 
         router.push({ name: 'Home' });
       });
-    }
-  },
+    },
+    verifyEmail({ dispatch, commit, getters, state }, token) {
+      return axiosInstance.post('/verify', {
+        token: token,
+      }).then((response) => {
+        console.log(getters.isLoggedIn && state.user && state.user.id === response.data.user.id)
+        console.log(state.user.id)
+        console.log(response.data.user.id)
+        if (getters.isLoggedIn && state.user && state.user.id === response.data.user.id) {
+          commit('setUser', response.data)
+        } else {
+          dispatch('getLoggedUser');
+        }
+      });
+    },
+    resendEmailVerification({ getters, state }) {
+      if (! getters.isLoggedIn || state.user && (! state.user.email || state.user.email_verified_at)) {
+        return;
+      }
+
+      return axiosInstance.post('/resend-verification', {
+        email: state.user.email
+      });
+    },
+  }
+  ,
   modules: {
   },
 });
