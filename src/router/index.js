@@ -8,21 +8,20 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const { authorize } = to.meta;
-  const authenticatedUser = store.state.user;
+  window.scrollTo(0, 0);
 
-  if (authorize) {
-    if (authorize.length && authenticatedUser === null) {
-      return next({ name: 'Home' });
-    }
+  if (
+      to.matched.some(record => record.meta.guestOnly) &&
+      store.getters.isLoggedIn
+  ) {
+    return next({ name: "Home" });
+  }
 
-    if (authorize.length) {
-      return next();
-    }
-
-    if (store.getters.isLoggedIn) {
-      return next({ name: 'Home' });
-    }
+  if (
+      to.matched.some(record => record.meta.authOnly) &&
+      ! store.getters.isLoggedIn
+  ) {
+    return next({ name: "Home" });
   }
 
   next();

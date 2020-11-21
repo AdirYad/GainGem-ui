@@ -1,7 +1,7 @@
 <template>
-  <footer class="tw-flex tw-items-center tw-flex-col tw-bg-primary tw-px-4 sm:tw-px-8 md:tw-px-16 tw-py-8">
+  <footer class="tw-flex tw-items-center tw-flex-col tw-bg-primary tw-px-4 sm:tw-px-8 md:tw-px-16 tw-py-6 lg:tw-py-8">
     <div class="logo" />
-    <div class="tw-mt-4 tw-flex tw-justify-center tw-flex-wrap">
+    <div :class="{ 'tw-hidden lg:tw-flex' : $store.getters.isLoggedIn }" class="tw-mt-4 tw-flex tw-justify-center tw-flex-wrap">
       <a href="#" class="social tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold">
         <svg width="24" height="24" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path class="tw-duration-200" d="M17 0C12.048 0 7.66518 0.529742 4.99944 0.941761C2.81752 1.2753 1.08147 3.04111 0.683036 5.30722C0.341518 7.28884 0 10.1828 0 13.8125C0 17.4422 0.341518 20.3362 0.683036 22.3178C1.08147 24.5839 2.81752 26.3399 4.99944 26.6832C7.67466 27.0953 12.0765 27.625 17 27.625C21.9235 27.625 26.3158 27.0953 28.9911 26.6832H29.0006C31.1825 26.3497 32.9185 24.5839 33.317 22.3178C33.6585 20.3263 34 17.4324 34 13.8125C34 10.1828 33.6585 7.28884 33.3075 5.30722C32.9185 3.04111 31.1825 1.2753 29.0006 0.941761C26.3348 0.529742 21.952 0 17 0ZM17 2.51136C21.7812 2.51136 26.0597 3.02148 28.6401 3.42369C29.7785 3.60028 30.6987 4.52242 30.9169 5.74867C31.2394 7.60276 31.5714 10.3496 31.5714 13.8125C31.5714 17.2754 31.2394 20.0222 30.9263 21.8665C30.7081 23.1026 29.7879 24.0247 28.6401 24.2013C26.0407 24.5937 21.7528 25.1136 17 25.1136C12.2472 25.1136 7.94978 24.5937 5.35993 24.2013C4.22154 24.0247 3.29185 23.1026 3.07366 21.8665C2.7606 20.0124 2.42857 17.2754 2.42857 13.8125C2.42857 10.3398 2.7606 7.60276 3.07366 5.74867C3.29185 4.52242 4.21205 3.60028 5.35045 3.43351H5.35993C7.94029 3.03129 12.2188 2.51136 17 2.51136ZM12.1429 7.53409V20.0909L24.2857 13.8125L12.1429 7.53409Z" fill="white"/>
@@ -24,17 +24,17 @@
       </a>
     </div>
 
-    <div class="md:tw-w-2/4 tw-border-t tw-border-solid tw-border-transparent-50 tw-py-4 tw-mt-4">
-    <div class="tw-text-center">
-      <router-link :to="{ name: '#' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
-        Terms
-      </router-link>
-      <router-link :to="{ name: '#' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
-        Privacy
-      </router-link>
+    <div :class="{ 'tw-hidden lg:tw-block' : $store.getters.isLoggedIn }" class="md:tw-w-2/4 tw-border-t tw-border-solid tw-border-transparent-50 tw-py-4 tw-mt-4">
+      <div class="tw-text-center">
+        <router-link :to="{ name: '#' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
+          Terms
+        </router-link>
+        <router-link :to="{ name: '#' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
+          Privacy
+        </router-link>
+      </div>
     </div>
-    </div>
-    <div class="md:tw-w-2/4 tw-border-t tw-border-solid tw-border-transparent-50 tw-pt-4">
+    <div :class="{ 'tw-border-t tw-border-transparent-50' : ! $store.getters.isLoggedIn }" class="md:tw-w-2/4 tw-pt-4">
       <div class="tw-text-secondary tw-font-light tw-text-transparent-60 tw-text-base md:tw-text-sm tw-text-center">
         © EzRewards {{ new Date().getFullYear() }}. All rights reserved.
       </div>

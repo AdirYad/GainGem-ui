@@ -36,12 +36,15 @@
           {{ errors.password[0] }}
         </p>
       </div>
-      <div class="tw-flex tw-items-center tw-justify-between">
+      <div class="tw-flex tw-items-center tw-justify-between tw-flex-wrap">
         <button class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
           Login
         </button>
         <router-link :to="{name: '#'}" class="tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary">
           Forgot Password?
+        </router-link>
+        <router-link :to="{name: 'Register'}" class="tw-w-full tw-mt-4 tw-text-center tw-font-bold tw-text-sm tw-text-primary">
+          You don't have an account yet?
         </router-link>
       </div>
     </form>

@@ -7,14 +7,167 @@
   --secondary-color-rgb: 244, 244, 248;
   --primary-color: rgb(var(--primary-color-rgb));
   --secondary-color: rgb(var(--secondary-color-rgb));
-  --header-height: 80px;
+  --sidebar-width: 250px;
+  --navigation-height: 60px;
   --header-unsigned-height: 100px;
+  --live-activity-height: 60px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  min-height: calc(100vh - var(--live-activity-height));
+}
+
+@media (max-width: 1024px) {
+  .page-container {
+    margin-bottom: var(--navigation-height);
+    margin-top: var(--navigation-height)
+  }
+
+  .container {
+    min-height: calc(100vh - 2 * var(--navigation-height) - var(--live-activity-height));
+  }
+}
+
+.activity-items {
+  position: relative;
+  width: calc(100vw - var(--sidebar-width));
+  height: var(--live-activity-height);
+
+  .activity-item {
+    height: calc(var(--live-activity-height) - 10px);
+    transition: transform 1.5s, opacity 1.5s;
+  }
+
+  .user-activity {
+    max-width: 96px;
+  }
+
+  > div:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background: linear-gradient(to right, #26262C00 80%, var(--secondary-color) 95%);
+  }
+
+  @media (max-width: 1024px) {
+    width: 100vw;
+  }
+}
+
+button:focus {
+  outline:0;
 }
 
 #app {
   font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.sidebar-menu {
+  width: var(--sidebar-width);
+  z-index: 999;
+
+  .logo-link {
+    height: 80px;
+
+    .logo {
+      height: 45px;
+      width: 150px;
+      background: url("../images/Logo.png") no-repeat 50%;
+      background-size: cover;
+    }
+  }
+
+  .router {
+    div {
+      color: rgba(255, 255, 255, 0.7);
+
+      @apply duration-300;
+    }
+
+    &:hover {
+      div {
+        font-weight: 600;
+
+        @apply text-white;
+      }
+    }
+
+    &.router-link-exact-active {
+      color: white;
+
+      div {
+        font-weight: bold !important;
+
+        @apply text-white;
+      }
+    }
+  }
+}
+
+.navigation {
+  height: var(--navigation-height);
+
+  .logo {
+    height: calc(var(--navigation-height) - 25px);
+    width: calc(var(--navigation-height) - 25px);
+    background: url("../images/Icon.png") no-repeat 50%;
+    background-size: cover;
+  }
+
+  &.navigation-top {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  &.navigation-bottom {
+    box-shadow: 1px 0 5px 0 rgba(0, 0, 0, 0.1), 1px 0 5px 0 rgba(0, 0, 0, 0.06);
+  }
+
+  .router {
+    div {
+      font-size: 10px;
+    }
+
+    &.router-link-exact-active {
+      color: white;
+
+      div {
+        font-weight: bold !important;
+
+        @apply uppercase tracking-widest font-light;
+      }
+    }
+
+    &.earn {
+      color: var(--primary-color);
+
+      svg {
+        width: 45px;
+
+        @apply h-8;
+      }
+
+      background: var(--secondary-color);
+    }
+
+    @media (max-width: 400px) {
+      svg {
+        margin: 0;
+      }
+
+      div {
+        @apply hidden;
+      }
+    }
+  }
 }
 
 .survey-bg {
@@ -51,7 +204,7 @@
 footer {
   .logo {
     width: 200px;
-    height: 50px;
+    height: 55px;
     background: url("../images/Logo.png") no-repeat 50%;
     background-size: cover;
   }
@@ -59,32 +212,6 @@ footer {
   .social:hover {
     path {
       fill: rgba(0, 0, 0, 0.7);
-    }
-  }
-}
-
-#header {
-  height: var(--header-height);
-  background: var(--primary-color);
-
-  .logo {
-    height: calc(var(--header-height) - 20px);
-  }
-
-  .link-border {
-    border: 1px solid var(--secondary-color);
-  }
-
-  .register {
-    background: var(--secondary-color);
-  }
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active:not(.no-router-link-exact-active) {
-      color: #42b983;
     }
   }
 }
@@ -220,4 +347,12 @@ img {
     background: linear-gradient(60deg, #b1060f -4.4%, #e50913 96.69%) !important;
     box-shadow: 0 6px 16px rgba(229, 9, 19, 0.4) !important;
   }
+}
+
+.border-secondary-3 {
+  border-color: rgba(var(--secondary-color-rgb), 0.3);
+}
+
+.fa-w-40 {
+  width: 40px !important;
 }
