@@ -7,7 +7,7 @@
       <div class="tw-flex tw-flex-wrap mb-4 md:tw--mx-4">
         <div v-for="(offerwall, index) in $store.state.offerwalls" :key="index" class="offerwall-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-6 md:tw-px-4 tw-my-2">
           <router-link :to="{ name: 'Offerwall', params: { provider: offerwall.provider } }"
-                       class="tw-h-full tw-flex tw-justify-center tw-items-center tw-rounded-lg tw-shadow tw-duration-300"
+                       class="tw-h-full tw-flex tw-justify-center tw-items-center tw-rounded-2xl tw-shadow tw-duration-300 tw-overflow-hidden"
                        :class="`offerwall-${offerwall.provider}`"
                        :style="{ background: offerwall.background || 'var(--primary-color)' }"
           >
@@ -20,7 +20,7 @@
       <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-3">
         Promo Code
       </div>
-      <div class="tw-flex tw-items-center tw-flex-wrap tw-p-6 tw-bg-white tw-shadow">
+      <div class="tw-flex tw-items-center tw-flex-wrap tw-p-6 tw-bg-white tw-shadow tw-rounded-sm">
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-3/5 tw-mb-6 md:tw-m-0">
           <div class="tw-text-md xl:tw-text-xl tw-font-medium tw-mb-3">
             Add your promo code and get Free Credits
@@ -30,7 +30,21 @@
           </div>
         </div>
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-1/4 tw-flex tw-flex-col tw-justify-center tw-m-auto md:tw-pl-6 xl:tw-p-0">
-          <input v-model="promoCode" class="tw-border tw-py-3 tw-px-2 tw-mb-5 tw-text-center" placeholder="Promo Code" type="text">
+          <div class="tw-mb-5 tw-border tw-px-2 tw-py-1" :class="{ 'tw-border-red-500' : promoCodeErrors, 'tw-border-green-500' : promoCodeSuccess }">
+            <p style="height: 18px"></p>
+            <input v-model="promoCode" placeholder="Promo Code" type="text"
+                   class="tw-w-full tw-text-sm tw-px-2 tw-text-center"
+                   @keydown="promoCodeErrors = ''; promoCodeSuccess = false"
+            >
+            <p style="min-height: 18px" class="tw-text-xs tw-italic" :class="{ 'tw-text-red-500' : promoCodeErrors, 'tw-text-green-500' : promoCodeSuccess }">
+              <template v-if="promoCodeErrors">
+                {{ promoCodeErrors }}
+              </template>
+              <template v-else-if="promoCodeSuccess">
+                Promo code has been redeemed.
+              </template>
+            </p>
+          </div>
           <button @click="redeemPromoCode" class="tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-px-10 tw-py-2 tw-duration-200"
                   :class="promoCode ? 'tw-bg-primary tw-text-white' : 'tw-bg-secondary tw-text-gray-500'"
                   :disabled="! promoCode"
@@ -195,18 +209,26 @@ export default {
     }
 
     const promoCode = ref('');
+    const promoCodeErrors = ref('');
+    const promoCodeSuccess = ref(false);
 
     const redeemPromoCode = () => {
       store.dispatch('redeemPromoCode', promoCode.value).then(() => {
+        promoCodeSuccess.value = true;
         promoCode.value = '';
       }).catch((err) => {
-        console.log(err)
+        if (err.response.status === 422) {
+          promoCodeErrors.value = err.response.data.errors ? err.response.data.errors.code[0] : err.response.data.message;
+        }
+
         promoCode.value = '';
       });
     }
 
     return {
       promoCode,
+      promoCodeErrors,
+      promoCodeSuccess,
       redeemPromoCode,
     }
   }
