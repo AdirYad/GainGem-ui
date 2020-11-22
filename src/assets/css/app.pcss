@@ -61,7 +61,7 @@
   }
 }
 
-button:focus {
+button:focus, input:focus {
   outline:0;
 }
 
@@ -355,4 +355,39 @@ img {
 
 .fa-w-40 {
   width: 40px !important;
+}
+
+.offerwall-card {
+  height: 120px;
+
+  > a {
+    .offerwall-image {
+      max-width: 200px;
+      max-height: 120px;
+    }
+
+    &.offerwall-adgem, &.offerwall-cpxresearch {
+      .offerwall-image {
+        max-width: 180px;
+      }
+    }
+
+    &.offerwall-lootably, &.offerwall-offertoro {
+      .offerwall-image {
+        max-width: 140px;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    height: 100px;
+
+    .offerwall-image {
+      max-height: 100px;
+    }
+  }
 }
