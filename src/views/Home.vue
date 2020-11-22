@@ -20,7 +20,7 @@
       <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-3">
         Promo Code
       </div>
-      <div class="tw-flex tw-items-center tw-flex-wrap tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
+      <div class="tw-flex tw-flex-wrap tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-3/5 tw-mb-6 md:tw-m-0">
           <div class="tw-text-md xl:tw-text-xl tw-font-medium tw-mb-3">
             Add your promo code and get Free Credits
