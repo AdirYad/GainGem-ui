@@ -134,7 +134,7 @@ export default createStore({
         return;
       }
 
-      return axiosInstance.post('/redeem', {
+      return axiosInstance.post('/coupons/redeem', {
         code: promoCode
       }).then((response) => {
         commit('setUser', response.data);

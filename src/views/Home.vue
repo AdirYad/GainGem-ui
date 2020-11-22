@@ -36,7 +36,7 @@
                    :class="{ 'tw-border-red-500 tw-mb-2' : promoCodeErrors, 'tw-border-green-500 tw-mb-2' : promoCodeSuccess }"
                    @keydown="promoCodeErrors = ''; promoCodeSuccess = false"
             >
-            <p class="tw-text-xs tw-italic" :class="{ 'tw-text-red-500' : promoCodeErrors, 'tw-text-green-500' : promoCodeSuccess }">
+            <p v-if="promoCodeErrors || promoCodeSuccess" class="tw-text-xs tw-italic" :class="{ 'tw-text-red-500' : promoCodeErrors, 'tw-text-green-500' : promoCodeSuccess }">
               <template v-if="promoCodeErrors">
                 {{ promoCodeErrors }}
               </template>
@@ -213,6 +213,9 @@ export default {
     const promoCodeSuccess = ref(false);
 
     const redeemPromoCode = () => {
+      promoCodeErrors.value = '';
+      promoCodeSuccess.value = false;
+
       store.dispatch('redeemPromoCode', promoCode.value).then(() => {
         promoCodeSuccess.value = true;
         promoCode.value = '';
