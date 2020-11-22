@@ -56,7 +56,7 @@ import { required, minLength, maxLength } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
 import { useStore } from 'vuex';
-import { ref, reactive, toRef } from "@vue/reactivity";
+import { ref, reactive, toRef } from "vue";
 
 export default {
   name: 'Login',

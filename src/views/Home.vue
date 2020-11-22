@@ -1,7 +1,6 @@
 <template>
   <div v-if="$store.getters.isLoggedIn">
     test
-    <div class="tw-h-screen"></div>
   </div>
 
   <div v-else class="home-unsigned survey-bg tw-h-screen">
@@ -126,11 +125,32 @@
 
 <script>
 import Footer from '@/components/Footer.vue';
+import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   name: 'Home',
   components: {
     Footer,
+  },
+  setup() {
+    const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+
+    if (route.query.token) {
+      store.dispatch('verifyEmail', route.query.token).then(() => {
+        router.push({ name: 'Home' });
+      }).catch((err) => {
+        if (err.response.status === 422 && err.response.data.message === 'verified') {
+          store.dispatch('getLoggedUser');
+        }
+
+        router.push({ name: 'Home' });
+      });
+    } else {
+      router.push({ name: 'Home' });
+    }
   }
 }
 </script>

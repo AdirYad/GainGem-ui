@@ -3,9 +3,12 @@
     <Navigation v-if="$store.getters.isLoggedIn" />
 
     <div :class="{ 'page-container' : $store.getters.isLoggedIn}">
-      <LiveActivity v-if="$store.getters.isLoggedIn" />
+      <div :class="{ 'container' : $store.getters.isLoggedIn }">
+        <LiveActivity v-if="$store.getters.isLoggedIn" />
+        <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
 
-      <router-view :key="$route.fullPath" :class="{ 'container tw-bg-secondary tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn }" />
+        <router-view :key="$route.fullPath" :class="{ 'tw-p-4 md:tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn }" />
+      </div>
 
       <Footer v-if="$store.getters.isLoggedIn" />
     </div>
@@ -13,16 +16,18 @@
 </template>
 
 <script>
-import LiveActivity from "@/components/LiveActivity";
 import Navigation from "@/components/Navigation";
+import LiveActivity from "@/components/LiveActivity";
+import EmailVerification from "@/components/EmailVerification";
 import Footer from "@/components/Footer";
 
 export default {
   name: 'App',
   components: {
-    Footer,
     Navigation,
     LiveActivity,
+    EmailVerification,
+    Footer,
   },
 }
 </script>

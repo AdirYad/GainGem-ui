@@ -1,5 +1,5 @@
 <template>
-  <div class="activity-items tw-bg-secondary tw-flex tw-items-end">
+  <div class="activity-items tw-flex tw-items-end">
     <transition-group name="activity" tag="div" class="tw-w-full tw-relative tw-flex tw-px-3 lg:tw-pl-4 tw-overflow-hidden">
       <div v-for="(activity) in activities" :key="activity.id" class="activity-item tw-bg-white tw-text-xs tw-font-light tw-text-primary tw-rounded-md tw-border-b-2 tw-border-primary tw-mx-2 tw-px-4 tw-flex tw-justify-center tw-items-center">
         <span class="tw-h-6 tw-w-6 tw-inline-block tw-mr-2">

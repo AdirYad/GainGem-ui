@@ -90,7 +90,7 @@ import { required, minLength, maxLength, email, sameAs } from '@vuelidate/valida
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
 import { useStore } from 'vuex';
-import { reactive, ref, toRef } from "@vue/reactivity";
+import { reactive, ref, toRef } from "vue";
 
 export default {
   name: 'Register',
@@ -103,7 +103,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-    })
+    });
 
     const errors = ref({});
 
