@@ -20,7 +20,7 @@
       <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-3">
         Promo Code
       </div>
-      <div class="tw-flex tw-items-center tw-flex-wrap tw-p-6 tw-bg-white tw-shadow tw-rounded-sm">
+      <div class="tw-flex tw-items-center tw-flex-wrap tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-3/5 tw-mb-6 md:tw-m-0">
           <div class="tw-text-md xl:tw-text-xl tw-font-medium tw-mb-3">
             Add your promo code and get Free Credits
@@ -30,13 +30,13 @@
           </div>
         </div>
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-1/4 tw-flex tw-flex-col tw-justify-center tw-m-auto md:tw-pl-6 xl:tw-p-0">
-          <div class="tw-mb-5 tw-border tw-px-2 tw-py-1" :class="{ 'tw-border-red-500' : promoCodeErrors, 'tw-border-green-500' : promoCodeSuccess }">
-            <p style="height: 18px"></p>
+          <div class="tw-mb-5">
             <input v-model="promoCode" placeholder="Promo Code" type="text"
-                   class="tw-w-full tw-text-sm tw-px-2 tw-text-center"
+                   class="tw-border tw-w-full tw-px-2 tw-py-4 tw-text-center"
+                   :class="{ 'tw-border-red-500 tw-mb-2' : promoCodeErrors, 'tw-border-green-500 tw-mb-2' : promoCodeSuccess }"
                    @keydown="promoCodeErrors = ''; promoCodeSuccess = false"
             >
-            <p style="min-height: 18px" class="tw-text-xs tw-italic" :class="{ 'tw-text-red-500' : promoCodeErrors, 'tw-text-green-500' : promoCodeSuccess }">
+            <p class="tw-text-xs tw-italic" :class="{ 'tw-text-red-500' : promoCodeErrors, 'tw-text-green-500' : promoCodeSuccess }">
               <template v-if="promoCodeErrors">
                 {{ promoCodeErrors }}
               </template>
