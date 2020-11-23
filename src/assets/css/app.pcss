@@ -392,6 +392,11 @@ img {
           max-height: 100px;
           transition: 0.3s;
         }
+
+        .badge-failed {
+          top: 10px;
+          right: 10px;
+        }
       }
 
       .reward-details {
@@ -471,4 +476,11 @@ img {
       }
     }
   }
+}
+
+.badge-failed {
+  padding-top: 0.1em;
+  padding-bottom: 0.1rem;
+
+  @apply text-xs px-3 bg-red-200 text-red-800 rounded-full;
 }
