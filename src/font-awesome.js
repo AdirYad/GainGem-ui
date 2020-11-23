@@ -10,6 +10,7 @@ import {
   faMedal,
   faCoins,
   faGift,
+  faReply,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBuffer,
@@ -21,7 +22,7 @@ import {
 export default {
   icons: library.add(
     // Solid
-    // faReply,
+     faReply,
     faChevronRight,
     faChevronLeft,
     faSignInAlt,
