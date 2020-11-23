@@ -21,6 +21,7 @@ import {
 export default {
   icons: library.add(
     // Solid
+    // faReply,
     faChevronRight,
     faChevronLeft,
     faSignInAlt,

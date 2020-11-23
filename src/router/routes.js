@@ -98,7 +98,7 @@ export default [
     {
         path: '/offerwall/:provider',
         name: 'Offerwall',
-        component: () => import('@/views/Register.vue'),
+        component: () => import('@/views/Offerwall.vue'),
         meta: {
             authOnly: true
         }
