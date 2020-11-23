@@ -347,6 +347,63 @@ img {
     background: linear-gradient(60deg, #b1060f -4.4%, #e50913 96.69%) !important;
     box-shadow: 0 6px 16px rgba(229, 9, 19, 0.4) !important;
   }
+  .reward-robux {
+    background: linear-gradient(210deg, rgb(0, 181, 110) 3%, rgb(10, 193, 92) 108%) !important;
+    box-shadow: 0 6px 16px rgba(63, 194, 23, 0.4) !important;
+  }
+
+  .reward-bitcoin {
+    background: linear-gradient(100deg, rgb(246, 146, 20) 4.44%, rgb(260, 100, 0) 160%) !important;
+    box-shadow: 0 6px 16px rgba(247, 148, 29, 0.4) !important;
+  }
+
+  .reward-googleplay {
+    background: linear-gradient(330deg, rgb(64, 64, 64) 1.38%, rgb(22, 30, 32) 70%) !important;
+    box-shadow: 0 6px 16px rgba(64, 64, 64, 0.4) !important;
+  }
+
+  .reward-apple {
+    background: linear-gradient(208.25deg, rgb(14, 199, 251) 1.58%, rgb(12, 96, 240) 76.76%) !important;
+    box-shadow: 0 6px 16px rgba(14, 199, 251, 0.4) !important;
+  }
+
+  .reward-spotify {
+    background: rgb(30, 215, 96) !important;
+    box-shadow: 0 6px 16px rgba(60, 205, 16, 0.25) !important;
+  }
+
+  &.tw-grid {
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-rows: repeat(2, 200px);
+
+    .reward-item {
+      @apply bg-white shadow rounded-md ;
+
+      .reward {
+        background-color: black;
+        height: 150px;
+        box-shadow: none !important;
+        overflow: hidden;
+
+        @apply w-full;
+
+        img {
+          max-height: 100px;
+          transition: 0.3s;
+        }
+
+        .badge-failed {
+          top: 10px;
+          right: 10px;
+        }
+      }
+
+      .reward-details {
+        height: 50px;
+      }
+    }
+  }
 }
 
 .border-secondary-3 {
@@ -383,11 +440,47 @@ img {
     }
   }
 
+  > div {
+    .offerwall-image {
+      max-width: 300px;
+      max-height: 160px;
+    }
+
+    &.offerwall-adgem, &.offerwall-cpxresearch, &.offerwall-lootably, &.offerwall-offertoro {
+      .offerwall-image {
+        width: 225px;
+      }
+    }
+  }
+
   @media (max-width: 1024px) {
     height: 100px;
 
     .offerwall-image {
       max-height: 100px;
     }
+
+    > div {
+      .offerwall-image {
+        max-width: 250px;
+        max-height: 140px;
+      }
+    }
   }
+
+  @media (max-width: 768px) {
+    > div {
+      .offerwall-image {
+        max-width: 200px;
+        max-height: 120px;
+      }
+    }
+  }
+}
+
+.badge-failed {
+  padding-top: 0.1em;
+  padding-bottom: 0.1rem;
+
+  @apply text-xs px-3 bg-red-200 text-red-800 rounded-full;
 }
