@@ -363,14 +363,19 @@ img {
   }
 
   .reward-apple {
-    background: linear-gradient(208.25deg, rgb(14, 199, 251) 1.58%, rgb(12, 96, 240) 76.76%);
+    background: linear-gradient(208.25deg, rgb(14, 199, 251) 1.58%, rgb(12, 96, 240) 76.76%) !important;
     box-shadow: 0 6px 16px rgba(14, 199, 251, 0.4) !important;
+  }
+
+  .reward-spotify {
+    background: rgb(30, 215, 96) !important;
+    box-shadow: 0 6px 16px rgba(60, 205, 16, 0.25) !important;
   }
 
   &.tw-grid {
     grid-gap: 20px;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-template-rows: repeat(2, 250px);
+    grid-template-rows: repeat(2, 200px);
 
     .reward-item {
       @apply bg-white shadow rounded-md ;
@@ -390,7 +395,7 @@ img {
       }
 
       .reward-details {
-        height: 100px;
+        height: 50px;
       }
     }
   }

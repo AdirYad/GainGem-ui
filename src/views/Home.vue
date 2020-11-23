@@ -4,7 +4,7 @@
       <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-3">
         Offerwalls
       </div>
-      <div class="tw-flex tw-flex-wrap mb-4 md:tw-mx-4">
+      <div class="tw-flex tw-flex-wrap md:tw--mx-4">
         <div v-for="(offerwall, index) in $store.state.offerwalls" :key="index" class="offerwall-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-6 md:tw-px-4 tw-my-2">
           <router-link :to="{ name: 'Offerwall', params: { provider: offerwall.provider } }"
                        class="tw-h-full tw-flex tw-justify-center tw-items-center tw-rounded-2xl tw-shadow tw-duration-300 tw-overflow-hidden"
