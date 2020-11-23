@@ -1,33 +1,59 @@
 <template>
   <div>
-    <div class="tw-justify-between tw-flex tw-flex-row tw-py-3">
-      <div class="tw-mx-1 md:tw-m-0 tw-w-1/2 md:tw-w-1/3 xl:tw-w-1/4 tw-h-12 tw-bg-primary tw-rounded-lg sm:tw-rounded-xl">
-        <router-link :to="{name: 'Home'}" class="tw-rounded-lg sm:tw-rounded-xl tw-w-full tw-h-full tw-flex tw-rounded-xl tw-text-secondary tw-justify-center tw-items-center">
-          <fa-icon icon="reply" class="tw-h-5 fa-w-26 lg:tw-h-6 lg:fa-w-40 tw-mr-3" />
-          <div class="tw-text-xs sm:tw-text-base md:tw-text-lg tw-uppercase tw-tracking-wider">
+    <div class="tw-justify-between tw-flex tw-flex-wrap">
+      <div class="tw-mb-2 sm:tw-m-0 tw-w-full sm:tw-w-1/3 xl:tw-w-1/4 tw-h-12 tw-bg-primary tw-rounded-xl">
+        <router-link :to="{ name: 'Home' }" class="tw-rounded-lg tw-w-full tw-h-full tw-flex tw-rounded-xl tw-text-secondary tw-justify-center tw-items-center">
+          <fa-icon icon="reply" />
+          <div class="tw-text-sm sm:tw-text-base tw-uppercase tw-tracking-wider tw-ml-3">
             More Offers
           </div>
         </router-link>
       </div>
-      <div class="miss-point tw-mx-1 md:tw-m-0 tw-w-1/2 md:tw-w-1/3 xl:tw-w-1/4 tw-h-12 tw-rounded-lg sm:tw-rounded-xl">
-        <router-link :to="{name: 'Support'}" class="tw-uppercase tw-tracking-wider tw-rounded-lg sm:tw-rounded-xl tw-w-full tw-h-full tw-flex tw-rounded-xl tw-text-secondary tw-justify-center tw-items-center">
-          <fa-icon icon="question" class="tw-h-5 fa-w-25 lg:tw-h-6 lg:fa-w-40 tw-m-3" />
-          <div class="tw-text-xs sm:tw-text-base md:tw-text-lg tw-uppercase tw-tracking-wider">
+      <div class="tw-bg-red-600 tw-w-full sm:tw-w-1/3 xl:tw-w-1/4 tw-h-12 tw-rounded-xl">
+        <router-link :to="{ name: 'Support' }" class="tw-uppercase tw-tracking-wider tw-rounded-xl tw-w-full tw-h-full tw-flex tw-text-secondary tw-justify-center tw-items-center">
+          <fa-icon icon="question" />
+          <div class="tw-text-sm sm:tw-text-base tw-uppercase tw-tracking-wider tw-ml-3">
              Missing Points?
           </div>
         </router-link>
       </div>
     </div>
-    <div class="offerwall-image">
-
+    <div v-if="offerwall" class="offerwall-card tw-w-full tw-my-4">
+      <div
+           class="tw-h-full tw-flex tw-justify-center tw-items-center tw-flex-col tw-rounded-xl tw-shadow tw-overflow-hidden"
+           :class="`offerwall-${offerwall.provider}`"
+           :style="{ background: offerwall.background || 'var(--primary-color)' }"
+      >
+        <img class="offerwall-image" :src="offerwall.image">
+      </div>
     </div>
   </div>
 
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
 
 export default {
   name: 'Offerwall',
+  setup() {
+    const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+
+    const provider = route.params.provider;
+
+    const offerwall = store.state.offerwalls.filter(offerwall => offerwall.provider === provider)[0];
+
+    if (! offerwall) {
+      router.push({ name: 'Home' });
+      return;
+    }
+
+    return {
+      offerwall,
+    }
+  }
 }
 </script>

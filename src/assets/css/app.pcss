@@ -16,9 +16,39 @@
   display: none;
 }
 
-.miss-point{
-  background-color: rgba(242, 38, 19, 1);
+.reward {
+  background-color: black;
+  height: 150px;
+  width: 250px;
+  border-radius: 4px;
+  box-shadow: 0 6px 16px black;
+  overflow: hidden;
+
+  .img-height{
+    max-height: 90px;
+  }
+
+  img {
+    max-height: 60px;
+  }
 }
+
+.reward-robux {
+  background: linear-gradient(216.41deg, rgb(63, 194, 23) 2.66%, rgb(1, 182, 87) 102.18%) !important;
+  box-shadow: 0 6px 16px rgba(140, 158, 255, 0.4) !important;
+}
+
+.reward-bitcoin {
+  background: linear-gradient(223.51deg, rgb(247, 148, 29) 4.44%, rgb(230, 126, 34) 178.8%) !important;
+  box-shadow: 0 6px 16px rgba(229, 9, 19, 0.4) !important;
+}
+
+.reward-googleplay {
+   background: linear-gradient(218.05deg, rgb(64, 64, 64) 1.33%, rgb(22, 22, 22) 100%) !important;
+   box-shadow: 0 6px 16px rgba(229, 9, 19, 0.4) !important;
+ }
+
+
 
 .container {
   min-height: 100vh;
@@ -387,11 +417,40 @@ img {
     }
   }
 
+  > div {
+    .offerwall-image {
+      max-width: 300px;
+      max-height: 160px;
+    }
+
+    &.offerwall-adgem, &.offerwall-cpxresearch, &.offerwall-lootably, &.offerwall-offertoro {
+      .offerwall-image {
+        width: 225px;
+      }
+    }
+  }
+
   @media (max-width: 1024px) {
     height: 100px;
 
     .offerwall-image {
       max-height: 100px;
+    }
+
+    > div {
+      .offerwall-image {
+        max-width: 250px;
+        max-height: 140px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    > div {
+      .offerwall-image {
+        max-width: 200px;
+        max-height: 120px;
+      }
     }
   }
 }

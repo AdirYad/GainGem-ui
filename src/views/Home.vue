@@ -21,11 +21,11 @@
         Promo Code
       </div>
       <div class="tw-flex tw-flex-wrap tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
-        <div class="tw-w-full md:tw-w-1/2 xl:tw-w-3/5 tw-mb-6 md:tw-m-0">
-          <div class="tw-text-md xl:tw-text-xl tw-font-medium tw-mb-3">
+        <div class="tw-w-full md:tw-w-1/2 xl:tw-w-3/5 tw-mb-3 sm:tw-mb-6 md:tw-m-0">
+          <div class="tw-text-lg xl:tw-text-xl tw-font-medium tw-mb-3">
             Add your promo code and get Free Credits
           </div>
-          <div class="tw-text-xs xl:tw-text-sm">
+          <div class="tw-text-sm">
             We give Promo Codes daily in our social media accounts and to our social media influencers, Make sure you follow us to get more Points!
           </div>
         </div>

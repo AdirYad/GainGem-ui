@@ -58,7 +58,7 @@ export default [
     {
         path: '/rewards',
         name: 'Rewards',
-        component: () => import('@/views/Register.vue'),
+        component: () => import('@/views/Rewards.vue'),
         meta: {
             authOnly: true
         }
