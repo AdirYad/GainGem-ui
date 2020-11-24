@@ -27,27 +27,26 @@ export default [
     },
     {
         path: '/profile',
-        name: 'Profile',
-        component: () => import('@/views/Register.vue'),
+        component: () => import('@/components/Temp.vue'),
         children: [
             {
                 path: '',
-                name: 'Profile/Details',
+                name: 'Profile',
                 component: () => import('@/views/Register.vue'),
             },
             {
-                path: '/transactions',
-                name: 'Profile/Transactions',
+                path: 'transactions',
+                name: 'Profile.Transactions',
                 component: () => import('@/views/Register.vue'),
             },
             {
-                path: '/referrals',
-                name: 'Profile/Referrals',
+                path: 'referrals',
+                name: 'Profile.Referrals',
                 component: () => import('@/views/Register.vue'),
             },
             {
-                path: '/offers-history',
-                name: 'Profile/OffersHistory',
+                path: 'offers-history',
+                name: 'Profile.OffersHistory',
                 component: () => import('@/views/Register.vue'),
             },
         ],
@@ -61,7 +60,7 @@ export default [
         component: () => import('@/views/Rewards.vue'),
         meta: {
             authOnly: true
-        }
+        },
     },
     {
         path: '/invite',
