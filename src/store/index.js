@@ -40,6 +40,58 @@ export default createStore({
         provider: 'offertoro',
       },
     ],
+    rewards: [
+      {
+        name: 'Robux',
+        image: require('@/assets/images/rewards/robux.png'),
+        provider: 'robux',
+      },
+      {
+        name: 'Bitcoin',
+        image: require('@/assets/images/rewards/bitcoin.png'),
+        provider: 'bitcoin',
+      },
+      {
+        name: 'App Store',
+        image: require('@/assets/images/rewards/apple.png'),
+        provider: 'apple',
+      },
+      {
+        name: 'Xbox',
+        image: require('@/assets/images/rewards/xbox.png'),
+        provider: 'xbox',
+      },
+      {
+        name: 'Roblox GiftCard',
+        image: require('@/assets/images/rewards/roblox.png'),
+        provider: 'roblox',
+      },
+      {
+        name: 'Psn',
+        image: require('@/assets/images/rewards/psn.png'),
+        provider: 'psn',
+      },
+      {
+        name: 'Google Play',
+        image: require('@/assets/images/rewards/googleplay.png'),
+        provider: 'googleplay',
+      },
+      {
+        name: 'Netflix',
+        image: require('@/assets/images/rewards/netflix.png'),
+        provider: 'netflix',
+      },
+      {
+        name: 'Spotify',
+        image: require('@/assets/images/rewards/spotify.png'),
+        provider: 'spotify',
+      },
+      {
+        name: 'Discord',
+        image: require('@/assets/images/rewards/discord.png'),
+        provider: 'discord',
+      },
+    ],
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",

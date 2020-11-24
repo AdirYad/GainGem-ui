@@ -13,12 +13,7 @@
       </div>
     </div>
     <div class="tw-pt-8 md:tw-pt-0 tw-pl-0 md:tw-pl-8 lg:tw-pl-16 tw-flex-col tw-w-full md:tw-w-2/3 xl:tw-w-3/4">
-      <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="username">
-        Roblux Username
-      </label>
-      <input id="robux-username" type="text" placeholder="Robux Username"
-             class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full sm:tw-w-1/2 xl:tw-w-5/12 tw-py-3 tw-px-4 tw-mb-8 focus:tw-outline-none">
-      <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="username">
+      <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="select">
         Select amount to reward
       </label>
       <div clss="tw-flex tw-flex-wrap">
@@ -27,23 +22,14 @@
           <!--          {{ option.text }}-->
           <!--        </option>-->
           <option disabled value="">Please select one</option>
-          <option type="number" value="5">5 Robux</option>
-          <option type="number" value="10">10 Robux</option>
-          <option type="number" value="15">15 Robux</option>
-          <option type="number" value="20">20 Robux</option>
-          <option type="number" value="30">30 Robux</option>
-          <option type="number" value="40">40 Robux</option>
-          <option type="number" value="50">50 Robux</option>
-          <option type="number" value="100">100 Robux</option>
-          <option type="number" value="200">200 Robux</option>
-          <option type="number" value="300">300 Robux</option>
-          <option type="number" value="500">500 Robux</option>
+          <option type="number" value="5">5$</option>
+          <option type="number" value="10">10$</option>
+          <option type="number" value="15">15$</option>
+          <option type="number" value="25">25$</option>
+          <option type="number" value="50">50$</option>
         </select>
         <span class="">
-          Cost {{ selected*8 }}
-        </span>
-        <span class="tw-w-full">
-          (1 Robux = 8 Points )
+          Cost {{ selected*1000 }}
         </span>
       </div>
       <button class="tw-text-white tw-mt-6 md:tw-mt-12 tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">

@@ -18,10 +18,10 @@
       </label>
       <input id="robux-username" type="text" placeholder="Robux Username"
              class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full sm:tw-w-1/2 xl:tw-w-5/12 tw-py-3 tw-px-4 tw-mb-8 focus:tw-outline-none">
-      <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="username">
+      <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="select">
         Select amount to reward
       </label>
-      <div clss="tw-flex tw-flex-wrap">
+      <div>
         <select v-model="selected" class="select tw-duration-300 tw-shadow tw-border tw-w-full sm:tw-w-1/2 xl:tw-w-5/12 tw-rounded-md tw-py-3 tw-px-4 focus:tw-outline-none">
           <!--        <option v-for="option in $store.data.options" :value="option.value">-->
           <!--          {{ option.text }}-->
@@ -39,11 +39,8 @@
           <option type="number" value="300">300 Robux</option>
           <option type="number" value="500">500 Robux</option>
         </select>
-        <span class="">
-          Cost {{ selected*8 }}
-        </span>
-        <span class="tw-w-full">
-          (1 Robux = 8 Points )
+        <span>
+          Cost {{ selected*8 }} (1 Robux = 8 Points )
         </span>
       </div>
       <button class="tw-text-white tw-mt-6 md:tw-mt-12 tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">

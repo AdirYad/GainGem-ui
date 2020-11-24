@@ -64,6 +64,14 @@ export default [
         }
     },
     {
+        path: '/rewards/:provider',
+        name: 'Rewards',
+        component: () => import('@/views/Rewards.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
         path: '/robux',
         name: 'Robux',
         component: () => import('@/views/Robux.vue'),
