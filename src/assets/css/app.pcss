@@ -408,7 +408,7 @@ img {
     grid-template-rows: repeat(2, 200px);
 
     .reward-item {
-      @apply bg-white shadow rounded-md ;
+      @apply bg-white shadow rounded-md;
 
       .reward {
         background-color: black;
@@ -426,6 +426,28 @@ img {
         .badge-failed {
           top: 10px;
           right: 10px;
+        }
+      }
+
+      .reward-details {
+        height: 50px;
+      }
+    }
+  }
+
+  &.reward-card {
+    .reward-item {
+      .reward {
+        background-color: black;
+        height: 150px;
+        box-shadow: none !important;
+        overflow: hidden;
+
+        @apply w-full;
+
+        img {
+          max-height: 100px;
+          transition: 0.3s;
         }
       }
 

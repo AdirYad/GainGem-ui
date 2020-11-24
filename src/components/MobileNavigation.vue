@@ -10,7 +10,7 @@
           {{ $store.state.user.points }}
         </span>
       </div>
-      <router-link :to="{ name: 'Profile/Details' }" class="tw-h-10 tw-w-10">
+      <router-link :to="{ name: 'Profile' }" class="tw-h-10 tw-w-10">
         <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-rounded-full" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
       </router-link>
     </div>
