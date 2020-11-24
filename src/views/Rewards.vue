@@ -5,10 +5,10 @@
         Rewards
       </div>
       <div class="rewards-list tw-grid">
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Robux' }" class="reward-item">
           <div class="reward reward-robux tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="true" class="tw-absolute badge-failed">
-                Out of stock
+              Out of stock
             </div>
             <img src="@/assets/images/rewards/robux.png" alt="Robux">
           </div>
@@ -122,6 +122,6 @@
 
 <script>
 export default {
-  name: 'Offerwall',
+  name: 'Rewards',
 }
 </script>

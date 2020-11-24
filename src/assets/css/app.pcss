@@ -230,7 +230,7 @@ img {
   border-color: transparent;
 }
 
-.input:active, .input:focus, .input:hover {
+.input:active, .input:focus, .input:hover, .select:active, .select:hover {
   box-shadow: 0 0 0 3px var(--primary-color);
   border-color: transparent;
 }
@@ -347,6 +347,7 @@ img {
     background: linear-gradient(60deg, #b1060f -4.4%, #e50913 96.69%) !important;
     box-shadow: 0 6px 16px rgba(229, 9, 19, 0.4) !important;
   }
+
   .reward-robux {
     background: linear-gradient(210deg, rgb(0, 181, 110) 3%, rgb(10, 193, 92) 108%) !important;
     box-shadow: 0 6px 16px rgba(63, 194, 23, 0.4) !important;
@@ -370,6 +371,35 @@ img {
   .reward-spotify {
     background: rgb(30, 215, 96) !important;
     box-shadow: 0 6px 16px rgba(60, 205, 16, 0.25) !important;
+  }
+
+  .reward-item {
+    @apply bg-white shadow rounded-md ;
+
+    .reward {
+      height: 250px;
+      background-color: black;
+      box-shadow: none !important;
+      overflow: hidden;
+
+      @apply w-full;
+
+      img {
+        max-height: 150px;
+        transition: 0.3s;
+
+      }
+
+      &:hover {
+        img {
+          transform: scale(1.1);
+        }
+      }
+
+      .reward-details {
+        height: 50px;
+      }
+    }
   }
 
   &.tw-grid {

@@ -64,6 +64,14 @@ export default [
         }
     },
     {
+        path: '/robux',
+        name: 'Robux',
+        component: () => import('@/views/Robux.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
         path: '/invite',
         name: 'Invite',
         component: () => import('@/views/Register.vue'),
