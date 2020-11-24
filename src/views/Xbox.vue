@@ -3,11 +3,11 @@
     <div class="tw-bg-secondary tw-w-full md:tw-w-1/3 xl:tw-w-1/4">
       <div class="rewards-list">
         <div class="reward-item">
-          <div class="reward reward-robux tw-relative tw-flex tw-justify-center tw-items-center">
-            <img src="@/assets/images/rewards/robux.png" alt="Robux">
+          <div class="reward reward-xbox tw-relative tw-flex tw-justify-center tw-items-center">
+            <img src="@/assets/images/rewards/xbox.png" alt="Xbox">
           </div>
           <div class="reward-details tw-flex tw-items-center tw-px-3 tw-font-medium tw-text-lg lg:tw-text-xl tw-uppercase tw-tracking-wider">
-            Robux
+            Xbox
           </div>
         </div>
       </div>

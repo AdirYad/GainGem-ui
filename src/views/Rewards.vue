@@ -16,7 +16,7 @@
             Robux
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Bitcoin' }" class="reward-item">
           <div class="reward reward-bitcoin tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -27,7 +27,7 @@
             Bitcoin
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Apple' }" class="reward-item">
           <div class="reward reward-apple tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -38,7 +38,7 @@
             App Store
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Xbox' }" class="reward-item">
           <div class="reward reward-xbox tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -49,7 +49,7 @@
             XBOX
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Roblox' }" class="reward-item">
           <div class="reward reward-roblox tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -60,7 +60,7 @@
             Roblox Giftcard
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Psn' }" class="reward-item">
           <div class="reward reward-psn tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -71,7 +71,7 @@
             PSN
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Googleplay' }" class="reward-item">
           <div class="reward reward-googleplay tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -82,7 +82,7 @@
             Google play
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Netflix' }" class="reward-item">
           <div class="reward reward-netflix tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -93,7 +93,7 @@
             Netflix
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Spotify' }" class="reward-item">
           <div class="reward reward-spotify tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock
@@ -104,7 +104,7 @@
             Spotify
           </div>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="reward-item">
+        <router-link :to="{ name: 'Discord' }" class="reward-item">
           <div class="reward reward-discord tw-relative tw-flex tw-justify-center tw-items-center">
             <div v-if="false" class="tw-absolute badge-failed">
               Out of stock

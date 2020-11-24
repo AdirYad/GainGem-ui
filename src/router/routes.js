@@ -72,6 +72,78 @@ export default [
         }
     },
     {
+        path: '/bitcoin',
+        name: 'Bitcoin',
+        component: () => import('@/views/Bitcoin.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/apple',
+        name: 'Apple',
+        component: () => import('@/views/Apple.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/xbox',
+        name: 'Xbox',
+        component: () => import('@/views/Xbox.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/roblox',
+        name: 'Roblox',
+        component: () => import('@/views/Roblox.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/psn',
+        name: 'Psn',
+        component: () => import('@/views/Psn.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/googleplay',
+        name: 'Googleplay',
+        component: () => import('@/views/Googleplay.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/netflix',
+        name: 'Netflix',
+        component: () => import('@/views/Netflix.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/spotify',
+        name: 'Spotify',
+        component: () => import('@/views/Spotify.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
+        path: '/discord',
+        name: 'Discord',
+        component: () => import('@/views/Discord.vue'),
+        meta: {
+            authOnly: true
+        }
+    },
+    {
         path: '/invite',
         name: 'Invite',
         component: () => import('@/views/Register.vue'),
