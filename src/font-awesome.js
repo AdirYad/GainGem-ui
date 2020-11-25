@@ -11,18 +11,18 @@ import {
   faCoins,
   faGift,
   faReply,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBuffer,
 } from "@fortawesome/free-brands-svg-icons";
 import {
-  faHandshake
+  faHandshake,
 } from "@fortawesome/free-regular-svg-icons";
 
 export default {
   icons: library.add(
     // Solid
-     faReply,
     faChevronRight,
     faChevronLeft,
     faSignInAlt,
@@ -33,6 +33,8 @@ export default {
     faMedal,
     faCoins,
     faGift,
+    faReply,
+    faTimes,
 
     // Brands
     faBuffer,

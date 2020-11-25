@@ -33,6 +33,11 @@ export default {
 
     const resendEmailVerification = () => {
       store.dispatch('resendEmailVerification').then(() => {
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: `We have successfully sent an email to ${store.state.user.email}`
+        });
+
         hasSentVerification.value = true;
       })
       .catch((err) => {

@@ -4,6 +4,7 @@ import router from "@/router";
 
 export default createStore({
   state: {
+    notifications: [],
     user: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))
         : null,
@@ -107,6 +108,17 @@ export default createStore({
     isLoggedIn: (state) => typeof state.token === "string",
   },
   mutations: {
+    pushNotification(state, notification) {
+      state.notifications.push({
+        ...notification,
+        id: (Math.random().toString(36) + Date.now().toString(36)).substr(2),
+      });
+    },
+
+    removeNotification(state, notificationToRemove) {
+      state.notifications = state.notifications.filter(notification => notification.id !== notificationToRemove.id);
+    },
+
     setToken(state, { token }) {
       state.token = token;
       localStorage.setItem('token', token);
@@ -133,6 +145,12 @@ export default createStore({
     },
   },
   actions: {
+    addNotification({ commit }, notification) {
+      commit('pushNotification', notification);
+    },
+    removeNotification({ commit }, notification) {
+      commit('removeNotification', notification);
+    },
     login({ commit, getters }, payload) {
       if (getters.isLoggedIn) {
         return;

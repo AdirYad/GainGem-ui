@@ -13,6 +13,8 @@
       <Footer v-if="$store.getters.isLoggedIn" />
     </div>
   </div>
+
+  <NotificationsList />
 </template>
 
 <script>
@@ -20,6 +22,7 @@ import Navigation from "@/components/Navigation";
 import LiveActivity from "@/components/LiveActivity";
 import EmailVerification from "@/components/EmailVerification";
 import Footer from "@/components/Footer";
+import NotificationsList from "@/components/Notifications/NotificationsList";
 
 export default {
   name: 'App',
@@ -28,6 +31,7 @@ export default {
     LiveActivity,
     EmailVerification,
     Footer,
+    NotificationsList,
   },
 }
 </script>
