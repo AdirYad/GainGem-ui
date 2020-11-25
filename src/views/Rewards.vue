@@ -17,8 +17,12 @@
             </button>
             <img :src="reward.image" :alt="reward.name">
           </div>
-          <div class="reward-details tw-flex tw-items-center tw-px-3 tw-font-medium tw-text-lg lg:tw-text-xl tw-uppercase tw-tracking-wider">
+          <div class="reward-details tw-flex tw-justify-between tw-items-center tw-px-3 tw-font-medium tw-text-lg lg:tw-text-xl tw-uppercase tw-tracking-wider">
             {{ reward.name }}
+
+            <button v-if="expandedReward === reward" @click="openModal(reward)" class="tw-border-2 tw-border-primary tw-rounded-full tw-h-8 tw-w-8 tw-text-sm tw-text-primary">
+              <fa-icon icon="question" />
+            </button>
           </div>
           <div v-if="expandedReward === reward" class="tw-flex tw-flex-col tw-justify-end tw-px-3 tw-pb-3" style="height: 200px; margin-top: 20px;">
             <span class="tw-flex tw-mb-1 tw-text-xs">
@@ -72,19 +76,34 @@
         </div>
       </div>
     </div>
+
+    <VModal :visible="rewardModal.visible" @closeModal="rewardModal.visible = false">
+      <h1>
+        {{ rewardModal.name }}
+      </h1>
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores distinctio labore maxime suscipit. Accusamus deserunt impedit inventore laboriosam libero? Amet aspernatur at dolores, ea ipsam necessitatibus numquam quae repellendus similique.</p>
+    </VModal>
   </div>
 </template>
 
 <script>
+import VModal from "@/components/VModal";
 import { useStore } from "vuex";
 import { ref } from 'vue';
 
 export default {
   name: 'Rewards',
+  components: {
+    VModal,
+  },
   setup() {
     const store = useStore();
 
     const expandedReward = ref({});
+    const rewardModal = ref({
+      visible: false
+    });
 
     const payload = ref({
       value: null,
@@ -136,11 +155,18 @@ export default {
       console.log(expandedReward.value)
     }
 
+    const openModal = (reward) => {
+      reward.visible = true;
+      rewardModal.value = reward;
+    }
+
     return {
       payload,
       expandedReward,
+      rewardModal,
       redeem,
       expandRow,
+      openModal,
     }
   }
 }
