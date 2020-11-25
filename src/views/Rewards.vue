@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class=" tw-pb-8 tw-bg-secondary">
+    <div id="rewards" class="tw-pb-8 tw-bg-secondary">
       <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-3">
         Rewards
       </div>
@@ -12,7 +12,7 @@
             <div v-if="! reward.stock" class="tw-absolute badge-failed">
               Out of stock
             </div>
-            <button v-if="expandedReward === reward" @click="expandRow(reward)" class="tw-absolute badge-failed">
+            <button v-if="expandedReward === reward" @click="expandRow(reward)" class="tw-absolute badge-failed tw-z-10">
               Close
             </button>
             <img :src="reward.image" :alt="reward.name">
@@ -118,6 +118,18 @@ export default {
         }, 0);
         return;
       }
+
+      const el = document.getElementById('rewards');
+
+      if (window.innerWidth < 1024) {
+        el.style.marginTop = 'calc(var(--navigation-height)*-1 + 2px)';
+        el.style.paddingTop = 'var(--navigation-height)';
+      }
+
+      el.scrollIntoView({behavior: "smooth"});
+
+      el.style.marginTop = '';
+      el.style.paddingTop = '';
 
       expandedReward.value = reward;
 

@@ -67,7 +67,7 @@ export default createStore({
         stock: false,
       },
       {
-        name: 'Roblox GiftCard',
+        name: 'Roblox Gifts',
         image: require('@/assets/images/rewards/roblox.png'),
         provider: 'roblox',
         stock: true,

@@ -103,6 +103,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      referral_token: localStorage.getItem('ref_id') || null,
     });
 
     const errors = ref({});
@@ -147,6 +148,8 @@ export default {
       }
 
       store.dispatch('register', auth).then(() => {
+        localStorage.removeItem('ref_id');
+
         router.push({ name: 'Home' });
       }).catch((err) => {
         if (err.response.status === 422) {
