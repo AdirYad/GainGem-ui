@@ -1,11 +1,11 @@
 <template>
   <teleport to="#modal">
     <transition name="fade">
-      <div class="modal-overlay" @click="$emit('closeModal'); returnScroll()" v-if="visible"></div>
+      <div class="modal-overlay" @click="$emit('closeModal')" v-if="visible"></div>
     </transition>
     <transition name="fade">
       <div class="modal" v-if="visible">
-        <button @click="$emit('closeModal'); returnScroll()" class="tw-absolute tw-text-sm" style="top: 12px; right: 12px">
+        <button @click="$emit('closeModal')" class="tw-absolute tw-text-sm" style="top: 12px; right: 12px">
           <fa-icon icon="times" />
         </button>
         <div class="tw-relative tw-overflow-scroll">
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import {  watch } from 'vue';
+
 export default {
   name: 'VModal',
   props: {
@@ -26,16 +28,10 @@ export default {
     }
   },
   emits: ['closeModal'],
-  setup() {
-    document.documentElement.style.overflow = 'hidden';
-
-    const returnScroll = () => {
-      document.documentElement.style.overflow = 'auto';
-    }
-
-    return {
-      returnScroll,
-    }
+  setup(props) {
+    watch(() => props.visible, () => {
+      document.documentElement.style.overflow = props.visible ? 'hidden' : 'auto';
+    })
   }
 }
 </script>
