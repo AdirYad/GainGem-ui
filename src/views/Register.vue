@@ -147,6 +147,8 @@ export default {
         return;
       }
 
+      errors.value = {};
+
       store.dispatch('register', auth).then(() => {
         localStorage.removeItem('ref_id');
 
