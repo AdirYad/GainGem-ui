@@ -99,4 +99,9 @@ export default [
         name: '#',
         component: () => import('@/views/Home.vue'),
     },
+    {
+        path: '/:catchAll(.*)*',
+        name: 'NotFound',
+        component: () => import('@/views/Home.vue'),
+    },
 ];
