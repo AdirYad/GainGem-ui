@@ -209,7 +209,7 @@ export default {
     }
 
     if (! store.getters.isLoggedIn && route.query.ref_id) {
-      localStorage.setItem('ref_route.query.ref_idid', route.query.ref_id);
+      localStorage.setItem('ref_id', route.query.ref_id);
     }
 
     const promoCode = ref('');
