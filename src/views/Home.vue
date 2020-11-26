@@ -31,19 +31,7 @@
         </div>
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-1/4 tw-flex tw-flex-col tw-justify-center tw-m-auto md:tw-pl-6 xl:tw-p-0">
           <div class="tw-mb-5">
-            <input v-model="promoCode" placeholder="Promo Code" type="text"
-                   class="tw-border tw-w-full tw-px-2 tw-py-4 tw-text-center"
-                   :class="{ 'tw-border-red-500 tw-mb-2' : promoCodeErrors, 'tw-border-green-500 tw-mb-2' : promoCodeSuccess }"
-                   @keydown="promoCodeErrors = ''; promoCodeSuccess = false"
-            >
-            <p v-if="promoCodeErrors || promoCodeSuccess" class="tw-text-xs tw-italic" :class="{ 'tw-text-red-500' : promoCodeErrors, 'tw-text-green-500' : promoCodeSuccess }">
-              <template v-if="promoCodeErrors">
-                {{ promoCodeErrors }}
-              </template>
-              <template v-else-if="promoCodeSuccess">
-                Promo code has been redeemed.
-              </template>
-            </p>
+            <input v-model="promoCode" placeholder="Promo Code" type="text" class="tw-border tw-w-full tw-px-2 tw-py-4 tw-text-center">
           </div>
           <button @click="redeemPromoCode" class="tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-px-10 tw-py-2 tw-duration-200"
                   :class="promoCode ? 'tw-bg-primary tw-text-white' : 'tw-bg-secondary tw-text-gray-500'"
@@ -213,19 +201,21 @@ export default {
     }
 
     const promoCode = ref('');
-    const promoCodeErrors = ref('');
-    const promoCodeSuccess = ref(false);
 
     const redeemPromoCode = () => {
-      promoCodeErrors.value = '';
-      promoCodeSuccess.value = false;
-
       store.dispatch('redeemPromoCode', promoCode.value).then(() => {
-        promoCodeSuccess.value = true;
         promoCode.value = '';
+
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: 'Promo code has been redeemed',
+        });
       }).catch((err) => {
         if (err.response.status === 422) {
-          promoCodeErrors.value = err.response.data.errors ? err.response.data.errors.code[0] : err.response.data.message;
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.errors ? err.response.data.errors.code[0] : err.response.data.message,
+          });
         }
 
         promoCode.value = '';
@@ -234,8 +224,6 @@ export default {
 
     return {
       promoCode,
-      promoCodeErrors,
-      promoCodeSuccess,
       redeemPromoCode,
     }
   }

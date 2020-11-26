@@ -15,6 +15,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBuffer,
+  faFacebookF,
+  faTwitter,
+  faRedditAlien,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faHandshake,
@@ -38,6 +41,9 @@ export default {
 
     // Brands
     faBuffer,
+    faFacebookF,
+    faTwitter,
+    faRedditAlien,
 
     // Regular
     faHandshake,

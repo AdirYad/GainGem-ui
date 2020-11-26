@@ -65,15 +65,7 @@ export default [
     {
         path: '/invite',
         name: 'Invite',
-        component: () => import('@/views/Register.vue'),
-        meta: {
-            authOnly: true
-        }
-    },
-    {
-        path: '/invite',
-        name: 'Invite',
-        component: () => import('@/views/Register.vue'),
+        component: () => import('@/views/Invite.vue'),
         meta: {
             authOnly: true
         }

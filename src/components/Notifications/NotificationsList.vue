@@ -41,7 +41,7 @@ export default {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .notifications-list {
     bottom: var(--navigation-height) !important;
   }
