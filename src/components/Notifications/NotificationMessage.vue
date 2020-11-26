@@ -1,5 +1,5 @@
 <template>
-  <div class="notification-message tw-duration-500 tw-flex tw-items-center tw-border-l-4 tw-py-2 tw-px-3 tw-shadow-md"
+  <div class="notification-message tw-flex tw-items-center tw-border-l-4 tw-py-2 tw-px-3 tw-shadow-md"
        :class="`notification-${notification.type || 'info'}`"
   >
     <div class="notification-icon tw-rounded-full tw-mr-3 tw-bg-white">
@@ -62,6 +62,13 @@ export default {
 <style scoped>
 .notification-message {
   margin-bottom: 15px;
+  transition: opacity 300ms, transform 300ms;
+}
+
+@media (max-width: 400px) {
+  .notification-message {
+    @apply border-t-2 border-l-0;
+  }
 }
 
 .notification-success {

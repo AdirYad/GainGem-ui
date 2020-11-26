@@ -5,7 +5,7 @@
     </transition>
     <transition name="fade">
       <div class="modal" v-if="visible">
-        <button @click="$emit('closeModal')" class="tw-absolute tw-text-sm" style="top: 12px; right: 12px">
+        <button @click="$emit('closeModal')" class="tw-absolute tw-text-sm tw-text-red-500" style="top: 12px; right: 12px">
           <fa-icon icon="times" />
         </button>
         <div class="tw-relative tw-overflow-scroll">
@@ -70,7 +70,7 @@ export default {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 499px) {
   .modal {
     max-width: 90vw;
   }
