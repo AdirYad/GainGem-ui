@@ -180,20 +180,20 @@ export default {
     const route = useRoute();
     const router = useRouter();
 
-    if (route.name === 'Verify') {
-      if (route.query.token) {
-        store.dispatch('verifyEmail', route.query.token).then(() => {
-          router.push({ name: 'Home' });
-        }).catch((err) => {
-          if (err.response.status === 422 && err.response.data.message === 'verified') {
-            store.dispatch('getLoggedUser');
-          }
-
-          router.push({ name: 'Home' });
-        });
-      } else {
+    if (route.query.token) {
+      store.dispatch('verifyEmail', route.query.token).then(() => {
         router.push({ name: 'Home' });
-      }
+      }).catch((err) => {
+        if (err.response.status === 422 && err.response.data.message === 'verified') {
+          store.dispatch('getLoggedUser');
+        }
+
+        router.push({ name: 'Home' });
+      });
+    }
+
+    if (route.name === 'NotFound') {
+      router.push({ name: 'Home' });
     }
 
     if (! store.getters.isLoggedIn && route.query.ref_id) {

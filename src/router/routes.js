@@ -5,11 +5,6 @@ export default [
         component: () => import('@/views/Home.vue'),
     },
     {
-        path: '/verify',
-        name: 'Verify',
-        component: () => import('@/views/Home.vue'),
-    },
-    {
         path: '/login',
         name: 'Login',
         component: () => import('@/views/Login.vue'),
@@ -27,29 +22,8 @@ export default [
     },
     {
         path: '/profile',
-        component: () => import('@/components/Temp.vue'),
-        children: [
-            {
-                path: '',
-                name: 'Profile',
-                component: () => import('@/views/Register.vue'),
-            },
-            {
-                path: 'transactions',
-                name: 'Profile.Transactions',
-                component: () => import('@/views/Register.vue'),
-            },
-            {
-                path: 'referrals',
-                name: 'Profile.Referrals',
-                component: () => import('@/views/Register.vue'),
-            },
-            {
-                path: 'offers-history',
-                name: 'Profile.OffersHistory',
-                component: () => import('@/views/Register.vue'),
-            },
-        ],
+        name: 'Profile',
+        component: () => import('@/views/Register.vue'),
         meta: {
             authOnly: true
         },
