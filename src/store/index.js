@@ -5,10 +5,16 @@ import router from "@/router";
 export default createStore({
   state: {
     notifications: [],
+    token: localStorage.getItem('token') || null,
     user: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))
         : null,
-    token: localStorage.getItem('token') || null,
+    stats: localStorage.getItem("stats")
+        ? JSON.parse(localStorage.getItem("stats"))
+        : {
+      total_points_earned: 0,
+      total_offers_completed: 0,
+    },
     offerwalls: [
       {
         background: '#369ee0',
@@ -139,6 +145,11 @@ export default createStore({
       localStorage.removeItem('user');
     },
 
+    setStats(state, stats) {
+      state.stats = stats;
+      localStorage.setItem('stats', JSON.stringify(stats));
+    },
+
     tempEmailVerification(state) {
       state.user.email_verified_at = 1;
       localStorage.setItem('user', JSON.stringify(state.user));
@@ -150,6 +161,15 @@ export default createStore({
     },
     removeNotification({ commit }, notification) {
       commit('removeNotification', notification);
+    },
+    stats({ commit, getters }) {
+      if (getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('stats').then((response) => {
+        commit('setStats', response.data);
+      });
     },
     login({ commit, getters }, payload) {
       if (getters.isLoggedIn) {

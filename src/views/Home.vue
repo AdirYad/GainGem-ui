@@ -84,7 +84,7 @@
       <div class="tw-flex tw-justify-around tw-items-center tw-text-center">
         <div class="tw-w-1/2 lg:tw-w-1/4">
           <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
-            46,038,123
+            {{ $store.state.stats.total_points_earned }}
           </div>
           <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
             <fa-icon class="tw-h-6 fa-w-20" icon="coins" />
@@ -95,7 +95,7 @@
         </div>
         <div class="tw-w-1/2 lg:tw-w-1/4">
           <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
-            35,429,266
+            {{ $store.state.stats.total_offers_completed }}
           </div>
           <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
             <fa-icon class="tw-h-6 fa-w-20" :icon="['fab', 'buffer']" />
@@ -220,6 +220,10 @@ export default {
 
         promoCode.value = '';
       });
+    }
+
+    if (! store.getters.isLoggedIn) {
+      store.dispatch('stats')
     }
 
     return {
