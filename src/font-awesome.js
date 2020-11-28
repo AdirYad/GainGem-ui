@@ -21,6 +21,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faHandshake,
+  faClock,
 } from "@fortawesome/free-regular-svg-icons";
 
 export default {
@@ -47,5 +48,6 @@ export default {
 
     // Regular
     faHandshake,
+    faClock,
   ),
 };

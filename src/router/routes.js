@@ -47,7 +47,7 @@ export default [
     {
         path: '/giveaways',
         name: 'Giveaways',
-        component: () => import('@/views/Register.vue'),
+        component: () => import('@/views/Giveaway.vue'),
         meta: {
             authOnly: true
         }
