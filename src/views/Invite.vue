@@ -35,7 +35,7 @@
     </div>
 
     <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8">
-      <div class="affiliate-card tw-w-full xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mx-4">
+      <div class="affiliate-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 sm:tw-mx-0 lg:tw-mx-4">
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
           Total Users
         </div>
@@ -49,7 +49,7 @@
           </span>
         </div>
       </div>
-      <div class="affiliate-card tw-w-full xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mx-4 tw-mt-4 lg:tw-mt-0">
+      <div class="affiliate-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 sm:tw-mx-0 tw-mt-4 sm:tw-mt-0">
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
           TOTAL REVENUE
         </div>
