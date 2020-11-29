@@ -28,49 +28,49 @@ export default {
       {
         id: 8,
         username: 123123,
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 32,
       },
       {
         id: 7,
         username: 'Adoirrrrrrr',
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 332323,
       },
       {
         id: 6,
         username: 121212121,
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 55555,
       },
       {
         id: 5,
         username: 123123,
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 32222,
       },
       {
         id: 4,
         username: 123123,
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 99,
       },
       {
         id: 3,
         username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 323232323,
       },
       {
         id: 2,
         username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 323232323,
       },
       {
         id: 1,
         username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: 323232323,
       },
     ]);
@@ -82,7 +82,7 @@ export default {
       {
         id: i++,
         username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/assets/user.png',
+        profile_image: 'http://localhost:8000/storage/assets/user.png',
         earned: Math.floor(Math.random() * 2000),
       });
     }, 3000);
