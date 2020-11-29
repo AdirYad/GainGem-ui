@@ -41,9 +41,18 @@ export default {
         hasSentVerification.value = true;
       })
       .catch((err) => {
-        if (err.response.status === 422 && err.response.data.message === 'verified') {
-          store.dispatch('getLoggedUser');
+        if (err.response.status !== 422) {
+          return;
         }
+
+        store.dispatch('getLoggedUser').then(() => {
+          if (store.state.user.email_verified_at) {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: "Your account is already verified!"
+            });
+          }
+        });
       });
     }
 

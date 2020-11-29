@@ -184,8 +184,15 @@ export default {
       store.dispatch('verifyEmail', route.query.token).then(() => {
         router.push({ name: 'Home' });
       }).catch((err) => {
-        if (err.response.status === 422 && err.response.data.message === 'verified') {
-          store.dispatch('getLoggedUser');
+        if (err.response.status === 422) {
+          store.dispatch('getLoggedUser').then(() => {
+            if (store.state.user.email_verified_at) {
+              store.dispatch('addNotification', {
+                type: 'error',
+                message: "Your account is already verified!"
+              });
+            }
+          });
         }
 
         router.push({ name: 'Home' });

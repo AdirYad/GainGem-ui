@@ -200,7 +200,7 @@ export default createStore({
         return;
       }
 
-      axiosInstance.post('/auth/user', state.token).then((response) => {
+      return axiosInstance.post('/auth/user', state.token).then((response) => {
         commit('setUser', response.data);
       }).catch(() => {
         commit('removeUser');
@@ -234,9 +234,7 @@ export default createStore({
         return;
       }
 
-      return axiosInstance.post('/coupons/redeem', {
-        code: promoCode
-      }).then((response) => {
+      return axiosInstance.post(`/coupons/${promoCode}/redeems`).then((response) => {
         commit('setUser', response.data);
       });
     },
