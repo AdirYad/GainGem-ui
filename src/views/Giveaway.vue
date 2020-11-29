@@ -31,9 +31,12 @@
         <div>Recent Entries</div>
         <fa-icon :icon="['far', 'clock']" />
       </div>
-      <div v-for="(item, index) in 10" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3 tw-mx-2">
-        <div>
-          -image- userName
+      <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3 tw-mx-2">
+        <div class="tw-flex-1 tw-flex tw-items-center">
+          <div class="tw-w-6 tw-h-6 tw-mr-2">
+            <img class="tw-rounded-full" src="http://localhost:8000/assets/user.png">
+          </div>
+           username
         </div>
         <div>
           52s ago
@@ -44,18 +47,21 @@
     <div class="tw-inline-block tw-w-full md:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md xl:tw-ml-2 tw-px-2 tw-pt-4 tw-mt-8">
       <div class="tw-text-left tw-text-xl tw-uppercase tw-flex tw-justify-between tw-tracking-wider tw-mx-2">
         <div>Previous Winners</div>
-        <div class="tw-w-1/3 tw-flex tw-justify-around">
-          <fa-icon icon="coins" />
+        <div class="tw-w-1/3 tw-flex tw-justify-end">
           <fa-icon :icon="['far', 'clock']" />
         </div>
       </div>
-      <div v-for="(item, index) in 10" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3 tw-mx-2">
-        <div>
-          -image- userName
+      <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3 tw-mx-2">
+        <div class="tw-flex-1 tw-flex tw-items-center">
+          <div class="tw-w-6 tw-h-6 tw-mr-2">
+            <img class="tw-rounded-full" src="http://localhost:8000/assets/user.png">
+          </div>
+          userName
         </div>
         <div class="tw-w-1/3 tw-flex tw-justify-around">
           <div>
-            11 p$
+            <fa-icon icon="coins" />
+            11
           </div>
           <div>
             3h ago
@@ -150,18 +156,18 @@ export default {
     let _minutes = ref({});
     let _seconds = ref({});
 
-    const restart = () => {
-      if(_hour === 0 && _minutes === 0 && _seconds === 0){
-        _hour = props.hour;
-        _minutes = _hour * 60;
-        _seconds = _minutes * 60;
-      }
-    }
-    let tick = setInterval(() => {
-      setInterval(_seconds--, 1000);
-      setInterval(_minutes--, 60 * 1000);
-      setInterval(_hour--, 60 * 60 * 1000);
-    }, 1000);
+    // const restart = () => {
+    //   if(_hour === 0 && _minutes === 0 && _seconds === 0){
+    //     _hour = props.hour;
+    //     _minutes = _hour * 60;
+    //     _seconds = _minutes * 60;
+    //   }
+    // }
+    // let tick = setInterval(() => {
+    //   setInterval(_seconds--, 1000);
+    //   setInterval(_minutes--, 60 * 1000);
+    //   setInterval(_hour--, 60 * 60 * 1000);
+    // }, 1000);
 
 
     return {
