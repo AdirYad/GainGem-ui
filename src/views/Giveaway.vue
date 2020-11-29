@@ -157,13 +157,13 @@ export default {
         _seconds = _minutes * 60;
       }
     }
-    let timer = setInterval( countdown(), 1000);
-
-     const countdown = () => {
+    let tick = setInterval(() => {
       setInterval(_seconds--, 1000);
       setInterval(_minutes--, 60 * 1000);
       setInterval(_hour--, 60 * 60 * 1000);
-     }
+    }, 1000);
+
+
     return {
       _seconds,
       _minutes,
