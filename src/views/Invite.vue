@@ -35,7 +35,7 @@
     </div>
 
     <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8">
-      <div class="affiliate-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 sm:tw-mx-0 lg:tw-mx-4">
+      <div class="affiliate-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
           Total Users
         </div>
@@ -119,7 +119,7 @@
           Once you've earned enough points, you can redeem them for many gifts!
         </div>
         <div class="tw-text-sm tw-mb-2">
-          More friends means more revenue and more generated revenue increasing your commission.
+          More friends means more revenue, and more generated revenue means more gifts.
         </div>
       </div>
     </div>

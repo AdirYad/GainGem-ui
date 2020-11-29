@@ -4,67 +4,76 @@
       Giveaway
     </div>
 
-    <div class="tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
-      <div class="tw-text-xl tw-text-primary tw-flex tw-justify-around tw-items-center">
-        <button class="tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-text-primary focus:tw-text-secondary hover:tw-text-secondary tw-border-primary focus:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
-          Enter Giveaway
-        </button>
-        <div class="tw-flex tw-rounded-lg tw-border-2 tw-border-primary tw-text-center tw-p-2">
-            {{ _hour }} : {{ _minutes }} : {{ _seconds % 60 }}
-        </div>
-        <div>
-          <div class="tw-text-2xl tw-uppercase tw-tracking-wider tw-font-bold">
-            13 points
+    <div class="tw-flex tw-justify-center tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
+      <div class="tw-w-full xl:tw-w-3/4 tw-text-xl tw-text-primary tw-flex tw-justify-between xl:tw-justify-around tw-flex-row-reverse tw-items-center tw-flex-wrap">
+        <div class="tw-w-1/2 sm:tw-w-1/3">
+          <div class="tw-text-2xl tw-font-bold">
+            <fa-icon class="tw-text-primary" icon="coins" />
+            13
           </div>
-          <div class="tw-text-sm tw-tracking-wider tw-font-thin">
+          <div class="tw-text-black tw-text-xs tw-uppercase tw-tracking-wider">
             Winning Amount
           </div>
         </div>
-        <div class="tw-text-2xl tw-uppercase tw-tracking-wider tw-font-thin tw-flex tw-items-center">
-         15 Users Entered
+        <div class="tw-w-1/2 sm:tw-w-1/3">
+          <div class="similar-integers tw-text-2xl tw-font-bold tw-rounded-full tw-text-center">
+            {{ countdown.displayMinutes }}m {{ countdown.displaySeconds }}s
+          </div>
+          <div class="tw-text-black tw-text-xs tw-uppercase tw-tracking-wider">
+            Time left
+          </div>
+        </div>
+        <div class="tw-w-full sm:tw-w-1/3 tw-mt-4 sm:tw-m-0">
+          <button v-if="true" @click="enterGiveaway" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+            Enter Giveaway
+          </button>
+          <div v-else class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+            You've entered
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="tw-inline-block tw-w-full md:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-2 tw-pt-4 tw-mt-8">
-      <div class="tw-text-left tw-text-xl tw-uppercase tw-flex tw-justify-between tw-tracking-wider tw-mx-2">
-        <div>Recent Entries</div>
-        <fa-icon :icon="['far', 'clock']" />
-      </div>
-      <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3 tw-mx-2">
-        <div class="tw-flex-1 tw-flex tw-items-center">
-          <div class="tw-w-6 tw-h-6 tw-mr-2">
-            <img class="tw-rounded-full" src="http://localhost:8000/assets/user.png">
+    <div class="tw-flex tw-justify-center tw-flex-wrap tw-mt-8">
+      <div class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 xl:tw-mr-4">
+        <div class="tw-flex tw-justify-between tw-items-center tw-flex-wrap">
+          <div class="tw-text-lg md:tw-text-xl tw-uppercase tw-tracking-wider tw-mr-2">
+            Recent Entries
           </div>
-           username
+          <div>
+            15000 Entries
+          </div>
         </div>
-        <div>
-          52s ago
+        <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
+          <div class="tw-w-6 tw-h-6 tw-mr-2">
+            <img class="tw-rounded-full" src="http://localhost:8000/storage/assets/user.png">
+          </div>
+          <div class="tw-flex-1 tw-text-left tw-truncate">
+            username
+          </div>
+          <div class="tw-w-20 tw-text-right">
+            24hrs ago
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="tw-inline-block tw-w-full md:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md xl:tw-ml-2 tw-px-2 tw-pt-4 tw-mt-8">
-      <div class="tw-text-left tw-text-xl tw-uppercase tw-flex tw-justify-between tw-tracking-wider tw-mx-2">
-        <div>Previous Winners</div>
-        <div class="tw-w-1/3 tw-flex tw-justify-end">
-          <fa-icon :icon="['far', 'clock']" />
+      <div class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 tw-mt-4 sm:tw-mt-0">
+        <div class="tw-flex tw-text-lg md:tw-text-xl tw-uppercase tw-tracking-wider">
+          Previous Winners
         </div>
-      </div>
-      <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3 tw-mx-2">
-        <div class="tw-flex-1 tw-flex tw-items-center">
-          <div class="tw-w-6 tw-h-6 tw-mr-2">
-            <img class="tw-rounded-full" src="http://localhost:8000/assets/user.png">
+        <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
+          <div class="tw-h-6 tw-w-6 tw-mr-2">
+            <img class="tw-rounded-full" src="http://localhost:8000/storage/assets/user.png">
           </div>
-          userName
-        </div>
-        <div class="tw-w-1/3 tw-flex tw-justify-around">
-          <div>
-            <fa-icon icon="coins" />
-            11
+          <div class="tw-flex-1 tw-text-left tw-truncate">
+            username
           </div>
-          <div>
-            3h ago
+          <div class="tw-flex tw-justify-end tw-items-center tw-mr-1 sm:tw-mr-2 md:tw-mr-4">
+            <fa-icon class="tw-mx-2 tw-text-primary" icon="coins" />
+            50
+          </div>
+          <div class="tw-w-20 tw-text-right">
+            24hrs ago
           </div>
         </div>
       </div>
@@ -79,13 +88,13 @@
           1
         </div>
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mt-10 tw-mb-4">
-          SHARE IT WITH FRIENDS
+          Enter The Giveaway
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Share your referral link with your friends in order to attract new users to EzRewards.
+          In order to participate in the giveaway, you must complete at least one offer in the last hour.
         </div>
         <div class="tw-text-sm tw-mb-2">
-          On each user you refer, you'll receive 10% on his earnings.
+          After completing an offer, you'll be able to enter the giveaway by clicking the "ENTER" button above.
         </div>
       </div>
 
@@ -103,7 +112,7 @@
           Receive Points
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once someone signed up on our EzRewards using your referral link and completes an offer, you'll receive your points.
+          Once you've entered the giveaway, you have a chance to win the amount of points that is written above.
         </div>
       </div>
 
@@ -124,7 +133,7 @@
           Once you've earned enough points, you can redeem them for many gifts!
         </div>
         <div class="tw-text-sm tw-mb-2">
-          More friends means more revenue and more generated revenue increasing your commission.
+          The more you participate in giveaways, the better chance to win!
         </div>
       </div>
     </div>
@@ -133,53 +142,64 @@
 
 <script>
 import { useStore } from 'vuex';
-import { ref } from 'vue';
+import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
 export default {
   name: 'Giveaway',
-  props: {
-    hour: {
-      type: Number,
-      default: 1,
-    },
-    minutes: {
-      type: Number,
-      default: 0,
-    },
-    seconds: {
-      type: Number,
-      default: 0,
-    },
-  },
-  setup(props) {
-    let _hour = ref({});
-    let _minutes = ref({});
-    let _seconds = ref({});
+  setup() {
+    const store = useStore();
 
-    // const restart = () => {
-    //   if(_hour === 0 && _minutes === 0 && _seconds === 0){
-    //     _hour = props.hour;
-    //     _minutes = _hour * 60;
-    //     _seconds = _minutes * 60;
-    //   }
-    // }
-    // let tick = setInterval(() => {
-    //   setInterval(_seconds--, 1000);
-    //   setInterval(_minutes--, 60 * 1000);
-    //   setInterval(_hour--, 60 * 60 * 1000);
-    // }, 1000);
+    const timer = ref(null);
+    const countdown = reactive({
+      displayMinutes: '00',
+      displaySeconds: '00',
+    });
 
+    const _seconds = computed(() => 1000);
+    const _minutes = computed(() => _seconds.value * 60);
+    const _hours = computed(() => _minutes.value * 60);
+
+    const showRemaining = () => {
+      timer.value = setInterval(() => {
+        const now = new Date();
+        const end = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate(), 1);
+        const distance = end.getTime() - now.getTime();
+
+        if (distance < 0) {
+          clearInterval(timer);
+          return;
+        }
+
+        const minutes = Math.floor((distance % _hours.value) / _minutes.value);
+        const seconds = Math.floor((distance % _minutes.value) / _seconds.value);
+        countdown.displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+        countdown.displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+      }, 1000);
+    };
+
+    showRemaining();
+
+    onBeforeUnmount(() => {
+      clearTimeout(timer);
+    });
+
+    const enterGiveaway = () => {
+      store.dispatch('enterGiveaway');
+    };
 
     return {
-      _seconds,
-      _minutes,
-      _hour,
-    };
+      countdown,
+      enterGiveaway,
+    }
   }
 }
 </script>
 
 <style scoped>
+.similar-integers {
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color emoji;
+}
+
 .giveaway-arrow {
   max-width: 100px;
   fill: var(--primary-color);
