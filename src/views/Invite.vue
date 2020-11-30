@@ -8,14 +8,16 @@
       <div class="tw-text-xl tw-text-primary tw-mb-6">
         Share your referral link and earn up to 10% points from your friends earnings
       </div>
-      <div class="tw-rounded-xl tw-p-4 tw-pl-0 tw-bg-primary tw-shadow-md tw-inline-block">
-        <div ref="referral" class="tw-text-secondary tw-inline-block tw-px-4">
-          {{ inviteLink }}
-        </div>
+      <div class="tw-rounded-xl tw-pt-4 tw-pr-4 tw-bg-primary tw-shadow-md tw-inline-block">
+        <div class="tw-flex tw-justify-center tw-flex-wrap">
+          <div ref="referral" class="tw-flex tw-items-center tw-text-secondary tw-inline-block tw-px-4 tw-break-all tw-mb-4">
+            {{ inviteLink }}
+          </div>
 
-        <button @click="copyInviteLink" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border hover:tw-text-primary hover:tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1">
-          Copy
-        </button>
+          <button @click="copyInviteLink" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border hover:tw-text-primary hover:tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mb-4">
+            Copy
+          </button>
+        </div>
       </div>
 
       <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-6">

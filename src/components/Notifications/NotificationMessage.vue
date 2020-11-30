@@ -61,7 +61,7 @@ export default {
 
 <style scoped>
 .notification-message {
-  margin-bottom: 15px;
+  margin-top: 15px;
   transition: opacity 300ms, transform 300ms;
 }
 

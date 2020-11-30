@@ -115,7 +115,7 @@ export default createStore({
   },
   mutations: {
     pushNotification(state, notification) {
-      state.notifications.push({
+      state.notifications.unshift({
         ...notification,
         id: (Math.random().toString(36) + Date.now().toString(36)).substr(2),
       });

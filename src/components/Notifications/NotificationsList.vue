@@ -1,6 +1,6 @@
 <template>
   <teleport to="#notifications">
-    <transition-group name="notifications" tag="div" class="notifications-list tw-fixed tw-bottom-0 tw-right-0">
+    <transition-group name="notifications" tag="div" class="notifications-list tw-fixed tw-top-0 tw-right-0">
       <NotificationMessage v-if="$store.state.notifications.length" v-for="notification in $store.state.notifications"
                            :key="notification.id"
                            :notification="notification"
@@ -43,7 +43,7 @@ export default {
 
 @media (max-width: 1023px) {
   .notifications-list {
-    bottom: var(--navigation-height) !important;
+    top: var(--navigation-height) !important;
   }
 }
 
