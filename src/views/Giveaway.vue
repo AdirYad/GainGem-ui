@@ -1,7 +1,7 @@
 <template>
   <div class="tw-text-center">
     <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-4">
-      Giveaway
+      Giveaways
     </div>
 
     <div class="tw-flex tw-justify-center tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">

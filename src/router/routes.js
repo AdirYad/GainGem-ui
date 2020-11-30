@@ -55,7 +55,7 @@ export default [
     {
         path: '/support',
         name: 'Support',
-        component: () => import('@/views/Register.vue'),
+        component: () => import('@/views/Support.vue'),
         meta: {
             authOnly: true
         }
