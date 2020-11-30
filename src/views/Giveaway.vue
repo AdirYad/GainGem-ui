@@ -27,7 +27,7 @@
           <button v-if="true" @click="enterGiveaway" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             Enter Giveaway
           </button>
-          <div v-else class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+          <div v-else class="tw-w-full sm:tw-w-auto tw-inline-block tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             You've entered
           </div>
         </div>
