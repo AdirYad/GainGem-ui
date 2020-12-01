@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import { DateTime } from 'luxon';
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
 import { useStore } from "vuex";
 import { computed, onBeforeUnmount, reactive, ref } from "vue";
 
@@ -37,18 +39,22 @@ export default {
 
     const timer = ref(null);
     const getCorrectDisplay = (value) => value < 10 ? '0' + value : value;
-    let now = DateTime.local().setZone(process.env.VUE_APP_TIMEZONE);
+
+    dayjs.extend(utc)
+    dayjs.extend(timezone)
+
+    let now = dayjs().tz(process.env.VUE_APP_TIMEZONE);
 
     const getDistance = () => {
-      now = DateTime.local().setZone(process.env.VUE_APP_TIMEZONE);
+      now = dayjs().tz(process.env.VUE_APP_TIMEZONE);
 
       return now.endOf('day') - now;
     };
 
     const countdown = reactive({
-      displayHours: getCorrectDisplay(23 - now.hour),
-      displayMinutes: getCorrectDisplay(59 - now.minute),
-      displaySeconds: getCorrectDisplay(59 - now.second),
+      displayHours: getCorrectDisplay(23 - now.get('hour')),
+      displayMinutes: getCorrectDisplay(59 - now.get('minute')),
+      displaySeconds: getCorrectDisplay(59 - now.get('second')),
     });
 
     const _seconds = computed(() => 1000);
