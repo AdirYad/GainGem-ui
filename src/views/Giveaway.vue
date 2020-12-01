@@ -141,6 +141,7 @@
 </template>
 
 <script>
+import { DateTime } from 'luxon';
 import { useStore } from 'vuex';
 import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
@@ -150,9 +151,18 @@ export default {
     const store = useStore();
 
     const timer = ref(null);
+    const getCorrectDisplay = (value) => value < 10 ? '0' + value : value;
+    let now = DateTime.local().setZone(process.env.VUE_APP_TIMEZONE);
+
+    const getDistance = () => {
+      now = DateTime.local().setZone(process.env.VUE_APP_TIMEZONE);
+
+      return now.endOf('day') - now;
+    };
+
     const countdown = reactive({
-      displayMinutes: '00',
-      displaySeconds: '00',
+      displayMinutes: getCorrectDisplay(59 - now.minute),
+      displaySeconds: getCorrectDisplay(59 - now.second),
     });
 
     const _seconds = computed(() => 1000);
@@ -161,19 +171,15 @@ export default {
 
     const showRemaining = () => {
       timer.value = setInterval(() => {
-        const now = new Date();
-        const end = new Date(now.getFullYear(), now.getMonth() + 1, now.getDate(), 1);
-        const distance = end.getTime() - now.getTime();
+        const distance = getDistance();
 
         if (distance < 0) {
           clearInterval(timer);
           return;
         }
 
-        const minutes = Math.floor((distance % _hours.value) / _minutes.value);
-        const seconds = Math.floor((distance % _minutes.value) / _seconds.value);
-        countdown.displayMinutes = minutes < 10 ? '0' + minutes : minutes;
-        countdown.displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+        countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
+        countdown.displaySeconds = getCorrectDisplay(Math.floor((distance % _minutes.value) / _seconds.value));
       }, 1000);
     };
 
@@ -196,10 +202,6 @@ export default {
 </script>
 
 <style scoped>
-.similar-integers {
-  font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color emoji;
-}
-
 .giveaway-arrow {
   max-width: 100px;
   fill: var(--primary-color);
