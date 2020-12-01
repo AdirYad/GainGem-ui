@@ -39,10 +39,10 @@
           Giveaways
         </div>
       </BottomNavigationRoute>
-      <BottomNavigationRoute to="Support">
-        <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" icon="question" />
+      <BottomNavigationRoute to="Challenges">
+        <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" icon="tasks" />
         <div class="tw-font-light">
-          Support
+          Challenges
         </div>
       </BottomNavigationRoute>
     </div>

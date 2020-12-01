@@ -12,6 +12,7 @@ import {
   faGift,
   faReply,
   faTimes,
+  faTasks,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faBuffer,
@@ -38,6 +39,7 @@ export default {
     faGift,
     faReply,
     faTimes,
+    faTasks,
 
     // Brands
     faBuffer,

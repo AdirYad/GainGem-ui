@@ -53,9 +53,9 @@ export default [
         }
     },
     {
-        path: '/support',
-        name: 'Support',
-        component: () => import('@/views/Support.vue'),
+        path: '/challenges',
+        name: 'Challenges',
+        component: () => import('@/views/Challenges.vue'),
         meta: {
             authOnly: true
         }
