@@ -1,25 +1,45 @@
 <template>
-  <div>
+  <div class="tw-text-center">
     <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-4">
       Daily Tasks
     </div>
 
     <div class="tw-text-primary tw-bg-white tw-rounded-sm tw-shadow tw-text-center tw-p-6 tw-mb-8">
-      <div class="similar-integers tw-text-3xl sm:tw-text-4xl md:tw-text-5xl tw-font-bold">
+      <div class="similar-integers tw-text-3xl sm:tw-text-4xl md:tw-text-5xl tw-font-bold tw-mb-2">
           {{ countdown.displayHours }}h {{ countdown.displayMinutes }}m {{ countdown.displaySeconds }}s
       </div>
       <div class="tw-text-black md:tw-text-lg tw-tracking-wider">
-          Complete daily tasks fot bonus points, daily challenges reset every 24 hours.
+          Complete daily tasks for extra points, these tasks reset every 24 hours.
       </div>
     </div>
-    <div v-for="(index, item) in 4" :key="index" class="tw-flex tw-justify-center tw-flex-wrap tw-mb-4">
-      <div class="giveaway-description-card tw-w-full tw-flex tw-flex-col tw-items-center tw-w-full xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mx-4">
-          <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mt-2 tw-mb-4">
-              Complete 1 offer
-          </div>
-          <button class="tw-bg-primary tw-w-full tw-rounded-full tw-text-sm tw-mb-2">
-              redeem
-          </button>
+    <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8 tw--mb-4">
+      <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options"
+           v-for="(taskOption, offers_count) in $store.state.daily_tasks.daily_tasks_options"
+           :key="offers_count"
+          class="daily-task-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4"
+      >
+        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+          Complete {{ offers_count }} offer{{ offers_count > 1 ? 's' : '' }}
+        </div>
+        <div v-if="$store.state.daily_tasks.completed_offers_count >= 0" class="tw-mb-6">
+          <template v-if="offers_count > $store.state.daily_tasks.completed_offers_count">
+            Complete {{ offers_count - $store.state.daily_tasks.completed_offers_count }} more offers.
+          </template>
+          <template v-else>
+            Already reached.
+          </template>
+        </div>
+        <button v-if="$store.state.daily_tasks.completed_daily_tasks &&
+                      ! $store.state.daily_tasks.completed_daily_tasks.some(dailyTask => parseInt(dailyTask) === parseInt(offers_count))"
+                @click="completeTask(offers_count)"
+                class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1">
+          Redeem
+          <fa-icon icon="coins" />
+          {{ taskOption }}
+        </button>
+        <div v-else class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-py-1">
+          Already redeemed!
+        </div>
       </div>
     </div>
   </div>
@@ -83,9 +103,51 @@ export default {
       clearTimeout(timer);
     });
 
+    store.dispatch('getDailyTasks');
+
+    const completeTask = (offers_count) => {
+      if (offers_count > store.state.daily_tasks.completed_offers_count) {
+        store.dispatch('addNotification', {
+          type: 'error',
+          message: `You need to complete ${offers_count - store.state.daily_tasks.completed_offers_count} more offers!`
+        });
+
+        return;
+      }
+
+      store.dispatch('storeDailyTasks', offers_count).then(() => {
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: "Task completed!"
+        });
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.errors ? err.response.data.errors.offers_count[0] : err.response.data.message,
+          });
+        }
+
+        store.dispatch('getDailyTasks');
+      });
+    };
+
     return {
       countdown,
+      completeTask,
     }
   }
 }
 </script>
+
+<style scoped>
+.daily-task-card {
+  min-height: 200px;
+}
+
+@media (min-width: 1024px) {
+  .daily-task-card {
+    max-width: 300px;
+  }
+}
+</style>

@@ -9,6 +9,9 @@ export default createStore({
     user: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))
         : null,
+    daily_tasks: localStorage.getItem("daily_tasks")
+        ? JSON.parse(localStorage.getItem("daily_tasks"))
+        : null,
     stats: localStorage.getItem("stats")
         ? JSON.parse(localStorage.getItem("stats"))
         : {
@@ -150,6 +153,16 @@ export default createStore({
       localStorage.setItem('stats', JSON.stringify(stats));
     },
 
+    setDailyTasks(state, dailyTasks) {
+      state.daily_tasks = dailyTasks;
+      localStorage.setItem('daily_tasks', JSON.stringify(dailyTasks));
+    },
+
+    updateDailyTasks(state, offers_count) {
+      state.daily_tasks.completed_daily_tasks.push(offers_count);
+      localStorage.setItem('daily_tasks', JSON.stringify(state.daily_tasks));
+    },
+
     tempEmailVerification(state) {
       state.user.email_verified_at = 1;
       localStorage.setItem('user', JSON.stringify(state.user));
@@ -236,6 +249,25 @@ export default createStore({
 
       return axiosInstance.post(`/coupons/${promoCode}/redeems`).then((response) => {
         commit('setUser', response.data);
+      });
+    },
+    getDailyTasks({ getters, commit }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/daily-tasks').then((response) => {
+          commit('setDailyTasks', response.data);
+      });
+    },
+    storeDailyTasks({ getters, commit }, offers_count) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/daily-tasks', { offers_count }).then((response) => {
+          commit('setUser', response.data);
+          commit('updateDailyTasks', offers_count);
       });
     },
   },
