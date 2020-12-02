@@ -163,6 +163,11 @@ export default createStore({
       localStorage.setItem('daily_tasks', JSON.stringify(state.daily_tasks));
     },
 
+    removeDailyTasks(state) {
+      state.daily_tasks = null;
+      localStorage.removeItem('daily_tasks');
+    },
+
     tempEmailVerification(state) {
       state.user.email_verified_at = 1;
       localStorage.setItem('user', JSON.stringify(state.user));
@@ -207,6 +212,7 @@ export default createStore({
     logout({ commit }) {
       commit('removeUser');
       commit('removeToken');
+      commit('removeDailyTasks');
     },
     getLoggedUser({ commit, getters, state }) {
       if (! getters.isLoggedIn) {

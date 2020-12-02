@@ -23,7 +23,7 @@
         </div>
         <div v-if="$store.state.daily_tasks.completed_offers_count >= 0" class="tw-mb-6">
           <template v-if="offers_count > $store.state.daily_tasks.completed_offers_count">
-            Complete {{ offers_count - $store.state.daily_tasks.completed_offers_count }} more offers.
+            Complete {{ offers_count - $store.state.daily_tasks.completed_offers_count }} more offer{{ offers_count - $store.state.daily_tasks.completed_offers_count > 1 ? 's' : '' }}.
           </template>
           <template v-else>
             Already reached.
@@ -109,7 +109,7 @@ export default {
       if (offers_count > store.state.daily_tasks.completed_offers_count) {
         store.dispatch('addNotification', {
           type: 'error',
-          message: `You need to complete ${offers_count - store.state.daily_tasks.completed_offers_count} more offers!`
+          message: `You need to complete ${offers_count - store.state.daily_tasks.completed_offers_count} more offer${offers_count - store.state.daily_tasks.completed_offers_count > 1 ? 's' : '' }!`
         });
 
         return;
