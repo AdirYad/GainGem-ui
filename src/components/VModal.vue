@@ -8,7 +8,7 @@
         <button @click="$emit('closeModal')" class="tw-absolute tw-text-sm tw-text-red-500" style="top: 12px; right: 12px">
           <fa-icon icon="times" />
         </button>
-        <div class="tw-relative tw-overflow-scroll">
+        <div class="tw-relative tw-overflow-scroll" style="max-height: 90vh">
           <slot />
         </div>
       </div>
@@ -57,14 +57,12 @@ export default {
 
   h1 {
     font-size: 22px;
-    margin-bottom: 15px;
 
-    @apply text-black font-bold;
+    @apply text-primary font-bold;
   }
 
   p {
-    color: #666;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     margin-bottom: 15px;
   }

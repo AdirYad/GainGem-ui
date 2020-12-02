@@ -79,10 +79,48 @@
 
     <VModal :visible="rewardModal.visible" @closeModal="rewardModal.visible = false">
       <h1>
-        {{ rewardModal.name }}
+        {{ rewardModal.provider === 'robux' || rewardModal.provider === 'bitcoin' ? rewardModal.name : rewardModal.name + ' Gift Cards' }}
       </h1>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores distinctio labore maxime suscipit. Accusamus deserunt impedit inventore laboriosam libero? Amet aspernatur at dolores, ea ipsam necessitatibus numquam quae repellendus similique.</p>
+      <p>
+        {{ rewardModal.modal.name }} is <strong>NOT</strong> affiliated with EzRewards.
+        <template v-if="rewardModal.modal.redeemAlert">
+          <br>
+          <div v-html="rewardModal.modal.redeemAlert" />
+        </template>
+      </p>
+
+      <template v-if="rewardModal.modal.ul">
+        <strong>
+          <template v-if="rewardModal.provider === 'robux' || rewardModal.provider === 'bitcoin'">
+            How to claim {{ rewardModal.name }}:
+          </template>
+          <template v-else>
+            How to redeem {{ rewardModal.name }} Gift Cards:
+          </template>
+        </strong>
+        <ul class="tw-list-disc tw-pl-8 tw-mb-4">
+          <li v-for="(li, index) in rewardModal.modal.ul" :key="index" v-html="li" />
+        </ul>
+      </template>
+      <template v-else-if="rewardModal.modal.text">
+        <div v-html="rewardModal.modal.text" class="tw-mb-4" />
+      </template>
+
+      <p v-if="rewardModal.provider === 'apple'">
+        <a class="tw-text-primary" href="https://support.apple.com/en-us/HT211163" target="_blank">Click Here</a> to learn more about how to redeem your Apple Gift Card code.
+      </p>
+
+      <div class="tw-text-xs md:tw-text-sm">
+        <template v-if="rewardModal.provider === 'robux'">
+          * There are no refunds once a code is claimed so please make sure you claim the
+          correct code!
+        </template>
+        <template v-else>
+          * There are no refunds once robux is claimed so please make sure you entered the
+          correct username!
+        </template>
+      </div>
     </VModal>
   </div>
 </template>
