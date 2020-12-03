@@ -21,7 +21,7 @@
             {{ reward.name }}
 
             <button v-if="expandedReward === reward" @click="openModal(reward)" class="tw-border-2 tw-border-primary tw-rounded-full tw-h-8 tw-w-8 tw-text-sm tw-text-primary">
-              <fa-icon icon="question" />
+              <fa-icon icon="exclamation" />
             </button>
           </div>
           <div v-if="expandedReward === reward" class="tw-flex tw-flex-col tw-justify-end tw-px-3 tw-pb-3" style="height: 200px; margin-top: 20px;">
