@@ -6,7 +6,7 @@
       </router-link>
     </section>
     <nav class="tw-flex-1 tw-flex tw-flex-col">
-      <router-link :to="{ name: 'Profile' }" class="tw-border-t tw-border-b border-secondary-3 tw-flex tw-items-center tw-px-10 tw-py-4">
+      <router-link :to="{ name: 'Profile', query: { tab: 'details' } }" class="tw-border-t tw-border-b border-secondary-3 tw-flex tw-items-center tw-px-10 tw-py-4">
         <div class="tw-h-10 tw-w-10">
           <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-rounded-full" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
         </div>

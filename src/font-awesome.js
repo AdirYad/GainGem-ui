@@ -1,28 +1,27 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-  faChevronLeft,
-  faChevronRight,
-  faSignInAlt,
-  faSignOutAlt,
-  faUser,
-  faMoneyCheckAlt,
-  faExclamation,
-  faMedal,
-  faCoins,
-  faGift,
-  faReply,
-  faTimes,
-  faTasks,
-    faHistory,
+    faChevronLeft,
+    faChevronRight,
+    faSignInAlt,
+    faSignOutAlt,
+    faUser,
+    faMoneyCheckAlt,
+    faExclamation,
+    faMedal,
+    faCoins,
+    faGift,
+    faReply,
+    faTimes,
+    faTasks,
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  faBuffer,
-  faFacebookF,
-  faTwitter,
-  faRedditAlien,
+    faBuffer,
+    faFacebookF,
+    faTwitter,
+    faRedditAlien,
 } from "@fortawesome/free-brands-svg-icons";
 import {
-  faHandshake,
+    faHandshake,
 } from "@fortawesome/free-regular-svg-icons";
 
 export default {
@@ -41,7 +40,6 @@ export default {
     faReply,
     faTimes,
     faTasks,
-      faHistory,
 
     // Brands
     faBuffer,
