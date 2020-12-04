@@ -191,24 +191,6 @@ export default createStore({
         }
       },
     ],
-    tabs: [
-      {
-        name: 'Account Details',
-        active: true,
-      },
-      {
-        name: 'Transctions',
-        active: false,
-      },
-      {
-        name: 'Activity',
-        active: false,
-      },
-      {
-        name: 'Refferrals',
-        active: false,
-      },
-    ],
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",

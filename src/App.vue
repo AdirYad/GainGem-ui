@@ -24,7 +24,6 @@ import EmailVerification from "@/components/EmailVerification";
 import Footer from "@/components/Footer";
 import NotificationsList from "@/components/Notifications/NotificationsList";
 
-
 export default {
   name: 'App',
   components: {

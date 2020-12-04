@@ -50,27 +50,63 @@
       </div>
 
       <div class="tw-flex tw-flex-1 tw-bg-secondary tw-shadow-md tw-mt-8 lg:tw-mt-0 tw-ml-0 lg:tw-ml-3 xl:tw-ml-6">
-        <button @click="tab" v-for="(tab, index) in $store.state.tabs" :key="index"
-             class="tw-flex tw-items-end tw-justify-center tw-truncate tw-mx-1 tw-text-xs lg:tw-text-sm tw-uppercase tw-font-light tw-h-12 tw-w-1/4"
-        >
-          <div v-if="tab.active" class="tw-flex tw-items-end tw-justify-center tw-text-sm lg:tw-text-base tw-text-primary tw-font-bold tw-border-t-2 tw-border-primary tw-h-full tw-w-full">
-            {{ tab.name }}
-          </div>
-          <div v-else>
-            {{ tab.name }}
-          </div>
-        </button>
+
+
+
+
+
+<!--        <div class="tw-flex tw-h-12 tw-w-full">-->
+<!--          <button @click="selectTab(tab)" v-for="(tab, index) in $store.state.tabs" :key="index"-->
+<!--                  class="tw-flex tw-items-end tw-justify-center tw-truncate tw-text-xs lg:tw-text-sm tw-uppercase tw-font-light tw-h-12 tw-w-1/4"-->
+<!--          >-->
+<!--            <div v-if="tab.isActive" :class="{ 'isActive': tab.isActive }"-->
+<!--                 class="tw-flex tw-items-end tw-justify-center tw-text-sm lg:tw-text-base tw-text-primary tw-font-bold tw-border-t-2 tw-border-primary tw-h-full tw-w-full">-->
+<!--              {{ tab.name }}-->
+<!--            </div>-->
+<!--            <div v-else>-->
+<!--              {{ tab.name }}-->
+<!--            </div>-->
+<!--          </button>-->
+<!--        </div>-->
+        <Tabs class="tw-h-12 tw-w-full">
+          <Tab name="Account Details" :selected="true">
+            <div>
+              11111111
+            </div>
+          </Tab>
+          <Tab name="Transactions">
+            <div>
+              22222222
+            </div>
+          </Tab>
+          <Tab name="Activity">
+            <div>
+              2323232
+            </div>
+          </Tab>
+          <Tab name="Referrals">
+            <div>
+              3332
+            </div>
+          </Tab>
+        </Tabs>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Tab from '@/components/Tab'
+import Tabs from "@/components/Tabs";
 import { useStore } from 'vuex';
 import router from "@/router";
 
 export default {
-
+  name: "Profile",
+  components: {
+    Tab,
+    Tabs,
+  },
   setup() {
     const store = useStore();
 
@@ -78,10 +114,10 @@ export default {
       store.dispatch('logout').then(() => {
         router.push({ name: 'Home' });
       });
-    }
+    };
 
     return {
-      logout
+      logout,
     }
   },
 }
