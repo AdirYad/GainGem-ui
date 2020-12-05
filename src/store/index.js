@@ -136,6 +136,15 @@ export default createStore({
         router.push({ name: 'Home' });
       });
     },
+    updateUser({ commit, getters, state }, payload) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.post(`/users/${state.user.id}`, payload).then((response) => {
+        commit('setUser', response.data);
+      });
+    },
     verifyEmail({ dispatch, commit, getters, state }, token) {
       return axiosInstance.post('/verify', {
         token: token,

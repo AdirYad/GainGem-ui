@@ -13,7 +13,7 @@ import {
     faReply,
     faTimes,
     faTasks,
-    faAngleDoubleUp,
+    faFileUpload,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -23,6 +23,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {
     faHandshake,
+    faCopy,
 } from "@fortawesome/free-regular-svg-icons";
 
 export default {
@@ -41,7 +42,7 @@ export default {
     faReply,
     faTimes,
     faTasks,
-    faAngleDoubleUp,
+    faFileUpload,
 
     // Brands
     faBuffer,
@@ -51,5 +52,6 @@ export default {
 
     // Regular
     faHandshake,
+    faCopy,
   ),
 };

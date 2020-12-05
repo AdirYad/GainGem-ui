@@ -231,14 +231,22 @@ img {
   -ms-user-select: none;
 }
 
-.input-invalid {
+.input-invalid:not(:disabled) {
   box-shadow: 0 0 0 3px #f56565 !important;
   border-color: transparent;
 }
 
-.input:active, .input:focus, .input:hover, .select:active, .select:hover {
+.input:active:not(:disabled), .input:focus:not(:disabled), .input:hover:not(:disabled), .select:active:not(:disabled), .select:hover:not(:disabled) {
   box-shadow: 0 0 0 3px var(--primary-color);
   border-color: transparent;
+}
+
+.input:disabled {
+  @apply cursor-not-allowed text-gray-400;
+}
+
+.input:disabled::placeholder {
+  @apply text-gray-400;
 }
 
 .authentication-form {

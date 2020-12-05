@@ -15,6 +15,7 @@
           </div>
 
           <button @click="copyInviteLink" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border hover:tw-text-primary hover:tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mb-4">
+            <fa-icon class="tw-h-4 fa-w-20" :icon="['far', 'copy']" />
             Copy
           </button>
         </div>
