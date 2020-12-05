@@ -3,11 +3,11 @@
     <header class="tw-h-12 tw-w-full">
       <ul class="tw-flex tw-h-full tw-w-full tw-overflow-scroll tw-relative">
         <li v-for="(tab, index) in tabs" :key="index"
-            class="tw-flex tw-items-center tw-justify-center tw-text-xs lg:tw-text-sm tw-uppercase tw-font-light md:tw-w-1/4 tw-cursor-pointer tw-relative tw-flex-none" :class="{ 'tw-text-primary tw-font-bold tw-border-t-2 tw-border-primary': tab.isActive }"
+            class="tw-flex tw-items-end tw-justify-center tw-text-xs lg:tw-text-sm tw-uppercase tw-font-light md:tw-w-1/4 tw-cursor-pointer tw-relative tw-flex-none" :class="{ 'tw-flex tw-items-center tw-text-primary tw-font-bold tw-border-t-2 tw-border-primary': tab.isActive }"
             @click="selectTab(tab)"
         >
-          <div style="padding: 15px">
-            {{ tab.name }}
+          <div class="tw-px-6">
+        {{ tab.name }}
           </div>
         </li>
       </ul>

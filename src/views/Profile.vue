@@ -42,13 +42,78 @@
       <div class="tw-flex tw-flex-1 tw-bg-white tw-shadow-md tw-mt-8 lg:tw-mt-0 lg:tw-ml-3 xl:tw-ml-6">
         <Tabs style="min-height: 200px" class="tw-min-h-12 tw-w-full">
           <Tab name="Account Details" query="details">
-            <div>
-              11111111
+            <div class="tw-flex tw-flex-col tw-p-4">
+              <div class="tw-flex">
+                <img v-if="$store.state.user && $store.state.user.profile_image"
+                     class="tw-mr-10 tw-rounded-full tw-w-12 tw-h-12"
+                     :src="$store.state.user.profile_image" :alt="$store.state.user.username">
+                <button @change="previewImage" class="tw-flex tw-justify-center tw-items-center tw-text-sm md:tw-text-lg tw-text-primary tw-border-2 tw-border-primary tw-tracking-wider tw-rounded-md tw-p-2">
+                  <fa-icon class="tw-h-6 fa-w-40" icon="angle-double-up" />
+                  <div class="tw-hidden md:tw-block">
+                    Upload an image profile
+                  </div>
+                </button>
+              </div>
+              <div class="tw-flex tw-mt-5">
+                <div class="tw-flex tw-items-center tw-mr-8">
+                  <label class="tw-text-primary tw-block tw-font-bold tw-mr-2" for="username">
+                    Username
+                  </label>
+                  <input id="username" type="text" placeholder="username"
+                   class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-py-2 tw-px-3 tw-leading-tight focus:tw-outline-none"
+                  >
+                </div>
+                <div class="tw-flex tw-items-center">
+                  <label class="tw-text-primary tw-font-bold tw-mr-2" for="email">
+                    Email
+                  </label>
+                  <input id="email" type="text" placeholder="Email"
+                         class="tw-cursor-not-allowed tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight"
+                  >
+                </div>
+              </div>
+              <div class="tw-flex tw-mt-8">
+                <div class="tw-flex tw-items-center tw-mr-8">
+                  <label class="tw-text-primary tw-font-bold tw-mr-2" for="password">
+                    Password
+                  </label>
+                  <input id="password" type="password" placeholder="************"
+                         class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-py-2 tw-px-3 tw-leading-tight focus:tw-outline-none"
+                  >
+                </div>
+                <div class="tw-flex tw-items-center">
+                  <label  class="tw-text-primary tw-font-bold tw-mr-2" for="password">
+                    Confirm Password
+                  </label>
+                  <input id="confirm" type="password" placeholder="************"
+                         class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-py-2 tw-px-3 tw-leading-tight focus:tw-outline-none"
+                  >
+                </div>
+              </div>
+              <button class="tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-w-40 tw-mt-16" type="submit">
+                save
+              </button>
             </div>
           </Tab>
           <Tab name="Transactions" query="transactions">
-            <div>
-              22222222
+            <div class="tw-p-2">
+              <table class="tw-w-full">
+                <tr>
+                  <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">id</td>
+                  <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">date</td>
+                  <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">reward</td>
+                  <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">amount</td>
+                  <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">status</td>
+                </tr>
+                <tr>
+                  <td class="tw-uppercase tw-racking-wider tw-text-sm tw-text-gray-500 tw-w-1/5">idddddddddd</td>
+                  <td>date</td>
+                  <td>reward</td>
+                  <td>amount</td>
+                  <td>status</td>
+                </tr>
+              </table>
+
             </div>
           </Tab>
           <Tab name="Activity" query="activity">
@@ -98,5 +163,16 @@ export default {
 <style scoped>
 .tab {
   padding: 10px 20px;
+}
+td{
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+
+
+  .active{
+    @apply text-primary font-medium w-1/5;
+  }
 }
 </style>

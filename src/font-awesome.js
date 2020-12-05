@@ -13,6 +13,7 @@ import {
     faReply,
     faTimes,
     faTasks,
+    faAngleDoubleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -40,6 +41,7 @@ export default {
     faReply,
     faTimes,
     faTasks,
+    faAngleDoubleUp,
 
     // Brands
     faBuffer,
