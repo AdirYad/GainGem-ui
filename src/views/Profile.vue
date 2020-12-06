@@ -90,20 +90,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.tab {
-  padding: 10px 20px;
-}
-td{
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-
-
-  .active{
-    @apply text-primary font-medium w-1/5;
-  }
-}
-</style>

@@ -7,7 +7,7 @@
             @click="selectTab(tab)"
         >
           <div class="tw-px-6">
-        {{ tab.name }}
+            {{ tab.name }}
           </div>
         </li>
       </ul>
@@ -40,11 +40,9 @@ export default {
       });
     };
 
-    if (route.query.tab) {
-      setTimeout(() => {
-        selectTab({ name: route.query.tab });
-      }, 0);
-    }
+    setTimeout(() => {
+      selectTab({ name: route.query.tab ? route.query.tab : tabs.value[0].name });
+    }, 0);
 
     return {
       tabs,
