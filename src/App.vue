@@ -4,6 +4,7 @@
 
     <div :class="{ 'page-container' : $store.getters.isLoggedIn}">
       <div :class="{ 'container' : $store.getters.isLoggedIn }">
+        <Announcement v-if="$store.getters.isLoggedIn" />
         <LiveActivity v-if="$store.getters.isLoggedIn" />
         <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
 
@@ -20,6 +21,7 @@
 <script>
 import Navigation from "@/components/Navigation";
 import LiveActivity from "@/components/LiveActivity";
+import Announcement from "@/components/AnnouncementBanner";
 import EmailVerification from "@/components/EmailVerification";
 import Footer from "@/components/Footer";
 import NotificationsList from "@/components/Notifications/NotificationsList";
@@ -28,6 +30,7 @@ export default {
   name: 'App',
   components: {
     Navigation,
+    Announcement,
     LiveActivity,
     EmailVerification,
     Footer,

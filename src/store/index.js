@@ -193,6 +193,13 @@ export default createStore({
           commit('updateDailyTasks', offers_count);
       });
     },
+    getAnnouncementBanner({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/announcement-banner');
+    },
   },
   modules: {
   },
