@@ -1,6 +1,6 @@
 <template>
   <article>
-    <header class="tw-h-12 tw-w-full">
+    <header id="tabs" class="tw-h-12 tw-w-full">
       <ul class="tw-flex tw-h-full tw-w-full tw-overflow-scroll tw-relative">
         <li v-for="(tab, index) in tabs" :key="index"
             class="tw-flex tw-items-center tw-justify-center tw-border-t-2 tw-border-transparent tw-text-xs lg:tw-text-sm tw-uppercase tw-font-light tw-cursor-pointer tw-relative tw-flex-none tw-font-medium" :class="{ 'tw-flex tw-items-center tw-text-primary tw-border-t-2 tw-border-primary': tab.isActive }"

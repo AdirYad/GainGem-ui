@@ -200,6 +200,27 @@ export default createStore({
 
       return axiosInstance.get('/announcement-banner');
     },
+    getTransactions({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/transactions`);
+    },
+    getActivities({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/activities`);
+    },
+    getReferrals({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/referrals`);
+    },
   },
   modules: {
   },
