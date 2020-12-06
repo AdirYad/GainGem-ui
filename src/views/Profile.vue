@@ -41,34 +41,15 @@
             <Details />
           </Tab>
           <Tab name="Transactions" query="transactions">
-            <table class="tw-w-full">
-              <tr>
-                <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">id</td>
-                <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">date</td>
-                <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">reward</td>
-                <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">amount</td>
-                <td class="tw-uppercase tw-tracking-wider tw-text-lg tw-text-primary tw-font-medium tw-w-1/5">status</td>
-              </tr>
-              <tr>
-                <td class="tw-uppercase tw-racking-wider tw-text-sm tw-text-gray-500 tw-w-1/5">id</td>
-                <td>date</td>
-                <td>reward</td>
-                <td>amount</td>
-                <td>status</td>
-              </tr>
-            </table>
+            <Transactions />
           </Tab>
           <Tab name="Activity" query="activity">
-            <div>
-              2323232
-            </div>
+            <Activity />
           </Tab>
           <Tab name="Referrals" query="referrals">
-            <div>
-              3332
-            </div>
+            <Referrals />
           </Tab>
-        </Tabs>
+      </Tabs>
       </div>
     </div>
   </div>
@@ -77,7 +58,10 @@
 <script>
 import Tab from '@/components/Tab'
 import Tabs from "@/components/Tabs";
-import Details from "@/components/Profile/Details";
+import Details from '@/components/Profile/Details';
+import Transactions from '@/components/Profile/Transactions';
+import Activity from '@/components/Profile/Activity';
+import Referrals from '@/components/Profile/Referrals';
 import { useStore } from 'vuex';
 import router from "@/router";
 
@@ -87,6 +71,9 @@ export default {
     Tab,
     Tabs,
     Details,
+    Transactions,
+    Activity,
+    Referrals,
   },
   setup() {
     const store = useStore();
