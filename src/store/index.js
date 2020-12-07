@@ -221,6 +221,13 @@ export default createStore({
 
       return axiosInstance.get(`/users/${state.user.id}/referrals`);
     },
+    getReferralsStats({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/referrals/stats`);
+    },
   },
   modules: {
   },

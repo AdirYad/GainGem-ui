@@ -47,8 +47,8 @@
         </div>
         <div class="tw-flex tw-justify-center tw-items-center">
           <fa-icon class="tw-h-8 fa-w-40 tw-text-primary" icon="user" />
-          <span class="tw-text-2xl tw-ml-2">
-            0
+          <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ stats.total_referrals }}
           </span>
         </div>
       </div>
@@ -61,8 +61,8 @@
         </div>
         <div class="tw-flex tw-justify-center tw-items-center">
           <fa-icon class="tw-h-8 fa-w-40 tw-text-primary" icon="coins" />
-          <span class="tw-text-2xl tw-ml-2">
-            0
+          <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ stats.total_revenue }}
           </span>
         </div>
       </div>
@@ -131,13 +131,17 @@
 
 <script>
 import { useStore } from 'vuex';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 
 export default {
   name: 'Invite',
   setup() {
     const store = useStore();
 
+    const stats = reactive({
+      total_referrals: 0,
+      total_revenue: 0,
+    });
     const referral = ref(null);
     const inviteLink = ref(`${window.location.origin}/?ref_id=${store.state.user.referral_token}`);
 
@@ -174,7 +178,13 @@ export default {
       });
     }
 
+    store.dispatch('getReferralsStats').then((response) => {
+      stats.total_referrals = response.data.total_referrals;
+      stats.total_revenue = response.data.total_revenue;
+    });
+
     return {
+      stats,
       referral,
       inviteLink,
       copyInviteLink,
