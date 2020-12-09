@@ -183,6 +183,22 @@ export default createStore({
           commit('setDailyTasks', response.data);
       });
     },
+    getGiveaway({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/giveaway');
+    },
+    enterGiveaway({ getters, commit }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/giveaway').then((response) => {
+        commit('setUser', response.data);
+      });
+    },
     storeDailyTasks({ getters, commit }, offers_count) {
       if (! getters.isLoggedIn) {
         return;

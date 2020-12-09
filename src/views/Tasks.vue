@@ -86,14 +86,13 @@ export default {
       timer.value = setInterval(() => {
         const distance = getDistance();
 
-        if (distance < 0) {
-          clearInterval(timer);
-          return;
-        }
-
         countdown.displayHours = getCorrectDisplay(Math.floor((distance % _days.value) / _hours.value));
         countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
         countdown.displaySeconds = getCorrectDisplay((Math.floor((distance % _minutes.value) / _seconds.value)));
+
+        if (distance <= 1000) {
+          store.dispatch('getDailyTasks');
+        }
       }, 1000);
     };
 

@@ -9,7 +9,7 @@
         <div class="tw-w-1/2 sm:tw-w-1/3">
           <div class="tw-text-2xl tw-font-bold">
             <fa-icon class="tw-text-primary" icon="coins" />
-            13
+            {{ giveaway.current_giveaway ? giveaway.current_giveaway.points : 0 }}
           </div>
           <div class="tw-text-black tw-text-xs tw-uppercase tw-tracking-wider">
             Winning Amount
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="tw-w-full sm:tw-w-1/3 tw-mt-4 sm:tw-m-0">
-          <button v-if="true" @click="enterGiveaway" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+          <button v-if="$store.state.user && ! $store.state.user.registered_giveaway_at" @click="enterGiveaway" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             Enter Giveaway
           </button>
           <div v-else class="tw-w-full sm:tw-w-auto tw-inline-block tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
@@ -34,46 +34,46 @@
       </div>
     </div>
 
-    <div class="tw-flex tw-justify-center tw-flex-wrap tw-mt-8">
+    <div v-if="giveaway.recent_giveaway_entries" class="tw-flex tw-justify-center tw-flex-wrap tw-mt-8">
       <div class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 xl:tw-mr-4">
         <div class="tw-flex tw-justify-between tw-items-center tw-flex-wrap">
           <div class="tw-text-lg md:tw-text-xl tw-uppercase tw-tracking-wider tw-mr-2">
             Recent Entries
           </div>
           <div>
-            15000 Entries
+            {{ giveaway.recent_giveaway_entries ? giveaway.recent_giveaway_entries.length : 0 }} Entries
           </div>
         </div>
-        <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
-          <div class="tw-w-6 tw-h-6 tw-mr-2">
-            <img class="tw-rounded-full" src="http://localhost:8000/storage/assets/user.png">
+        <div v-for="(entry, index) in giveaway.recent_giveaway_entries" :key="index" :class="{ 'tw-border-b' : index + 1 !== giveaway.recent_giveaway_entries.length }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
+          <div class="tw-mr-2">
+            <img class="tw-rounded-full tw-h-6 tw-w-6" :src="entry.profile_image_url">
           </div>
           <div class="tw-flex-1 tw-text-left tw-truncate">
-            username
+            {{ entry.username }}
           </div>
-          <div class="tw-w-20 tw-text-right">
-            24hrs ago
+          <div class="tw-flex tw-justify-end tw-items-center tw-w-24 tw-text-right tw-text-xs">
+            {{ entry.formatted_registered_giveaway_at }}
           </div>
         </div>
       </div>
 
-      <div class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 tw-mt-4 sm:tw-mt-0">
+      <div v-if="giveaway.recent_giveaway_winners" class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 tw-mt-4 sm:tw-mt-0">
         <div class="tw-flex tw-text-lg md:tw-text-xl tw-uppercase tw-tracking-wider">
           Previous Winners
         </div>
-        <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
-          <div class="tw-h-6 tw-w-6 tw-mr-2">
-            <img class="tw-rounded-full" src="http://localhost:8000/storage/assets/user.png">
+        <div v-for="(winner, index) in giveaway.recent_giveaway_winners" :key="index" :class="{ 'tw-border-b' : index + 1 !== giveaway.recent_giveaway_winners.length }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
+          <div class="tw-mr-2">
+            <img class="tw-rounded-full tw-h-6 tw-w-6" :src="winner.user.profile_image_url">
           </div>
           <div class="tw-flex-1 tw-text-left tw-truncate">
-            username
+            {{ winner.user.username }}
           </div>
           <div class="tw-flex tw-justify-end tw-items-center tw-mr-1 sm:tw-mr-2 md:tw-mr-4">
             <fa-icon class="tw-mx-2 tw-text-primary" icon="coins" />
-            50
+            {{ winner.points }}
           </div>
-          <div class="tw-w-20 tw-text-right">
-            24hrs ago
+          <div class="tw-flex tw-justify-end tw-items-center tw-w-20 sm:tw-w-24 tw-text-right tw-text-xs">
+            {{ winner.won_at }}
           </div>
         </div>
       </div>
@@ -152,6 +152,7 @@ export default {
   setup() {
     const store = useStore();
 
+    const giveaway = ref({});
     const timer = ref(null);
     const getCorrectDisplay = (value) => value < 10 ? '0' + value : value;
 
@@ -179,14 +180,14 @@ export default {
       timer.value = setInterval(() => {
         const distance = getDistance();
 
-        if (distance < 0) {
+        countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
+        countdown.displaySeconds = getCorrectDisplay(Math.floor((distance % _minutes.value) / _seconds.value));
+
+        if (distance <= 1000) {
           clearInterval(timer);
           return;
         }
-
-        countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
-        countdown.displaySeconds = getCorrectDisplay(Math.floor((distance % _minutes.value) / _seconds.value));
-      }, 1000);
+      }, 1000)
     };
 
     showRemaining();
@@ -195,11 +196,28 @@ export default {
       clearTimeout(timer);
     });
 
+    store.dispatch('getGiveaway').then((response) => {
+      giveaway.value = response.data;
+    });
+
     const enterGiveaway = () => {
-      store.dispatch('enterGiveaway');
+      store.dispatch('enterGiveaway').then(() => {
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: "You've entered the giveaway!",
+        });
+      }).catch((err) => {
+        if (err.response.status === 422 && err.response.data.message) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          });
+        }
+      });
     };
 
     return {
+      giveaway,
       countdown,
       enterGiveaway,
     }
