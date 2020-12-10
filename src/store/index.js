@@ -1,6 +1,7 @@
 import { Offerwalls } from "@/_helpers/offerwalls";
 import { createStore } from 'vuex'
 import { axiosInstance } from '@/_helpers/axios';
+import { Roles } from '@/_helpers/roles';
 import router from "@/router";
 
 export default createStore({
@@ -23,6 +24,8 @@ export default createStore({
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",
+    isRoleSupplier: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Supplier,
+    isRoleAdmin: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Admin,
   },
   mutations: {
     pushNotification(state, notification) {

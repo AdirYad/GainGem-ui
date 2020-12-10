@@ -10,9 +10,14 @@
           {{ $store.state.user.points }}
         </span>
       </div>
-      <router-link :to="{ name: 'Profile', query: { tab: 'details' } }">
-        <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
-      </router-link>
+      <div class="tw-flex tw-items-center">
+        <a v-if="$store.getters.isRoleAdmin" :href="adminUrl" class="tw-flex tw-justify-center tw-items-center tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10 tw-mr-2">
+          <fa-icon class="tw-h-5 fa-w-40" icon="users-cog" />
+        </a>
+        <router-link :to="{ name: 'Profile', query: { tab: 'details' } }" class="tw-rounded-full">
+          <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
+        </router-link>
+      </div>
     </div>
     <div class="navigation-bottom navigation tw-z-10 tw-fixed tw-right-0 tw-left-0 tw-bottom-0 tw-bg-primary tw-flex tw-justify-around sm:tw-justify-center tw-items-center tw-px-2 sm:tw-px-6 sm:tw-px-12">
       <BottomNavigationRoute to="Rewards">
@@ -51,11 +56,19 @@
 
 <script>
 import BottomNavigationRoute from './BottomNavigationRoute';
+import { ref } from 'vue';
 
 export default {
   name: 'MobileNavigation',
   components: {
     BottomNavigationRoute,
+  },
+  setup() {
+    const adminUrl = ref(process.env.VUE_APP_ADMIN_URL);
+
+    return {
+      adminUrl,
+    }
   }
 }
 </script>

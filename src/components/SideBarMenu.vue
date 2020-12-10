@@ -1,5 +1,5 @@
 <template>
-  <aside class="sidebar-menu tw-sticky tw-shadow-lg tw-top-0 tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-bg-primary">
+  <aside class="sidebar-menu tw-sticky tw-shadow-lg tw-top-0 tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-bg-primary tw-overflow-scroll">
     <section>
       <router-link :to="{ name: 'Home' }" class="logo-link tw-flex tw-justify-center tw-items-center">
         <div class="logo" />
@@ -61,6 +61,14 @@
             </div>
           </router-link>
         </li>
+        <li>
+          <a v-if="$store.getters.isRoleAdmin" :href="adminUrl" class="router tw-flex tw-items-center tw-px-10 tw-py-4 tw-text-secondary">
+            <fa-icon class="tw-h-6 fa-w-40" icon="users-cog" />
+            <div class="tw-text-sm tw-uppercase tw-tracking-widest tw-font-light tw-ml-6">
+              Admin
+            </div>
+          </a>
+        </li>
       </ul>
     </nav>
     <section>
@@ -76,12 +84,15 @@
 
 <script>
 import { useStore } from 'vuex';
-import router from "@/router";
+import router from '@/router';
+import { ref } from 'vue';
 
 export default {
   name: 'SidebarMenu',
   setup() {
     const store = useStore();
+
+    const adminUrl = ref(process.env.VUE_APP_ADMIN_URL);
 
     const logout = () => {
       store.dispatch('logout').then(() => {
@@ -90,6 +101,7 @@ export default {
     }
 
     return {
+      adminUrl,
       logout,
     }
   },

@@ -14,6 +14,7 @@ import {
     faTimes,
     faTasks,
     faFileUpload,
+    faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -43,6 +44,7 @@ export default {
     faTimes,
     faTasks,
     faFileUpload,
+    faUsersCog,
 
     // Brands
     faBuffer,
