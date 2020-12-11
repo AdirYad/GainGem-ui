@@ -58,7 +58,6 @@ export default {
     const store = useStore();
 
     const timer = ref(null);
-    const getCorrectDisplay = (value) => value < 10 ? '0' + value : value;
 
     dayjs.extend(utc)
     dayjs.extend(timezone)
@@ -72,9 +71,9 @@ export default {
     };
 
     const countdown = reactive({
-      displayHours: getCorrectDisplay(23 - now.get('hour')),
-      displayMinutes: getCorrectDisplay(59 - now.get('minute')),
-      displaySeconds: getCorrectDisplay(59 - now.get('second')),
+      displayHours: 23 - now.get('hour'),
+      displayMinutes: 59 - now.get('minute'),
+      displaySeconds: 59 - now.get('second'),
     });
 
     const _seconds = computed(() => 1000);
@@ -86,9 +85,9 @@ export default {
       timer.value = setInterval(() => {
         const distance = getDistance();
 
-        countdown.displayHours = getCorrectDisplay(Math.floor((distance % _days.value) / _hours.value));
-        countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
-        countdown.displaySeconds = getCorrectDisplay((Math.floor((distance % _minutes.value) / _seconds.value)));
+        countdown.displayHours = Math.floor((distance % _days.value) / _hours.value);
+        countdown.displayMinutes = Math.floor((distance % _hours.value) / _minutes.value);
+        countdown.displaySeconds = Math.floor((distance % _minutes.value) / _seconds.value);
 
         if (distance <= 1000) {
           store.dispatch('getDailyTasks');
