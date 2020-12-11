@@ -1,3 +1,5 @@
+import { Roles } from "@/_helpers/roles";
+
 export default [
     {
         path: '/',
@@ -9,7 +11,7 @@ export default [
         name: 'Login',
         component: () => import('@/views/Login.vue'),
         meta: {
-            guestOnly: true,
+            authorize: [],
         },
     },
     {
@@ -17,7 +19,7 @@ export default [
         name: 'Register',
         component: () => import('@/views/Register.vue'),
         meta: {
-            guestOnly: true,
+            authorize: [],
         },
     },
     {
@@ -25,7 +27,11 @@ export default [
         name: 'Profile',
         component: () => import('@/views/Profile.vue'),
         meta: {
-            authOnly: true
+            authorize: [
+                Roles.Admin,
+                Roles.Supplier,
+                Roles.User,
+            ],
         },
     },
     {
@@ -33,7 +39,11 @@ export default [
         name: 'Rewards',
         component: () => import('@/views/Rewards.vue'),
         meta: {
-            authOnly: true
+            authorize: [
+                Roles.Admin,
+                Roles.Supplier,
+                Roles.User,
+            ],
         },
     },
     {
@@ -41,7 +51,11 @@ export default [
         name: 'Invite',
         component: () => import('@/views/Invite.vue'),
         meta: {
-            authOnly: true
+            authorize: [
+                Roles.Admin,
+                Roles.Supplier,
+                Roles.User,
+            ],
         }
     },
     {
@@ -49,7 +63,11 @@ export default [
         name: 'Giveaways',
         component: () => import('@/views/Giveaway.vue'),
         meta: {
-            authOnly: true
+            authorize: [
+                Roles.Admin,
+                Roles.Supplier,
+                Roles.User,
+            ],
         }
     },
     {
@@ -57,7 +75,11 @@ export default [
         name: 'Tasks',
         component: () => import('@/views/Tasks.vue'),
         meta: {
-            authOnly: true
+            authorize: [
+                Roles.Admin,
+                Roles.Supplier,
+                Roles.User,
+            ],
         }
     },
     {
@@ -65,7 +87,21 @@ export default [
         name: 'Offerwall',
         component: () => import('@/views/Offerwall.vue'),
         meta: {
-            authOnly: true
+            authorize: [
+                Roles.Admin,
+                Roles.Supplier,
+                Roles.User,
+            ],
+        }
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: () => import('@/views/Admin.vue'),
+        meta: {
+            authorize: [
+                Roles.Admin,
+            ],
         }
     },
     {

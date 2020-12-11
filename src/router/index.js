@@ -12,18 +12,21 @@ router.beforeEach((to, from, next) => {
     window.scrollTo(0, 0);
   }
 
-  if (
-      to.matched.some(record => record.meta.guestOnly) &&
-      store.getters.isLoggedIn
-  ) {
-    return next({ name: "Home" });
-  }
+  const { authorize } = to.meta;
+  const authenticatedUser = store.state.user;
 
-  if (
-      to.matched.some(record => record.meta.authOnly) &&
-      ! store.getters.isLoggedIn
-  ) {
-    return next({ name: "Home" });
+  if (authorize) {
+    if (authorize.length && authenticatedUser === null) {
+      return next({ name: 'Home' });
+    }
+
+    if (authorize.length && authorize.includes(authenticatedUser.role)) {
+      return next();
+    }
+
+    if (store.getters.isLoggedIn) {
+      return next({ name: 'Home' });
+    }
   }
 
   next();
