@@ -51,7 +51,7 @@
           <div class="tw-flex-1 tw-text-left tw-truncate">
             {{ entry.username }}
           </div>
-          <div class="tw-flex tw-justify-end tw-items-center tw-w-24 tw-text-right tw-text-xs">
+          <div class="similar-integers tw-flex tw-justify-end tw-items-center tw-w-12 sm:tw-w-16 tw-text-right tw-text-xs sm:tw-text-base">
             {{ entry.formatted_registered_giveaway_at }}
           </div>
         </div>
@@ -68,11 +68,11 @@
           <div class="tw-flex-1 tw-text-left tw-truncate">
             {{ winner.user.username }}
           </div>
-          <div class="tw-flex tw-justify-end tw-items-center tw-mr-1 sm:tw-mr-2 md:tw-mr-4">
+          <div class="tw-flex tw-justify-end tw-items-center tw-mr-1 tw-mr-2 tw-text-xs sm:tw-text-base">
             <fa-icon class="tw-mx-2 tw-text-primary" icon="coins" />
             {{ winner.points }}
           </div>
-          <div class="tw-flex tw-justify-end tw-items-center tw-w-20 sm:tw-w-24 tw-text-right tw-text-xs">
+          <div class="similar-integers tw-flex tw-justify-end tw-items-center tw-w-12 sm:tw-w-16 tw-text-right tw-text-xs sm:tw-text-base">
             {{ winner.won_at }}
           </div>
         </div>
@@ -150,7 +150,7 @@ import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
 export default {
   name: 'Giveaway',
-  setup() {
+  setup: function () {
     const store = useStore();
 
     const pusher = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
@@ -166,36 +166,76 @@ export default {
 
     const giveaway = ref({});
     const timer = ref(null);
-    const getCorrectDisplay = (value) => value < 10 ? '0' + value : value;
 
     dayjs.extend(utc);
     dayjs.extend(timezone);
 
     let now = dayjs().tz(process.env.VUE_APP_TIMEZONE);
 
-    const getDistance = () => {
+    const getDistance = (date = null) => {
       now = dayjs().tz(process.env.VUE_APP_TIMEZONE);
 
-      return now.endOf('day') - now;
+      if (!date) {
+        return now.endOf('day') - now;
+      }
+
+      return now - dayjs(date);
     };
 
     const countdown = reactive({
-      displayMinutes: getCorrectDisplay(59 - now.get('minute')),
-      displaySeconds: getCorrectDisplay(59 - now.get('second')),
+      displayMinutes:59 - now.get('minute'),
+      displaySeconds:59 - now.get('second'),
     });
 
     const _seconds = computed(() => 1000);
     const _minutes = computed(() => _seconds.value * 60);
     const _hours = computed(() => _minutes.value * 60);
+    const _days = computed(() => _hours.value * 24);
 
     const showRemaining = () => {
       timer.value = setInterval(() => {
         const distance = getDistance();
 
-        countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
-        countdown.displaySeconds = getCorrectDisplay(Math.floor((distance % _minutes.value) / _seconds.value));
-      }, 1000)
+        countdown.displayMinutes = Math.floor((distance % _hours.value) / _minutes.value);
+        countdown.displaySeconds = Math.floor((distance % _minutes.value) / _seconds.value);
+
+        formatGiveawayTimes();
+      }, 1000);
     };
+
+    const getCorrectTimeDisplay = (distance) => {
+      const hours = Math.floor((distance % _days.value) / _hours.value);
+      const minutes = Math.floor((distance % _hours.value) / _minutes.value);
+      const seconds = Math.floor((distance % _minutes.value) / _seconds.value);
+
+      let time = seconds + 's';
+
+      if (hours) {
+        time = hours + 'h';
+      } else if (minutes) {
+        time = minutes + 'm'
+      }
+
+      return time + ' ago';
+    }
+
+    const formatGiveawayTimes = () => {
+      if (giveaway.value.recent_giveaway_entries) {
+        const max = giveaway.value.recent_giveaway_entries.length <= 10 ? giveaway.value.recent_giveaway_entries.length : 10;
+
+        for (let i = 0; i < max; i++) {
+          giveaway.value.recent_giveaway_entries[i].formatted_registered_giveaway_at = getCorrectTimeDisplay(getDistance(giveaway.value.recent_giveaway_entries[i].registered_giveaway_at));
+        }
+      }
+
+      if (giveaway.value.recent_giveaway_winners) {
+        const max = giveaway.value.recent_giveaway_winners.length <= 10 ? giveaway.value.recent_giveaway_winners.length : 10;
+
+        for (let i = 0; i < max; i++) {
+          giveaway.value.recent_giveaway_winners[i].won_at = getCorrectTimeDisplay(getDistance(giveaway.value.recent_giveaway_winners[i].updated_at));
+        }
+      }
+    }
 
     showRemaining();
 
@@ -209,12 +249,15 @@ export default {
     store.dispatch('getGiveaway').then((response) => {
       giveaway.value = response.data;
 
+      formatGiveawayTimes();
+
       pusher.subscribe('giveaways')
-          .bind('giveaway.registration', ({ recent_giveaway_entries }) => {
-            giveaway.value.recent_giveaway_entries.splice(0, recent_giveaway_entries.length - 1);
-            giveaway.value.recent_giveaway_entries = [...recent_giveaway_entries, ...giveaway.value.recent_giveaway_entries];
+          .bind('giveaway.registration', ({user}) => {
+            giveaway.value.recent_giveaway_entries.unshift(user);
+
+            formatGiveawayTimes();
           })
-          .bind('giveaway.created', ({ current_giveaway, recent_giveaway_winners }) => {
+          .bind('giveaway.created', ({current_giveaway, recent_giveaway_winners}) => {
             store.dispatch('getLoggedUser').then(() => {
               giveaway.value.recent_giveaway_entries.length = 0;
               giveaway.value.current_giveaway = current_giveaway;
