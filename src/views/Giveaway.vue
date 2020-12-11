@@ -44,7 +44,7 @@
             {{ giveaway.recent_giveaway_entries ? giveaway.recent_giveaway_entries.length : 0 }} Entries
           </div>
         </div>
-        <div v-for="(entry, index) in giveaway.recent_giveaway_entries" :key="index" :class="{ 'tw-border-b' : index + 1 !== giveaway.recent_giveaway_entries.length }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
+        <div v-for="(entry, index) in giveaway.recent_giveaway_entries.slice(0, 10)" :key="index" :class="{ 'tw-border-b' : giveaway.recent_giveaway_entries.length <= 10 && index + 1 !== giveaway.recent_giveaway_entries.length || giveaway.recent_giveaway_entries.length >= 10 && index + 1 !== 10 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
           <div class="tw-mr-2">
             <img class="tw-rounded-full tw-h-6 tw-w-6" :src="entry.profile_image_url">
           </div>
@@ -144,6 +144,7 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import Pusher from 'pusher-js/with-encryption';
 import { useStore } from 'vuex';
 import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
@@ -152,12 +153,23 @@ export default {
   setup() {
     const store = useStore();
 
+    const pusher = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
+      cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
+      encrypted: true,
+      authEndpoint: process.env.VUE_APP_WEBSOCKET_URL,
+      auth: {
+        headers: {
+          Authorization: `Bearer ${store.state.token}`,
+        }
+      }
+    });
+
     const giveaway = ref({});
     const timer = ref(null);
     const getCorrectDisplay = (value) => value < 10 ? '0' + value : value;
 
-    dayjs.extend(utc)
-    dayjs.extend(timezone)
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
 
     let now = dayjs().tz(process.env.VUE_APP_TIMEZONE);
 
@@ -182,11 +194,6 @@ export default {
 
         countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
         countdown.displaySeconds = getCorrectDisplay(Math.floor((distance % _minutes.value) / _seconds.value));
-
-        if (distance <= 1000) {
-          clearInterval(timer);
-          return;
-        }
       }, 1000)
     };
 
@@ -194,10 +201,26 @@ export default {
 
     onBeforeUnmount(() => {
       clearTimeout(timer);
+
+      pusher.unsubscribe('giveaways');
     });
 
+    store.dispatch('getLoggedUser');
     store.dispatch('getGiveaway').then((response) => {
       giveaway.value = response.data;
+
+      pusher.subscribe('giveaways')
+          .bind('giveaway.registration', ({ recent_giveaway_entries }) => {
+            giveaway.value.recent_giveaway_entries.splice(0, recent_giveaway_entries.length - 1);
+            giveaway.value.recent_giveaway_entries = [...recent_giveaway_entries, ...giveaway.value.recent_giveaway_entries];
+          })
+          .bind('giveaway.created', ({ current_giveaway, recent_giveaway_winners }) => {
+            store.dispatch('getLoggedUser').then(() => {
+              giveaway.value.recent_giveaway_entries.length = 0;
+              giveaway.value.current_giveaway = current_giveaway;
+              giveaway.value.recent_giveaway_winners = recent_giveaway_winners;
+            })
+          });
     });
 
     const enterGiveaway = () => {
