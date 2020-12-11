@@ -35,7 +35,7 @@ export default {
         tab.isActive = tab.name === name || tab.query === name;
 
         if (tab.name === name) {
-          router.push({ name: 'Profile', query: { tab: tab.query } });
+          router.push({ name: route.name, query: { tab: tab.query } });
         }
       });
     };

@@ -21,6 +21,10 @@ export default createStore({
       total_offers_completed: 0,
     },
     offerwalls: Offerwalls,
+    announcement_banner: {
+      text: '',
+      is_enabled: false,
+    }
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",
@@ -77,6 +81,10 @@ export default createStore({
     removeDailyTasks(state) {
       state.daily_tasks = null;
       localStorage.removeItem('daily_tasks');
+    },
+
+    setAnnouncementBanner(state, announcementBanner) {
+      state.announcement_banner = announcementBanner;
     },
 
     tempEmailVerification(state) {
@@ -212,12 +220,27 @@ export default createStore({
           commit('updateDailyTasks', offers_count);
       });
     },
-    getAnnouncementBanner({ getters }) {
+    getAnnouncementBanner({ getters, commit }) {
       if (! getters.isLoggedIn) {
         return;
       }
 
-      return axiosInstance.get('/announcement-banner');
+      return axiosInstance.get('/announcement-banner').then((response) => {
+        if (response.data.announcement_banner) {
+          commit('setAnnouncementBanner', response.data.announcement_banner)
+        }
+      });
+    },
+    updateAnnouncementBanner({ getters, commit }, payload) {
+      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('/announcement-banner', payload).then((response) => {
+        if (response.data.announcement_banner) {
+          commit('setAnnouncementBanner', response.data.announcement_banner)
+        }
+      });
     },
     getTransactions({ getters, state }) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
