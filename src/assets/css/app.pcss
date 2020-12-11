@@ -231,14 +231,22 @@ img {
   -ms-user-select: none;
 }
 
-.input-invalid {
+.input-invalid:not(:disabled) {
   box-shadow: 0 0 0 3px #f56565 !important;
   border-color: transparent;
 }
 
-.input:active, .input:focus, .input:hover, .select:active, .select:hover {
+.input:active:not(:disabled), .input:focus:not(:disabled), .input:hover:not(:disabled), .select:active:not(:disabled), .select:hover:not(:disabled) {
   box-shadow: 0 0 0 3px var(--primary-color);
   border-color: transparent;
+}
+
+.input:disabled {
+  @apply cursor-not-allowed text-gray-400;
+}
+
+.input:disabled::placeholder {
+  @apply text-gray-400;
 }
 
 .authentication-form {
@@ -558,4 +566,34 @@ img {
 
 .similar-integers {
   font-family: system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color emoji;
+}
+
+.table {
+  tr {
+    td, th {
+      height: 50px;
+    }
+  }
+
+  td:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  th:not(:last-child) {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  }
+}
+
+@media (min-width: 640px) {
+  .table {
+    display: inline-table !important;
+
+    thead > tr:not(:first-child) {
+      display: none;
+    }
+
+    td, th {
+      height: auto !important;
+    }
+  }
 }

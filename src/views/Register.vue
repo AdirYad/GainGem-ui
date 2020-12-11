@@ -45,7 +45,6 @@
                v-model="auth.password"
                :class="{ 'input-invalid tw-mb-3' : v$.password.$invalid || errors.password }"
                @keydown="resetErrors('password')"
-               @change="v$.confirmPassword.sameAsPassword.$params.equalTo = auth.password"
         >
         <p v-if="v$.password.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ v$.password.$errors[0].$message }}

@@ -1,5 +1,7 @@
+import { Offerwalls } from "@/_helpers/offerwalls";
 import { createStore } from 'vuex'
 import { axiosInstance } from '@/_helpers/axios';
+import { Roles } from '@/_helpers/roles';
 import router from "@/router";
 
 export default createStore({
@@ -18,182 +20,12 @@ export default createStore({
       total_points_earned: 0,
       total_offers_completed: 0,
     },
-    offerwalls: [
-      {
-        background: '#369ee0',
-        image: require('@/assets/images/offerwalls/adgatemedia.png'),
-        provider: 'adgatemedia',
-      },
-      {
-        background: '#fff',
-        image: require('@/assets/images/offerwalls/adgem.png'),
-        provider: 'adgem',
-      },
-      {
-        background: '#11455b',
-        image: require('@/assets/images/offerwalls/cpxresearch.png'),
-        provider: 'cpxresearch',
-      },
-      {
-        background: '#30b0d5',
-        image: require('@/assets/images/offerwalls/lootably.png'),
-        provider: 'lootably',
-      },
-      {
-        background: '#233649',
-        image: require('@/assets/images/offerwalls/ayet-studios.png'),
-        provider: 'ayetstudios',
-      },
-      {
-        background: '#2a303c',
-        image: require('@/assets/images/offerwalls/offertoro.png'),
-        provider: 'offertoro',
-      },
-    ],
-    rewards: [
-      {
-        name: 'Robux',
-        image: require('@/assets/images/rewards/robux.png'),
-        provider: 'robux',
-        stock: true,
-        modal: {
-          name: 'Roblox',
-          ul: [
-              'Enter your Roblox username',
-              'Enter the amount of Robux you want to receive (1 Robux = 1 Point)',
-              'Join the group that will be shown to you',
-              'When you are in the group, click ‘Claim Robux’ and you will receive your Robux within 5 minutes',
-          ],
-        }
-      },
-      {
-        name: 'Bitcoin',
-        image: require('@/assets/images/rewards/bitcoin.png'),
-        provider: 'bitcoin',
-        stock: true,
-        modal: {
-          name: 'Bitcoin',
-        }
-      },
-      {
-        name: 'App Store',
-        image: require('@/assets/images/rewards/apple.png'),
-        provider: 'apple',
-        stock: true,
-        modal: {
-          name: 'Apple',
-          redeemAlert: 'All App Store Gift Cards can be redeemed on the App Store.',
-          ul: [
-              'On your iPhone, iPad, or iPod touch, open the App Store app.',
-              'At the top of the screen, tap the sign-in button or your photo.',
-              'Tap "Redeem Gift Card or Code." If you don’t see “Redeem Gift Card or Code,” sign in with your Apple ID.',
-              'Enter your code manually.',
-              'Tap Redeem in the top right corner.',
-          ],
-        }
-      },
-      {
-        name: 'Xbox',
-        image: require('@/assets/images/rewards/xbox.png'),
-        provider: 'xbox',
-        stock: true,
-        modal: {
-          name: 'Xbox',
-          redeemAlert: 'All XBOX Gift Cards can be redeemed on the XBOX website.',
-          text: 'You can redeem XBOX Gift Card codes internationally as long as you change your XBOX account region to <strong>match the correct country</strong>.',
-        }
-      },
-      {
-        name: 'Roblox',
-        image: require('@/assets/images/rewards/roblox.png'),
-        provider: 'roblox',
-        stock: true,
-        modal: {
-          name: 'Roblox',
-          redeemAlert: 'All ROBLOX Gift Cards can be redeemed on the ROBLOX website.',
-          ul: [
-              'Navigate to <a class="tw-text-primary" href="https://roblox.com/gamecards/redeem" target="_blank">roblox.com/gamecards/redeem</a> from a web browser.',
-              'Enter your code in the \'Enter Pin Code\' section.',
-              'Tap Redeem.',
-              'Then hit Redeem to add the balance to your ROBLOX account.',
-          ],
-        }
-      },
-      {
-        name: 'Psn',
-        image: require('@/assets/images/rewards/psn.png'),
-        provider: 'psn',
-        stock: true,
-        modal: {
-          name: 'PlayStation',
-          redeemAlert: 'All PlayStation Gift Cards can be redeemed on the PlayStation website.',
-          text: 'You can only redeem PlayStation Gift Card codes in the account’s region so <strong>make sure to select the correct country</strong>',
-        }
-      },
-      {
-        name: 'Google Play',
-        image: require('@/assets/images/rewards/googleplay.png'),
-        provider: 'googleplay',
-        stock: true,
-        modal: {
-          name: 'Google Play',
-          redeemAlert: 'All Google Play Gift Cards can be redeemed on the Google website.',
-          ul: [
-              'Navigate to <a class="tw-text-primary" href="https://play.google.com/redeem" target="_blank">play.google.com/redeem</a> from a web browser.',
-              'Click on Redeem near the bottom left corner (or just go to <a class="tw-text-primary" href="https://play.google.com/redeem" target="_blank">play.google.com/redeem</a>).',
-              'Enter your 16-digit code in the popup.',
-              'Tap Redeem.',
-              'Then hit Confirm to add the balance to your Google account.',
-          ],
-        }
-      },
-      {
-        name: 'Netflix',
-        image: require('@/assets/images/rewards/netflix.png'),
-        provider: 'netflix',
-        stock: true,
-        modal: {
-          name: 'Netflix',
-          redeemAlert: 'All Netflix Gift Cards can be redeemed on the Netflix website.',
-          text: 'You can only redeem Netflix Gift Cards on an account that uses the same currency. <br>' +
-              'For example: £ Gift Cards can be used in the United Kingdom but not in the United States. <br>' +
-              '$ Gift Cards can be used in the United States but not in the United Kingdom.',
-        }
-      },
-      {
-        name: 'Spotify',
-        image: require('@/assets/images/rewards/spotify.png'),
-        provider: 'spotify',
-        stock: true,
-        modal: {
-          name: 'Spotify',
-          redeemAlert: 'Spotify Gift Cards can only be redeemed on Spotify accounts registered in the <strong>same country</strong> where they were purchased.',
-          ul: [
-            'Go to <a class="tw-text-primary" href="https://spotify.com/redeem" target="_blank">spotify.com/redeem</a>.',
-            'Login to Spotify.',
-            'Enter the code and click Redeem.',
-          ],
-        }
-      },
-      {
-        name: 'Discord',
-        image: require('@/assets/images/rewards/discord.png'),
-        provider: 'discord',
-        stock: true,
-        modal: {
-          name: 'Discord',
-          ul: [
-              'Navigate to <a class="tw-text-primary" href="https://discord.com/app" target="_blank">discord.com/app</a> and open your user settings.',
-              'Click on ‘Gift Inventory’',
-              'Enter your code in the \'Redeem Codes\' section.',
-              'Tap Redeem.',
-          ],
-        }
-      },
-    ],
+    offerwalls: Offerwalls,
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",
+    isRoleSupplier: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Supplier,
+    isRoleAdmin: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Admin,
   },
   mutations: {
     pushNotification(state, notification) {
@@ -307,6 +139,15 @@ export default createStore({
         router.push({ name: 'Home' });
       });
     },
+    updateUser({ commit, getters, state }, payload) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.post(`/users/${state.user.id}`, payload).then((response) => {
+        commit('setUser', response.data);
+      });
+    },
     verifyEmail({ dispatch, commit, getters, state }, token) {
       return axiosInstance.post('/verify', {
         token: token,
@@ -345,6 +186,22 @@ export default createStore({
           commit('setDailyTasks', response.data);
       });
     },
+    getGiveaway({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/giveaway');
+    },
+    enterGiveaway({ getters, commit }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/giveaway').then((response) => {
+        commit('setUser', response.data);
+      });
+    },
     storeDailyTasks({ getters, commit }, offers_count) {
       if (! getters.isLoggedIn) {
         return;
@@ -354,6 +211,41 @@ export default createStore({
           commit('setUser', response.data);
           commit('updateDailyTasks', offers_count);
       });
+    },
+    getAnnouncementBanner({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/announcement-banner');
+    },
+    getTransactions({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/transactions`);
+    },
+    getActivities({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/activities`);
+    },
+    getReferrals({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/referrals`);
+    },
+    getReferralsStats({ getters, state }) {
+      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${state.user.id}/referrals/stats`);
     },
   },
   modules: {

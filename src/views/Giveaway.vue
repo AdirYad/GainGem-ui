@@ -9,7 +9,7 @@
         <div class="tw-w-1/2 sm:tw-w-1/3">
           <div class="tw-text-2xl tw-font-bold">
             <fa-icon class="tw-text-primary" icon="coins" />
-            13
+            {{ giveaway.current_giveaway ? giveaway.current_giveaway.points : 0 }}
           </div>
           <div class="tw-text-black tw-text-xs tw-uppercase tw-tracking-wider">
             Winning Amount
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="tw-w-full sm:tw-w-1/3 tw-mt-4 sm:tw-m-0">
-          <button v-if="true" @click="enterGiveaway" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+          <button v-if="$store.state.user && ! $store.state.user.registered_giveaway_at" @click="enterGiveaway" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             Enter Giveaway
           </button>
           <div v-else class="tw-w-full sm:tw-w-auto tw-inline-block tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
@@ -34,46 +34,46 @@
       </div>
     </div>
 
-    <div class="tw-flex tw-justify-center tw-flex-wrap tw-mt-8">
+    <div v-if="giveaway.recent_giveaway_entries" class="tw-flex tw-justify-center tw-flex-wrap tw-mt-8">
       <div class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 xl:tw-mr-4">
         <div class="tw-flex tw-justify-between tw-items-center tw-flex-wrap">
           <div class="tw-text-lg md:tw-text-xl tw-uppercase tw-tracking-wider tw-mr-2">
             Recent Entries
           </div>
           <div>
-            15000 Entries
+            {{ giveaway.recent_giveaway_entries ? giveaway.recent_giveaway_entries.length : 0 }} Entries
           </div>
         </div>
-        <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
-          <div class="tw-w-6 tw-h-6 tw-mr-2">
-            <img class="tw-rounded-full" src="http://localhost:8000/storage/assets/user.png">
+        <div v-for="(entry, index) in giveaway.recent_giveaway_entries.slice(0, 10)" :key="index" :class="{ 'tw-border-b' : giveaway.recent_giveaway_entries.length <= 10 && index + 1 !== giveaway.recent_giveaway_entries.length || giveaway.recent_giveaway_entries.length >= 10 && index + 1 !== 10 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
+          <div class="tw-mr-2">
+            <img class="tw-rounded-full tw-h-6 tw-w-6" :src="entry.profile_image_url">
           </div>
           <div class="tw-flex-1 tw-text-left tw-truncate">
-            username
+            {{ entry.username }}
           </div>
-          <div class="tw-w-20 tw-text-right">
-            24hrs ago
+          <div class="similar-integers tw-flex tw-justify-end tw-items-center tw-w-12 sm:tw-w-16 tw-text-right tw-text-xs sm:tw-text-base">
+            {{ entry.formatted_registered_giveaway_at }}
           </div>
         </div>
       </div>
 
-      <div class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 tw-mt-4 sm:tw-mt-0">
+      <div v-if="giveaway.recent_giveaway_winners" class="similar-integers tw-inline-block tw-w-full sm:tw-w-1/2 xl:tw-w-1/3 tw-border-t-2 tw-border-primary tw-shadow-md tw-px-4 tw-pt-4 tw-mt-4 sm:tw-mt-0">
         <div class="tw-flex tw-text-lg md:tw-text-xl tw-uppercase tw-tracking-wider">
           Previous Winners
         </div>
-        <div v-for="(item, index) in 10" :key="index" :class="{ 'tw-border-b' : index !== 9 }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
-          <div class="tw-h-6 tw-w-6 tw-mr-2">
-            <img class="tw-rounded-full" src="http://localhost:8000/storage/assets/user.png">
+        <div v-for="(winner, index) in giveaway.recent_giveaway_winners" :key="index" :class="{ 'tw-border-b' : index + 1 !== giveaway.recent_giveaway_winners.length }" class="body-ga tw-border-primary tw-flex tw-justify-between tw-py-3">
+          <div class="tw-mr-2">
+            <img class="tw-rounded-full tw-h-6 tw-w-6" :src="winner.user.profile_image_url">
           </div>
           <div class="tw-flex-1 tw-text-left tw-truncate">
-            username
+            {{ winner.user.username }}
           </div>
-          <div class="tw-flex tw-justify-end tw-items-center tw-mr-1 sm:tw-mr-2 md:tw-mr-4">
+          <div class="tw-flex tw-justify-end tw-items-center tw-mr-1 tw-mr-2 tw-text-xs sm:tw-text-base">
             <fa-icon class="tw-mx-2 tw-text-primary" icon="coins" />
-            50
+            {{ winner.points }}
           </div>
-          <div class="tw-w-20 tw-text-right">
-            24hrs ago
+          <div class="similar-integers tw-flex tw-justify-end tw-items-center tw-w-12 sm:tw-w-16 tw-text-right tw-text-xs sm:tw-text-base">
+            {{ winner.won_at }}
           </div>
         </div>
       </div>
@@ -144,62 +144,146 @@
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import Pusher from 'pusher-js/with-encryption';
 import { useStore } from 'vuex';
 import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
 export default {
   name: 'Giveaway',
-  setup() {
+  setup: function () {
     const store = useStore();
 
-    const timer = ref(null);
-    const getCorrectDisplay = (value) => value < 10 ? '0' + value : value;
+    const pusher = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
+      cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
+      encrypted: true,
+      authEndpoint: process.env.VUE_APP_WEBSOCKET_URL,
+      auth: {
+        headers: {
+          Authorization: `Bearer ${store.state.token}`,
+        }
+      }
+    });
 
-    dayjs.extend(utc)
-    dayjs.extend(timezone)
+    const giveaway = ref({});
+    const timer = ref(null);
+
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
 
     let now = dayjs().tz(process.env.VUE_APP_TIMEZONE);
 
-    const getDistance = () => {
+    const getDistance = (date = null) => {
       now = dayjs().tz(process.env.VUE_APP_TIMEZONE);
 
-      return now.endOf('day') - now;
+      if (!date) {
+        return now.endOf('day') - now;
+      }
+
+      return now - dayjs(date);
     };
 
     const countdown = reactive({
-      displayMinutes: getCorrectDisplay(59 - now.get('minute')),
-      displaySeconds: getCorrectDisplay(59 - now.get('second')),
+      displayMinutes:59 - now.get('minute'),
+      displaySeconds:59 - now.get('second'),
     });
 
     const _seconds = computed(() => 1000);
     const _minutes = computed(() => _seconds.value * 60);
     const _hours = computed(() => _minutes.value * 60);
+    const _days = computed(() => _hours.value * 24);
 
     const showRemaining = () => {
       timer.value = setInterval(() => {
         const distance = getDistance();
 
-        if (distance < 0) {
-          clearInterval(timer);
-          return;
-        }
+        countdown.displayMinutes = Math.floor((distance % _hours.value) / _minutes.value);
+        countdown.displaySeconds = Math.floor((distance % _minutes.value) / _seconds.value);
 
-        countdown.displayMinutes = getCorrectDisplay(Math.floor((distance % _hours.value) / _minutes.value));
-        countdown.displaySeconds = getCorrectDisplay(Math.floor((distance % _minutes.value) / _seconds.value));
+        formatGiveawayTimes();
       }, 1000);
     };
+
+    const getCorrectTimeDisplay = (distance) => {
+      const hours = Math.floor((distance % _days.value) / _hours.value);
+      const minutes = Math.floor((distance % _hours.value) / _minutes.value);
+      const seconds = Math.floor((distance % _minutes.value) / _seconds.value);
+
+      let time = seconds + 's';
+
+      if (hours) {
+        time = hours + 'h';
+      } else if (minutes) {
+        time = minutes + 'm'
+      }
+
+      return time + ' ago';
+    }
+
+    const formatGiveawayTimes = () => {
+      if (giveaway.value.recent_giveaway_entries) {
+        const max = giveaway.value.recent_giveaway_entries.length <= 10 ? giveaway.value.recent_giveaway_entries.length : 10;
+
+        for (let i = 0; i < max; i++) {
+          giveaway.value.recent_giveaway_entries[i].formatted_registered_giveaway_at = getCorrectTimeDisplay(getDistance(giveaway.value.recent_giveaway_entries[i].registered_giveaway_at));
+        }
+      }
+
+      if (giveaway.value.recent_giveaway_winners) {
+        const max = giveaway.value.recent_giveaway_winners.length <= 10 ? giveaway.value.recent_giveaway_winners.length : 10;
+
+        for (let i = 0; i < max; i++) {
+          giveaway.value.recent_giveaway_winners[i].won_at = getCorrectTimeDisplay(getDistance(giveaway.value.recent_giveaway_winners[i].updated_at));
+        }
+      }
+    }
 
     showRemaining();
 
     onBeforeUnmount(() => {
       clearTimeout(timer);
+
+      pusher.unsubscribe('giveaways');
+    });
+
+    store.dispatch('getLoggedUser');
+    store.dispatch('getGiveaway').then((response) => {
+      giveaway.value = response.data;
+
+      formatGiveawayTimes();
+
+      pusher.subscribe('giveaways')
+          .bind('giveaway.registration', ({user}) => {
+            giveaway.value.recent_giveaway_entries.unshift(user);
+
+            formatGiveawayTimes();
+          })
+          .bind('giveaway.created', ({current_giveaway, recent_giveaway_winners}) => {
+            store.dispatch('getLoggedUser').then(() => {
+              giveaway.value.recent_giveaway_entries.length = 0;
+              giveaway.value.current_giveaway = current_giveaway;
+              giveaway.value.recent_giveaway_winners = recent_giveaway_winners;
+            })
+          });
     });
 
     const enterGiveaway = () => {
-      store.dispatch('enterGiveaway');
+      store.dispatch('enterGiveaway').then(() => {
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: "You've entered the giveaway!",
+        });
+      }).catch((err) => {
+        if (err.response.status === 422 && err.response.data.message) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          });
+        }
+      });
     };
 
     return {
+      giveaway,
       countdown,
       enterGiveaway,
     }

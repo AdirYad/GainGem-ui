@@ -4,10 +4,11 @@
 
     <div :class="{ 'page-container' : $store.getters.isLoggedIn}">
       <div :class="{ 'container' : $store.getters.isLoggedIn }">
+        <Announcement v-if="$store.getters.isLoggedIn" />
         <LiveActivity v-if="$store.getters.isLoggedIn" />
         <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
 
-        <router-view :key="$route.fullPath" :class="{ 'tw-p-4 md:tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn }" />
+        <router-view :key="$route.name !== 'Profile' ? $route.fullPath : $route.name" :class="{ 'tw-p-4 md:tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn }" />
       </div>
 
       <Footer v-if="$store.getters.isLoggedIn" />
@@ -20,6 +21,7 @@
 <script>
 import Navigation from "@/components/Navigation";
 import LiveActivity from "@/components/LiveActivity";
+import Announcement from "@/components/AnnouncementBanner";
 import EmailVerification from "@/components/EmailVerification";
 import Footer from "@/components/Footer";
 import NotificationsList from "@/components/Notifications/NotificationsList";
@@ -28,6 +30,7 @@ export default {
   name: 'App',
   components: {
     Navigation,
+    Announcement,
     LiveActivity,
     EmailVerification,
     Footer,

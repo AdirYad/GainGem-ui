@@ -23,7 +23,7 @@ export default [
     {
         path: '/profile',
         name: 'Profile',
-        component: () => import('@/views/Register.vue'),
+        component: () => import('@/views/Profile.vue'),
         meta: {
             authOnly: true
         },

@@ -1,14 +1,14 @@
 <template>
-  <aside class="sidebar-menu tw-sticky tw-shadow-lg tw-top-0 tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-bg-primary">
+  <aside class="sidebar-menu tw-sticky tw-shadow-lg tw-top-0 tw-hidden lg:tw-flex tw-flex-col tw-h-screen tw-min-h-screen tw-bg-primary tw-overflow-scroll">
     <section>
       <router-link :to="{ name: 'Home' }" class="logo-link tw-flex tw-justify-center tw-items-center">
         <div class="logo" />
       </router-link>
     </section>
     <nav class="tw-flex-1 tw-flex tw-flex-col">
-      <router-link :to="{ name: 'Profile' }" class="tw-border-t tw-border-b border-secondary-3 tw-flex tw-items-center tw-px-10 tw-py-4">
-        <div class="tw-h-10 tw-w-10">
-          <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-rounded-full" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
+      <router-link :to="{ name: 'Profile', query: { tab: 'details' } }" class="tw-border-t tw-border-b border-secondary-3 tw-flex tw-items-center tw-px-10 tw-py-4">
+        <div>
+          <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
         </div>
         <div class="tw-flex-1 tw-text-white tw-font-medium tw-ml-6 tw-truncate">
           <div class="tw-truncate" v-if="$store.state.user && $store.state.user.username">
@@ -61,6 +61,14 @@
             </div>
           </router-link>
         </li>
+        <li>
+          <a v-if="$store.getters.isRoleAdmin" :href="adminUrl" class="router tw-flex tw-items-center tw-px-10 tw-py-4 tw-text-secondary">
+            <fa-icon class="tw-h-6 fa-w-40" icon="users-cog" />
+            <div class="tw-text-sm tw-uppercase tw-tracking-widest tw-font-light tw-ml-6">
+              Admin
+            </div>
+          </a>
+        </li>
       </ul>
     </nav>
     <section>
@@ -76,12 +84,15 @@
 
 <script>
 import { useStore } from 'vuex';
-import router from "@/router";
+import router from '@/router';
+import { ref } from 'vue';
 
 export default {
   name: 'SidebarMenu',
   setup() {
     const store = useStore();
+
+    const adminUrl = ref(process.env.VUE_APP_ADMIN_URL);
 
     const logout = () => {
       store.dispatch('logout').then(() => {
@@ -90,6 +101,7 @@ export default {
     }
 
     return {
+      adminUrl,
       logout,
     }
   },
