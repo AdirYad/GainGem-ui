@@ -252,16 +252,18 @@ export default {
       formatGiveawayTimes();
 
       pusher.subscribe('giveaways')
-          .bind('giveaway.registration', ({user}) => {
+          .bind('giveaway.registration', ({ user }) => {
             giveaway.value.recent_giveaway_entries.unshift(user);
 
             formatGiveawayTimes();
           })
-          .bind('giveaway.created', ({current_giveaway, recent_giveaway_winners}) => {
+          .bind('giveaway.created', ({ current_giveaway, recent_giveaway_winners }) => {
             store.dispatch('getLoggedUser').then(() => {
               giveaway.value.recent_giveaway_entries.length = 0;
               giveaway.value.current_giveaway = current_giveaway;
               giveaway.value.recent_giveaway_winners = recent_giveaway_winners;
+
+              formatGiveawayTimes();
             })
           });
     });
