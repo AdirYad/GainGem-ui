@@ -7,12 +7,12 @@
             Banner Text
           </label>
           <div>
-            <div class="tw-relative tw-inline-block tw-w-10 tw-mr-2 tw-align-middle tw-select-none tw-transition tw-duration-300">
+            <div class="tw-relative tw-inline-block tw-w-10 tw-mr-2 tw-align-middle tw-select-none">
               <input type="checkbox" name="toggle" id="toggle"
                      class="toggle-checkbox tw-duration-300 tw-absolute tw-block tw-w-6 tw-h-6 tw-rounded-full tw-bg-white tw-border-4 tw-appearance-none tw-cursor-pointer"
                      v-model="payload.is_enabled"
               >
-              <label for="toggle" class="toggle-label tw-block tw-overflow-hidden tw-h-6 tw-rounded-full tw-bg-gray-300 tw-cursor-pointer" />
+              <label for="toggle" class="toggle-label tw-duration-300 tw-block tw-overflow-hidden tw-h-6 tw-rounded-full tw-bg-gray-300 tw-cursor-pointer" />
             </div>
             <label for="toggle" class="tw-text-primary tw-font-bold tw-text-sm tw-cursor-pointer">
               Banner Enabled?
@@ -110,7 +110,14 @@ export default {
 </script>
 
 <style scoped>
+.toggle-checkbox {
+  right: 100%;
+  transform: translateX(100%);
+}
+
 .toggle-checkbox:checked {
+  transform: none;
+
   @apply right-0 border-primary;
 }
 
