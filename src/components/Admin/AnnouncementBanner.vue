@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="saveAnnouncementBanner" class="tw-flex tw-flex-col">
     <div class="tw-flex tw-flex-wrap">
-      <div class="tw-w-full tw-mb-4 sm:tw-pl-2">
+      <div class="tw-w-full tw-mb-4">
         <div class="tw-flex tw-justify-between tw-items-center tw-flex-wrap tw-mb-2">
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold" for="text">
             Banner Text

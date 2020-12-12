@@ -75,7 +75,7 @@ export default {
       username: {
         required,
         minLength: minLength(6),
-        maxLength: maxLength(50),
+        maxLength: maxLength(20),
       },
       password: {
         required,
@@ -104,6 +104,11 @@ export default {
               'password': [err.response.data.message],
             }
           }
+        } else if (err.response.status === 403) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          });
         }
       });
     }

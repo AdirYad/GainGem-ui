@@ -28,6 +28,7 @@ export default [
         component: () => import('@/views/Profile.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -40,6 +41,7 @@ export default [
         component: () => import('@/views/Rewards.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -52,6 +54,7 @@ export default [
         component: () => import('@/views/Invite.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -64,6 +67,7 @@ export default [
         component: () => import('@/views/Giveaway.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -76,6 +80,7 @@ export default [
         component: () => import('@/views/Tasks.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -88,6 +93,7 @@ export default [
         component: () => import('@/views/Offerwall.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -100,6 +106,7 @@ export default [
         component: () => import('@/views/Admin.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
             ],
         }

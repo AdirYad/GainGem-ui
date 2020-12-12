@@ -28,8 +28,10 @@ export default createStore({
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",
-    isRoleSupplier: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Supplier,
-    isRoleAdmin: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Admin,
+    isUser: (state, getters) => getters.isLoggedIn && state.user,
+    isRoleSupplier: (state, getters) => getters.isUser && state.user.role === Roles.Supplier,
+    isRoleAdmin: (state, getters) => getters.isUser && (state.user.role === Roles.Admin || getters.isRoleSuperAdmin),
+    isRoleSuperAdmin: (state, getters) => getters.isUser && state.user.role === Roles.SuperAdmin,
   },
   mutations: {
     pushNotification(state, notification) {
@@ -148,13 +150,17 @@ export default createStore({
       });
     },
     updateUser({ commit, getters, state }, payload) {
-      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+      if (! getters.isLoggedIn && (! payload.user_id || ! state.user && ! state.user.id)) {
         return;
       }
 
-      return axiosInstance.post(`/users/${state.user.id}`, payload).then((response) => {
-        commit('setUser', response.data);
-      });
+      if (payload.user_id) {
+        return axiosInstance.put(`/users/${payload.user_id}`, payload);
+      }
+
+      axiosInstance.post(`/users/${state.user.id}`, payload).then((response) => {
+          commit('setUser', response.data);
+        });
     },
     verifyEmail({ dispatch, commit, getters, state }, token) {
       return axiosInstance.post('/verify', {
@@ -269,6 +275,27 @@ export default createStore({
       }
 
       return axiosInstance.get(`/users/${state.user.id}/referrals/stats`);
+    },
+    getUsers({ getters }, payload) {
+      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/users?page=${payload.page}` + (payload.username ? `&username=${payload.username}` : ''));
+    },
+    banUser({ getters }, payload) {
+      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+        return;
+      }
+
+      return axiosInstance.post(`/users/${payload.user_id}/bans`, { ban_reason: payload.ban_reason });
+    },
+    unbanUser({ getters }, user_id) {
+      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+        return;
+      }
+
+      return axiosInstance.delete(`/users/${user_id}/bans`);
     },
   },
   modules: {

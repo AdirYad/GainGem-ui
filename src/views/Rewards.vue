@@ -44,7 +44,7 @@
                 <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="value">
                   Select Amount
                 </label>
-                <select v-model="payload.value" id="value" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 focus:tw-outline-none" style="height: 34px">
+                <select v-model="payload.value" id="value" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
                   <option v-for="(option, index) in expandedReward.options" :key="index" :value="option" :selected="index === 0">
                     ${{ option }}
                   </option>
@@ -63,7 +63,7 @@
                 <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="country">
                   Select Country
                 </label>
-                <select v-model="payload.country" id="country" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 focus:tw-outline-none" style="height: 34px">
+                <select v-model="payload.country" id="country" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
                   <option v-for="(country, index) in expandedReward.countries" :key="index" :value="country" :selected="index === 0">
                     {{ country }}
                   </option>
@@ -77,7 +77,7 @@
       </div>
     </div>
 
-    <VModal :visible="rewardModal.visible" @closeModal="rewardModal.visible = false">
+    <VModal v-model:visible="rewardModal.visible">
       <h1>
         {{ rewardModal.provider === 'robux' || rewardModal.provider === 'bitcoin' ? rewardModal.name : rewardModal.name + ' Gift Cards' }}
       </h1>

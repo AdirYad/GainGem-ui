@@ -111,7 +111,7 @@ export default {
       username: {
         required,
         minLength: minLength(6),
-        maxLength: maxLength(50),
+        maxLength: maxLength(20),
       },
       email: {
         required,
