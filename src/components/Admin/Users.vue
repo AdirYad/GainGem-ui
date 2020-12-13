@@ -11,7 +11,7 @@
       >
     </div>
   </div>
-  <div class="users tw-rounded-lg tw-overflow-scroll tw-mb-4">
+  <div class="full-size-table tw-rounded-lg tw-overflow-scroll tw-mb-4">
     <table class="unresponsive-table tw-w-full tw-flex sm:tw-bg-white tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
@@ -75,7 +75,7 @@
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="points">
             Add Points
           </label>
-          <input id="points" type="number" placeholder="Points"
+          <input id="points" type="number" min="1" max="999999" placeholder="Points"
                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.points"
@@ -273,21 +273,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.users {
-  width: calc(100vw - 2.5rem * 2 - 1rem * 2 - var(--sidebar-width));
-}
-
-@media (max-width: 1023px) and (min-width: 768px) {
-  .users {
-    width: calc(100vw - 2rem * 2 - 1rem * 2);
-  }
-}
-
-@media (max-width: 767px) {
-  .users {
-    width: calc(100vw - 1rem * 4);
-  }
-}
-</style>

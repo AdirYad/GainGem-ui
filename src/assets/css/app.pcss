@@ -617,6 +617,22 @@ img {
   }
 }
 
+.full-size-table {
+  width: calc(100vw - 2.5rem * 2 - 1rem * 2 - var(--sidebar-width));
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
+  .full-size-table {
+    width: calc(100vw - 2rem * 2 - 1rem * 2);
+  }
+}
+
+@media (max-width: 767px) {
+  .full-size-table {
+    width: calc(100vw - 1rem * 4);
+  }
+}
+
 .VuePagination {
   > nav {
     @apply text-center;

@@ -33,9 +33,11 @@
         </p>
       </div>
     </div>
-    <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-mt-4" type="submit">
-      Save
-    </button>
+    <div class="tw-text-center">
+      <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
+        Save
+      </button>
+    </div>
   </form>
 </template>
 

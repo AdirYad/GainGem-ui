@@ -6,6 +6,9 @@
           <Tab name="Reward Stock" query="stock">
             <RewardStock />
           </Tab>
+          <Tab name="Promo Codes" query="promo-codes">
+            <PromoCodes />
+          </Tab>
           <Tab name="Users" query="users">
             <Users />
           </Tab>
@@ -22,6 +25,7 @@
 import Tab from '@/components/Tab'
 import Tabs from "@/components/Tabs";
 import RewardStock from '@/components/Admin/RewardStock';
+import PromoCodes from '@/components/Admin/PromoCodes';
 import Users from '@/components/Admin/Users';
 import AnnouncementBanner from '@/components/Admin/AnnouncementBanner';
 
@@ -31,6 +35,7 @@ export default {
     Tab,
     Tabs,
     RewardStock,
+    PromoCodes,
     Users,
     AnnouncementBanner,
   },

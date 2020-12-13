@@ -54,7 +54,7 @@
                 <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="amount">
                   Robux Amount
                 </label>
-                <input v-model="payload.value" id="amount" type="number" placeholder="Amount"
+                <input v-model="payload.value" id="amount" type="number" min="1" placeholder="Amount"
                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                        class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full tw-py-1 tw-px-4 focus:tw-outline-none">
               </template>

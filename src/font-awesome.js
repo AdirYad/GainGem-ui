@@ -18,6 +18,7 @@ import {
     faCog,
     faGavel,
     faUnlockAlt,
+    faInfinity,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -28,6 +29,7 @@ import {
 import {
     faHandshake,
     faCopy,
+    faTrashAlt,
 } from "@fortawesome/free-regular-svg-icons";
 
 export default {
@@ -51,6 +53,7 @@ export default {
     faCog,
     faGavel,
     faUnlockAlt,
+    faInfinity,
 
     // Brands
     faBuffer,
@@ -61,5 +64,6 @@ export default {
     // Regular
     faHandshake,
     faCopy,
+    faTrashAlt,
   ),
 };

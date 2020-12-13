@@ -30,7 +30,7 @@ export default createStore({
     isLoggedIn: (state) => typeof state.token === "string",
     isUser: (state, getters) => getters.isLoggedIn && state.user,
     isRoleSupplier: (state, getters) => getters.isUser && state.user.role === Roles.Supplier,
-    isRoleAdmin: (state, getters) => getters.isUser && (state.user.role === Roles.Admin || getters.isRoleSuperAdmin),
+    isRoleAdmin: (state, getters) => getters.isUser && state.user.role === Roles.Admin,
     isRoleSuperAdmin: (state, getters) => getters.isUser && state.user.role === Roles.SuperAdmin,
   },
   mutations: {
@@ -158,7 +158,7 @@ export default createStore({
         return axiosInstance.put(`/users/${payload.user_id}`, payload);
       }
 
-      axiosInstance.post(`/users/${state.user.id}`, payload).then((response) => {
+      return axiosInstance.post(`/users/${state.user.id}`, payload).then((response) => {
           commit('setUser', response.data);
         });
     },
@@ -181,6 +181,34 @@ export default createStore({
       return axiosInstance.post('/resend-verification', {
         email: state.user.email
       });
+    },
+    getPromoCodes({ getters }, page) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/coupons?page=${page}`);
+    },
+    storePromoCode({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('/coupons', payload);
+    },
+    updatePromoCode({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put(`/coupons/${payload.promo_code}`, payload);
+    },
+    deletePromoCode({ getters }, code) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.delete(`/coupons/${code}`);
     },
     redeemPromoCode({ getters, commit }, promoCode) {
       if (! getters.isLoggedIn) {
@@ -238,7 +266,7 @@ export default createStore({
       });
     },
     updateAnnouncementBanner({ getters, commit }, payload) {
-      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
@@ -277,21 +305,21 @@ export default createStore({
       return axiosInstance.get(`/users/${state.user.id}/referrals/stats`);
     },
     getUsers({ getters }, payload) {
-      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
       return axiosInstance.get(`/users?page=${payload.page}` + (payload.username ? `&username=${payload.username}` : ''));
     },
     banUser({ getters }, payload) {
-      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
       return axiosInstance.post(`/users/${payload.user_id}/bans`, { ban_reason: payload.ban_reason });
     },
     unbanUser({ getters }, user_id) {
-      if (! getters.isLoggedIn && ! getters.isRoleAdmin) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
