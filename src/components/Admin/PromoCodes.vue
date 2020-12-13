@@ -388,7 +388,7 @@ export default {
       errors.value = {};
 
       const payload = {
-        promo_code: modal.promo_code.code,
+        promo_code_id: modal.promo_code.id,
         code: modal.code,
         points: modal.points,
         expires_at: modal.expires_at,

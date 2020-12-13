@@ -201,7 +201,7 @@ export default createStore({
         return;
       }
 
-      return axiosInstance.put(`/coupons/${payload.promo_code}`, payload);
+      return axiosInstance.put(`/coupons/${payload.promo_code_id}`, payload);
     },
     deletePromoCode({ getters }, code) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
