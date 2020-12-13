@@ -287,15 +287,38 @@ export default {
       max_usages: toRef(modal, 'max_usages'),
     });
 
-    const getPromoCodes = () => {
+    watch(() => modal.visible, () => {
+      errors.value = {};
+      v$.value.$reset();
+      v2$.value.$reset();
+    });
+
+    getPromoCodes();
+
+    return {
+      Roles,
+      promoCodesObj,
+      page,
+      payload,
+      modal,
+      errors,
+      v$,
+      v2$,
+      getPromoCodes,
+      openEditModal,
+      destroy,
+      create,
+      edit,
+      resetErrors,
+    };
+
+    function getPromoCodes() {
       store.dispatch('getPromoCodes', page.value).then((response) => {
         promoCodesObj.value = response.data;
       });
     }
 
-    getPromoCodes();
-
-    const openEditModal = (promoCode) => {
+    function openEditModal(promoCode) {
       const date = dayjs(promoCode.expires_at);
 
       modal.promo_code = promoCode;
@@ -306,7 +329,7 @@ export default {
       modal.expires_at = `${date.year()}-${date.month() + 1}-${date.date()}`;
     }
 
-    const destroy = (promoCode) => {
+    function destroy(promoCode) {
       store.dispatch('deletePromoCode', promoCode.code).then(() => {
         promoCodesObj.value.promo_codes.splice(promoCodesObj.value.promo_codes.indexOf(promoCode), 1);
         promoCodesObj.value.pagination.total--;
@@ -324,7 +347,7 @@ export default {
       });
     }
 
-    const create = () => {
+    function create() {
       v$.value.$touch();
 
       if (v$.value.$invalid) {
@@ -355,7 +378,7 @@ export default {
       });
     }
 
-    const edit = () => {
+    function edit() {
       v2$.value.$touch();
 
       if (v2$.value.$invalid) {
@@ -380,6 +403,7 @@ export default {
         modal.promo_code.formatted_expires_at = response.data.promo_code.formatted_expires_at;
         modal.promo_code.uses = response.data.promo_code.uses;
         modal.promo_code.max_usages = response.data.promo_code.max_usages;
+        modal.promo_code.is_active = response.data.promo_code.is_active;
 
         store.dispatch('addNotification', {
           type: 'success',
@@ -398,33 +422,10 @@ export default {
       });
     }
 
-    const resetErrors = (key) => {
+    function resetErrors(key) {
       (modal.visible ? v2$ : v$).value[key].$reset();
       delete errors.value[key];
     }
-
-    watch(() => modal.visible, () => {
-      errors.value = {};
-      v$.value.$reset();
-      v2$.value.$reset();
-    });
-
-    return {
-      Roles,
-      promoCodesObj,
-      page,
-      payload,
-      modal,
-      errors,
-      v$,
-      v2$,
-      getPromoCodes,
-      openEditModal,
-      destroy,
-      create,
-      edit,
-      resetErrors,
-    };
   },
 }
 </script>

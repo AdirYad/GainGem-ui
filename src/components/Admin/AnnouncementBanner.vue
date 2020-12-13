@@ -71,7 +71,15 @@ export default {
       text: toRef(payload, 'text'),
     });
 
-    const saveAnnouncementBanner = () => {
+    return {
+      payload,
+      v$,
+      errors,
+      resetErrors,
+      saveAnnouncementBanner,
+    }
+
+    function saveAnnouncementBanner() {
       v$.value.$touch();
 
       if (v$.value.$invalid) {
@@ -93,19 +101,11 @@ export default {
           errors.value = err.response.data.errors;
         }
       });
-    };
-
-    const resetErrors = (key) => {
-      v$.value[key].$reset();
-      delete errors.value[key];
     }
 
-    return {
-      payload,
-      v$,
-      errors,
-      resetErrors,
-      saveAnnouncementBanner,
+    function resetErrors(key) {
+      v$.value[key].$reset();
+      delete errors.value[key];
     }
   },
 }

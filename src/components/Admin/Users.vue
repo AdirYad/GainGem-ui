@@ -145,12 +145,6 @@ export default {
       type: null,
     });
 
-    const searchUsers = () => {
-      store.dispatch('getUsers', { username: username.value, page: page.value}).then((response) => {
-        usersObj.value = response.data;
-      });
-    }
-
     const debounceSearchUsers = debounce( () => {
       page.value = 1;
       searchUsers();
@@ -158,7 +152,28 @@ export default {
 
     searchUsers();
 
-    const openEditModal = (user) => {
+    return {
+      Roles,
+      usersObj,
+      page,
+      username,
+      modal,
+      debounceSearchUsers,
+      searchUsers,
+      openEditModal,
+      openBanModal,
+      unban,
+      edit,
+      ban,
+    };
+
+    function searchUsers() {
+      store.dispatch('getUsers', { username: username.value, page: page.value}).then((response) => {
+        usersObj.value = response.data;
+      });
+    }
+
+    function openEditModal(user) {
       modal.user = user;
       modal.visible = true;
       modal.role = user.role;
@@ -166,14 +181,14 @@ export default {
       modal.type = 'edit';
     }
 
-    const openBanModal = (user) => {
+    function openBanModal(user) {
       modal.user = user;
       modal.visible = true;
       modal.ban_reason = '';
       modal.type = 'ban';
     }
 
-    const unban = (user) => {
+    function unban(user) {
       store.dispatch('unbanUser', user.id).then((response) => {
         user.banned_at = response.data.user.banned_at;
         user.ban_reason = response.data.user.ban_reason;
@@ -181,7 +196,7 @@ export default {
       });
     }
 
-    const edit = () => {
+    function edit() {
       const payload = {
         user_id: modal.user.id,
         points: modal.points,
@@ -221,7 +236,7 @@ export default {
       });
     }
 
-    const ban = () => {
+    function ban() {
       const payload = {
         user_id: modal.user.id,
         ban_reason: modal.ban_reason
@@ -255,21 +270,6 @@ export default {
         }
       });
     }
-
-    return {
-      Roles,
-      usersObj,
-      page,
-      username,
-      modal,
-      debounceSearchUsers,
-      searchUsers,
-      openEditModal,
-      openBanModal,
-      unban,
-      edit,
-      ban,
-    };
   },
 }
 </script>
