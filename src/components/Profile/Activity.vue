@@ -13,7 +13,7 @@
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.id" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="activity.formatted_created_at" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="activity.formatted_type" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.points" />
+        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.formatted_points" />
       </tr>
     </tbody>
   </table>

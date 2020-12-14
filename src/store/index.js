@@ -24,7 +24,7 @@ export default createStore({
     announcement_banner: {
       text: '',
       is_enabled: false,
-    }
+    },
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",
@@ -282,6 +282,13 @@ export default createStore({
       }
 
       return axiosInstance.get(`/users/${state.user.id}/transactions`);
+    },
+    getRecentActivities({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/activities');
     },
     getActivities({ getters, state }) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
