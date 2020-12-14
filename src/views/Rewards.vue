@@ -6,7 +6,7 @@
       </div>
 
       <div class="rewards-list tw-grid">
-        <div v-for="(reward, index) in rewards" :key="index" @click="reward.stock && expandedReward !== reward ? expandRow(reward) : ''" class="reward-item"
+        <div v-for="(reward, index) in $store.state.rewards" :key="index" @click="reward.stock && expandedReward !== reward ? expandRow(reward) : ''" class="reward-item"
              :class="{ 'extend-row' : expandedReward === reward, 'tw-cursor-pointer' : expandedReward !== reward && reward.stock, 'tw-cursor-not-allowed' : ! reward.stock }">
           <div class="reward tw-relative tw-flex tw-justify-center tw-items-center" :class="`reward-${reward.provider}`">
             <div v-if="! reward.stock" class="tw-absolute badge-failed">
@@ -126,7 +126,6 @@
 </template>
 
 <script>
-import { Rewards } from "@/_helpers/rewards";
 import VModal from "@/components/VModal";
 import { useStore } from "vuex";
 import { ref, reactive } from 'vue';
@@ -138,8 +137,6 @@ export default {
   },
   setup() {
     const store = useStore();
-
-    const rewards = reactive(Rewards);
 
     const expandedReward = ref({});
     const rewardModal = ref({
@@ -214,7 +211,6 @@ export default {
     }
 
     return {
-      rewards,
       payload,
       expandedReward,
       rewardModal,

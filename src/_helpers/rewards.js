@@ -81,7 +81,7 @@ export const Rewards = [
   {
     name: 'Google Play',
     image: require('@/assets/images/rewards/googleplay.png'),
-    provider: 'googleplay',
+    provider: 'google_play',
     stock: true,
     modal: {
       name: 'Google Play',

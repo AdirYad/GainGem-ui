@@ -1,4 +1,5 @@
 import { Offerwalls } from "@/_helpers/offerwalls";
+import { Rewards } from "@/_helpers/rewards";
 import { createStore } from 'vuex'
 import { axiosInstance } from '@/_helpers/axios';
 import { Roles } from '@/_helpers/roles';
@@ -21,6 +22,7 @@ export default createStore({
       total_offers_completed: 0,
     },
     offerwalls: Offerwalls,
+    rewards: Rewards,
     announcement_banner: {
       text: '',
       is_enabled: false,
@@ -218,6 +220,34 @@ export default createStore({
       return axiosInstance.post(`/coupons/${promoCode}/redeems`).then((response) => {
         commit('setUser', response.data);
       });
+    },
+    getRewards({ getters }, { page, provider }) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/gift-cards?page=${page}&provider=${provider}`);
+    },
+    storeReward({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('/gift-cards', payload);
+    },
+    updateReward({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put(`/gift-cards/${payload.gift_card_id}`, payload);
+    },
+    deleteReward({ getters }, reward_id) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.delete(`/gift-cards/${reward_id}`);
     },
     getDailyTasks({ getters, commit }) {
       if (! getters.isLoggedIn) {
