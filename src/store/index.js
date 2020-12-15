@@ -132,6 +132,20 @@ export default createStore({
         commit('setToken', response.data);
       });
     },
+    getPointsValue({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('points');
+    },
+    updatePointsValue({ getters }, points) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleAdmin) {
+        return;
+      }
+
+      return axiosInstance.put('points', { 'points': points });
+    },
     logout({ commit }) {
       commit('removeUser');
       commit('removeToken');

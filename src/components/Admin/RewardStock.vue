@@ -1,4 +1,11 @@
 <template>
+  <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-2">
+    <button class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-primary tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-8 tw-py-2"
+            @click="openEditPointsValueModal"
+    >
+      Change Points Value
+    </button>
+  </div>
   <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap" :class="{ 'tw-mb-4' : payload.provider }">
     <button v-for="(reward, index) in $store.state.rewards" :key="index"
             class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-4 tw-py-1 tw-m-2"
@@ -84,8 +91,9 @@
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Code</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Country</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40 ">Value</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40 ">Taken By</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Value</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Taken By</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
         </thead>
@@ -95,6 +103,7 @@
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.country ? giftCard.country : 'International'" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + giftCard.value" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.transaction ? giftCard.transaction.user.username : ''" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.value * pointsValue).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
               <button @click="openEditModal(giftCard)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
@@ -110,74 +119,91 @@
       </table>
     </div>
     <Pagination v-if="rewardStockObj.pagination" v-model="page" :records="rewardStockObj.pagination.total" :per-page="rewardStockObj.pagination.per_page" @paginate="getRewards" :options="{ chunk: 5 }" />
-    <VModal v-model:visible="modal.visible">
-      <form @submit.prevent="edit" class="tw-px-2">
-        <div class="tw-flex tw-flex-wrap">
-          <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
-            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_code">
-              Code
-            </label>
-            <input id="edit_code" type="text" placeholder="Code"
-                   class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
-                   v-model="modal.code"
-                   :class="{ 'input-invalid tw-mb-3' : v2$.code.$invalid || errors.code }"
-                   @keydown="resetErrors('code')"
-            >
-            <p v-if="v2$.code.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-              {{ v2$.code.$errors[0].$message }}
-            </p>
-            <p v-else-if="errors.code" class="tw-text-red-500 tw-text-xs tw-italic">
-              {{ errors.code[0] }}
-            </p>
-          </div>
-          <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pl-2">
-            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_country">
-              Country
-            </label>
-            <select v-model="modal.country" id="edit_country"
-                    class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
-                    style="height: 38px"
-                    :class="{ 'input-invalid tw-mb-3' : errors.country }"
-                    @keydown="resetErrors('country')"
-            >
-              <option :value="null" selected>
-                International
-              </option>
-              <option v-for="(country, index) in countries" :key="index" :value="country.country">
-                {{ country.country }}
-              </option>
-            </select>
-            <p v-if="errors.country" class="tw-text-red-500 tw-text-xs tw-italic">
-              {{ errors.country[0] }}
-            </p>
-          </div>
-        </div>
-        <div class="tw-flex tw-flex-wrap">
-          <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4">
-            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_value">
-              Value
-            </label>
-            <input id="edit_value" type="number" min="1" placeholder="Value"
-                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                   class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
-                   v-model="modal.value"
-                   :class="{ 'input-invalid tw-mb-3' : v2$.value.$invalid || errors.value }"
-                   @keydown="resetErrors('value')"
-            >
-            <p v-if="v2$.value.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-              {{ v2$.value.$errors[0].$message }}
-            </p>
-            <p v-else-if="errors.value" class="tw-text-red-500 tw-text-xs tw-italic">
-              {{ errors.value[0] }}
-            </p>
-          </div>
-        </div>
-        <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
-          Save
-        </button>
-      </form>
-    </VModal>
   </template>
+  <VModal v-model:visible="modal.visible">
+    <form v-if="modal.type === 'editGiftCard'" @submit.prevent="edit" class="tw-px-2">
+      <div class="tw-flex tw-flex-wrap">
+        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_code">
+            Code
+          </label>
+          <input id="edit_code" type="text" placeholder="Code"
+                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                 v-model="modal.code"
+                 :class="{ 'input-invalid tw-mb-3' : v2$.code.$invalid || errors.code }"
+                 @keydown="resetErrors('code')"
+          >
+          <p v-if="v2$.code.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ v2$.code.$errors[0].$message }}
+          </p>
+          <p v-else-if="errors.code" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ errors.code[0] }}
+          </p>
+        </div>
+        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pl-2">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_country">
+            Country
+          </label>
+          <select v-model="modal.country" id="edit_country"
+                  class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
+                  style="height: 38px"
+                  :class="{ 'input-invalid tw-mb-3' : errors.country }"
+                  @keydown="resetErrors('country')"
+          >
+            <option :value="null" selected>
+              International
+            </option>
+            <option v-for="(country, index) in countries" :key="index" :value="country.country">
+              {{ country.country }}
+            </option>
+          </select>
+          <p v-if="errors.country" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ errors.country[0] }}
+          </p>
+        </div>
+      </div>
+      <div class="tw-flex tw-flex-wrap">
+        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_value">
+            Value
+          </label>
+          <input id="edit_value" type="number" min="1" placeholder="Value"
+                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                 v-model="modal.value"
+                 :class="{ 'input-invalid tw-mb-3' : v2$.value.$invalid || errors.value }"
+                 @keydown="resetErrors('value')"
+          >
+          <p v-if="v2$.value.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ v2$.value.$errors[0].$message }}
+          </p>
+          <p v-else-if="errors.value" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ errors.value[0] }}
+          </p>
+        </div>
+      </div>
+      <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
+        Save
+      </button>
+    </form>
+    <form v-else @submit.prevent="updatePointsValue" class="tw-px-2">
+      <div class="tw-flex tw-flex-wrap">
+        <div class="tw-w-full tw-mb-4">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_points">
+            Points Value
+          </label>
+          <input id="edit_points" type="number" min="1" max="10000" placeholder="Value"
+                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                 v-model="modal.points"
+          >
+        </div>
+      </div>
+      <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
+        Save
+      </button>
+    </form>
+  </VModal>
 </template>
 
 <script>
@@ -199,6 +225,7 @@ export default {
 
     const countries = require('country-json/src/country-by-name.json');
     const rewardStockObj = ref({});
+    const pointsValue = ref(40);
     const page = ref(1);
     const payload = reactive({
       provider: null,
@@ -212,6 +239,7 @@ export default {
       country: null,
       code: '',
       value: null,
+      points: null,
     });
 
     const errors = ref({});
@@ -245,9 +273,15 @@ export default {
       v2$.value.$reset();
     });
 
+    store.dispatch('getPointsValue').then((response) => {
+      pointsValue.value = response.data;
+      modal.points = response.data;
+    });
+
     return {
       countries,
       rewardStockObj,
+      pointsValue,
       page,
       payload,
       modal,
@@ -256,10 +290,12 @@ export default {
       v2$,
       getRewards,
       changeProvider,
+      openEditPointsValueModal,
       openEditModal,
       destroy,
       create,
       edit,
+      updatePointsValue,
       resetErrors,
     };
 
@@ -283,12 +319,18 @@ export default {
       getRewards();
     }
 
+    function openEditPointsValueModal() {
+      modal.visible = true;
+      modal.points = pointsValue.value;
+    }
+
     function openEditModal(giftCard) {
       modal.gift_card = giftCard;
       modal.visible = true;
       modal.country = giftCard.country;
       modal.code = giftCard.code;
       modal.value = giftCard.value;
+      modal.type = 'editGiftCard';
     }
 
     function destroy(giftCard) {
@@ -369,6 +411,31 @@ export default {
         if (err.response.status === 422 && err.response.data.errors) {
           errors.value = err.response.data.errors;
         }
+      });
+    }
+
+    function updatePointsValue() {
+      store.dispatch('updatePointsValue', modal.points).then((response) => {
+        modal.visible = false;
+        pointsValue.value = response.data;
+
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: 'Points value saved successfully!',
+        });
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          if (err.response.data.errors && err.response.data.errors.points)
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.errors.points[0],
+            });
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
       });
     }
 
