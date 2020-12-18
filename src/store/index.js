@@ -247,6 +247,8 @@ export default createStore({
         return;
       }
 
+      console.log(payload)
+
       return axiosInstance.post('/gift-cards', payload);
     },
     updateReward({ getters }, payload) {
@@ -262,6 +264,34 @@ export default createStore({
       }
 
       return axiosInstance.delete(`/gift-cards/${reward_id}`);
+    },
+    getRobuxCredentials({ getters }) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get('robux');
+    },
+    updateRobuxCredentials({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('robux', payload);
+    },
+    getBitcoinCredentials({ getters }) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get('bitcoin');
+    },
+    updateBitcoinCredentials({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('bitcoin', payload);
     },
     getDailyTasks({ getters, commit }) {
       if (! getters.isLoggedIn) {
