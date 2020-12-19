@@ -235,30 +235,42 @@ export default createStore({
         commit('setUser', response.data);
       });
     },
-    getRewards({ getters }, { page, provider }) {
+    getRewards({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('rewards');
+    },
+    redeemReward({ getters }, payload) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('rewards', payload);
+    },
+    getGiftCards({ getters }, { page, provider }) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
       return axiosInstance.get(`/gift-cards?page=${page}&provider=${provider}`);
     },
-    storeReward({ getters }, payload) {
+    storeGiftCard({ getters }, payload) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
-      console.log(payload)
-
       return axiosInstance.post('/gift-cards', payload);
     },
-    updateReward({ getters }, payload) {
+    updateGiftCard({ getters }, payload) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
       return axiosInstance.put(`/gift-cards/${payload.gift_card_id}`, payload);
     },
-    deleteReward({ getters }, reward_id) {
+    deleteGiftCard({ getters }, reward_id) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }

@@ -198,19 +198,6 @@ export default {
   min-height: 200px;
 }
 
-.social-button {
-  @apply w-full;
-
-  .social-icon {
-    left: 17px;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-right: 17px;
-
-    @apply absolute;
-  }
-}
-
 .affiliates-arrow {
   max-width: 100px;
   fill: var(--primary-color);
@@ -242,12 +229,6 @@ export default {
     transform: rotate(90deg);
     max-width: 40px;
     margin: 15px 0;
-  }
-}
-
-@media (min-width: 640px) {
-  .social-button {
-    width: 220px;
   }
 }
 </style>

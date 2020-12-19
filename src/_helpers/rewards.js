@@ -21,7 +21,21 @@ export const Rewards = [
     stock: true,
     modal: {
       name: 'Bitcoin',
-    }
+    },
+    options: [
+      {
+        country: null,
+        value: 5,
+      },
+      {
+        country: null,
+        value: 10,
+      },
+      {
+        country: null,
+        value: 25,
+      },
+    ],
   },
   {
     name: 'App Store',

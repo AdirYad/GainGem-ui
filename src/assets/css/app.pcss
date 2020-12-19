@@ -555,6 +555,24 @@ img {
   @apply text-xs px-3 bg-red-200 text-red-800 rounded-full;
 }
 
+.social-button {
+  @apply w-full;
+
+  .social-icon {
+    left: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-right: 17px;
+
+    @apply absolute;
+  }
+}
+
+@media (min-width: 640px) {
+  .social-button {
+    width: 220px;
+  }
+}
 
 .bg-facebook {
   background-color: #4267b2;

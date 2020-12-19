@@ -117,7 +117,7 @@
       </tbody>
     </table>
   </div>
-  <Pagination v-if="rewardStockObj.pagination" v-model="page" :records="rewardStockObj.pagination.total" :per-page="rewardStockObj.pagination.per_page" @paginate="getRewards" :options="{ chunk: 5 }" />
+  <Pagination v-if="rewardStockObj.pagination" v-model="page" :records="rewardStockObj.pagination.total" :per-page="rewardStockObj.pagination.per_page" @paginate="getGiftCards" :options="{ chunk: 5 }" />
   <VModal v-model:visible="modal.visible">
     <form @submit.prevent="edit" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
@@ -278,7 +278,7 @@ export default {
 
     watch(() => props.provider, () => changeProvider());
 
-    getRewards();
+    getGiftCards();
 
     return {
       countries,
@@ -289,7 +289,7 @@ export default {
       errors,
       v$,
       v2$,
-      getRewards,
+      getGiftCards,
       changeProvider,
       saveCode,
       openEditModal,
@@ -300,8 +300,8 @@ export default {
       resetErrors,
     };
 
-    function getRewards() {
-      store.dispatch('getRewards', { page: page.value, provider: payload.provider }).then((response) => {
+    function getGiftCards() {
+      store.dispatch('getGiftCards', { page: page.value, provider: payload.provider }).then((response) => {
         rewardStockObj.value = response.data;
       });
     }
@@ -315,7 +315,7 @@ export default {
       payload.country = null;
       payload.value = null;
 
-      getRewards();
+      getGiftCards();
     }
 
     function saveCode() {
@@ -380,7 +380,7 @@ export default {
     }
 
     function destroy(giftCard) {
-      store.dispatch('deleteReward', giftCard.id).then(() => {
+      store.dispatch('deleteGiftCard', giftCard.id).then(() => {
         rewardStockObj.value.gift_cards.splice(rewardStockObj.value.gift_cards.indexOf(giftCard), 1);
         rewardStockObj.value.pagination.total--;
 
@@ -392,7 +392,7 @@ export default {
         if (page.value > 1 && rewardStockObj.value.pagination.total <= 10) {
           page.value = 1;
 
-          getRewards();
+          getGiftCards();
         }
       });
     }
@@ -420,7 +420,7 @@ export default {
       errors.value = {};
 
       setTimeout(() => {
-        store.dispatch('storeReward', payload).then((response) => {
+        store.dispatch('storeGiftCard', payload).then((response) => {
           v$.value.$reset();
 
           payload.codes = [];
@@ -482,7 +482,7 @@ export default {
         value: modal.value,
       };
 
-      store.dispatch('updateReward', giftCardPayload).then((response) => {
+      store.dispatch('updateGiftCard', giftCardPayload).then((response) => {
         modal.visible = false;
         console.log(response.data)
         modal.gift_card.code = response.data.code;
