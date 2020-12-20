@@ -210,13 +210,13 @@ export default createStore({
         }
       });
     },
-    resendEmailVerification({ getters, state }) {
-      if (! getters.isLoggedIn || ! state.user || state.user && (! state.user.email || state.user.email_verified_at)) {
+    resendEmailVerification({ getters, state }, email = null) {
+      if (! email && (! getters.isLoggedIn || ! state.user || state.user && (! state.user.email || state.user.email_verified_at))) {
         return;
       }
 
       return axiosInstance.post('/resend-verification', {
-        email: state.user.email
+        email: email ? email : state.user.email,
       });
     },
     getPromoCodes({ getters }, page) {

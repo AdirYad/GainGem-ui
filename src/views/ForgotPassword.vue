@@ -22,9 +22,16 @@
           {{ errors.email[0] }}
         </p>
       </div>
-      <button class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
-        Send Request
-      </button>
+      <div class="tw-flex tw-flex-col">
+        <button class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
+          Send Request
+        </button>
+        <transition name="slide-down">
+          <button v-if="! isEmailVerified" @click="sendEmailVerification" class="tw-duration-300 tw-mt-4 tw-text-center tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary" type="button">
+            Email Verification
+          </button>
+        </transition>
+      </div>
     </form>
   </div>
 </template>
@@ -42,6 +49,7 @@ export default {
   setup() {
     const store = useStore();
 
+    const isEmailVerified = ref(true);
     const auth = reactive({
       email: '',
     });
@@ -76,11 +84,42 @@ export default {
           if (err.response.data.errors) {
             errors.value = err.response.data.errors;
           } else {
+            isEmailVerified.value = false;
+
             store.dispatch('addNotification', {
               type: 'error',
               message: err.response.data.message,
             });
           }
+        }
+      });
+    }
+
+    const sendEmailVerification = () => {
+      store.dispatch('resendEmailVerification', auth.email).then(() => {
+        isEmailVerified.value = true;
+
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: `We have successfully sent an email to ${auth.email}`
+        });
+      }).catch((err) => {
+        if (err.response.status !== 422) {
+          return;
+        }
+
+        if (err.response.data.errors) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: 'Email could not be found',
+          });
+        } else {
+          isEmailVerified.value = true;
+
+          store.dispatch('addNotification', {
+            type: 'info',
+            message: 'Email is already verified',
+          });
         }
       });
     }
@@ -92,11 +131,21 @@ export default {
 
     return {
       v$,
+      isEmailVerified,
       auth,
       errors,
       login,
+      sendEmailVerification,
       resetErrors,
     }
   },
 }
 </script>
+
+<style scoped>
+.slide-down-enter-from,
+.slide-down-leave-to {
+  transform: translateY(-37px);
+  opacity: 0;
+}
+</style>
