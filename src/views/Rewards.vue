@@ -92,7 +92,32 @@
     </div>
 
     <VModal v-model:visible="modal.visible">
-      <template v-if="modal.code">
+      <template v-if="modal.group_id">
+        <h1>
+          Last part before claiming your robux
+        </h1>
+
+        <p>
+          Please join
+          <a :href="`https://www.roblox.com/groups/${modal.group_id}`" target="_blank" class="tw-text-primary">this group</a>
+          first then hit OK button.
+        </p>
+
+        <div class="tw-flex">
+          <div class="tw-w-1/2 tw-pr-1">
+            <button @click="modal.visible = false; redeem()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+              Ok
+            </button>
+          </div>
+
+          <div class="tw-w-1/2 tw-pl-1">
+            <button @click="modal.visible = false" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </template>
+      <template v-else-if="modal.code">
         <h1>
           {{ modal.formatted_provider }}
         </h1>
@@ -257,6 +282,10 @@ export default {
         return;
       }
 
+      if (isRedeeming.value) {
+        return;
+      }
+
       if (expandedReward.value === reward) {
         setTimeout(() => {
           expandedReward.value = {};
@@ -278,6 +307,7 @@ export default {
 
       expandedReward.value = reward;
 
+      confirmation.value = false;
       payload.value.destination = null;
       payload.value.provider = expandedReward.value.provider;
       payload.value.country = expandedReward.value.countries ? expandedReward.value.countries[0] : null;
@@ -290,6 +320,41 @@ export default {
 
     function redeem() {
       if (isRedeeming.value) {
+        return;
+      }
+
+      let errorMessage = '';
+
+      if (! payload.value.value) {
+        errorMessage = 'You must enter an amount!';
+      } else if (payload.value.value < 1) {
+        errorMessage = 'The amount has to be greater than 0.';
+      } else if (payload.value.value > 999999) {
+        errorMessage = 'The amount may not be greater than 999999.';
+      } else if (payload.value.provider === 'robux') {
+        if (! payload.value.destination) {
+          errorMessage = 'You must enter a username!';
+        } else if (payload.value.destination.length < 2) {
+          errorMessage = 'The username must be at least 2 characters.';
+        } else if (payload.value.destination.length > 255) {
+          errorMessage = 'The username may not be greater than 255 characters.';
+        }
+      } else if (payload.value.provider === 'bitcoin') {
+        if (! payload.value.destination) {
+          errorMessage = 'You must enter a wallet!';
+        } else if (payload.value.destination.length < 2) {
+          errorMessage = 'The wallet must be at least 2 characters.';
+        } else if (payload.value.destination.length > 255) {
+          errorMessage = 'The wallet may not be greater than 255 characters.';
+        }
+      }
+
+      if (errorMessage) {
+        store.dispatch('addNotification', {
+          type: 'error',
+          message: errorMessage,
+        });
+
         return;
       }
 
@@ -307,6 +372,11 @@ export default {
           response.data.gift_card.visible = true;
           response.data.gift_card.formatted_provider = expandedReward.value.name.toString();
           modal.value = response.data.gift_card;
+        } else {
+          store.dispatch('addNotification', {
+            type: 'success',
+            message: "You've successfully claimed your reward!"
+          });
         }
 
         expandedReward.value = {};
@@ -319,6 +389,9 @@ export default {
             type: 'error',
             message: err.response.data.message,
           });
+        } else if (err.response.status === 404) {
+          err.response.data.visible = true;
+          modal.value = err.response.data;
         }
       });
     }
