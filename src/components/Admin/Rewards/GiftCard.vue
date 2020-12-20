@@ -255,7 +255,7 @@ export default {
       value: {
         required,
         minValue: minValue(1),
-        maxValue: maxValue(999999),
+        maxValue: maxValue(5000),
       },
     };
 

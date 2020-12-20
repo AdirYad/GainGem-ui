@@ -56,7 +56,7 @@
                 <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="amount">
                   Robux Amount
                 </label>
-                <input v-model="payload.value" id="amount" type="number" min="1" :max="expandedReward.stock" placeholder="Amount"
+                <input v-model="payload.value" id="amount" type="number" min="1" :max="expandedReward.stock > 5000 ? 5000 : expandedReward.stock" placeholder="Amount"
                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                        class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full tw-py-1 tw-px-4 focus:tw-outline-none">
               </template>
@@ -329,16 +329,18 @@ export default {
         errorMessage = 'You must enter an amount!';
       } else if (payload.value.value < 1) {
         errorMessage = 'The amount has to be greater than 0.';
-      } else if (payload.value.value > 999999) {
-        errorMessage = 'The amount may not be greater than 999999.';
       } else if (payload.value.provider === 'robux') {
-        if (! payload.value.destination) {
+        if (expandedReward.value.stock > 5000 && payload.value.value > 5000 || expandedReward.value.stock <= 5000 && payload.value.value > expandedReward.value.stock) {
+          errorMessage = `The amount may not be greater than ${expandedReward.value.stock > 5000 ? 5000 : expandedReward.value.stock}.`;
+        } else if (! payload.value.destination) {
           errorMessage = 'You must enter a username!';
         } else if (payload.value.destination.length < 2) {
           errorMessage = 'The username must be at least 2 characters.';
         } else if (payload.value.destination.length > 255) {
           errorMessage = 'The username may not be greater than 255 characters.';
         }
+      } else if (payload.value.value > 5000) {
+        errorMessage = 'The amount may not be greater than 5000.';
       } else if (payload.value.provider === 'bitcoin') {
         if (! payload.value.destination) {
           errorMessage = 'You must enter a wallet!';
