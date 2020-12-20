@@ -132,6 +132,27 @@ export default createStore({
         commit('setToken', response.data);
       });
     },
+    forgotPassword({ commit, getters }, payload) {
+      if (getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/forgot-password', payload);
+    },
+    checkForgotPasswordToken({ commit, getters }, token) {
+      if (getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/forgot-password/check-token', { token });
+    },
+    resetPassword({ commit, getters }, payload) {
+      if (getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/forgot-password/reset', payload);
+    },
     getPointsValue({ getters }) {
       if (! getters.isLoggedIn) {
         return;
