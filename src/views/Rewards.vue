@@ -138,11 +138,11 @@
             <fa-icon class="social-icon" :icon="['fab', 'facebook-f']" />
             Share on facebook
           </a>
-          <a :href="`https://twitter.com/intent/tweet?text=I just redeemed a ${modal.formatted_provider} at EzRewards.gg!&url=${link}`" target="_blank" class="social-button bg-twitter tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
+          <a :href="`https://twitter.com/intent/tweet?text=I just redeemed a ${modal.formatted_provider} gift card at EzRewards.gg!&url=${link}`" target="_blank" class="social-button bg-twitter tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
             <fa-icon class="social-icon" :icon="['fab', 'twitter']" />
             Share on Twitter
           </a>
-          <a :href="`https://reddit.com/submit?title=I just redeemed a ${modal.formatted_provider} at EzRewards.gg!`" target="_blank" class="social-button bg-reddit tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
+          <a :href="`https://reddit.com/submit?title=I just redeemed a ${modal.formatted_provider} gift card at EzRewards.gg!`" target="_blank" class="social-button bg-reddit tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
             <fa-icon class="social-icon" :icon="['fab', 'reddit-alien']" />
             Share on Reddit
           </a>
