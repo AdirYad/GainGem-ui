@@ -257,8 +257,12 @@ export default {
         rewards.value = response.data;
 
         store.state.rewards.forEach((reward) => {
-          if (reward.provider === 'robux' || reward.provider === 'bitcoin') {
-            reward.stock = rewards.value[reward.provider];
+          if (reward.provider === 'robux') {
+            reward.stock = rewards.value.robux;
+            return;
+          } else if (reward.provider === 'bitcoin') {
+            reward.options = reward.options.filter((option) => option.value <= rewards.value.bitcoin);
+            reward.stock = reward.options.length ? rewards.value.bitcoin : 0;
             return;
           }
 

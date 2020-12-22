@@ -25,15 +25,15 @@ export const Rewards = [
     options: [
       {
         country: null,
-        value: 5,
-      },
-      {
-        country: null,
         value: 10,
       },
       {
         country: null,
-        value: 25,
+        value: 15,
+      },
+      {
+        country: null,
+        value: 20,
       },
     ],
   },
