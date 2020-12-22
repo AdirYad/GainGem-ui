@@ -12,11 +12,10 @@
           Complete daily tasks for extra points, these tasks reset every 24 hours.
       </div>
     </div>
-    <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8 tw--mb-4">
-      <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options"
-           v-for="(taskOption, offers_count) in $store.state.daily_tasks.daily_tasks_options"
+    <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options" class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8 tw--mb-4">
+      <div v-for="(taskOption, offers_count) in $store.state.daily_tasks.daily_tasks_options"
            :key="offers_count"
-          class="daily-task-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4"
+           class="daily-task-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4"
       >
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
           Complete {{ offers_count }} offer{{ offers_count > 1 ? 's' : '' }}
@@ -42,6 +41,14 @@
         </div>
       </div>
     </div>
+
+    <div v-else class="tw-flex tw-justify-center tw-items-center tw-w-full tw-mt-12">
+      <LoopingRhombusesSpinner
+          :animation-duration="2500"
+          :rhombus-size="25"
+          color="var(--primary-color)"
+      />
+    </div>
   </div>
 </template>
 
@@ -49,11 +56,15 @@
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { useStore } from "vuex";
 import { computed, onBeforeUnmount, reactive, ref } from "vue";
 
 export default {
   name: 'Tasks',
+  components: {
+    LoopingRhombusesSpinner,
+  },
   setup() {
     const store = useStore();
 

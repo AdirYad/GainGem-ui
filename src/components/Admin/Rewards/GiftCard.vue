@@ -87,35 +87,43 @@
   <div class="full-size-table tw-rounded-lg tw-overflow-scroll tw-mb-4">
     <table class="unresponsive-table tw-w-full tw-flex sm:tw-bg-white tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
-      <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
-        <th class="tw-p-3 tw-text-left sm:tw-w-40">Code</th>
-        <th class="tw-p-3 tw-text-left sm:tw-w-40">Country</th>
-        <th class="tw-p-3 tw-text-left sm:tw-w-40">Value</th>
-        <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
-        <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Taken By</th>
-        <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
-      </tr>
+        <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Code</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Country</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Value</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Taken By</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
+        </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
-      <tr v-for="(giftCard, index) in rewardStockObj.gift_cards" :key="index"  class="tw-table-row">
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.code" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.country ? giftCard.country : 'International'" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + (giftCard.value).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.value * pointsValue).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.transaction ? giftCard.transaction.user.username : ''" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
-          <div class="tw-flex">
-            <button @click="openEditModal(giftCard)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
-              <fa-icon icon="cog" />
-            </button>
-            <button @click="destroy(giftCard)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full hover:tw-text-white hover:tw-bg-red-500">
-              <fa-icon :icon="['far', 'trash-alt']" />
-            </button>
-          </div>
-        </td>
-      </tr>
+        <tr v-if="rewardStockObj.gift_cards" v-for="(giftCard, index) in rewardStockObj.gift_cards" :key="index"  class="tw-table-row">
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.code" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.country ? giftCard.country : 'International'" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + (giftCard.value).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.value * pointsValue).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.transaction ? giftCard.transaction.user.username : ''" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
+            <div class="tw-flex">
+              <button @click="openEditModal(giftCard)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
+                <fa-icon icon="cog" />
+              </button>
+              <button @click="destroy(giftCard)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full hover:tw-text-white hover:tw-bg-red-500">
+                <fa-icon :icon="['far', 'trash-alt']" />
+              </button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
+
+    <div v-if="! rewardStockObj.gift_cards" class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-6">
+      <LoopingRhombusesSpinner
+          :animation-duration="2500"
+          :rhombus-size="25"
+          color="var(--primary-color)"
+      />
+    </div>
   </div>
   <Pagination v-if="rewardStockObj.pagination" v-model="page" :records="rewardStockObj.pagination.total" :per-page="rewardStockObj.pagination.per_page" @paginate="getGiftCards" :options="{ chunk: 5 }" />
   <VModal v-model:visible="modal.visible">
@@ -190,6 +198,7 @@
 <script>
 import Pagination from 'v-pagination-3';
 import VModal from '@/components/VModal';
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required, minValue, maxValue } from '@vuelidate/validators';
 import { useStore } from 'vuex';
@@ -200,6 +209,7 @@ export default {
   components: {
     Pagination,
     VModal,
+    LoopingRhombusesSpinner,
   },
   props: {
       provider: {
@@ -216,6 +226,7 @@ export default {
 
     const countries = require('country-json/src/country-by-name.json');
     const rewardStockObj = ref({});
+    const provider = ref(props.provider);
     const page = ref(1);
     const payload = reactive({
       provider: props.provider,
@@ -301,6 +312,14 @@ export default {
     };
 
     function getGiftCards() {
+      if (provider.value !== payload.provider) {
+        rewardStockObj.value = {};
+      } else {
+        delete rewardStockObj.value.gift_cards;
+      }
+
+      provider.value = payload.provider;
+
       store.dispatch('getGiftCards', { page: page.value, provider: payload.provider }).then((response) => {
         rewardStockObj.value = response.data;
       });

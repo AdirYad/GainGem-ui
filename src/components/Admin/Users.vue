@@ -32,7 +32,7 @@
         </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
-        <tr v-for="(user, index) in usersObj.users" :key="index"  class="tw-table-row">
+        <tr v-if="usersObj.users" v-for="(user, index) in usersObj.users" :key="index"  class="tw-table-row">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.username" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.email" />
@@ -42,7 +42,7 @@
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_total_points" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.withdraws" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referrals" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referred_by.username" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referred_by ? user.referred_by.username : ''" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_banned_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.banned_at ? user.ban_reason : ''" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.role" />
@@ -65,6 +65,15 @@
       </tbody>
     </table>
   </div>
+
+  <div v-if="! usersObj.users" class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-6">
+    <LoopingRhombusesSpinner
+        :animation-duration="2500"
+        :rhombus-size="25"
+        color="var(--primary-color)"
+    />
+  </div>
+
   <Pagination v-if="usersObj.pagination" v-model="page" :records="usersObj.pagination.total" :per-page="usersObj.pagination.per_page" @paginate="searchUsers" :options="{ chunk: 5 }" />
   <VModal v-model:visible="modal.visible">
     <form v-if="modal.type === 'edit'" @submit.prevent="edit" class="tw-px-2">
@@ -123,6 +132,7 @@
 const debounce = require('debounce');
 import Pagination from 'v-pagination-3';
 import VModal from '@/components/VModal';
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { Roles } from '@/_helpers/roles';
 import { useStore } from 'vuex';
 import { ref, reactive } from "vue";
@@ -132,12 +142,14 @@ export default {
   components: {
     Pagination,
     VModal,
+    LoopingRhombusesSpinner,
   },
   setup() {
     const store = useStore();
 
     const usersObj = ref({});
     const page = ref(1);
+    const previousUsername = ref('');
     const username = ref('');
     const modal = reactive({
       user: null,
@@ -168,6 +180,14 @@ export default {
     };
 
     function searchUsers() {
+      if (previousUsername.value !== username.value) {
+        usersObj.value = {};
+      } else {
+        delete usersObj.value.users;
+      }
+
+      previousUsername.value = username.value;
+
       store.dispatch('getUsers', { username: username.value, page: page.value}).then((response) => {
         usersObj.value = response.data;
       });

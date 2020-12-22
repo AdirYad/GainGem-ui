@@ -73,9 +73,18 @@
         </p>
       </div>
       <div class="tw-flex tw-flex-col">
-        <button class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
+        <button v-if="! isRegistering" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
           Register
         </button>
+
+        <div v-else class="tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full" style="padding: 11px 0">
+          <LoopingRhombusesSpinner
+              :animation-duration="2500"
+              :rhombus-size="10"
+              color="white"
+          />
+        </div>
+
         <router-link :to="{name: 'Login'}" class="tw-mt-4 tw-text-center tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary">
           You have already an account?
         </router-link>
@@ -85,6 +94,7 @@
 </template>
 
 <script>
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { required, minLength, maxLength, email, sameAs } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
@@ -93,10 +103,13 @@ import { reactive, ref, toRef } from "vue";
 
 export default {
   name: 'Register',
-
+  components: {
+    LoopingRhombusesSpinner,
+  },
   setup() {
     const store = useStore();
 
+    const isRegistering = ref(false)
     const auth = reactive({
       username: '',
       email: '',
@@ -146,13 +159,17 @@ export default {
         return;
       }
 
+      isRegistering.value = true;
       errors.value = {};
 
       store.dispatch('register', auth).then(() => {
+        isRegistering.value = false;
         localStorage.removeItem('ref_id');
 
         router.push({ name: 'Home' });
       }).catch((err) => {
+        isRegistering.value = false;
+
         if (err.response.status === 422) {
           if (err.response.data.errors) {
             errors.value = err.response.data.errors;
@@ -172,6 +189,7 @@ export default {
 
     return {
       v$,
+      isRegistering,
       auth,
       errors,
       register,

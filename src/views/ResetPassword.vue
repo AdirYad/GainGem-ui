@@ -38,14 +38,23 @@
           </template>
         </p>
       </div>
-      <button class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
+      <button v-if="! isResetting" class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
         Reset
       </button>
+
+      <div v-else class="tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full" style="padding: 11px 0">
+        <LoopingRhombusesSpinner
+            :animation-duration="2500"
+            :rhombus-size="10"
+            color="white"
+        />
+      </div>
     </form>
   </div>
 </template>
 
 <script>
+import { LoopingRhombusesSpinner } from "epic-spinners";
 import { required, minLength, maxLength, sameAs } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import { useStore } from 'vuex';
@@ -54,12 +63,15 @@ import { reactive, ref, toRef } from "vue";
 
 export default {
   name: 'ResetPassword',
-
+  components: {
+    LoopingRhombusesSpinner,
+  },
   setup() {
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
 
+    const isResetting = ref(false);
     const auth = reactive({
       password: '',
       confirmPassword: '',
@@ -115,9 +127,12 @@ export default {
         return;
       }
 
+      isResetting.value = true;
       errors.value = {};
 
       store.dispatch('resetPassword', auth).then(() => {
+        isResetting.value = false;
+
         store.dispatch('addNotification', {
           type: 'success',
           message: 'Password has been reset successfully.'
@@ -125,6 +140,8 @@ export default {
 
         router.push({ name: 'Login' });
       }).catch((err) => {
+        isResetting.value = false;
+
         if (err.response.status === 422) {
           if (err.response.data.errors) {
             errors.value = err.response.data.errors;
@@ -147,6 +164,7 @@ export default {
 
     return {
       v$,
+      isResetting,
       auth,
       errors,
       resetPassword,

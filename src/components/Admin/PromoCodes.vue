@@ -96,7 +96,7 @@
         </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
-        <tr v-for="(promoCode, index) in promoCodesObj.promo_codes" :key="index"  class="tw-table-row">
+        <tr v-if="promoCodesObj.promo_codes" v-for="(promoCode, index) in promoCodesObj.promo_codes" :key="index"  class="tw-table-row">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="promoCode.code" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="promoCode.formatted_points" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="promoCode.formatted_expires_at" />
@@ -129,6 +129,15 @@
       </tbody>
     </table>
   </div>
+
+  <div v-if="! promoCodesObj.promo_codes" class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-6">
+    <LoopingRhombusesSpinner
+        :animation-duration="2500"
+        :rhombus-size="25"
+        color="var(--primary-color)"
+    />
+  </div>
+
   <Pagination v-if="promoCodesObj.pagination" v-model="page" :records="promoCodesObj.pagination.total" :per-page="promoCodesObj.pagination.per_page" @paginate="getPromoCodes" :options="{ chunk: 5 }" />
   <VModal v-model:visible="modal.visible">
     <form @submit.prevent="edit" class="tw-px-2">
@@ -218,6 +227,7 @@
 import dayjs from "dayjs";
 import Pagination from 'v-pagination-3';
 import VModal from '@/components/VModal';
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { Roles } from '@/_helpers/roles';
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required, minValue, maxValue } from '@vuelidate/validators';
@@ -229,6 +239,7 @@ export default {
   components: {
     Pagination,
     VModal,
+    LoopingRhombusesSpinner,
   },
   setup() {
     const store = useStore();
@@ -313,6 +324,8 @@ export default {
     };
 
     function getPromoCodes() {
+      delete promoCodesObj.value.promo_codes;
+
       store.dispatch('getPromoCodes', page.value).then((response) => {
         promoCodesObj.value = response.data;
       });

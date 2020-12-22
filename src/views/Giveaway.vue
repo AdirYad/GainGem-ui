@@ -79,6 +79,14 @@
       </div>
     </div>
 
+    <div v-else class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-12">
+      <LoopingRhombusesSpinner
+          :animation-duration="2500"
+          :rhombus-size="25"
+          color="var(--primary-color)"
+      />
+    </div>
+
     <div class="tw-text-primary tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-my-4 lg:tw-my-8">
       How does it work?
     </div>
@@ -145,11 +153,15 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import Pusher from 'pusher-js/with-encryption';
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { useStore } from 'vuex';
 import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
 export default {
   name: 'Giveaway',
+  components: {
+    LoopingRhombusesSpinner,
+  },
   setup: function () {
     const store = useStore();
 

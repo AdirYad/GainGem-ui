@@ -19,6 +19,7 @@
     "country-json": "^1.1.0",
     "dayjs": "^1.9.6",
     "debounce": "^1.2.0",
+    "epic-spinners": "^1.1.0",
     "pusher-js": "^7.0.2",
     "tailwindcss": "^1.9.6",
     "v-pagination-3": "^0.1.2",

@@ -4,7 +4,7 @@
     <div class="tw-w-full tw-max-w-2xl tw-text-lg tw-text-center tw-mx-auto tw-mb-4">
       If you have forgotten your password and would like to reset it, you can fill out this form and receive instructions by email on how to reset your password.
     </div>
-    <form @submit.prevent="login" class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-px-10 tw-py-12">
+    <form @submit.prevent="forgotPassword" class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-px-10 tw-py-12">
       <div class="tw-mb-4">
         <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="email">
           Email
@@ -23,9 +23,18 @@
         </p>
       </div>
       <div class="tw-flex tw-flex-col">
-        <button class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
+        <button v-if="! isRequesting" class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
           Send Request
         </button>
+
+        <div v-else class="tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full" style="padding: 11px 0">
+          <LoopingRhombusesSpinner
+              :animation-duration="2500"
+              :rhombus-size="10"
+              color="white"
+          />
+        </div>
+
         <transition name="slide-down">
           <button v-if="! isEmailVerified" @click="sendEmailVerification" class="tw-duration-300 tw-mt-4 tw-text-center tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary" type="button">
             Email Verification
@@ -37,6 +46,7 @@
 </template>
 
 <script>
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { required, email } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
@@ -45,10 +55,13 @@ import { ref, reactive, toRef } from "vue";
 
 export default {
   name: 'ForgotPassword',
-
+  components: {
+    LoopingRhombusesSpinner,
+  },
   setup() {
     const store = useStore();
 
+    const isRequesting = ref(false);
     const isEmailVerified = ref(true);
     const auth = reactive({
       email: '',
@@ -65,21 +78,27 @@ export default {
 
     const v$ = useVuelidate(rules, { email: toRef(auth, 'email') });
 
-    const login = () => {
+    const forgotPassword = () => {
       v$.value.$touch();
 
       if (v$.value.$invalid) {
         return;
       }
 
+      isRequesting.value = true;
+
       store.dispatch('forgotPassword', auth).then(() => {
-        router.push({ name: 'Home' });
+        isRequesting.value = false;
 
         store.dispatch('addNotification', {
           type: 'success',
           message: 'Password reset request sent to email.',
         });
+
+        router.push({ name: 'Home' });
       }).catch((err) => {
+        isRequesting.value = false;
+
         if (err.response.status === 422) {
           if (err.response.data.errors) {
             errors.value = err.response.data.errors;
@@ -131,10 +150,11 @@ export default {
 
     return {
       v$,
+      isRequesting,
       isEmailVerified,
       auth,
       errors,
-      login,
+      forgotPassword,
       sendEmailVerification,
       resetErrors,
     }

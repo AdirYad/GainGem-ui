@@ -5,7 +5,7 @@
         Rewards
       </div>
 
-      <div class="rewards-list tw-grid">
+      <div v-if="rewards" class="rewards-list tw-grid">
         <div v-for="(reward, index) in $store.state.rewards" :key="index" @click="reward.stock && expandedReward !== reward ? expandRow(reward) : ''" class="reward-item"
              :class="{ 'extend-row' : expandedReward === reward, 'tw-cursor-pointer' : expandedReward !== reward && reward.stock && rewards, 'tw-cursor-not-allowed' : ! reward.stock }">
           <div class="reward tw-relative tw-flex tw-justify-center tw-items-center" :class="`reward-${reward.provider}`">
@@ -76,9 +76,17 @@
             </button>
             <div v-else class="tw-flex">
               <div class="tw-w-1/2 tw-pr-1">
-                <button @click="redeem" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+                <button v-if="! isRedeeming" @click="redeem" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
                   Confirm
                 </button>
+
+                <div v-else class="tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full" style="padding: 11px 0">
+                  <LoopingRhombusesSpinner
+                      :animation-duration="2500"
+                      :rhombus-size="10"
+                      color="white"
+                  />
+                </div>
               </div>
               <div class="tw-w-1/2 tw-pl-1">
                 <button @click="confirmation = false" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
@@ -88,6 +96,15 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div v-else class="tw-absolute tw-top-0 tw-left-0 tw-flex tw-justify-center tw-items-center tw-h-screen tw-w-full">
+        <LoopingRhombusesSpinner
+            class="tw-z-10"
+            :animation-duration="2500"
+            :rhombus-size="40"
+            color="var(--primary-color)"
+        />
       </div>
     </div>
 
@@ -199,6 +216,7 @@
 
 <script>
 import VModal from "@/components/VModal";
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { useStore } from "vuex";
 import { ref } from 'vue';
 
@@ -206,6 +224,7 @@ export default {
   name: 'Rewards',
   components: {
     VModal,
+    LoopingRhombusesSpinner,
   },
   setup() {
     const store = useStore();

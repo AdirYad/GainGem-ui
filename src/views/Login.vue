@@ -37,9 +37,18 @@
         </p>
       </div>
       <div class="tw-flex tw-items-center tw-justify-between tw-flex-wrap">
-        <button class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
+        <button v-if="! isLogging" class="tw-w-1/3 tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 focus:tw-outline-none" type="submit">
           Login
         </button>
+
+        <div v-else class="tw-w-1/3 tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full" style="padding: 11px 0">
+          <LoopingRhombusesSpinner
+              :animation-duration="2500"
+              :rhombus-size="10"
+              color="white"
+          />
+        </div>
+
         <router-link :to="{ name: 'ForgotPassword' }" class="tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary">
           Forgot Password?
         </router-link>
@@ -52,6 +61,7 @@
 </template>
 
 <script>
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { required, minLength, maxLength } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
@@ -60,10 +70,13 @@ import { ref, reactive, toRef } from "vue";
 
 export default {
   name: 'Login',
-
+  components: {
+    LoopingRhombusesSpinner,
+  },
   setup() {
     const store = useStore();
 
+    const isLogging = ref(false)
     const auth = reactive({
       username: '',
       password: '',
@@ -93,9 +106,15 @@ export default {
         return;
       }
 
+      isLogging.value = true;
+
       store.dispatch('login', auth).then(() => {
+        isLogging.value = false;
+
         router.push({ name: 'Home' });
       }).catch((err) => {
+        isLogging.value = false;
+
         if (err.response.status === 422) {
           if (err.response.data.errors) {
             errors.value = err.response.data.errors;
@@ -120,6 +139,7 @@ export default {
 
     return {
       v$,
+      isLogging,
       auth,
       errors,
       login,
