@@ -394,6 +394,13 @@ export default {
 
           getGiftCards();
         }
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          });
+        }
       });
     }
 

@@ -9,12 +9,12 @@
         <div v-for="(reward, index) in $store.state.rewards" :key="index" @click="reward.stock && expandedReward !== reward ? expandRow(reward) : ''" class="reward-item"
              :class="{ 'extend-row' : expandedReward === reward, 'tw-cursor-pointer' : expandedReward !== reward && reward.stock && rewards, 'tw-cursor-not-allowed' : ! reward.stock }">
           <div class="reward tw-relative tw-flex tw-justify-center tw-items-center" :class="`reward-${reward.provider}`">
-            <div v-if="! reward.stock" class="tw-absolute badge-failed">
-              Out of stock
-            </div>
             <button v-if="expandedReward === reward" @click="expandRow(reward)" class="tw-absolute badge-failed tw-z-10">
               Close
             </button>
+            <div v-else-if="! reward.stock" class="tw-absolute badge-failed">
+              Out of stock
+            </div>
             <img :src="reward.image" :alt="reward.name">
           </div>
           <div class="reward-details tw-flex tw-justify-between tw-items-center tw-px-3 tw-font-medium tw-text-lg lg:tw-text-xl tw-uppercase tw-tracking-wider">
