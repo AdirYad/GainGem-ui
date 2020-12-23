@@ -21,7 +21,21 @@ export const Rewards = [
     stock: true,
     modal: {
       name: 'Bitcoin',
-    }
+    },
+    options: [
+      {
+        country: null,
+        value: 10,
+      },
+      {
+        country: null,
+        value: 15,
+      },
+      {
+        country: null,
+        value: 20,
+      },
+    ],
   },
   {
     name: 'App Store',
@@ -81,7 +95,7 @@ export const Rewards = [
   {
     name: 'Google Play',
     image: require('@/assets/images/rewards/googleplay.png'),
-    provider: 'googleplay',
+    provider: 'google_play',
     stock: true,
     modal: {
       name: 'Google Play',

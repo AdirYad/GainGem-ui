@@ -1,17 +1,22 @@
 <template>
   <div class="activity-items tw-flex tw-items-end">
     <transition-group name="activity" tag="div" class="tw-w-full tw-relative tw-flex tw-px-3 lg:tw-pl-4 tw-overflow-hidden">
-      <div v-for="(activity) in activities" :key="activity.id" class="activity-item tw-bg-white tw-text-xs tw-font-light tw-text-primary tw-rounded-md tw-border-b-2 tw-border-primary tw-mx-2 tw-px-4 tw-flex tw-justify-center tw-items-center">
+      <div v-for="activity in activities" :key="activity.id" class="activity-item tw-h-full tw-flex tw-justify-center tw-items-center tw-flex-no tw-bg-white tw-text-xs tw-font-light tw-text-primary tw-rounded-md tw-border-b-2 tw-border-primary tw-mx-2 tw-px-4" style="white-space: nowrap">
         <span class="tw-w-6 tw-inline-block tw-mr-2">
-          <img class="tw-bg-secondary tw-rounded-full tw-h-6" :src="activity.profile_image" :alt="activity.username">
+          <img class="tw-bg-secondary tw-rounded-full tw-h-6" :src="activity.user.profile_image_url" :alt="activity.user.username">
         </span>
-        <span class="user-activity tw-text-sm tw-font-medium tw-inline-block tw-truncate tw-mr-1">
-          {{ activity.username }}
+          <span class="user-activity tw-text-sm tw-font-medium tw-inline-block tw-truncate tw-mr-1">
+          {{ activity.user.username }}
         </span>
-        earned
-        <span class="tw-flex tw-text-sm tw-font-medium tw-ml-1">
+          earned
+          <span class="tw-flex tw-text-sm tw-font-medium tw-ml-1">
           <fa-icon class="tw-h-4 fa-w-20" icon="coins" />
-          {{ activity.earned }}
+          {{ activity.formatted_points }}
+        </span>
+        <span class="tw-ml-1">
+          from
+          {{ (/^[aeiou]$/i).test(activity.formatted_type[0]) ? 'an' : 'a' }}
+          {{ activity.formatted_type }}
         </span>
       </div>
     </transition-group>
@@ -19,73 +24,40 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import Pusher from "pusher-js/with-encryption";
+import { ref, onBeforeUnmount } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
   name: 'LiveActivity',
   setup() {
-    const activities = ref([
-      {
-        id: 8,
-        username: 123123,
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 32,
-      },
-      {
-        id: 7,
-        username: 'Adoirrrrrrr',
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 332323,
-      },
-      {
-        id: 6,
-        username: 121212121,
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 55555,
-      },
-      {
-        id: 5,
-        username: 123123,
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 32222,
-      },
-      {
-        id: 4,
-        username: 123123,
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 99,
-      },
-      {
-        id: 3,
-        username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 323232323,
-      },
-      {
-        id: 2,
-        username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 323232323,
-      },
-      {
-        id: 1,
-        username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: 323232323,
-      },
-    ]);
+    const store = useStore();
 
-    let i = 9;
+    const pusher = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
+      cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
+      encrypted: true,
+      authEndpoint: process.env.VUE_APP_WEBSOCKET_URL,
+      auth: {
+        headers: {
+          Authorization: `Bearer ${store.state.token}`,
+        }
+      }
+    });
 
-    setInterval(() => {
-      activities.value.unshift(
-      {
-        id: i++,
-        username: 'asdasdassad',
-        profile_image: 'http://localhost:8000/storage/assets/user.png',
-        earned: Math.floor(Math.random() * 2000),
-      });
-    }, 3000);
+    const activities = ref([]);
+
+    store.dispatch('getRecentActivities').then((response) => {
+      activities.value = response.data.activities;
+
+      pusher.subscribe('activities')
+          .bind('activities.created', ({ activity }) => {
+            activities.value.unshift(activity);
+          });
+    });
+
+    onBeforeUnmount(() => {
+      pusher.unsubscribe('activities');
+    });
 
     return {
       activities
@@ -95,8 +67,9 @@ export default {
 </script>
 
 <style scoped>
-.activity-enter, .activity-leave-to {
+.activity-enter-from,
+.activity-leave-to {
   opacity: 0;
-  transform: translateX(250px);
+  transform: translateX(-250px);
 }
 </style>

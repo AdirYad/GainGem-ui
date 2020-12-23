@@ -1,8 +1,8 @@
 <template>
   <transition name="bounce">
-    <div v-if="announcementBanner.is_enabled" class="tw-w-full tw-relative tw-flex tw-justify-center tw-shadow-md tw-text-white tw-items-center tw-bg-primary tw-px-8 tw-py-4">
-      <div v-html="announcementBanner.text" />
-      <button @click="announcementBanner.is_enabled = false" class="tw-absolute tw-text-sm" style="top: 50%; right: 12px; transform: translateY(-50%)">
+    <div v-if="$store.state.announcement_banner.is_enabled" class="tw-w-full tw-relative tw-flex tw-justify-center tw-shadow-md tw-text-white tw-items-center tw-bg-primary tw-px-8 tw-py-4">
+      <div v-html="$store.state.announcement_banner.text" />
+      <button @click="$store.state.announcement_banner.is_enabled = false" class="tw-absolute tw-text-sm" style="top: 50%; right: 12px; transform: translateY(-50%)">
         <fa-icon icon="times" />
       </button>
     </div>
@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -18,19 +17,7 @@ export default {
   setup() {
     const store = useStore();
 
-    const announcementBanner = ref({
-      is_enabled: false,
-    });
-
-    store.dispatch('getAnnouncementBanner').then((response) => {
-      if (response.data.announcement_banner) {
-        announcementBanner.value = response.data.announcement_banner;
-      }
-    });
-
-    return {
-      announcementBanner,
-    }
+    store.dispatch('getAnnouncementBanner');
   }
 }
 </script>

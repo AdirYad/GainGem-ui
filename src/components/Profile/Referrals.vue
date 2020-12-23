@@ -13,7 +13,7 @@
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="index + 1" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="referral.formatted_created_at" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="referral.username" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="referral.formatted_total_points" />
+        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="referral.referral_points" />
       </tr>
     </tbody>
   </table>

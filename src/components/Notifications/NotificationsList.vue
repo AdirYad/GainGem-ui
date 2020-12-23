@@ -24,6 +24,7 @@ export default {
 .notifications-list {
   margin-right: 15px;
   width: 320px;
+  z-index: 1000;
 }
 
 @media (max-width: 400px) {
