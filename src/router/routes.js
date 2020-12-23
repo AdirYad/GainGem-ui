@@ -23,11 +23,28 @@ export default [
         },
     },
     {
+        path: '/forgot-password',
+        name: 'ForgotPassword',
+        component: () => import('@/views/ForgotPassword.vue'),
+        meta: {
+            authorize: [],
+        },
+    },
+    {
+        path: '/reset-password',
+        name: 'ResetPassword',
+        component: () => import('@/views/ResetPassword.vue'),
+        meta: {
+            authorize: [],
+        },
+    },
+    {
         path: '/profile',
         name: 'Profile',
         component: () => import('@/views/Profile.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -40,6 +57,7 @@ export default [
         component: () => import('@/views/Rewards.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -52,6 +70,7 @@ export default [
         component: () => import('@/views/Invite.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -64,6 +83,7 @@ export default [
         component: () => import('@/views/Giveaway.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -76,6 +96,7 @@ export default [
         component: () => import('@/views/Tasks.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -88,6 +109,7 @@ export default [
         component: () => import('@/views/Offerwall.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
                 Roles.Supplier,
                 Roles.User,
@@ -100,9 +122,20 @@ export default [
         component: () => import('@/views/Admin.vue'),
         meta: {
             authorize: [
+                Roles.SuperAdmin,
                 Roles.Admin,
             ],
         }
+    },
+    {
+        path: '/terms',
+        name: 'Terms',
+        component: () => import('@/views/Terms.vue'),
+    },
+    {
+        path: '/privacy',
+        name: 'Privacy',
+        component: () => import('@/views/Privacy.vue'),
     },
     {
         path: '/#',

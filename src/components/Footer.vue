@@ -1,6 +1,8 @@
 <template>
   <footer class="tw-flex tw-items-center tw-flex-col tw-bg-primary tw-px-4 sm:tw-px-8 md:tw-px-16 tw-py-6 lg:tw-py-8">
-    <div class="logo" />
+    <router-link :to="{ name: 'Home' }">
+      <div class="logo" />
+    </router-link>
     <div :class="{ 'tw-hidden lg:tw-flex' : $store.getters.isLoggedIn }" class="tw-mt-4 tw-flex tw-justify-center tw-flex-wrap">
       <a href="#" class="social tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold">
         <svg width="24" height="24" viewBox="0 0 34 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,10 +28,10 @@
 
     <div :class="{ 'tw-hidden lg:tw-block' : $store.getters.isLoggedIn }" class="md:tw-w-2/4 tw-border-t tw-border-solid tw-border-transparent-50 tw-py-4 tw-mt-4">
       <div class="tw-text-center">
-        <router-link :to="{ name: '#' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
+        <router-link :to="{ name: 'Terms' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
           Terms
         </router-link>
-        <router-link :to="{ name: '#' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
+        <router-link :to="{ name: 'Privacy' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-200">
           Privacy
         </router-link>
       </div>

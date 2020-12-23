@@ -39,8 +39,7 @@ export default {
         });
 
         hasSentVerification.value = true;
-      })
-      .catch((err) => {
+      }).catch((err) => {
         if (err.response.status !== 422) {
           return;
         }

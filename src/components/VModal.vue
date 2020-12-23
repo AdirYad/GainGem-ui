@@ -1,11 +1,11 @@
 <template>
   <teleport to="#modal">
     <transition name="fade">
-      <div class="modal-overlay" @click="$emit('closeModal')" v-if="visible"></div>
+      <div class="modal-overlay" @click="$emit('update:visible', false)" v-if="visible"></div>
     </transition>
     <transition name="fade">
       <div class="modal" v-if="visible">
-        <button @click="$emit('closeModal')" class="tw-absolute tw-text-sm tw-text-red-500" style="top: 12px; right: 12px">
+        <button @click="$emit('update:visible', false)" class="tw-absolute tw-text-sm" style="top: 12px; right: 12px">
           <fa-icon icon="times" />
         </button>
         <div class="tw-relative tw-overflow-scroll" style="max-height: 90vh">
@@ -27,7 +27,6 @@ export default {
       required: true,
     }
   },
-  emits: ['closeModal'],
   setup(props) {
     watch(() => props.visible, () => {
       document.documentElement.style.overflow = props.visible ? 'hidden' : 'auto';
@@ -62,8 +61,6 @@ export default {
   }
 
   p {
-    font-size: 16px;
-    font-weight: 400;
     margin-bottom: 15px;
   }
 }

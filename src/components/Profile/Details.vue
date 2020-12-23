@@ -46,7 +46,7 @@
     </div>
     <div class="tw-flex tw-flex-wrap">
       <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
-        <label class="tw-flex tw-justify-between tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="password">
+        <label class="tw-flex tw-justify-between tw-flex-wrap tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="password">
           Password
           <button v-if="auth.confirmPassword === null" @click="editPassword" type="button" class="tw-rounded-full tw-px-4 tw-mr-2 tw-bg-primary tw-text-white p-2 tw-leading-none tw-flex tw-items-center">
             Edit

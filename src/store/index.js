@@ -1,4 +1,5 @@
 import { Offerwalls } from "@/_helpers/offerwalls";
+import { Rewards } from "@/_helpers/rewards";
 import { createStore } from 'vuex'
 import { axiosInstance } from '@/_helpers/axios';
 import { Roles } from '@/_helpers/roles';
@@ -21,11 +22,18 @@ export default createStore({
       total_offers_completed: 0,
     },
     offerwalls: Offerwalls,
+    rewards: Rewards,
+    announcement_banner: {
+      text: '',
+      is_enabled: false,
+    },
   },
   getters: {
     isLoggedIn: (state) => typeof state.token === "string",
-    isRoleSupplier: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Supplier,
-    isRoleAdmin: (state, getters) => getters.isLoggedIn && state.user && state.user.role === Roles.Admin,
+    isUser: (state, getters) => getters.isLoggedIn && state.user,
+    isRoleSupplier: (state, getters) => getters.isUser && state.user.role === Roles.Supplier,
+    isRoleAdmin: (state, getters) => getters.isUser && state.user.role === Roles.Admin,
+    isRoleSuperAdmin: (state, getters) => getters.isUser && state.user.role === Roles.SuperAdmin,
   },
   mutations: {
     pushNotification(state, notification) {
@@ -79,6 +87,10 @@ export default createStore({
       localStorage.removeItem('daily_tasks');
     },
 
+    setAnnouncementBanner(state, announcementBanner) {
+      state.announcement_banner = announcementBanner;
+    },
+
     tempEmailVerification(state) {
       state.user.email_verified_at = 1;
       localStorage.setItem('user', JSON.stringify(state.user));
@@ -120,6 +132,41 @@ export default createStore({
         commit('setToken', response.data);
       });
     },
+    forgotPassword({ commit, getters }, payload) {
+      if (getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/forgot-password', payload);
+    },
+    checkForgotPasswordToken({ commit, getters }, token) {
+      if (getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/forgot-password/check-token', { token });
+    },
+    resetPassword({ commit, getters }, payload) {
+      if (getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/forgot-password/reset', payload);
+    },
+    getPointsValue({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('points');
+    },
+    updatePointsValue({ getters }, points) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleAdmin) {
+        return;
+      }
+
+      return axiosInstance.put('points', { 'points': points });
+    },
     logout({ commit }) {
       commit('removeUser');
       commit('removeToken');
@@ -140,13 +187,17 @@ export default createStore({
       });
     },
     updateUser({ commit, getters, state }, payload) {
-      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+      if (! getters.isLoggedIn && (! payload.user_id || ! state.user && ! state.user.id)) {
         return;
       }
 
+      if (payload.user_id) {
+        return axiosInstance.put(`/users/${payload.user_id}`, payload);
+      }
+
       return axiosInstance.post(`/users/${state.user.id}`, payload).then((response) => {
-        commit('setUser', response.data);
-      });
+          commit('setUser', response.data);
+        });
     },
     verifyEmail({ dispatch, commit, getters, state }, token) {
       return axiosInstance.post('/verify', {
@@ -159,14 +210,42 @@ export default createStore({
         }
       });
     },
-    resendEmailVerification({ getters, state }) {
-      if (! getters.isLoggedIn || ! state.user || state.user && (! state.user.email || state.user.email_verified_at)) {
+    resendEmailVerification({ getters, state }, email = null) {
+      if (! email && (! getters.isLoggedIn || ! state.user || state.user && (! state.user.email || state.user.email_verified_at))) {
         return;
       }
 
       return axiosInstance.post('/resend-verification', {
-        email: state.user.email
+        email: email ? email : state.user.email,
       });
+    },
+    getPromoCodes({ getters }, page) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/coupons?page=${page}`);
+    },
+    storePromoCode({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('/coupons', payload);
+    },
+    updatePromoCode({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put(`/coupons/${payload.promo_code_id}`, payload);
+    },
+    deletePromoCode({ getters }, code) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.delete(`/coupons/${code}`);
     },
     redeemPromoCode({ getters, commit }, promoCode) {
       if (! getters.isLoggedIn) {
@@ -176,6 +255,76 @@ export default createStore({
       return axiosInstance.post(`/coupons/${promoCode}/redeems`).then((response) => {
         commit('setUser', response.data);
       });
+    },
+    getRewards({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('rewards');
+    },
+    redeemReward({ getters }, payload) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('rewards', payload);
+    },
+    getGiftCards({ getters }, { page, provider }) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/gift-cards?page=${page}&provider=${provider}`);
+    },
+    storeGiftCard({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('/gift-cards', payload);
+    },
+    updateGiftCard({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put(`/gift-cards/${payload.gift_card_id}`, payload);
+    },
+    deleteGiftCard({ getters }, reward_id) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.delete(`/gift-cards/${reward_id}`);
+    },
+    getRobuxCredentials({ getters }) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get('robux');
+    },
+    updateRobuxCredentials({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('robux', payload);
+    },
+    getBitcoinCredentials({ getters }) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get('bitcoin');
+    },
+    updateBitcoinCredentials({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('bitcoin', payload);
     },
     getDailyTasks({ getters, commit }) {
       if (! getters.isLoggedIn) {
@@ -212,12 +361,27 @@ export default createStore({
           commit('updateDailyTasks', offers_count);
       });
     },
-    getAnnouncementBanner({ getters }) {
+    getAnnouncementBanner({ getters, commit }) {
       if (! getters.isLoggedIn) {
         return;
       }
 
-      return axiosInstance.get('/announcement-banner');
+      return axiosInstance.get('/announcement-banner').then((response) => {
+        if (response.data.announcement_banner) {
+          commit('setAnnouncementBanner', response.data.announcement_banner)
+        }
+      });
+    },
+    updateAnnouncementBanner({ getters, commit }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('/announcement-banner', payload).then((response) => {
+        if (response.data.announcement_banner) {
+          commit('setAnnouncementBanner', response.data.announcement_banner)
+        }
+      });
     },
     getTransactions({ getters, state }) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
@@ -225,6 +389,13 @@ export default createStore({
       }
 
       return axiosInstance.get(`/users/${state.user.id}/transactions`);
+    },
+    getRecentActivities({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/activities');
     },
     getActivities({ getters, state }) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
@@ -246,6 +417,27 @@ export default createStore({
       }
 
       return axiosInstance.get(`/users/${state.user.id}/referrals/stats`);
+    },
+    getUsers({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/users?page=${payload.page}` + (payload.username ? `&username=${payload.username}` : ''));
+    },
+    banUser({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post(`/users/${payload.user_id}/bans`, { ban_reason: payload.ban_reason });
+    },
+    unbanUser({ getters }, user_id) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.delete(`/users/${user_id}/bans`);
     },
   },
   modules: {

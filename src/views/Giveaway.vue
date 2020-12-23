@@ -24,12 +24,18 @@
           </div>
         </div>
         <div class="tw-w-full sm:tw-w-1/3 tw-mt-4 sm:tw-m-0">
-          <button v-if="$store.state.user && ! $store.state.user.registered_giveaway_at" @click="enterGiveaway" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+          <button v-if="$store.state.user && ! $store.state.user.registered_giveaway_at" @click="$refs.hcaptcha.execute()" class="tw-w-full sm:tw-w-auto tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             Enter Giveaway
           </button>
           <div v-else class="tw-w-full sm:tw-w-auto tw-inline-block tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             You've entered
           </div>
+
+          <VueHcaptcha :sitekey="sitekey"
+                       @verify="enterGiveaway"
+                       size="invisible"
+                       ref="hcaptcha"
+          />
         </div>
       </div>
     </div>
@@ -77,6 +83,14 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div v-else class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-12">
+      <LoopingRhombusesSpinner
+          :animation-duration="2500"
+          :rhombus-size="25"
+          color="var(--primary-color)"
+      />
     </div>
 
     <div class="tw-text-primary tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-my-4 lg:tw-my-8">
@@ -145,11 +159,17 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import Pusher from 'pusher-js/with-encryption';
+import { LoopingRhombusesSpinner } from 'epic-spinners';
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 import { useStore } from 'vuex';
 import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
 export default {
   name: 'Giveaway',
+  components: {
+    LoopingRhombusesSpinner,
+    VueHcaptcha,
+  },
   setup: function () {
     const store = useStore();
 
@@ -164,6 +184,7 @@ export default {
       }
     });
 
+    const sitekey = ref(process.env.VUE_APP_HCAPTCHA_SITEKEY);
     const giveaway = ref({});
     const timer = ref(null);
 
@@ -280,11 +301,14 @@ export default {
             type: 'error',
             message: err.response.data.message,
           });
+
+          store.dispatch('getLoggedUser');
         }
       });
     };
 
     return {
+      sitekey,
       giveaway,
       countdown,
       enterGiveaway,
