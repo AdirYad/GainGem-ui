@@ -12,6 +12,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-2",
+    "@hcaptcha/vue-hcaptcha": "^0.2.4",
     "@vuelidate/core": "^2.0.0-alpha.7",
     "@vuelidate/validators": "^2.0.0-alpha.5",
     "axios": "^0.21.0",

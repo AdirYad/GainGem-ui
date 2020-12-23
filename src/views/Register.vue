@@ -1,7 +1,7 @@
 <template>
   <div class="authentication-form tw-w-screen tw-h-screen tw-bg-secondary tw-flex tw-items-center tw-justify-center tw-flex-col tw-overflow-auto tw-p-10">
     <img alt="logo" src="@/assets/images/Icon.png">
-    <form @submit.prevent="register" class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-px-10 tw-py-12">
+    <form @submit.prevent="openHcaptcha" class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-px-10 tw-py-12">
       <div class="tw-mb-4">
         <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="email">
           Email
@@ -85,7 +85,14 @@
           />
         </div>
 
-        <router-link :to="{name: 'Login'}" class="tw-mt-4 tw-text-center tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary">
+        <VueHcaptcha :sitekey="sitekey"
+                     @verify="register"
+                     @opened="isRegistering = false"
+                     size="invisible"
+                     ref="hcaptcha"
+        />
+
+        <router-link :to="{ name: 'Login' }" class="tw-mt-4 tw-text-center tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary">
           You have already an account?
         </router-link>
       </div>
@@ -95,6 +102,7 @@
 
 <script>
 import { LoopingRhombusesSpinner } from 'epic-spinners';
+import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
 import { required, minLength, maxLength, email, sameAs } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
@@ -105,10 +113,13 @@ export default {
   name: 'Register',
   components: {
     LoopingRhombusesSpinner,
+    VueHcaptcha,
   },
   setup() {
     const store = useStore();
 
+    const sitekey = ref(process.env.VUE_APP_HCAPTCHA_SITEKEY);
+    const hcaptcha = ref(null)
     const isRegistering = ref(false)
     const auth = reactive({
       username: '',
@@ -149,16 +160,6 @@ export default {
     });
 
     const register = () => {
-      v$.value.$touch();
-
-      if (v$.value.confirmPassword.sameAsPassword.$invalid && auth.password === auth.confirmPassword) {
-        v$.value.confirmPassword.$reset();
-      }
-
-      if (v$.value.$invalid) {
-        return;
-      }
-
       isRegistering.value = true;
       errors.value = {};
 
@@ -182,6 +183,21 @@ export default {
       });
     }
 
+    const openHcaptcha = () => {
+      v$.value.$touch();
+
+      if (v$.value.confirmPassword.sameAsPassword.$invalid && auth.password === auth.confirmPassword) {
+        v$.value.confirmPassword.$reset();
+      }
+
+      if (v$.value.$invalid) {
+        return;
+      }
+
+      isRegistering.value = true;
+      hcaptcha.value.execute()
+    }
+
     const resetErrors = (key) => {
       v$.value[key].$reset();
       delete errors.value[key];
@@ -189,10 +205,13 @@ export default {
 
     return {
       v$,
+      sitekey,
+      hcaptcha,
       isRegistering,
       auth,
       errors,
       register,
+      openHcaptcha,
       resetErrors,
     }
   },
