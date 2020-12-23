@@ -128,6 +128,16 @@ export default [
         }
     },
     {
+        path: '/terms',
+        name: 'Terms',
+        component: () => import('@/views/Terms.vue'),
+    },
+    {
+        path: '/privacy',
+        name: 'Privacy',
+        component: () => import('@/views/Privacy.vue'),
+    },
+    {
         path: '/#',
         name: '#',
         component: () => import('@/views/Home.vue'),
