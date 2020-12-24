@@ -18,15 +18,15 @@
     </div>
     <div>
       <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-3">
-        Promo Code
+        Promo Codes
       </div>
       <div class="tw-flex tw-flex-wrap tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-3/5 tw-mb-3 sm:tw-mb-6 md:tw-m-0">
           <div class="tw-text-lg xl:tw-text-xl tw-font-medium tw-mb-3">
-            Add your promo code and get Free Credits
+            Redeem a promocode for free points
           </div>
           <div class="tw-text-sm">
-            We give Promo Codes daily in our social media accounts and to our social media influencers, Make sure you follow us to get more Points!
+            You can find promo codes in videos from our sponsors! <br> We also often post promo codes on our social media so make sure to follow us everywhere!
           </div>
         </div>
         <div class="tw-w-full md:tw-w-1/2 xl:tw-w-1/4 tw-flex tw-flex-col tw-justify-center tw-m-auto md:tw-pl-6 xl:tw-p-0">
@@ -65,10 +65,10 @@
     <main class="landing-section hero tw-h-screen tw-flex tw-justify-around xl:tw-justify-center tw-items-center tw-flex-col xl:tw-flex-row">
       <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
           <h1 class="tw-font-bold tw-text-3xl lg:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
-            Earn Points & Withdraw Anytime
+            Earn Points & Redeem Rewards
           </h1>
           <p class="tw-text-sm xl:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
-            Earn instant rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
+            Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
           </p>
           <router-link :to="{name: 'Register'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             <fa-icon icon="sign-in-alt" />
