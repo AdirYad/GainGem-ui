@@ -10,7 +10,7 @@
         </router-link>
       </div>
       <div class="tw-bg-red-600 tw-w-full sm:tw-w-1/3 xl:tw-w-1/4 tw-h-12 tw-rounded-xl">
-        <a href="https://ezrewards.reamaze.com/articles/missing-points" target="_blank" class="tw-uppercase tw-tracking-wider tw-rounded-xl tw-w-full tw-h-full tw-flex tw-text-secondary tw-justify-center tw-items-center">
+        <a href="https://ezrewards.reamaze.com/kb/missing-points" target="_blank" class="tw-uppercase tw-tracking-wider tw-rounded-xl tw-w-full tw-h-full tw-flex tw-text-secondary tw-justify-center tw-items-center">
           <fa-icon icon="exclamation" />
           <div class="tw-text-sm sm:tw-text-base tw-uppercase tw-tracking-wider tw-ml-3">
              Missing Points?
