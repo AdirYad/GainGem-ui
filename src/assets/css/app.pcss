@@ -12,6 +12,10 @@
   --header-unsigned-height: 100px;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -258,10 +262,13 @@ img {
 }
 
 .authentication-form {
-  > img {
+  > a {
     height: 80px;
-    margin-top: 80px;
     margin-bottom: 40px;
+
+    img {
+      height: 80px;
+    }
   }
 
   > form {
@@ -269,7 +276,7 @@ img {
   }
 }
 
-@media screen and (max-height: 579px) {
+@media screen and (max-height: 623px) {
   .authentication-form {
     padding-top: 10vh;
     padding-bottom: 10vh;
