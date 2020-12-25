@@ -71,12 +71,12 @@
                   </option>
                 </select>
             </div>
-            <button v-if="! confirmation" @click="confirmation = true" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" style="height: 34px" type="button">
+            <button v-if="! confirmation" @click="confirmation = true" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
               Redeem Reward
             </button>
             <div v-else class="tw-flex">
               <div class="tw-w-1/2 tw-pr-1">
-                <button v-if="! isRedeeming" @click="redeem" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" style="height: 34px" type="button">
+                <button v-if="! isRedeeming" @click="redeem" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
                   Confirm
                 </button>
 
@@ -89,7 +89,7 @@
                 </div>
               </div>
               <div class="tw-w-1/2 tw-pl-1">
-                <button @click="confirmation = false" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" style="height: 34px" type="button">
+                <button @click="confirmation = false" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
                   Cancel
                 </button>
               </div>
