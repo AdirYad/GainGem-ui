@@ -116,15 +116,16 @@
         </tr>
       </tbody>
     </table>
-
-    <div v-if="! rewardStockObj.gift_cards" class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-6">
-      <LoopingRhombusesSpinner
-          :animation-duration="2500"
-          :rhombus-size="25"
-          color="var(--primary-color)"
-      />
-    </div>
   </div>
+
+  <div v-if="! rewardStockObj.gift_cards" class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-6">
+    <LoopingRhombusesSpinner
+        :animation-duration="2500"
+        :rhombus-size="25"
+        color="var(--primary-color)"
+    />
+  </div>
+
   <Pagination v-if="rewardStockObj.pagination" v-model="page" :records="rewardStockObj.pagination.total" :per-page="rewardStockObj.pagination.per_page" @paginate="getGiftCards" :options="{ chunk: 5 }" />
   <VModal v-model:visible="modal.visible">
     <form @submit.prevent="edit" class="tw-px-2">
