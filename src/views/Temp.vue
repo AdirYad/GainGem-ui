@@ -30,7 +30,7 @@ import Users from '@/components/Admin/Users';
 import AnnouncementBanner from '@/components/Admin/AnnouncementBanner';
 
 export default {
-  name: 'Admin',
+  name: 'Temp',
   components: {
     Tab,
     Tabs,
@@ -38,6 +38,6 @@ export default {
     PromoCodes,
     Users,
     AnnouncementBanner,
-  },
+  }
 }
 </script>

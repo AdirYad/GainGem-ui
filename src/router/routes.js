@@ -128,6 +128,17 @@ export default [
         }
     },
     {
+        path: '/temp',
+        name: 'Temp',
+        component: () => import('@/views/Temp.vue'),
+        meta: {
+            authorize: [
+                Roles.SuperAdmin,
+                Roles.Admin,
+            ],
+        }
+    },
+    {
         path: '/terms',
         name: 'Terms',
         component: () => import('@/views/Terms.vue'),
