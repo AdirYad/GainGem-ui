@@ -100,8 +100,8 @@
         <tr v-if="rewardStockObj.gift_cards" v-for="(giftCard, index) in rewardStockObj.gift_cards" :key="index"  class="tw-table-row">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.code" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.country ? giftCard.country : 'International'" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + (giftCard.value).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.value * pointsValue).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + (giftCard.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.value * pointsValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.transaction ? giftCard.transaction.user.username : ''" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
