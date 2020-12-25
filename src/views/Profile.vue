@@ -49,7 +49,7 @@
           <Tab name="Referrals" query="referrals">
             <Referrals />
           </Tab>
-      </Tabs>
+        </Tabs>
       </div>
     </div>
   </div>
