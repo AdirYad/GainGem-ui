@@ -119,7 +119,7 @@ export default [
     {
         path: '/admin',
         name: 'Admin',
-        component: () => import('@/views/Admin.vue'),
+        component: () => import('@/views/Terms.vue'),
         meta: {
             authorize: [
                 Roles.SuperAdmin,
