@@ -71,30 +71,28 @@
                   </option>
                 </select>
             </div>
-            <div class="tw-flex">
-              <button v-if="! confirmation" @click="confirmation = true" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
-                Redeem Reward
-              </button>
-              <template v-else>
-                <div class="tw-w-1/2 tw-pr-1">
-                  <button v-if="! isRedeeming" @click="redeem" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
-                    Confirm
-                  </button>
+            <button v-if="! confirmation" @click="confirmation = true" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" style="height: 34px" type="button">
+              Redeem Reward
+            </button>
+            <div v-else class="tw-flex" style="height: 34px">
+              <div class="tw-w-1/2 tw-pr-1">
+                <button v-if="! isRedeeming" @click="redeem" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+                  Confirm
+                </button>
 
-                  <div v-else class="tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full" style="padding: 11px 0">
-                    <LoopingRhombusesSpinner
-                        :animation-duration="2500"
-                        :rhombus-size="10"
-                        color="white"
-                    />
-                  </div>
+                <div v-else class="tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full" style="padding: 11px 0">
+                  <LoopingRhombusesSpinner
+                      :animation-duration="2500"
+                      :rhombus-size="10"
+                      color="white"
+                  />
                 </div>
-                <div class="tw-w-1/2 tw-pl-1">
-                  <button @click="confirmation = false" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
-                    Cancel
-                  </button>
-                </div>
-              </template>
+              </div>
+              <div class="tw-w-1/2 tw-pl-1">
+                <button @click="confirmation = false" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>
