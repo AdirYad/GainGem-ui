@@ -15,7 +15,9 @@
         </span>
         <span class="tw-ml-1">
           from
-          {{ (/^[aeiou]$/i).test(activity.formatted_type[0]) ? 'an' : 'a' }}
+          <template v-if="! activity.provider">
+            {{ (/^[aeiou]$/i).test(activity.formatted_type[0]) ? 'an' : 'a' }}
+          </template>
           {{ activity.formatted_type }}
         </span>
       </div>
