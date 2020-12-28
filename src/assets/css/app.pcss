@@ -30,6 +30,12 @@ html {
   }
 }
 
+@media (max-width: 767px) {
+  #reamaze-container {
+    bottom: 0 !important;
+  }
+}
+
 .container {
   min-height: 100vh;
   background: var(--secondary-color);
@@ -211,6 +217,15 @@ button:focus, input:focus {
       height: calc(var(--header-unsigned-height) - 20px);
       width: 200px;
       background: url("../images/Logo.png") no-repeat 50%;
+      background-size: cover;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .logo {
+      height: calc(var(--header-unsigned-height) - 60px);
+      width: calc(var(--header-unsigned-height) - 60px);
+      background: url("../images/Icon.png") no-repeat 50%;
       background-size: cover;
     }
   }
