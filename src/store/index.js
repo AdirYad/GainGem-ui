@@ -439,6 +439,13 @@ export default createStore({
 
       return axiosInstance.delete(`/users/${user_id}/bans`);
     },
+    getSuppliers({ getters }, page) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/suppliers?page=${page}`);
+    },
   },
   modules: {
   },
