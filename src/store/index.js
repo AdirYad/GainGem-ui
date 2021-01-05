@@ -446,6 +446,27 @@ export default createStore({
 
       return axiosInstance.get(`/suppliers?page=${page}`);
     },
+    updateSupplier({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put(`/suppliers/${payload.supplier_id}`, payload);
+    },
+    getSupplierRate({ getters }) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get('supplier-rate');
+    },
+    updateSupplierRate({ getters }, rate) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put('supplier-rate', { 'rate': rate });
+    },
   },
   modules: {
   },

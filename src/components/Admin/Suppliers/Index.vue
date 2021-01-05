@@ -14,10 +14,10 @@
       <tbody class="tw-flex-1 sm:tw-flex-none">
         <tr v-if="suppliersObj.suppliers" v-for="(supplier, index) in suppliersObj.suppliers" :key="index" class="tw-table-row">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="supplier.username" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="5" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + (1233).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(4000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(5000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + supplier.formatted_robux_rate" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + supplier.formatted_groups_total_earnings" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + supplier.formatted_groups_available_earnings" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + supplier.formatted_total_supplier_withdrawals" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
               <button @click="openEditModal(supplier)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
@@ -42,62 +42,38 @@
   <VModal v-model:visible="modal.visible">
     <form @submit.prevent="editRate" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
-        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
-          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_code">
-            Code
+        <div class="tw-w-full tw-mb-4" :class="{ 'sm:tw-w-1/2 sm:tw-pr-2' : modal.rate_type === 'custom' }">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="rate_type">
+            Rate Type
           </label>
-          <input id="edit_code" type="text" placeholder="Code"
-                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
-                 v-model="modal.code"
-                 :class="{ 'input-invalid tw-mb-3' : v$.code.$invalid || errors.code }"
-                 @keydown="resetErrors('code')"
-          >
-          <p v-if="v$.code.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-            {{ v$.code.$errors[0].$message }}
-          </p>
-          <p v-else-if="errors.code" class="tw-text-red-500 tw-text-xs tw-italic">
-            {{ errors.code[0] }}
-          </p>
-        </div>
-        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pl-2">
-          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_country">
-            Country
-          </label>
-          <select v-model="modal.country" id="edit_country"
+          <select v-model="modal.rate_type" @change="modal.robux_rate = null" id="rate_type"
                   class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
                   style="height: 38px"
-                  :class="{ 'input-invalid tw-mb-3' : errors.country }"
-                  @keydown="resetErrors('country')"
           >
-            <option :value="null" selected>
-              International
+            <option value="global" selected>
+              Global Rate
             </option>
-            <option v-for="(country, index) in countries" :key="Index" :value="country.country">
-              {{ country.country }}
+            <option value="custom">
+              Custom Rate
             </option>
           </select>
-          <p v-if="errors.country" class="tw-text-red-500 tw-text-xs tw-italic">
-            {{ errors.country[0] }}
-          </p>
         </div>
-      </div>
-      <div class="tw-flex tw-flex-wrap">
-        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4">
-          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_value">
-            Value
+        <div v-if="modal.rate_type === 'custom'" class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_rate">
+            Rate
           </label>
-          <input id="edit_value" type="number" min="1" placeholder="Value"
+          <input id="edit_rate" type="number" min="1" placeholder="Rate"
                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
-                 v-model="modal.value"
-                 :class="{ 'input-invalid tw-mb-3' : v$.value.$invalid || errors.value }"
-                 @keydown="resetErrors('value')"
+                 v-model="modal.robux_rate"
+                 :class="{ 'input-invalid tw-mb-3' : v$.robux_rate.$invalid || errors.robux_rate }"
+                 @keydown="resetErrors('robux_rate')"
           >
-          <p v-if="v$.value.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-            {{ v$.value.$errors[0].$message }}
+          <p v-if="v$.robux_rate.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ v$.robux_rate.$errors[0].$message }}
           </p>
-          <p v-else-if="errors.value" class="tw-text-red-500 tw-text-xs tw-italic">
-            {{ errors.value[0] }}
+          <p v-else-if="errors.robux_rate" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ errors.robux_rate[0] }}
           </p>
         </div>
       </div>
@@ -113,7 +89,7 @@ import Pagination from 'v-pagination-3';
 import VModal from '@/components/VModal';
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import useVuelidate from '@vuelidate/core';
-import { maxLength, minLength, required, minValue, maxValue } from '@vuelidate/validators';
+import { requiredIf, required, minValue, maxValue } from '@vuelidate/validators';
 import { useStore } from 'vuex';
 import { ref, reactive, toRef, watch } from 'vue';
 
@@ -124,59 +100,36 @@ export default {
     VModal,
     LoopingRhombusesSpinner,
   },
+  props: {
+    globalRate: {
+      type: Number,
+      required: true,
+    },
+  },
   setup(props) {
     const store = useStore();
 
-    const countries = require('country-json/src/country-by-name.json');
     const suppliersObj = ref({});
-    const provider = ref(props.provider);
     const page = ref(1);
-    const payload = reactive({
-      provider: props.provider,
-      codes: [],
-      code: '',
-      country: null,
-      value: null,
-    });
     const modal = reactive({
-      gift_card: null,
+      supplier: null,
       visible: false,
-      country: null,
-      code: '',
-      value: null,
+      rate_type: 'global',
+      robux_rate: null,
     });
 
-    const isSavingCode = ref(false);
     const errors = ref({});
 
     const rules = {
-      codes: {
-        required,
-        minLength: minLength(1),
-        $each: {
-          code: {
-            required,
-            minLength: minLength(2),
-            maxLength: maxLength(255),
-          },
-        },
-      },
-      code: {
-        required,
-        minLength: minLength(2),
-        maxLength: maxLength(255),
-      },
-      value: {
-        required,
+      robux_rate: {
+        requiredIf: requiredIf(() => modal.rate_type === 'custom'),
         minValue: minValue(1),
-        maxValue: maxValue(5000),
+        maxValue: maxValue(100),
       },
     };
 
     const v$ = useVuelidate(rules, {
-      codes: toRef(payload, 'codes'),
-      code: toRef(payload, 'code'),
-      value: toRef(payload, 'value'),
+      robux_rate: toRef(modal, 'robux_rate'),
     });
 
     watch(() => modal.visible, () => {
@@ -184,20 +137,26 @@ export default {
       v$.value.$reset();
     });
 
+    watch(() => props.globalRate, () => {
+      if (suppliersObj.value.suppliers) {
+        suppliersObj.value.suppliers.forEach((supplier) => {
+          if (! supplier.robux_rate) {
+            supplier.formatted_robux_rate = props.globalRate;
+          }
+        });
+      }
+    });
+
     getSuppliers();
 
     return {
-      countries,
       suppliersObj,
       page,
-      payload,
       modal,
       errors,
       v$,
       getSuppliers,
-      saveCode,
       openEditModal,
-      create,
       editRate,
       resetErrors,
     };
@@ -210,133 +169,15 @@ export default {
       });
     }
 
-    function saveCode() {
-      isSavingCode.value = true;
-
-      setTimeout(() => {
-        const codes = payload.code.split(' ').filter((str) => /\S/.test(str));
-        const codesArr = [];
-        const errors = {
-          'list': false,
-          'between': false,
-        };
-
-        for (let i = 0; i < codes.length; i++) {
-          if (payload.codes.findIndex((code) => code.code === codes[i]) !== -1) {
-            if (! errors.list) {
-              store.dispatch('addNotification', {
-                type: 'error',
-                message: codes.length > 1 ? 'One of the codes is already in the list' : 'The code is already in the list',
-              });
-            }
-
-            codesArr.push(codes[i]);
-            errors.list = true;
-            continue;
-          }
-
-          if (codes[i].length < 2 || codes[i].length > 255) {
-            if (! errors.between) {
-              store.dispatch('addNotification', {
-                type: 'error',
-                message: 'Code must be between 2 to 255 characters!',
-              });
-            }
-
-            codesArr.push(codes[i]);
-            errors.between = true;
-            continue;
-          }
-
-          payload.codes.push({
-            id: (Math.random().toString(36) + codes[i]).substr(2),
-            code: codes[i],
-          });
-        }
-
-        payload.code = codesArr.join(' ');
-        isSavingCode.value = false;
-      }, 0);
-    }
-
-    function openEditModal(giftCard) {
-      modal.gift_card = giftCard;
+    function openEditModal(supplier) {
+      modal.supplier = supplier;
       modal.visible = true;
-      modal.country = giftCard.country;
-      modal.code = giftCard.code;
-      modal.value = giftCard.value;
-    }
-
-    function create() {
-      if (isSavingCode.value) {
-        isSavingCode.value = false;
-        return;
-      }
-
-      v$.value.$touch();
-
-      if (! v$.value.code.$invalid) {
-        saveCode();
-        v$.value.codes.$reset();
-        v$.value.code.$reset();
-      } else if (! v$.value.codes.$invalid && v$.value.code.$invalid) {
-        v$.value.code.$reset();
-      }
-
-      if (v$.value.$invalid) {
-        return;
-      }
-
-      errors.value = {};
-
-      setTimeout(() => {
-        store.dispatch('storeGiftCard', payload).then((response) => {
-          v$.value.$reset();
-
-          payload.codes = [];
-          payload.code = '';
-          payload.country = null;
-          payload.value = null;
-          suppliersObj.value.gift_cards.unshift(...response.data);
-          suppliersObj.value.pagination.total += response.data.length;
-
-          store.dispatch('addNotification', {
-            type: 'success',
-            message: 'Reward' + (response.data.length > 1 ? 's ' : ' ') + 'created successfully!',
-          });
-        }).catch((err) => {
-          if (err.response.status === 422 && err.response.data.errors) {
-            errors.value = err.response.data.errors;
-
-            let error = false;
-
-            for (let i = 0; i < payload.codes.length; i++) {
-              if (! errors.value['codes.' + i + '.code']) {
-                continue;
-              }
-
-              errors.value[payload.codes[i].id] = errors.value['codes.' + i + '.code'];
-              delete errors.value['codes.' + i + '.code'];
-
-              if (error) {
-                continue;
-              }
-
-              store.dispatch('addNotification', {
-                type: 'error',
-                message: payload.codes.length > 1 ? 'Some codes have already been taken' : 'The code has already been taken',
-              });
-
-              error = true;
-            }
-          }
-        });
-      }, 0);
+      modal.rate_type = supplier.robux_rate ? 'custom' : 'global';
+      modal.robux_rate = supplier.robux_rate ? supplier.formatted_robux_rate : null;
     }
 
     function editRate() {
       v$.value.$touch();
-      v$.value.codes.$reset();
 
       if (v$.value.$invalid) {
         return;
@@ -344,26 +185,28 @@ export default {
 
       errors.value = {};
 
-      const giftCardPayload = {
-        gift_card_id: modal.gift_card.id,
-        code: modal.code,
-        country: modal.country,
-        provider: payload.provider,
-        value: modal.value,
+      const payload = {
+        supplier_id: modal.supplier.id,
+        robux_rate: modal.robux_rate,
       };
 
-      store.dispatch('updateGiftCard', giftCardPayload).then((response) => {
+      console.log(modal)
+
+      store.dispatch('updateSupplier', payload).then((response) => {
         modal.visible = false;
-        console.log(response.data)
-        modal.gift_card.code = response.data.code;
-        modal.gift_card.country = response.data.country;
-        modal.gift_card.value = response.data.value;
+        modal.supplier.robux_rate = response.data.robux_rate;
+        modal.supplier.formatted_robux_rate = response.data.formatted_robux_rate;
 
         store.dispatch('addNotification', {
           type: 'success',
-          message: 'Reward saved successfully!',
+          message: 'Rate saved successfully!',
         });
       }).catch((err) => {
+        store.dispatch('addNotification', {
+          type: 'error',
+          message: 'Error occurred!',
+        });
+
         if (err.response.status === 422 && err.response.data.errors) {
           errors.value = err.response.data.errors;
         }
@@ -377,20 +220,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.chips-enter-from {
-  opacity: 0;
-  transform: translateX(250px);
-}
-
-.chips-leave-to {
-  opacity: 0;
-  transform: translateY(-100px);
-}
-</style>
