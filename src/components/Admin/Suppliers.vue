@@ -19,8 +19,8 @@
   </div>
 
   <Index v-if="chosenType === 'Suppliers'" :global-rate="supplierRate" />
-  <Bitcoin v-else-if="chosenType === 'bitcoin'" />
-  <GiftCard v-else-if="chosenType" :provider="chosenType" :points-value="supplierRate" />
+  <Groups v-else-if="chosenType === 'Groups'" />
+  <Payments v-else-if="chosenType === 'Payments'" />
 
   <VModal v-model:visible="modal.visible">
     <form @submit.prevent="updateSupplierRate" class="tw-px-2">
@@ -29,7 +29,7 @@
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_rate">
             Global Rate
           </label>
-          <input id="edit_rate" type="number" min="1" max="10000" placeholder="Rate"
+          <input id="edit_rate" type="number" min="1" max="100" placeholder="Rate"
                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.rate"
@@ -45,9 +45,9 @@
 
 <script>
 import Pagination from 'v-pagination-3';
-import GiftCard from '@/components/Admin/Rewards/GiftCard';
+import Payments from '@/components/Admin/Suppliers/Payments';
 import Index from '@/components/Admin/Suppliers/Index';
-import Bitcoin from '@/components/Admin/Rewards/Bitcoin';
+import Groups from '@/components/Admin/Suppliers/Groups';
 import VModal from '@/components/VModal';
 import { useStore } from 'vuex';
 import { ref, reactive } from 'vue';
@@ -56,9 +56,9 @@ export default {
   name: 'Admin.Suppliers',
   components: {
     Pagination,
-    GiftCard,
+    Payments,
     Index,
-    Bitcoin,
+    Groups,
     VModal,
   },
   setup() {

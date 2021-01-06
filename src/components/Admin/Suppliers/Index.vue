@@ -89,7 +89,7 @@ import Pagination from 'v-pagination-3';
 import VModal from '@/components/VModal';
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import useVuelidate from '@vuelidate/core';
-import { requiredIf, required, minValue, maxValue } from '@vuelidate/validators';
+import { requiredIf, minValue, maxValue } from '@vuelidate/validators';
 import { useStore } from 'vuex';
 import { ref, reactive, toRef, watch } from 'vue';
 
@@ -189,8 +189,6 @@ export default {
         supplier_id: modal.supplier.id,
         robux_rate: modal.robux_rate,
       };
-
-      console.log(modal)
 
       store.dispatch('updateSupplier', payload).then((response) => {
         modal.visible = false;

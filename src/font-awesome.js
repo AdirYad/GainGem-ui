@@ -18,6 +18,7 @@ import {
     faCog,
     faGavel,
     faUnlockAlt,
+    faLock,
     faInfinity,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -53,6 +54,7 @@ export default {
     faCog,
     faGavel,
     faUnlockAlt,
+    faLock,
     faInfinity,
 
     // Brands
