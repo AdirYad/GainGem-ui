@@ -98,15 +98,20 @@
     />
   </div>
 
-  <BarChart :data="chartData" :options="options" />
-
   <Pagination v-if="groupsObj.pagination" v-model="page" :records="groupsObj.pagination.total" :per-page="groupsObj.pagination.per_page" @paginate="getRobuxGroups" :options="{ chunk: 5 }" />
+
+  <template v-if="chartData.labels">
+    <div class="tw-text-primary tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-my-4 tw-text-center">
+      Monthly Sales
+    </div>
+    <LineChart v-if="chartData.labels" :data="chartData" :options="options" />
+  </template>
 </template>
 
 <script>
 import Pagination from 'v-pagination-3';
 import { LoopingRhombusesSpinner } from 'epic-spinners';
-import BarChart from '../BarChart';
+import LineChart from '../LineChart';
 import useVuelidate from '@vuelidate/core';
 import { maxLength, minLength, required, minValue, maxValue } from '@vuelidate/validators';
 import { useStore } from 'vuex';
@@ -117,10 +122,7 @@ export default {
   components: {
     Pagination,
     LoopingRhombusesSpinner,
-    BarChart,
-  },
-  mounted () {
-    this.renderChart(this.chartData, this.options)
+    LineChart,
   },
   setup() {
     const store = useStore();
@@ -133,39 +135,38 @@ export default {
       robux_group_id: null,
     });
     const chartData = reactive({
-      labels: ["Babol",	"Cabanatuan",	"Daegu",	"Jerusalem",	"Fairfield",	"New York",	"Gangtok", "Buenos Aires", "Hafar Al-Batin", "Idlib"],
       datasets: [
-        {
-          label: 'Line Chart',
-          data: [600,	1150,	342,	6050,	2522,	3241,	1259,	157,	1545, 9841],
-          fill: false,
-          borderColor: '#2554FF',
-          backgroundColor: '#2554FF',
-          borderWidth: 1
-        }
-      ]
+          {
+            label: 'Sales',
+            borderColor: "rgba(19, 160, 101, 1)",
+            backgroundColor: "rgba(19, 160, 101, 0.2)",
+            pointBackgroundColor: "rgba(19, 160, 101, 1)",
+            borderWidth: 3,
+            pointRadius: 2,
+          }
+      ],
     });
     const options = reactive({
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          },
-          gridLines: {
-            display: true
-          }
-        }],
-        xAxes: [ {
-          gridLines: {
-            display: false
-          }
-        }]
-      },
+      maintainAspectRatio: false,
       legend: {
-        display: true
+        display: false,
       },
-      responsive: true,
-      maintainAspectRatio: false
+      scales: {
+        yAxes: [
+          {
+            gridLines: {
+              zeroLineColor: "#bbb",
+            },
+          },
+        ],
+        xAxes: [
+          {
+            gridLines: {
+              zeroLineColor: "transparent",
+            },
+          },
+        ],
+      },
     });
 
     const errors = ref({});
@@ -215,6 +216,14 @@ export default {
 
       store.dispatch('getRobuxGroups', payload).then((response) => {
         groupsObj.value = response.data;
+
+        chartData.labels = getDaysInMonth();
+        chartData.datasets[0].data = [];
+
+        for (let i = 0; i < chartData.labels.length; i++) {
+          const earning = groupsObj.value.monthly_robux_earnings.find((earning) => earning.date === i + 1);
+          chartData.datasets[0].data[i] = earning ? earning.total_robux_amount : 0;
+        }
       });
     }
 
@@ -307,6 +316,21 @@ export default {
     function resetErrors(key) {
       v$.value[key].$reset();
       delete errors.value[key];
+    }
+
+    function getDaysInMonth() {
+      const date = new Date();
+      const days = [];
+      const month = date.getMonth();
+
+      date.setDate(1);
+
+      while (date.getMonth() === month) {
+        days.push(`${date.toLocaleString('default', { month: 'short' })} ${date.getDate()}`);
+        date.setDate(date.getDate() + 1);
+      }
+
+      return days;
     }
   },
 }
