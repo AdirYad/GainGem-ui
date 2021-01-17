@@ -79,7 +79,7 @@ export default {
     function getRobuxGroups() {
       delete groupsObj.value.groups;
 
-      store.dispatch('getRobuxGroups', page.value).then((response) => {
+      store.dispatch('getRobuxGroups', { page: page.value }).then((response) => {
         groupsObj.value = response.data;
       });
     }

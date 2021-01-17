@@ -467,12 +467,12 @@ export default createStore({
 
       return axiosInstance.put(`/suppliers/${payload.supplier_id}`, payload);
     },
-    getRobuxGroups({ getters }, page) {
-      if (! getters.isRoleSuperAdmin) {
+    getRobuxGroups({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleSupplier) {
         return;
       }
 
-      return axiosInstance.get(`suppliers/groups?page=${page}`);
+      return axiosInstance.get(`suppliers/groups?page=${payload.page}` + (payload.user_id ? `&user_id=${payload.user_id}` : ''));
     },
     disableRobuxGroup({ getters }, group_id) {
       if (! getters.isRoleSuperAdmin) {
@@ -487,6 +487,27 @@ export default createStore({
       }
 
       return axiosInstance.delete(`suppliers/groups/${group_id}/disability`);
+    },
+    storeRobuxGroup({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleSupplier) {
+        return;
+      }
+
+      return axiosInstance.post('suppliers/groups', payload);
+    },
+    deleteRobuxGroup({ getters }, group_id) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleSupplier) {
+        return;
+      }
+
+      return axiosInstance.delete(`suppliers/groups/${group_id}`);
+    },
+    refreshRobuxGroup({ getters }, group_id) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleSupplier) {
+        return;
+      }
+
+      return axiosInstance.post(`suppliers/groups/${group_id}/refresh`);
     },
     getSupplierPayments({ getters }, page) {
       if (! getters.isRoleSuperAdmin) {
