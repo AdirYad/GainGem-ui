@@ -117,6 +117,48 @@
   </div>
 
   <Pagination v-if="paymentsObj.pagination" v-model="page" :records="paymentsObj.pagination.total" :per-page="paymentsObj.pagination.per_page" @paginate="getSupplierPayments" :options="{ chunk: 5 }" />
+
+  <div v-if="paymentsObj.available_earnings && paymentsObj.total_earnings && paymentsObj.total_withdrawals" class="tw-text-center tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-mt-8">
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Total Earnings
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <span class="tw-text-primary tw-font-medium tw-text-2xl">
+          $
+        </span>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ paymentsObj.total_earnings }}
+        </span>
+      </div>
+    </div>
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Total Withdrawals
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <span class="tw-text-primary tw-font-medium tw-text-2xl">
+          $
+        </span>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ paymentsObj.total_withdrawals }}
+        </span>
+      </div>
+    </div>
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Available Earnings
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <span class="tw-text-primary tw-font-medium tw-text-2xl">
+          $
+        </span>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ paymentsObj.available_earnings }}
+        </span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -243,3 +285,15 @@ export default {
   },
 }
 </script>
+
+<style>
+.stats-card {
+  min-height: 150px;
+}
+
+@media (min-width: 1024px) {
+  .stats-card {
+    max-width: 300px;
+  }
+}
+</style>
