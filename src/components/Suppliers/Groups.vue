@@ -109,11 +109,8 @@
 
     <div class="tw-text-center tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8">
       <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
-        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
           Total Sold Lifetime
-        </div>
-        <div class="tw-mb-6">
-          Total of sold robux lifetime
         </div>
         <div class="tw-flex tw-justify-center tw-items-center">
           <svg class="tw-text-primary" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -129,11 +126,8 @@
         </div>
       </div>
       <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
-        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
           Total Sold Today
-        </div>
-        <div class="tw-mb-6">
-          Total of sold robux today
         </div>
         <div class="tw-flex tw-justify-center tw-items-center">
           <svg class="tw-text-primary" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -429,7 +423,7 @@ export default {
 }
 
 .stats-card {
-  min-height: 200px;
+  min-height: 150px;
 }
 
 @media (min-width: 1024px) {
