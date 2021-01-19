@@ -1,4 +1,41 @@
 <template>
+  <div v-if="groupsObj.total_robux_earnings && groupsObj.daily_robux_earnings" class="tw-text-center tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-4">
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Total Sold Lifetime
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <svg class="tw-text-primary" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>common/robux</title>
+          <desc>Created with Sketch.</desc>
+          <g id="common/robux" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <path style="fill: var(--primary-color)" d="M27.402,9.574 C29.009,10.502 30,12.218 30,14.074 L30,21.93 C30,23.787 29.009,25.502 27.402,26.43 L20.597,30.359 C18.99,31.287 17.009,31.287 15.402,30.359 L8.597,26.43 C6.99,25.502 6,23.787 6,21.93 L6,14.074 C6,12.218 6.99,10.502 8.597,9.574 L15.402,5.646 C17.009,4.718 18.99,4.718 20.597,5.646 L27.402,9.574 Z M16.313,7.429 L9.686,11.255 C8.642,11.858 8,12.971 8,14.177 L8,21.828 C8,23.033 8.642,24.147 9.686,24.75 L16.313,28.575 C17.357,29.178 18.642,29.178 19.686,28.575 L26.313,24.75 C27.357,24.147 28,23.033 28,21.828 L28,14.177 C28,12.971 27.357,11.858 26.313,11.255 L19.686,7.429 C18.642,6.826 17.357,6.826 16.313,7.429 L16.313,7.429 Z M19.385,9.567 L24.614,12.585 C25.471,13.08 26,13.995 26,14.986 L26,21.023 C26,22.013 25.471,22.928 24.614,23.423 L19.385,26.442 C18.528,26.937 17.471,26.937 16.614,26.442 L11.385,23.423 C10.528,22.928 10,22.013 10,21.023 L10,14.986 C10,13.995 10.528,13.08 11.385,12.585 L16.614,9.567 C17.471,9.072 18.528,9.072 19.385,9.567 L19.385,9.567 Z M15,21.004 L21,21.004 L21,15.004 L15,15.004 L15,21.004 Z" id="coin" fill="#FFFFFF"></path>
+          </g>
+        </svg>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ groupsObj.total_robux_earnings }}
+          </span>
+      </div>
+    </div>
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Total Sold Today
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <svg class="tw-text-primary" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <title>common/robux</title>
+          <desc>Created with Sketch.</desc>
+          <g id="common/robux" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <path style="fill: var(--primary-color)" d="M27.402,9.574 C29.009,10.502 30,12.218 30,14.074 L30,21.93 C30,23.787 29.009,25.502 27.402,26.43 L20.597,30.359 C18.99,31.287 17.009,31.287 15.402,30.359 L8.597,26.43 C6.99,25.502 6,23.787 6,21.93 L6,14.074 C6,12.218 6.99,10.502 8.597,9.574 L15.402,5.646 C17.009,4.718 18.99,4.718 20.597,5.646 L27.402,9.574 Z M16.313,7.429 L9.686,11.255 C8.642,11.858 8,12.971 8,14.177 L8,21.828 C8,23.033 8.642,24.147 9.686,24.75 L16.313,28.575 C17.357,29.178 18.642,29.178 19.686,28.575 L26.313,24.75 C27.357,24.147 28,23.033 28,21.828 L28,14.177 C28,12.971 27.357,11.858 26.313,11.255 L19.686,7.429 C18.642,6.826 17.357,6.826 16.313,7.429 L16.313,7.429 Z M19.385,9.567 L24.614,12.585 C25.471,13.08 26,13.995 26,14.986 L26,21.023 C26,22.013 25.471,22.928 24.614,23.423 L19.385,26.442 C18.528,26.937 17.471,26.937 16.614,26.442 L11.385,23.423 C10.528,22.928 10,22.013 10,21.023 L10,14.986 C10,13.995 10.528,13.08 11.385,12.585 L16.614,9.567 C17.471,9.072 18.528,9.072 19.385,9.567 L19.385,9.567 Z M15,21.004 L21,21.004 L21,15.004 L15,15.004 L15,21.004 Z" id="coin" fill="#FFFFFF"></path>
+          </g>
+        </svg>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ groupsObj.daily_robux_earnings }}
+          </span>
+      </div>
+    </div>
+  </div>
+
   <div class="tw-flex tw-flex-wrap">
     <div class="tw-w-full tw-mb-4">
       <form @submit.prevent="create">
@@ -105,44 +142,7 @@
       Monthly Sales
     </div>
 
-    <LineChart v-if="chartData.labels" :data="chartData" :options="options" />
-
-    <div class="tw-text-center tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8">
-      <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
-        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
-          Total Sold Lifetime
-        </div>
-        <div class="tw-flex tw-justify-center tw-items-center">
-          <svg class="tw-text-primary" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <title>common/robux</title>
-            <desc>Created with Sketch.</desc>
-            <g id="common/robux" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <path style="fill: var(--primary-color)" d="M27.402,9.574 C29.009,10.502 30,12.218 30,14.074 L30,21.93 C30,23.787 29.009,25.502 27.402,26.43 L20.597,30.359 C18.99,31.287 17.009,31.287 15.402,30.359 L8.597,26.43 C6.99,25.502 6,23.787 6,21.93 L6,14.074 C6,12.218 6.99,10.502 8.597,9.574 L15.402,5.646 C17.009,4.718 18.99,4.718 20.597,5.646 L27.402,9.574 Z M16.313,7.429 L9.686,11.255 C8.642,11.858 8,12.971 8,14.177 L8,21.828 C8,23.033 8.642,24.147 9.686,24.75 L16.313,28.575 C17.357,29.178 18.642,29.178 19.686,28.575 L26.313,24.75 C27.357,24.147 28,23.033 28,21.828 L28,14.177 C28,12.971 27.357,11.858 26.313,11.255 L19.686,7.429 C18.642,6.826 17.357,6.826 16.313,7.429 L16.313,7.429 Z M19.385,9.567 L24.614,12.585 C25.471,13.08 26,13.995 26,14.986 L26,21.023 C26,22.013 25.471,22.928 24.614,23.423 L19.385,26.442 C18.528,26.937 17.471,26.937 16.614,26.442 L11.385,23.423 C10.528,22.928 10,22.013 10,21.023 L10,14.986 C10,13.995 10.528,13.08 11.385,12.585 L16.614,9.567 C17.471,9.072 18.528,9.072 19.385,9.567 L19.385,9.567 Z M15,21.004 L21,21.004 L21,15.004 L15,15.004 L15,21.004 Z" id="coin" fill="#FFFFFF"></path>
-            </g>
-          </svg>
-          <span class="similar-integers tw-text-2xl tw-ml-2">
-            {{ groupsObj.total_robux_earnings }}
-          </span>
-        </div>
-      </div>
-      <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
-        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
-          Total Sold Today
-        </div>
-        <div class="tw-flex tw-justify-center tw-items-center">
-          <svg class="tw-text-primary" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <title>common/robux</title>
-            <desc>Created with Sketch.</desc>
-            <g id="common/robux" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <path style="fill: var(--primary-color)" d="M27.402,9.574 C29.009,10.502 30,12.218 30,14.074 L30,21.93 C30,23.787 29.009,25.502 27.402,26.43 L20.597,30.359 C18.99,31.287 17.009,31.287 15.402,30.359 L8.597,26.43 C6.99,25.502 6,23.787 6,21.93 L6,14.074 C6,12.218 6.99,10.502 8.597,9.574 L15.402,5.646 C17.009,4.718 18.99,4.718 20.597,5.646 L27.402,9.574 Z M16.313,7.429 L9.686,11.255 C8.642,11.858 8,12.971 8,14.177 L8,21.828 C8,23.033 8.642,24.147 9.686,24.75 L16.313,28.575 C17.357,29.178 18.642,29.178 19.686,28.575 L26.313,24.75 C27.357,24.147 28,23.033 28,21.828 L28,14.177 C28,12.971 27.357,11.858 26.313,11.255 L19.686,7.429 C18.642,6.826 17.357,6.826 16.313,7.429 L16.313,7.429 Z M19.385,9.567 L24.614,12.585 C25.471,13.08 26,13.995 26,14.986 L26,21.023 C26,22.013 25.471,22.928 24.614,23.423 L19.385,26.442 C18.528,26.937 17.471,26.937 16.614,26.442 L11.385,23.423 C10.528,22.928 10,22.013 10,21.023 L10,14.986 C10,13.995 10.528,13.08 11.385,12.585 L16.614,9.567 C17.471,9.072 18.528,9.072 19.385,9.567 L19.385,9.567 Z M15,21.004 L21,21.004 L21,15.004 L15,15.004 L15,21.004 Z" id="coin" fill="#FFFFFF"></path>
-            </g>
-          </svg>
-          <span class="similar-integers tw-text-2xl tw-ml-2">
-            {{ groupsObj.daily_robux_earnings }}
-          </span>
-        </div>
-      </div>
-    </div>
+    <LineChart :data="chartData" :options="options" />
   </template>
 </template>
 
