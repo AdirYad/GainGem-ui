@@ -32,7 +32,6 @@ export default {
 
     store.dispatch('getTransactions').then((response) => {
       transactions.value = response.data.transactions;
-      console.log(transactions.value)
     });
 
     return {

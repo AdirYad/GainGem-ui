@@ -62,6 +62,14 @@
           </router-link>
         </li>
         <li>
+          <router-link v-if="$store.getters.isRoleSupplier || $store.getters.isRoleSuperAdmin" :to="{ name: 'Supplier', query: { tab: 'groups' } }" class="router tw-flex tw-items-center tw-px-10 tw-py-4 tw-text-secondary">
+            <fa-icon class="tw-h-6 fa-w-40" icon="box" />
+            <div class="tw-text-sm tw-uppercase tw-tracking-widest tw-font-light tw-ml-6">
+              Supplier
+            </div>
+          </router-link>
+        </li>
+        <li>
           <router-link v-if="$store.getters.isRoleAdmin || $store.getters.isRoleSuperAdmin" :to="{ name: 'Admin', query: { tab: 'stock' } }" class="router tw-flex tw-items-center tw-px-10 tw-py-4 tw-text-secondary">
             <fa-icon class="tw-h-6 fa-w-40" icon="users-cog" />
             <div class="tw-text-sm tw-uppercase tw-tracking-widest tw-font-light tw-ml-6">

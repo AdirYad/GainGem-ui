@@ -511,7 +511,6 @@ export default {
 
       store.dispatch('updateGiftCard', giftCardPayload).then((response) => {
         modal.visible = false;
-        console.log(response.data)
         modal.gift_card.code = response.data.code;
         modal.gift_card.country = response.data.country;
         modal.gift_card.value = response.data.value;

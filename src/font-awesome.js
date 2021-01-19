@@ -18,7 +18,10 @@ import {
     faCog,
     faGavel,
     faUnlockAlt,
+    faLock,
     faInfinity,
+    faBox,
+    faSyncAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -53,7 +56,10 @@ export default {
     faCog,
     faGavel,
     faUnlockAlt,
+    faLock,
     faInfinity,
+    faBox,
+    faSyncAlt,
 
     // Brands
     faBuffer,

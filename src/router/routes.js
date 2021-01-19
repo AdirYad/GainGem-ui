@@ -117,6 +117,17 @@ export default [
         }
     },
     {
+        path: '/supplier',
+        name: 'Supplier',
+        component: () => import('@/views/Supplier.vue'),
+        meta: {
+            authorize: [
+                Roles.SuperAdmin,
+                Roles.Supplier,
+            ],
+        }
+    },
+    {
         path: '/admin',
         name: 'Admin',
         component: () => import('@/views/Admin.vue'),

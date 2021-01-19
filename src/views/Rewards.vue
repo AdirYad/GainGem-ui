@@ -56,7 +56,7 @@
                 <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="amount">
                   Robux Amount
                 </label>
-                <input v-model="payload.value" id="amount" type="number" min="1" :max="expandedReward.stock > 5000 ? 5000 : expandedReward.stock" placeholder="Amount"
+                <input v-model="payload.value" id="amount" type="number" min="1" :max="5000" placeholder="Amount"
                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                        class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full tw-py-1 tw-px-4 focus:tw-outline-none">
               </template>
@@ -76,7 +76,7 @@
             </button>
             <div v-else class="tw-flex">
               <div class="tw-w-1/2 tw-pr-1">
-                <button v-if="! isRedeeming" @click="redeem" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+                <button v-if="! isRedeeming" @click="redeem()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
                   Confirm
                 </button>
 
@@ -122,7 +122,7 @@
 
         <div class="tw-flex">
           <div class="tw-w-1/2 tw-pr-1">
-            <button @click="modal.visible = false; redeem()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+            <button @click="modal.visible = false; redeem(modal.group_id)" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
               Ok
             </button>
           </div>
@@ -170,13 +170,13 @@
           {{ modal.provider === 'robux' || modal.provider === 'bitcoin' ? modal.name : modal.name + ' Gift Cards' }}
         </h1>
 
-        <p>
+        <div>
           {{ modal.modal.name }} is <strong>NOT</strong> affiliated with EzRewards.
           <template v-if="modal.modal.redeemAlert">
             <br>
             <div v-html="modal.modal.redeemAlert" />
           </template>
-        </p>
+        </div>
 
         <template v-if="modal.modal.ul">
           <strong>
@@ -341,7 +341,7 @@ export default {
       }
     }
 
-    function redeem() {
+    function redeem(group_id = null) {
       if (isRedeeming.value) {
         return;
       }
@@ -352,18 +352,16 @@ export default {
         errorMessage = 'You must enter an amount!';
       } else if (payload.value.value < 1) {
         errorMessage = 'The amount has to be greater than 0.';
+      } else if (payload.value.value > 5000) {
+        errorMessage = 'The amount may not be greater than 5000.';
       } else if (payload.value.provider === 'robux') {
-        if (expandedReward.value.stock > 5000 && payload.value.value > 5000 || expandedReward.value.stock <= 5000 && payload.value.value > expandedReward.value.stock) {
-          errorMessage = `The amount may not be greater than ${expandedReward.value.stock > 5000 ? 5000 : expandedReward.value.stock}.`;
-        } else if (! payload.value.destination) {
+        if (! payload.value.destination) {
           errorMessage = 'You must enter a username!';
         } else if (payload.value.destination.length < 2) {
           errorMessage = 'The username must be at least 2 characters.';
         } else if (payload.value.destination.length > 255) {
           errorMessage = 'The username may not be greater than 255 characters.';
         }
-      } else if (payload.value.value > 5000) {
-        errorMessage = 'The amount may not be greater than 5000.';
       } else if (payload.value.provider === 'bitcoin') {
         if (! payload.value.destination) {
           errorMessage = 'You must enter a wallet!';
@@ -385,9 +383,17 @@ export default {
 
       isRedeeming.value = true;
 
+      if (group_id) {
+        payload.value.group_id = group_id;
+      }
+
       store.dispatch('redeemReward', payload.value).then((response) => {
         confirmation.value = false;
         isRedeeming.value = false;
+
+        if (payload.value.group_id) {
+          delete payload.value.group_id;
+        }
 
         getRewards();
 
@@ -410,13 +416,24 @@ export default {
         isRedeeming.value = false;
 
         if (err.response.status === 422) {
-          store.dispatch('addNotification', {
-            type: 'error',
-            message: err.response.data.message,
-          });
+          if (err.response.data.errors && err.response.data.errors.destination) {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.errors.destination[0],
+            });
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
         } else if (err.response.status === 404) {
           err.response.data.visible = true;
           modal.value = err.response.data;
+        }
+
+        if (payload.value.group_id) {
+          delete payload.value.group_id;
         }
       });
     }
