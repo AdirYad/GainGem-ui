@@ -1,5 +1,5 @@
 <template>
-  <div v-if="paymentsObj.available_earnings && paymentsObj.total_earnings && paymentsObj.total_withdrawals" class="tw-text-center tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-mb-4">
+  <div v-if="paymentsObj.hasOwnProperty('available_earnings') && paymentsObj.hasOwnProperty('.total_earnings') && paymentsObj.hasOwnProperty('total_withdrawals')" class="tw-text-center tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-mb-4">
     <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
       <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
         Total Earnings

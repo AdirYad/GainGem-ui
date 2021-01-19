@@ -1,5 +1,5 @@
 <template>
-  <div v-if="groupsObj.total_robux_earnings && groupsObj.daily_robux_earnings" class="tw-text-center tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-4">
+  <div v-if="groupsObj.hasOwnProperty('total_robux_earnings') && groupsObj.hasOwnProperty('daily_robux_earnings')" class="tw-text-center tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-4">
     <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
       <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
         Total Sold Lifetime
