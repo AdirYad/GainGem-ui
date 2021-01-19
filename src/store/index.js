@@ -298,20 +298,6 @@ export default createStore({
 
       return axiosInstance.delete(`/gift-cards/${reward_id}`);
     },
-    getRobuxCredentials({ getters }) {
-      if (! getters.isRoleSuperAdmin) {
-        return;
-      }
-
-      return axiosInstance.get('robux');
-    },
-    updateRobuxCredentials({ getters }, payload) {
-      if (! getters.isRoleSuperAdmin) {
-        return;
-      }
-
-      return axiosInstance.post('robux', payload);
-    },
     getBitcoinCredentials({ getters }) {
       if (! getters.isRoleSuperAdmin) {
         return;

@@ -9,7 +9,7 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Group ID</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Owner ID</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Cookie</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Disabled At</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Status</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
       </thead>
@@ -21,7 +21,13 @@
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.robux_group_id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.robux_owner_id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.cookie" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.formatted_disabled_at" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3">
+            <div class="tw-text-xs tw-rounded-xl tw-text-white tw-font-bold tw-text-center tw-inline-block tw-w-20 tw-px-4 tw-py-1"
+                 :class="group.disabled_at ? 'tw-bg-red-500' : 'tw-bg-green-500'"
+            >
+              {{ group.disabled_at ? 'Inactive' : 'Active' }}
+            </div>
+          </td>
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
               <button v-if="! group.disabled_at" @click="disableRobuxGroup(group)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full hover:tw-text-white hover:tw-bg-red-500">

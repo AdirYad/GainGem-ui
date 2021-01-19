@@ -9,7 +9,7 @@
   <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap" :class="{ 'tw-mb-4' : provider }">
     <template v-for="(reward, index) in $store.state.rewards" :key="index">
       <button
-              v-if="$store.getters.isRoleSuperAdmin || $store.getters.isRoleAdmin && reward.provider !== 'robux' && reward.provider !== 'bitcoin'"
+              v-if="reward.provider !== 'robux' && ($store.getters.isRoleSuperAdmin || $store.getters.isRoleAdmin && reward.provider !== 'bitcoin')"
               class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-4 tw-py-1 tw-m-2"
               :class="reward.provider === provider ? 'tw-bg-primary tw-text-white' : 'tw-text-primary'"
               @click="provider = reward.provider"
@@ -19,8 +19,7 @@
     </template>
   </div>
 
-  <Robux v-if="provider === 'robux' && $store.getters.isRoleSuperAdmin" />
-  <Bitcoin v-else-if="provider === 'bitcoin' && $store.getters.isRoleSuperAdmin" />
+  <Bitcoin v-if="provider === 'bitcoin' && $store.getters.isRoleSuperAdmin" />
   <GiftCard v-else-if="provider" :provider="provider" :points-value="pointsValue" />
 
   <VModal v-model:visible="modal.visible">
@@ -47,7 +46,6 @@
 <script>
 import Pagination from 'v-pagination-3';
 import GiftCard from '@/components/Admin/Rewards/GiftCard';
-import Robux from '@/components/Admin/Rewards/Robux';
 import Bitcoin from '@/components/Admin/Rewards/Bitcoin';
 import VModal from '@/components/VModal';
 import { useStore } from 'vuex';
@@ -58,7 +56,6 @@ export default {
   components: {
     Pagination,
     GiftCard,
-    Robux,
     Bitcoin,
     VModal,
   },

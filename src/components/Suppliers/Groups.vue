@@ -133,7 +133,7 @@
           Total Sold Today
         </div>
         <div class="tw-mb-6">
-          Number of sold robux today
+          Total of sold robux today
         </div>
         <div class="tw-flex tw-justify-center tw-items-center">
           <svg class="tw-text-primary" width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -200,6 +200,9 @@ export default {
           {
             gridLines: {
               zeroLineColor: "#bbb",
+            },
+            ticks: {
+              min: 0,
             },
           },
         ],
