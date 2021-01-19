@@ -17,7 +17,7 @@
         <tr v-if="groupsObj.groups" v-for="(group, index) in groupsObj.groups" :key="index" class="tw-table-row">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.formatted_total_withdrawn" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.robux_amount" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.formatted_robux_amount" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.robux_group_id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.robux_owner_id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="group.cookie" />

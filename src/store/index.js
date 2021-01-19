@@ -509,12 +509,19 @@ export default createStore({
 
       return axiosInstance.post(`suppliers/groups/${group_id}/refresh`);
     },
-    getSupplierPayments({ getters }, page) {
-      if (! getters.isRoleSuperAdmin) {
+    getSupplierPayments({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleSupplier) {
         return;
       }
 
-      return axiosInstance.get(`suppliers/payments?page=${page}`);
+      return axiosInstance.get(`suppliers/payments?page=${payload.page}` + (payload.user_id ? `&user_id=${payload.user_id}` : ''));
+    },
+    storeSupplierPayment({ getters }, payload) {
+      if (! getters.isRoleSupplier) {
+        return;
+      }
+
+      return axiosInstance.post('/suppliers/payments', payload);
     },
     updateSupplierPaymentStatus({ getters }, payload) {
       if (! getters.isRoleSuperAdmin) {

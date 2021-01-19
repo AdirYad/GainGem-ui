@@ -20,7 +20,17 @@
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.formatted_method" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.destination" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + payment.formatted_value" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.formatted_status" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3">
+            <div class="tw-text-xs tw-rounded-xl tw-text-white tw-font-bold tw-text-center tw-inline-block tw-w-20 tw-px-4 tw-py-1"
+                 :class="{
+                    'tw-bg-green-500' : payment.status === 'paid',
+                    'tw-bg-red-500' : payment.status === 'denied',
+                    'tw-bg-gray-500' : payment.status === 'pending',
+                 }"
+            >
+              {{ payment.formatted_status }}
+            </div>
+          </td>
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.denial_reason" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">

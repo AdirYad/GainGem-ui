@@ -1,34 +1,108 @@
 <template>
+  <div class="tw-flex tw-flex-wrap">
+    <div class="tw-w-full tw-mb-4">
+      <form @submit.prevent="create">
+        <div class="tw-flex tw-flex-wrap">
+          <div class="tw-w-full sm:tw-w-1/3 tw-mb-4 sm:tw-pr-2">
+            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="method">
+              Method
+            </label>
+            <select v-model="payload.method" id="method"
+                    class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
+                    :class="{ 'input-invalid tw-mb-3' : v$.method.$invalid || errors.method }"
+                    @change="payload.destination = null; resetErrors('method'); resetErrors('destination')"
+                    style="height: 38px"
+            >
+              <option value="paypal" selected>
+                Paypal
+              </option>
+              <option value="bitcoin">
+                Bitcoin
+              </option>
+            </select>
+            <p v-if="v$.method.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+              {{ v$.method.$errors[0].$message }}
+            </p>
+            <p v-else-if="errors.method" class="tw-text-red-500 tw-text-xs tw-italic">
+              {{ errors.method[0] }}
+            </p>
+          </div>
+          <div class="tw-w-full sm:tw-w-1/3 tw-mb-4 sm:tw-pr-2">
+            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="destination">
+              {{ payload.method === 'paypal' ? 'Paypal Email' : 'Bitcoin Address' }}
+            </label>
+            <input id="destination" type="text" :placeholder="payload.method === 'paypal' ? 'Paypal Email' : 'Bitcoin Address'"
+                   class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                   v-model="payload.destination"
+                   :class="{ 'input-invalid tw-mb-3' : v$.destination.$invalid || errors.destination }"
+                   @keydown="resetErrors('destination')"
+            >
+            <p v-if="v$.destination.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+              {{ v$.destination.$errors[0].$message }}
+            </p>
+            <p v-else-if="errors.destination" class="tw-text-red-500 tw-text-xs tw-italic">
+              {{ errors.destination[0] }}
+            </p>
+          </div>
+          <div class="tw-w-full sm:tw-w-1/3 tw-mb-4 sm:tw-px-2">
+            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="value">
+              Amount
+            </label>
+            <input id="value" type="number" min="1" placeholder="Amount"
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                   class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                   v-model="payload.value"
+                   :class="{ 'input-invalid tw-mb-3' : v$.value.$invalid || errors.value }"
+                   @keydown="resetErrors('value')"
+            >
+            <p v-if="v$.value.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+              {{ v$.value.$errors[0].$message }}
+            </p>
+            <p v-else-if="errors.value" class="tw-text-red-500 tw-text-xs tw-italic">
+              {{ errors.value[0] }}
+            </p>
+          </div>
+          <div class="tw-w-full tw-text-center">
+            <button class="tw-h-full tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
+              Create
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="full-size-table tw-rounded-lg tw-overflow-scroll tw-mb-4">
     <table class="unresponsive-table tw-w-full tw-flex sm:tw-bg-white tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
           <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Username</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Date</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Method</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Destination</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Amount</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Status</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Denial Reason</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Actions</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Denial Reason</th>
         </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
-        <tr v-if="paymentsObj.payments" v-for="(payment, index) in paymentsObj.payments" :key="index" class="tw-table-row">
+        <tr v-if="paymentsObj.payments" v-for="(payment, index) in paymentsObj.payments" :key="index"  class="tw-table-row">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.id" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.supplier_user.username" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.formatted_created_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.formatted_method" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.destination" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + payment.formatted_value" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.formatted_status" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.denial_reason" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
-            <div class="tw-flex">
-              <button @click="openEditModal(payment)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
-                <fa-icon icon="cog" />
-              </button>
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3">
+            <div class="tw-text-xs tw-rounded-xl tw-text-white tw-font-bold tw-text-center tw-inline-block tw-w-20 tw-px-4 tw-py-1"
+                 :class="{
+                    'tw-bg-green-500' : payment.status === 'paid',
+                    'tw-bg-red-500' : payment.status === 'denied',
+                    'tw-bg-gray-500' : payment.status === 'pending',
+                 }"
+            >
+              {{ payment.formatted_status }}
             </div>
           </td>
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="payment.denial_reason" />
         </tr>
       </tbody>
     </table>
@@ -43,104 +117,56 @@
   </div>
 
   <Pagination v-if="paymentsObj.pagination" v-model="page" :records="paymentsObj.pagination.total" :per-page="paymentsObj.pagination.per_page" @paginate="getSupplierPayments" :options="{ chunk: 5 }" />
-  <VModal v-model:visible="modal.visible">
-    <form @submit.prevent="editStatus" class="tw-px-2">
-      <div class="tw-flex tw-flex-wrap">
-        <div class="tw-w-full tw-mb-4" :class="{ 'sm:tw-w-1/2 sm:tw-pr-2' : modal.status === 'denied' }">
-          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="status">
-            Status
-          </label>
-          <select v-model="modal.status" @change="modal.denial_reason = null" id="status"
-                  class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
-                  style="height: 38px"
-          >
-            <option value="pending" selected>
-              Pending
-            </option>
-            <option value="paid">
-              Paid
-            </option>
-            <option value="denied">
-              Denied
-            </option>
-          </select>
-        </div>
-        <div v-if="modal.status === 'denied'" class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4">
-          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="denial_reason">
-            Denial Reason
-          </label>
-          <input id="denial_reason" type="text" placeholder="Denial Reason"
-                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
-                 v-model="modal.denial_reason"
-                 :class="{ 'input-invalid tw-mb-3' : v$.denial_reason.$invalid || errors.denial_reason }"
-                 @keydown="resetErrors('denial_reason')"
-          >
-          <p v-if="v$.denial_reason.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-            {{ v$.denial_reason.$errors[0].$message }}
-          </p>
-          <p v-else-if="errors.denial_reason" class="tw-text-red-500 tw-text-xs tw-italic">
-            {{ errors.denial_reason[0] }}
-          </p>
-        </div>
-      </div>
-      <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
-        Save
-      </button>
-    </form>
-  </VModal>
 </template>
 
 <script>
 import Pagination from 'v-pagination-3';
-import VModal from '@/components/VModal';
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import useVuelidate from '@vuelidate/core';
-import { required, requiredIf, minLength, maxLength } from '@vuelidate/validators';
+import { maxLength, minLength, required, minValue, maxValue } from '@vuelidate/validators';
 import { useStore } from 'vuex';
-import { ref, reactive, toRef, watch } from 'vue';
+import { ref, reactive, toRef } from 'vue';
 
 export default {
-  name: 'Admin.SuppliersPayments',
+  name: 'Supplier.Payments',
   components: {
     Pagination,
-    VModal,
     LoopingRhombusesSpinner,
   },
   setup() {
     const store = useStore();
 
+    const isCreating = ref(false);
     const paymentsObj = ref({});
     const page = ref(1);
-    const modal = reactive({
-      group: null,
-      visible: false,
-      status: 'paid',
-      denial_reason: null,
+    const payload = reactive({
+      method: 'paypal',
+      destination: '',
+      value: null,
     });
 
     const errors = ref({});
 
     const rules = {
-      status: {
-        requiredIf: required,
-        minLength: minLength(1),
+      method: {
+        required,
+      },
+      destination: {
+        required,
+        minLength: minLength(2),
         maxLength: maxLength(255),
       },
-      denial_reason: {
-        requiredIf: requiredIf(() => modal.status === 'denied'),
-        minLength: minLength(1),
-        maxLength: maxLength(255),
+      value: {
+        required,
+        minValue: minValue(1),
+        maxValue: maxValue(10000),
       },
     };
 
     const v$ = useVuelidate(rules, {
-      status: toRef(modal, 'status'),
-      denial_reason: toRef(modal, 'denial_reason'),
-    });
-
-    watch(() => modal.visible, () => {
-      errors.value = {};
-      v$.value.$reset();
+      method: toRef(payload, 'method'),
+      destination: toRef(payload, 'destination'),
+      value: toRef(payload, 'value'),
     });
 
     getSupplierPayments();
@@ -148,64 +174,65 @@ export default {
     return {
       paymentsObj,
       page,
-      modal,
+      payload,
       errors,
       v$,
       getSupplierPayments,
-      openEditModal,
-      editStatus,
+      create,
       resetErrors,
     };
 
     function getSupplierPayments() {
       delete paymentsObj.value.payments;
 
-      store.dispatch('getSupplierPayments', page.value).then((response) => {
+      const payload = {
+        page: page.value,
+        user_id: store.state.user.id
+      }
+
+      store.dispatch('getSupplierPayments', payload).then((response) => {
         paymentsObj.value = response.data;
       });
     }
 
-    function openEditModal(group) {
-      modal.group = group;
-      modal.visible = true;
-      modal.status = group.status;
-      modal.denial_reason = group.denial_reason;
-    }
-
-    function editStatus() {
+    function create() {
       v$.value.$touch();
 
-      if (v$.value.$invalid) {
+      if (v$.value.$invalid || isCreating.value) {
         return;
       }
 
       errors.value = {};
+      isCreating.value = true;
 
-      const payload = {
-        supplier_payment_id: modal.group.id,
-        status: modal.status,
-        denial_reason: modal.denial_reason,
-      };
+      store.dispatch('storeSupplierPayment', payload).then((response) => {
+        v$.value.$reset();
 
-      store.dispatch('updateSupplierPaymentStatus', payload).then((response) => {
-        modal.visible = false;
-        modal.group.status = response.data.status;
-        modal.group.formatted_status = response.data.formatted_status;
-        modal.group.denial_reason = response.data.denial_reason;
+        payload.method = 'paypal';
+        payload.destination = '';
+        payload.value = null;
+        paymentsObj.value.payments.unshift(response.data);
+        paymentsObj.value.pagination.total++;
 
         store.dispatch('addNotification', {
           type: 'success',
-          message: 'Status saved successfully!',
-        });
-      }).catch((err) => {
-        store.dispatch('addNotification', {
-          type: 'error',
-          message: 'Error occurred!',
+          message: 'Payment created successfully!',
         });
 
-        if (err.response.status === 422 && err.response.data.errors) {
-          errors.value = err.response.data.errors;
+        isCreating.value = false;
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          if (err.response.data.errors) {
+            errors.value = err.response.data.errors;
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
         }
+
+        isCreating.value = false;
       });
     }
 

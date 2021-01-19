@@ -6,17 +6,8 @@
           <Tab name="Groups" query="groups">
             <Groups />
           </Tab>
-          <Tab name="Promo Codes" query="promo-codes">
-            <PromoCodes />
-          </Tab>
-          <Tab name="Users" query="users">
-            <Users />
-          </Tab>
-          <Tab name="Announcement Banner" query="announcement-banner">
-            <AnnouncementBanner />
-          </Tab>
-          <Tab v-if="$store.getters.isRoleSuperAdmin" name="Supplier Panel" query="suppliers">
-            <Suppliers />
+          <Tab v-if="$store.getters.isRoleSupplier" name="Payments" query="payments">
+            <Payments />
           </Tab>
         </Tabs>
       </div>
@@ -28,10 +19,7 @@
 import Tab from '@/components/Tab'
 import Tabs from "@/components/Tabs";
 import Groups from '@/components/Suppliers/Groups';
-import PromoCodes from '@/components/Admin/PromoCodes';
-import Users from '@/components/Admin/Users';
-import AnnouncementBanner from '@/components/Admin/AnnouncementBanner';
-import Suppliers from '@/components/Admin/Suppliers';
+import Payments from '@/components/Suppliers/Payments';
 
 export default {
   name: 'Supplier',
@@ -39,10 +27,7 @@ export default {
     Tab,
     Tabs,
     Groups,
-    PromoCodes,
-    Users,
-    AnnouncementBanner,
-    Suppliers,
+    Payments,
   },
 }
 </script>
