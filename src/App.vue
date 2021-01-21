@@ -9,8 +9,7 @@
         <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
 
         <router-view :key="$route.name !== 'Profile' && $route.name !== 'Admin' && $route.name !== 'Supplier' ? $route.fullPath : $route.name"
-                     :class="{ 'tw-p-4 md:tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn,
-                     'tw-container tw-mx-auto tw-mb-6 tw-px-4' : ! $store.getters.isLoggedIn && ($route.name === 'Terms' || $route.name === 'Privacy') }"
+                     :class="{ 'tw-p-4 md:tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn }"
         />
       </div>
 

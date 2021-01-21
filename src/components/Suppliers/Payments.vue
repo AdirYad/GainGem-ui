@@ -1,4 +1,46 @@
 <template>
+  <div v-if="paymentsObj.hasOwnProperty('available_earnings') && paymentsObj.hasOwnProperty('total_earnings') && paymentsObj.hasOwnProperty('total_withdrawals')" class="tw-text-center tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-mb-4">
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Total Earnings
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <span class="tw-text-primary tw-font-medium tw-text-2xl">
+          $
+        </span>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ paymentsObj.total_earnings }}
+        </span>
+      </div>
+    </div>
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Total Withdrawn
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <span class="tw-text-primary tw-font-medium tw-text-2xl">
+          $
+        </span>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ paymentsObj.total_withdrawals }}
+        </span>
+      </div>
+    </div>
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Available Earnings
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <span class="tw-text-primary tw-font-medium tw-text-2xl">
+          $
+        </span>
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ paymentsObj.available_earnings }}
+        </span>
+      </div>
+    </div>
+  </div>
+
   <div class="tw-flex tw-flex-wrap">
     <div class="tw-w-full tw-mb-4">
       <form @submit.prevent="create">
@@ -48,8 +90,7 @@
             <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="value">
               Amount
             </label>
-            <input id="value" type="number" min="1" placeholder="Amount"
-                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+            <input id="value" type="number" min="1" step=".01" placeholder="Amount"
                    class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                    v-model="payload.value"
                    :class="{ 'input-invalid tw-mb-3' : v$.value.$invalid || errors.value }"
@@ -117,48 +158,6 @@
   </div>
 
   <Pagination v-if="paymentsObj.pagination" v-model="page" :records="paymentsObj.pagination.total" :per-page="paymentsObj.pagination.per_page" @paginate="getSupplierPayments" :options="{ chunk: 5 }" />
-
-  <div v-if="paymentsObj.available_earnings && paymentsObj.total_earnings && paymentsObj.total_withdrawals" class="tw-text-center tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-mt-8">
-    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
-      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
-        Total Earnings
-      </div>
-      <div class="tw-flex tw-justify-center tw-items-center">
-        <span class="tw-text-primary tw-font-medium tw-text-2xl">
-          $
-        </span>
-        <span class="similar-integers tw-text-2xl tw-ml-2">
-            {{ paymentsObj.total_earnings }}
-        </span>
-      </div>
-    </div>
-    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
-      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
-        Total Withdrawals
-      </div>
-      <div class="tw-flex tw-justify-center tw-items-center">
-        <span class="tw-text-primary tw-font-medium tw-text-2xl">
-          $
-        </span>
-        <span class="similar-integers tw-text-2xl tw-ml-2">
-            {{ paymentsObj.total_withdrawals }}
-        </span>
-      </div>
-    </div>
-    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4">
-      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
-        Available Earnings
-      </div>
-      <div class="tw-flex tw-justify-center tw-items-center">
-        <span class="tw-text-primary tw-font-medium tw-text-2xl">
-          $
-        </span>
-        <span class="similar-integers tw-text-2xl tw-ml-2">
-            {{ paymentsObj.available_earnings }}
-        </span>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>

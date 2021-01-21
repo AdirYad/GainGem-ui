@@ -204,7 +204,9 @@ button:focus, input:focus {
 
 .header-unsigned {
   height: var(--header-unsigned-height);
+}
 
+.header-unsigned, .unsigned-nav {
   .logo {
     height: calc(var(--header-unsigned-height) - 40px);
     width: calc(var(--header-unsigned-height) - 40px);
@@ -280,10 +282,12 @@ img {
 .authentication-form {
   > a {
     height: 80px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 
     img {
       height: 80px;
+      width: 160px;
+      object-fit: cover;
     }
   }
 
