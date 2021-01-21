@@ -1,7 +1,7 @@
 <template>
   <div class="authentication-form tw-w-screen tw-h-screen tw-bg-secondary tw-flex tw-items-center tw-justify-center tw-flex-col tw-overflow-auto tw-p-10">
     <router-link :to="{ name: 'Home' }">
-      <img alt="logo" src="@/assets/images/Icon.png">
+      <img alt="logo" src="@/assets/images/Logo.png">
     </router-link>
     <form @submit.prevent="openHcaptcha" class="tw-bg-white tw-shadow-lg tw-rounded-lg tw-px-10 tw-py-12">
       <div class="tw-mb-4">

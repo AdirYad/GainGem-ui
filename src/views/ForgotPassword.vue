@@ -1,7 +1,7 @@
 <template>
   <div class="authentication-form tw-w-screen tw-h-screen tw-bg-secondary tw-flex tw-items-center tw-justify-center tw-flex-col tw-overflow-auto tw-p-10">
     <router-link :to="{ name: 'Home' }">
-      <img alt="logo" src="@/assets/images/Icon.png">
+      <img alt="logo" src="@/assets/images/Logo.png">
     </router-link>
     <div class="tw-w-full tw-max-w-2xl tw-text-lg tw-text-center tw-mx-auto tw-mb-4">
       If you have forgotten your password and would like to reset it, you can fill out this form and receive instructions by email on how to reset your password.
