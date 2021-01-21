@@ -15,7 +15,7 @@
                @keydown="resetErrors('username')"
         >
         <p v-if="v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-          {{ v$.username.$errors[0].$message }}
+          {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters and numbers.' : v$.username.$errors[0].$message }}
         </p>
         <p v-else-if="errors.username" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ errors.username[0] }}
@@ -64,7 +64,7 @@
 
 <script>
 import { LoopingRhombusesSpinner } from 'epic-spinners';
-import { required, minLength, maxLength } from '@vuelidate/validators';
+import { required, minLength, maxLength, helpers } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
 import { useStore } from 'vuex';
@@ -91,6 +91,7 @@ export default {
         required,
         minLength: minLength(6),
         maxLength: maxLength(20),
+        valid: helpers.regex(/^[a-zA-Z0-9]+$/u),
       },
       password: {
         required,

@@ -32,7 +32,7 @@
                @keydown="resetErrors('username')"
         >
         <p v-if="v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-          {{ v$.username.$errors[0].$message }}
+          {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters and numbers.' : v$.username.$errors[0].$message }}
         </p>
         <p v-else-if="errors.username" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ errors.username[0] }}
@@ -95,7 +95,7 @@
         />
 
         <router-link :to="{ name: 'Login' }" class="tw-mt-4 tw-text-center tw-inline-block tw-align-baseline tw-font-bold tw-text-sm tw-text-primary">
-          You have already an account?
+          You already have an account?
         </router-link>
       </div>
     </form>
@@ -105,7 +105,7 @@
 <script>
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import VueHcaptcha from '@hcaptcha/vue-hcaptcha';
-import { required, minLength, maxLength, email, sameAs } from '@vuelidate/validators';
+import { required, minLength, maxLength, email, sameAs, helpers } from '@vuelidate/validators';
 import useVuelidate from '@vuelidate/core';
 import router from "@/router";
 import { useStore } from 'vuex';
@@ -138,6 +138,7 @@ export default {
         required,
         minLength: minLength(6),
         maxLength: maxLength(20),
+        valid: helpers.regex(/^[a-zA-Z0-9]+$/u),
       },
       email: {
         required,
