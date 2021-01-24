@@ -79,7 +79,7 @@
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="denial_reason">
             Denial Reason
           </label>
-          <input id="denial_reason" type="text" placeholder="Denial Reason"
+          <input id="denial_reason" type="text" placeholder="Denial Reason" autocomplete="off"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.denial_reason"
                  :class="{ 'input-invalid tw-mb-3' : v$.denial_reason.$invalid || errors.denial_reason }"
