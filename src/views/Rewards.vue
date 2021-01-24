@@ -25,10 +25,18 @@
             </button>
           </div>
           <div v-if="expandedReward === reward" class="tw-flex tw-flex-col tw-justify-end tw-px-3 tw-pb-3" style="height: 220px;">
-            <span v-if="pointsValue || expandedReward.provider === 'robux'" class="tw-flex tw-mb-1 tw-text-xs">
+            <span v-if="expandedReward.provider !== 'bitcoin' && pointsValue || expandedReward.provider === 'bitcoin' && bitcoinValue || expandedReward.provider === 'robux'" class="tw-flex tw-mb-1 tw-text-xs">
               Cost
               <span class="tw-truncate tw-inline-block tw-mx-1" style="max-width: 90px">
-                {{ expandedReward.provider !== 'robux' ? payload.value * pointsValue : payload.value || 0 }}
+                <template v-if="expandedReward.provider === 'robux'">
+                  {{ payload.value || 0 }}
+                </template>
+                <template v-else-if="expandedReward.provider === 'bitcoin'">
+                  {{ payload.value * bitcoinValue }}
+                </template>
+                <template v-else>
+                  {{ payload.value * pointsValue }}
+                </template>
               </span>
               points
             </span>
@@ -36,7 +44,7 @@
               <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="destination">
                 {{ expandedReward.provider === 'robux' ? 'Roblox Username' : 'Wallet Address' }}
               </label>
-              <input v-model="payload.destination" id="destination" type="text" :placeholder="expandedReward.provider === 'robux' ? 'Roblox Username' : 'Wallet Address'"
+              <input v-model="payload.destination" id="destination" type="text" autocomplete="off" :placeholder="expandedReward.provider === 'robux' ? 'Roblox Username' : 'Wallet Address'"
                      class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full tw-py-1 tw-px-4 focus:tw-outline-none">
             </div>
             <div class="tw-w-full tw-mb-4">
@@ -233,6 +241,7 @@ export default {
     const confirmation = ref(false);
     const isRedeeming = ref(false);
     const pointsValue = ref(null);
+    const bitcoinValue = ref(null);
     const rewards = ref(null);
     const expandedReward = ref({});
     const modal = ref({
@@ -250,6 +259,10 @@ export default {
       pointsValue.value = response.data;
     });
 
+    store.dispatch('getBitcoinValue').then((response) => {
+      bitcoinValue.value = response.data;
+    });
+
     getRewards();
 
     return {
@@ -257,6 +270,7 @@ export default {
       confirmation,
       isRedeeming,
       pointsValue,
+      bitcoinValue,
       rewards,
       expandedReward,
       modal,
