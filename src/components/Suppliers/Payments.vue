@@ -90,7 +90,7 @@
             <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="value">
               Amount
             </label>
-            <input id="value" type="number" min="1" step=".01" placeholder="Amount"
+            <input id="value" type="number" min="1" step=".001" placeholder="Amount"
                    class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                    v-model="payload.value"
                    :class="{ 'input-invalid tw-mb-3' : v$.value.$invalid || errors.value }"
