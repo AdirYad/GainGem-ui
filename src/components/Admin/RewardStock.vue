@@ -1,9 +1,19 @@
 <template>
-  <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-2">
-    <button class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-primary tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-8 tw-py-2"
+  <div v-if="$store.getters.isRoleSuperAdmin" class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-2 tw--m-1">
+    <button class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-primary tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-8 tw-py-2 tw-m-1"
             @click="openEditPointsValueModal"
     >
       Change Points Value
+    </button>
+    <button class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-primary tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-8 tw-py-2 tw-m-1"
+            @click="openEditPostbackValueModal"
+    >
+      Change Postback Value
+    </button>
+    <button class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-primary tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-8 tw-py-2 tw-m-1"
+            @click="openEditBitcoinValueModal"
+    >
+      Change Bitcoin Value
     </button>
   </div>
   <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap" :class="{ 'tw-mb-4' : provider }">
@@ -23,7 +33,7 @@
   <GiftCard v-else-if="provider" :provider="provider" :points-value="pointsValue" />
 
   <VModal v-model:visible="modal.visible">
-    <form @submit.prevent="updatePointsValue" class="tw-px-2">
+    <form v-if="modal.type === 'points'" @submit.prevent="updatePointsValue" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
         <div class="tw-w-full tw-mb-4">
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_points">
@@ -33,6 +43,40 @@
                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.points"
+          >
+        </div>
+      </div>
+      <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
+        Save
+      </button>
+    </form>
+    <form v-if="modal.type === 'postback'" @submit.prevent="updatePostbackValue" class="tw-px-2">
+      <div class="tw-flex tw-flex-wrap">
+        <div class="tw-w-full tw-mb-4">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_postback">
+            Postback Value
+          </label>
+          <input id="edit_postback" type="number" min="1" max="10000" placeholder="Value"
+                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                 v-model="modal.postback"
+          >
+        </div>
+      </div>
+      <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
+        Save
+      </button>
+    </form>
+    <form v-if="modal.type === 'bitcoin'" @submit.prevent="updateBitcoinValue" class="tw-px-2">
+      <div class="tw-flex tw-flex-wrap">
+        <div class="tw-w-full tw-mb-4">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_bitcoin">
+            Bitcoin Value
+          </label>
+          <input id="edit_bitcoin" type="number" min="1" max="10000" placeholder="Value"
+                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                 v-model="modal.bitcoin"
           >
         </div>
       </div>
@@ -64,10 +108,15 @@ export default {
 
     const provider = ref(null);
 
-    const pointsValue = ref(40);
+    const pointsValue = ref(80);
+    const postbackValue = ref(40);
+    const bitcoinValue = ref(100);
     const modal = reactive({
       visible: false,
       points: null,
+      postback: null,
+      bitcoin: null,
+      type: '',
     });
 
     store.dispatch('getPointsValue').then((response) => {
@@ -75,17 +124,48 @@ export default {
       modal.points = response.data;
     });
 
+    if (store.getters.isRoleSuperAdmin) {
+      store.dispatch('getPostbackValue').then((response) => {
+        postbackValue.value = response.data;
+        modal.postback = response.data;
+      });
+
+      store.dispatch('getBitcoinValue').then((response) => {
+        bitcoinValue.value = response.data;
+        modal.bitcoin = response.data;
+      });
+    }
+
     return {
       provider,
       pointsValue,
+      postbackValue,
+      bitcoinValue,
       modal,
       openEditPointsValueModal,
+      openEditPostbackValueModal,
+      openEditBitcoinValueModal,
       updatePointsValue,
+      updatePostbackValue,
+      updateBitcoinValue,
     };
 
     function openEditPointsValueModal() {
       modal.visible = true;
       modal.points = pointsValue.value;
+      modal.type = 'points';
+    }
+
+    function openEditPostbackValueModal() {
+      modal.visible = true;
+      modal.postback = postbackValue.value;
+      modal.type = 'postback';
+    }
+
+    function openEditBitcoinValueModal() {
+      modal.visible = true;
+      modal.bitcoin = bitcoinValue.value;
+      modal.type = 'bitcoin';
     }
 
     function updatePointsValue() {
@@ -103,6 +183,56 @@ export default {
             store.dispatch('addNotification', {
               type: 'error',
               message: err.response.data.errors.points[0],
+            });
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
+      });
+    }
+
+    function updatePostbackValue() {
+      store.dispatch('updatePostbackValue', modal.postback).then((response) => {
+        modal.visible = false;
+        postbackValue.value = response.data;
+
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: 'Postback value saved successfully!',
+        });
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          if (err.response.data.errors && err.response.data.errors.postback)
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.errors.postback[0],
+            });
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
+      });
+    }
+
+    function updateBitcoinValue() {
+      store.dispatch('updateBitcoinValue', modal.bitcoin).then((response) => {
+        modal.visible = false;
+        bitcoinValue.value = response.data;
+
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: 'Bitcoin value saved successfully!',
+        });
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          if (err.response.data.errors && err.response.data.errors.bitcoin)
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.errors.bitcoin[0],
             });
           } else {
             store.dispatch('addNotification', {

@@ -161,11 +161,39 @@ export default createStore({
       return axiosInstance.get('points');
     },
     updatePointsValue({ getters }, points) {
-      if (! getters.isRoleSuperAdmin && ! getters.isRoleAdmin) {
+      if (! getters.isRoleSuperAdmin) {
         return;
       }
 
       return axiosInstance.put('points', { 'points': points });
+    },
+    getPostbackValue({ getters }) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get('postback/values');
+    },
+    updatePostbackValue({ getters }, postbackValue) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put('postback/values', { 'postback': postbackValue });
+    },
+    getBitcoinValue({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('bitcoin/values');
+    },
+    updateBitcoinValue({ getters }, bitcoin) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put('bitcoin/values', { 'bitcoin': bitcoin });
     },
     logout({ commit }) {
       commit('removeUser');
