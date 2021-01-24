@@ -36,7 +36,7 @@
               <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="destination">
                 {{ expandedReward.provider === 'robux' ? 'Roblox Username' : 'Wallet Address' }}
               </label>
-              <input v-model="payload.destination" id="destination" type="text" :placeholder="expandedReward.provider === 'robux' ? 'Roblox Username' : 'Wallet Address'"
+              <input v-model="payload.destination" id="destination" type="text" autocomplete="off" :placeholder="expandedReward.provider === 'robux' ? 'Roblox Username' : 'Wallet Address'"
                      class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full tw-py-1 tw-px-4 focus:tw-outline-none">
             </div>
             <div class="tw-w-full tw-mb-4">
