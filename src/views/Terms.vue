@@ -1,10 +1,10 @@
 <template>
   <div class="tw-break-words">
     <UnsignedNavigation v-if="! $store.getters.isLoggedIn">
-      <div class="tw-text-center tw-text-white tw-uppercase tw-font-medium tw-text-2xl lg:tw-text-3xl tw-tracking-wider ">
+      <div class="tw-text-center tw-text-white tw-uppercase tw-font-medium tw-text-2xl lg:tw-text-3xl tw-tracking-wider">
         Terms of use
       </div>
-      <div class="tw-text-center tw-text-white tw-text-sm tw-tracking-wider">
+      <div class="tw-text-center tw-text-white tw-text-sm tw-tracking-wider tw-pb-6">
         Last updated June 11, 2020
       </div>
     </UnsignedNavigation>
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div :class="{ 'tw-container tw-mx-auto tw-mb-6 tw-px-4' : ! $store.getters.isLoggedIn }">
+    <div :class="{ 'tw-container tw-mx-auto tw-my-6 tw-px-4' : ! $store.getters.isLoggedIn }">
       <div class="tw-mb-6">
         <div class="tw-font-medium tw-text-lg lg:tw-text-xl tw-tracking-wider tw-uppercase tw-mb-3">
           AGREEMENT TO TERMS

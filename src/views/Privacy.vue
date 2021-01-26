@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div :class="{ 'tw-container tw-mx-auto tw-mb-6 tw-px-4' : ! $store.getters.isLoggedIn }">
+    <div :class="{ 'tw-container tw-mx-auto tw-my-6 tw-px-4' : ! $store.getters.isLoggedIn }">
       <div class="tw-mb-6">
         <div class="tw-mb-3 tw-text-sm">
           Thank you for choosing to be part of our community at EzRewards (“company”, “we”, “us”, or “our”). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about our policy, or our practices with regards to your personal information, please contact us at ezrewardsgg@gmail.com.

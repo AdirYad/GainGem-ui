@@ -20,6 +20,24 @@ html {
   display: none;
 }
 
+.wall {
+ color: rgb(29, 93, 77);
+  background-color: var(--primary-color);
+  height: 330px;
+  border-radius: 4px;box-shadow: 0 6px 6px var(--primary-color);
+  @apply w-1/4 tw-py-3;
+}
+
+@media (min-height: 649px) {
+  .home {
+    height: 100vh;
+  }
+}
+
+.home-unsigned:hover {
+  box-shadow: 0 12px 15px rgba(255, 255, 255, 0.2);
+}
+
 @media (max-width: 1023px) {
   #reamaze-widget {
     bottom: calc(var(--navigation-height) + 22px) !important;
@@ -190,18 +208,6 @@ button:focus, input:focus {
   }
 }
 
-.survey-bg {
-  background: linear-gradient(0deg, rgba(19, 160, 101, 0.65), rgba(19, 160, 101, 0.45), rgba(19, 160, 101, 0.25)), url('../images/background.jpeg') no-repeat fixed 50%;
-  background-size: cover;
-  transform: translate3d(0,0,0);
-}
-
-.home-unsigned {
-  main {
-    margin-top: calc(0% - var(--header-unsigned-height));
-  }
-}
-
 .header-unsigned {
   height: var(--header-unsigned-height);
 }
@@ -323,7 +329,7 @@ img {
 
 @media (max-width: 1279px) {
   .hero {
-    padding-top: 10vh;
+    padding-top: 20vh;
     padding-bottom: 10vh;
   }
 }

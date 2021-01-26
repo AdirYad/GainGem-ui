@@ -44,46 +44,31 @@
     </div>
   </div>
 
-  <div v-else class="home-unsigned survey-bg tw-h-screen">
-    <header class="header-unsigned md:tw-px-24 lg:tw-px-48 tw-px-4 tw-flex tw-m-auto tw-items-center">
-      <nav class="tw-flex-1">
-        <div class="logo tw-inline-block tw-duration-300" />
-      </nav>
-
-      <nav class="tw-flex tw-z-10">
-        <router-link :to="{name: 'Login'}" class="tw-text-sm sm:tw-text-base tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-transparent hover:tw-border-primary hover:tw-text-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-2 md:tw-mr-4">
-          <fa-icon class="tw-hidden sm:tw-inline-block" icon="sign-in-alt" />
-          Login
-        </router-link>
-        <router-link :to="{name: 'Register'}" class="tw-text-sm sm:tw-text-base tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 hover:tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
-          <fa-icon class="tw-hidden sm:tw-inline-block" icon="sign-in-alt" />
-          Register
-        </router-link>
-      </nav>
-    </header>
-
-    <main class="landing-section hero tw-h-screen tw-flex tw-justify-around xl:tw-justify-center tw-items-center tw-flex-col xl:tw-flex-row">
-      <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
-          <h1 class="tw-font-bold tw-text-3xl lg:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
+  <div v-else class="tw-h-screen">
+    <UnsignedNavigation v-if="! $store.getters.isLoggedIn">
+      <main class="hero tw-flex tw-items-center tw-py-10">
+        <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
+          <h1 class="tw-font-bold tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
             Earn Points & Redeem Rewards
           </h1>
-          <p class="tw-text-sm xl:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
+          <p class="tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
             Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
           </p>
-          <router-link :to="{name: 'Register'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+          <router-link :to="{name: 'Register'}" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             <fa-icon icon="sign-in-alt" />
             Get Started
           </router-link>
-      </div>
-      <div class="tw-z-0 tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden lg:tw-block">
-        <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/survey.png">
-      </div>
-    </main>
+        </div>
+        <div class="tw-z-0 tw-pt-4 tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden xl:tw-block">
+          <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/survey.png">
+        </div>
+      </main>
+    </UnsignedNavigation>
 
-    <div class="landing-section tw-py-8 tw-bg-secondary">
-      <div class="tw-flex tw-justify-around tw-items-center tw-text-center">
-        <div class="tw-w-1/2 lg:tw-w-1/4">
-          <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
+    <div class="landing-section home tw-h-auto xlw-h-screen tw-py-8 tw-bg-secondary" style=": 870px">
+      <div class="tw-flex tw-justify-around tw-items-center tw-text-primary tw-text-center tw-pt-34 sm:tw-pt-5 lg:t-pt-8 xl:tw-pt-20 tw-pb-10 sm:tw-pb-10 xl:tw-pb-24">
+        <div class="tw-mr-2 lg:tw-mr-0 tw-w-1/2 lg:tw-w-1/4">
+          <div class="tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
             {{ $store.state.stats.total_points_earned }}
           </div>
           <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
@@ -94,7 +79,7 @@
           </div>
         </div>
         <div class="tw-w-1/2 lg:tw-w-1/4">
-          <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
+          <div class="tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
             {{ $store.state.stats.total_offers_completed }}
           </div>
           <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
@@ -105,10 +90,7 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="landing-section tw-pb-8 tw-bg-secondary">
-      <div class="tw-text-primary tw-mb-4 md:tw-mb-2 tw-text-3xl sm:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider">
+      <div class="tw-text-primary tw-text-3xl sm:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider md:tw-pb-8">
         <fa-icon icon="medal" />
         Our Rewards
       </div>
@@ -139,21 +121,121 @@
           </div>
         </div>
       </div>
-      <div class="tw-text-sm tw-text-center tw-mt-2">
+      <div class="tw-text-primary tw-uppercase tw-text-sm tw-text-center tw-mt-2">
         And many more!
       </div>
     </div>
 
-    <div class="landing-section survey-bg tw-py-8 tw-flex tw-justify-between tw-items-center tw-flex-wrap" style="min-height: 250px">
-      <div class="tw-w-full lg:tw-w-1/2 xl:tw-w-2/3 tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-white tw-font-bold tw-text-center lg:tw-text-left">
-        Get Started Today & Start Earning
+    <div class="landing-section tw-text-center tw-bg-secondary tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap">
+      <div class="tw-text-center tw-w-full tw-pt-20 tw-pb-32">
+        <div class="tw-text-primary tw-text-3xl sm:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-mb-6">
+          <fa-icon icon="hashtag" />
+          Our Features
+        </div>
+<!--        <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-base tw-font-light tw-uppercase sm:tw-tracking-wider tw-pb-20">-->
+<!--          Our Offers - Your Experience-->
+<!--        </div>-->
+
+        <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw--mb-4">
+          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+              Offer Walls
+            </div>
+            <div class="tw-mb-6">
+              Explore our offerwall options, and earn coins!
+            </div>
+          </div>
+          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+              Giveaways
+            </div>
+            <div class="tw-mb-6">
+              Enter on site, daily giveaways on our social medias!
+            </div>
+          </div>
+          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+              Referrals
+            </div>
+            <div class="tw-mb-6">
+              Earn coins from your friends!
+            </div>
+          </div>
+          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+              support
+            </div>
+            <div class="tw-mb-6">
+              Read our support!
+            </div>
+          </div>
+        </div>
       </div>
-      <nav class="tw-flex tw-justify-center lg:tw-justify-end tw-w-full lg:tw-w-1/2 xl:tw-w-1/3">
-        <router-link :to="{name: 'Login'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-transparent hover:tw-border-primary hover:tw-text-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-2 md:tw-mr-4">
+    </div>
+
+    <div class="landing-section home tw-h-auto tw-py-8 tw-text-primary tw-bg-secondary tw-pt-20" style="min-height: 800px">
+      <div class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-text-center tw-w-full tw-pt-20 tw-pb-32">
+        <div class="tw-text-primary tw-text-3xl sm:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-pb-10">
+          <fa-icon icon="hashtag" />
+          Our Features
+        </div>
+        <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-base tw-font-light tw-uppercase sm:tw-tracking-wider tw-pb-20">
+          Our Offers - Your Experience
+        </div>
+        <div class="tw-flex tw-flex-wrap tw-justify-between tw-items-center">
+          <div class="wall tw-w-full md:tw-w-1/2 xl:tw-w-1/4 tw-py-3">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-text-2xl xl:tw-text-3xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-py-10">
+              offer walls
+            </div>
+            <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-base tw-font-light tw-uppercase sm:tw-tracking-wider tw-pb-20 ">
+              explore our offerwall options, and earn coins!
+            </div>
+          </div>
+          <div class="wall">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-text-2xl xl:tw-text-3xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-py-10">
+              giveaways
+            </div>
+            <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-base tw-font-light tw-uppercase sm:tw-tracking-wider tw-pb-20">
+              enter on site, daily giveaways on our social medias!
+            </div>
+          </div>
+          <div class="wall">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-text-2xl xl:tw-text-3xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-py-10">
+              referrals
+            </div>
+            <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-base tw-font-light tw-uppercase sm:tw-tracking-wider tw-pb-20">
+            earn coins from your friends!
+            </div>
+          </div>
+          <div class="wall">
+            <fa-icon class="fa-w-40 tw-h-20" icon="hashtag" />
+            <div class="tw-text-2xl xl:tw-text-3xl  tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-py-10">
+              support
+            </div>
+            <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-base tw-font-light tw-uppercase sm:tw-tracking-wider tw-pb-20">
+              read our support!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="landing-section tw-bg-secondary tw-py-8 tw-flex tw-flex-col tw-justify-around tw-items-center" style="min-height: 250px">
+      <div class="tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-primary tw-font-bold tw-text-center lg:tw-text-left">
+        Ready To Start Earning ?
+      </div>
+      <nav class="tw-flex tw-justifycenter lg:tw-justifyend">
+        <router-link :to="{name: 'Login'}" class="tw-text-primary hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-5 md:tw-mr-16">
           <fa-icon icon="sign-in-alt" />
           Login
         </router-link>
-        <router-link :to="{name: 'Register'}" class="tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 hover:tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+        <router-link :to="{name: 'Register'}" class="tw-text-primary hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
           <fa-icon icon="sign-in-alt" />
           Register
         </router-link>
@@ -165,6 +247,7 @@
 </template>
 
 <script>
+import UnsignedNavigation from '@/components/UnsignedNavigation';
 import Footer from '@/components/Footer.vue';
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
@@ -174,6 +257,7 @@ export default {
   name: 'Home',
   components: {
     Footer,
+    UnsignedNavigation,
   },
   setup() {
     const store = useStore();
