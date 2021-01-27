@@ -23,6 +23,10 @@ import {
     faBox,
     faSyncAlt,
     faHashtag,
+    faStar,
+    faWallet,
+    faPeopleArrows,
+    faQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -62,6 +66,10 @@ export default {
     faBox,
     faSyncAlt,
     faHashtag,
+    faStar,
+    faWallet,
+    faPeopleArrows,
+    faQuestion,
 
     // Brands
     faBuffer,
