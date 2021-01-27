@@ -1,10 +1,10 @@
 <template>
   <div class="tw-break-words">
-    <UnsignedNavigation v-if="! $store.getters.isLoggedIn">
+    <UnsignedNavigation v-if="! $store.getters.isLoggedIn" class="tw-pb-6">
       <div class="tw-text-center tw-text-white tw-uppercase tw-font-medium tw-text-2xl lg:tw-text-3xl tw-tracking-wider">
         Terms of use
       </div>
-      <div class="tw-text-center tw-text-white tw-text-sm tw-tracking-wider tw-pb-6">
+      <div class="tw-text-center tw-text-white tw-text-sm tw-tracking-wider">
         Last updated June 11, 2020
       </div>
     </UnsignedNavigation>

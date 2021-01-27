@@ -28,16 +28,6 @@ html {
   @apply w-1/4 tw-py-3;
 }
 
-@media (min-height: 649px) {
-  .home {
-    height: 100vh;
-  }
-}
-
-.home-unsigned:hover {
-  box-shadow: 0 12px 15px rgba(255, 255, 255, 0.2);
-}
-
 @media (max-width: 1023px) {
   #reamaze-widget {
     bottom: calc(var(--navigation-height) + 22px) !important;
@@ -324,13 +314,6 @@ img {
   .landing-section {
     padding-left: 12vw;
     padding-right: 12vw;
-  }
-}
-
-@media (max-width: 1279px) {
-  .hero {
-    padding-top: 20vh;
-    padding-bottom: 10vh;
   }
 }
 
@@ -734,5 +717,15 @@ img {
         }
       }
     }
+  }
+}
+
+.daily-task-card, .feature-card {
+  min-height: 200px;
+}
+
+@media (min-width: 1024px) {
+  .daily-task-card, .feature-card {
+    max-width: 300px;
   }
 }
