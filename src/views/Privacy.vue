@@ -1,7 +1,7 @@
 <template>
   <div class="tw-break-words">
-    <UnsignedNavigation v-if="! $store.getters.isLoggedIn">
-      <div class="tw-text-center tw-text-white tw-uppercase tw-font-medium tw-text-2xl lg:tw-text-3xl tw-tracking-wider ">
+    <UnsignedNavigation v-if="! $store.getters.isLoggedIn" class="tw-pb-6">
+      <div class="tw-text-center tw-text-white tw-uppercase tw-font-medium tw-text-2xl lg:tw-text-3xl tw-tracking-wider">
         Privacy
       </div>
       <div class="tw-text-center tw-text-white tw-text-sm tw-tracking-wider">
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div :class="{ 'tw-container tw-mx-auto tw-mb-6 tw-px-4' : ! $store.getters.isLoggedIn }">
+    <div :class="{ 'tw-container tw-mx-auto tw-my-6 tw-px-4' : ! $store.getters.isLoggedIn }">
       <div class="tw-mb-6">
         <div class="tw-mb-3 tw-text-sm">
           Thank you for choosing to be part of our community at EzRewards (“company”, “we”, “us”, or “our”). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about our policy, or our practices with regards to your personal information, please contact us at ezrewardsgg@gmail.com.
