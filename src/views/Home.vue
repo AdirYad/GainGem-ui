@@ -127,7 +127,7 @@
           </div>
         </div>
       </div>
-      <div class="tw-text-primary tw-uppercase tw-text-sm tw-text-center tw-mt-2">
+      <div class="tw-text-sm tw-text-center tw-mt-2">
         And many more!
       </div>
     </div>
