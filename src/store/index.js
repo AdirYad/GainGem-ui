@@ -349,6 +349,16 @@ export default createStore({
           commit('setDailyTasks', response.data);
       });
     },
+    storeDailyTasks({ getters, commit }, offers_count) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/daily-tasks', { offers_count }).then((response) => {
+        commit('setUser', response.data);
+        commit('updateDailyTasks', offers_count);
+      });
+    },
     getGiveaway({ getters }) {
       if (! getters.isLoggedIn) {
         return;
@@ -363,16 +373,6 @@ export default createStore({
 
       return axiosInstance.post('/giveaway').then((response) => {
         commit('setUser', response.data);
-      });
-    },
-    storeDailyTasks({ getters, commit }, offers_count) {
-      if (! getters.isLoggedIn) {
-        return;
-      }
-
-      return axiosInstance.post('/daily-tasks', { offers_count }).then((response) => {
-          commit('setUser', response.data);
-          commit('updateDailyTasks', offers_count);
       });
     },
     getAnnouncementBanner({ getters, commit }) {
@@ -543,6 +543,22 @@ export default createStore({
       }
 
       return axiosInstance.put(`/suppliers/payments/${payload.supplier_payment_id}`, payload);
+    },
+    getSocialMediaTasks({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/social-media-tasks');
+    },
+    storeSocialMediaTasks({ getters, commit }, social_media) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/social-media-tasks', { social_media }).then((response) => {
+        commit('setUser', response.data);
+      });
     },
   },
   modules: {

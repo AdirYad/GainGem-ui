@@ -117,8 +117,8 @@ button:focus, input:focus {
     height: 80px;
 
     .logo {
-      height: 45px;
-      width: 150px;
+      height: 95px;
+      width: 200px;
       background: url("../images/Logo.png") no-repeat 50%;
       background-size: cover;
     }
@@ -245,6 +245,13 @@ footer {
     height: 55px;
     background: url("../images/Logo.png") no-repeat 50%;
     background-size: cover;
+  }
+
+  .social {
+    > svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   .social:hover {
@@ -521,10 +528,10 @@ img {
   width: 40px !important;
 }
 
-.offerwall-card {
+.offerwall-card, .extra-points-card {
   height: 120px;
 
-  > a {
+  > a, > button {
     .offerwall-image {
       max-width: 200px;
       max-height: 120px;
@@ -596,8 +603,12 @@ img {
   @apply bg-red-200 text-red-800;
 }
 
+.badge-success {
+  @apply bg-green-600 text-white font-bold uppercase;
+}
+
 .badge-out-of-stock {
-  @apply bg-red-500 text-white tw-uppercase tw-font-bold;
+  @apply bg-red-500 text-white uppercase font-bold;
 }
 
 .social-button {

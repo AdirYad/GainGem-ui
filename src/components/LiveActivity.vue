@@ -54,6 +54,10 @@ export default {
       pusher.subscribe('activities')
           .bind('activities.created', ({ activity }) => {
             activities.value.unshift(activity);
+
+            if (store.state.user && store.state.user.id && activity.user.id === store.state.user.id) {
+              store.dispatch('getLoggedUser');
+            }
           });
     });
 
