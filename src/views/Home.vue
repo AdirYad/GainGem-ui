@@ -45,16 +45,16 @@
   </div>
 
   <div v-else>
-    <UnsignedNavigation v-if="! $store.getters.isLoggedIn">
-      <main class="hero tw-flex tw-items-center tw-py-10">
+    <UnsignedNavigation v-if="! $store.getters.isLoggedIn" class="lg:tw-px-4">
+      <main class="tw-flex tw-items-center tw-py-5 lg:tw-py-10">
         <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
-          <h1 class="tw-font-bold tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
+          <h1 class="tw-font-bold tw-text-2xl md:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
             Earn Points & Redeem Rewards
           </h1>
-          <p class="tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
+          <p class="tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
             Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
           </p>
-          <router-link :to="{name: 'Register'}" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+          <router-link :to="{ name: 'Register' }" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
             <fa-icon icon="sign-in-alt" />
             Get Started
           </router-link>
@@ -65,9 +65,14 @@
       </main>
     </UnsignedNavigation>
 
-    <div class="landing-section home tw-bg-secondary md:tw-mt-10">
-      <div class="tw-flex tw-justify-around tw-items-center tw-text-center tw-pt-20 tw-pb-16 tw-pb-20 xl:tw-pb-32">
-<!--        tw-pt-34 sm:tw-pt-5 lg:t-pt-8 xl: tw-pb-10 sm:tw-pb-10 xl:-->
+    <div class="tw-bg-white tw-text-primary">
+      <svg class="tw-block xl:tw--mt-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 240">
+        <path fill="var(--primary-color)" d="M0,224L48,202.7C96,181,192,139,288,112C384,85,480,75,576,85.3C672,96,768,128,864,154.7C960,181,1056,203,1152,186.7C1248,171,1344,117,1392,90.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+      </svg>
+    </div>
+
+    <div class="landing-section tw-py-8 tw-bg-white tw--mt-8 sm:tw--mt-12 md:tw--mt-16 lg:tw--mt-20 xl:tw--mt-24">
+      <div class="tw-flex tw-justify-around tw-items-center tw-text-center tw-py-4">
         <div class="tw-mr-2 lg:tw-mr-0 tw-w-1/2 lg:tw-w-1/4">
           <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
             {{ $store.state.stats.total_points_earned }}
@@ -91,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div class="tw-text-primary tw-text-3xl sm:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-pb-4 md:tw-pb-8">
+      <div class="tw-text-primary tw-mb-4 md:tw-mb-2 tw-text-3xl md:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider">
         <fa-icon icon="medal" />
         Our Rewards
       </div>
@@ -127,19 +132,22 @@
       </div>
     </div>
 
-    <div class="landing-section home  tw-text-center tw-mt-20 xl:tw-mt-0 tw-bg-secondary tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap">
-      <div class="tw-text-center tw-pt-10 xl:tw-pt-0 tw-pb-20 xl:tw-pb-0">
-        <div class="tw-text-primary tw-text-3xl sm:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider tw-pb-8 xl:tw-pb-20 xl:tw-pt-16">
+    <div class="tw-bg-white tw-text-secondary">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z" fill="currentColor"></path>
+      </svg>
+    </div>
+
+    <div class="landing-section tw-text-center tw-bg-secondary tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-pt-4 tw-pb-8">
+      <div class="tw-text-center tw-w-full">
+        <div class="tw-text-primary tw-mb-4 md:tw-mb-2 tw-text-3xl md:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider">
           <fa-icon icon="star" />
           Our Features
         </div>
-<!--        <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-base tw-font-light tw-uppercase sm:tw-tracking-wider tw-pb-20">-->
-<!--          Our Offers - Your Experience-->
-<!--        </div>-->
 
-        <div class="tw-flex tw-justify-center tw-flex-wrap">
-          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 md:tw-mx-1 xl:tw-mx-2 tw-mb-4 xl:tw-mb-12">
-            <fa-icon class="fa-w-40 tw-h-20" icon="wallet" />
+        <div class="tw-flex tw-justify-center tw-flex-wrap lg:tw-flex-no-wrap tw--mb-4 lg:tw-pl-4">
+          <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="wallet" />
             <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
               Offer Walls
             </div>
@@ -147,8 +155,8 @@
               Explore our offerwall options, and earn coins!
             </div>
           </div>
-          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 md:tw-mx-1 xl:tw-mx-2 tw-mb-4 xl:tw-mb-12">
-            <fa-icon class="fa-w-40 tw-h-20" icon="gift" />
+          <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="gift" />
             <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
               Giveaways
             </div>
@@ -156,8 +164,8 @@
               Enter on site, daily giveaways on our social medias!
             </div>
           </div>
-          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 md:tw-mx-1 xl:tw-mx-2 tw-mb-4 xl:tw-mb-12">
-            <fa-icon class="fa-w-40 tw-h-20" icon="people-arrows" />
+          <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="people-arrows" />
             <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
               Referrals
             </div>
@@ -165,8 +173,8 @@
               Earn coins from your friends!
             </div>
           </div>
-          <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 md:tw-mx-1 xl:tw-mx-0">
-            <fa-icon class="fa-w-40 tw-h-20" icon="question" />
+          <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+            <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="question" />
             <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
               support
             </div>
@@ -178,20 +186,32 @@
       </div>
     </div>
 
-    <div class="landing-section tw-bg-secondary tw-py-8 tw-flex tw-flex-col tw-justify-around tw-items-center" style="min-height: 250px">
-      <div class="tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-primary tw-font-bold tw-text-center lg:tw-text-left">
-        Ready To Start Earning ?
+    <div class="tw-bg-secondary tw-text-white">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z" fill="currentColor"></path>
+      </svg>
+    </div>
+
+    <div class="landing-section tw-bg-white tw-py-8 tw-flex tw-flex-col tw-justify-around tw-items-center">
+      <div class="tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-primary tw-font-bold tw-text-center lg:tw-text-left tw-mb-6">
+        Ready To Start Earning?
       </div>
-      <nav class="tw-flex tw-justifycenter lg:tw-justifyend">
-        <router-link :to="{name: 'Login'}" class="tw-text-primary hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-5 md:tw-mr-16">
+      <nav class="tw-flex">
+        <router-link :to="{ name: 'Login' }" class="tw-text-primary hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-4 lg:tw-mr-8">
           <fa-icon class="tw-hidden sm:tw-inline-block" icon="sign-in-alt" />
           Login
         </router-link>
-        <router-link :to="{name: 'Register'}" class="tw-text-primary hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+        <router-link :to="{ name: 'Register' }" class="tw-text-primary hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
           <fa-icon class="tw-hidden sm:tw-inline-block" icon="sign-in-alt" />
           Register
         </router-link>
       </nav>
+    </div>
+
+    <div class="tw-bg-white tw-text-primary">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z" fill="currentColor"></path>
+      </svg>
     </div>
 
     <Footer />

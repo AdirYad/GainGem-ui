@@ -19,7 +19,7 @@
           </router-link>
         </nav>
       </div>
-      <div class="tw-pb-6">
+      <div>
         <slot />
       </div>
     </div>

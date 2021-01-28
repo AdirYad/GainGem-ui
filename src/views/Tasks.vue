@@ -12,7 +12,7 @@
           Complete daily tasks for extra points, these tasks reset every 24 hours.
       </div>
     </div>
-    <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options" class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8 tw--mb-4">
+    <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options" class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8 tw--mb-4 lg:tw-pl-4">
       <div v-for="(taskOption, offers_count) in $store.state.daily_tasks.daily_tasks_options"
            :key="offers_count"
            class="daily-task-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4"
@@ -148,15 +148,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.daily-task-card {
-  min-height: 200px;
-}
-
-@media (min-width: 1024px) {
-  .daily-task-card {
-    max-width: 300px;
-  }
-}
-</style>

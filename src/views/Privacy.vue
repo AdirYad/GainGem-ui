@@ -1,7 +1,7 @@
 <template>
   <div class="tw-break-words">
-    <UnsignedNavigation v-if="! $store.getters.isLoggedIn">
-      <div class="tw-text-center tw-text-white tw-uppercase tw-font-medium tw-text-2xl lg:tw-text-3xl tw-tracking-wider ">
+    <UnsignedNavigation v-if="! $store.getters.isLoggedIn" class="tw-pb-6">
+      <div class="tw-text-center tw-text-white tw-uppercase tw-font-medium tw-text-2xl lg:tw-text-3xl tw-tracking-wider">
         Privacy
       </div>
       <div class="tw-text-center tw-text-white tw-text-sm tw-tracking-wider">
