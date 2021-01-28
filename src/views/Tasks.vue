@@ -12,33 +12,47 @@
           Complete daily tasks for extra points, these tasks reset every 24 hours.
       </div>
     </div>
-    <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options" class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mt-8 tw--mb-4 lg:tw-pl-4">
+    <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options" class="tw-flex tw-justify-center tw-flex-wrap xl:tw-flex-no-wrap tw-mt-8 tw--mb-4 lg:tw-pl-4">
       <div v-for="(taskOption, offers_count) in $store.state.daily_tasks.daily_tasks_options"
            :key="offers_count"
-           class="daily-task-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4"
+           class="daily-task-card tw-flex tw-flex-col tw-justify-around tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4"
       >
-        <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
-          Complete {{ offers_count }} offer{{ offers_count > 1 ? 's' : '' }}
+        <div>
+          <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
+            Complete {{ offers_count }} offer{{ offers_count > 1 ? 's' : '' }}
+          </div>
+          <div v-if="$store.state.daily_tasks.completed_offers_count >= 0" class="tw-mb-6">
+            <template v-if="offers_count > $store.state.daily_tasks.completed_offers_count">
+              Complete {{ offers_count - $store.state.daily_tasks.completed_offers_count }} more offer{{ offers_count - $store.state.daily_tasks.completed_offers_count > 1 ? 's' : '' }}.
+            </template>
+            <template v-else class="tw-mb-1">
+              Already reached.
+            </template>
+          </div>
         </div>
-        <div v-if="$store.state.daily_tasks.completed_offers_count >= 0" class="tw-mb-6">
-          <template v-if="offers_count > $store.state.daily_tasks.completed_offers_count">
-            Complete {{ offers_count - $store.state.daily_tasks.completed_offers_count }} more offer{{ offers_count - $store.state.daily_tasks.completed_offers_count > 1 ? 's' : '' }}.
-          </template>
-          <template v-else>
-            Already reached.
-          </template>
-        </div>
-        <button v-if="$store.state.daily_tasks.completed_daily_tasks &&
+
+        <div>
+          <KProgress class="tw-w-full"
+                     :percent="($store.state.daily_tasks.completed_offers_count / offers_count) * 100 <= 100 ? ($store.state.daily_tasks.completed_offers_count / offers_count) * 100 : 100"
+                     color="var(--primary-color)"
+                     :show-text="false"
+                     :active="$store.state.daily_tasks.completed_daily_tasks &&
+                    ! $store.state.daily_tasks.completed_daily_tasks.some(dailyTask => parseInt(dailyTask) === parseInt(offers_count))"
+                     bg-color="white"
+          />
+          <button v-if="$store.state.daily_tasks.completed_daily_tasks &&
                       ! $store.state.daily_tasks.completed_daily_tasks.some(dailyTask => parseInt(dailyTask) === parseInt(offers_count))"
-                @click="completeTask(offers_count)"
-                class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1">
-          Redeem
-          <fa-icon icon="coins" />
-          {{ taskOption }}
-        </button>
-        <div v-else class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-py-1">
-          Already redeemed!
+                  @click="completeTask(offers_count)"
+                  class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1">
+            Redeem
+            <fa-icon icon="coins" />
+            {{ taskOption }}
+          </button>
+          <div v-else class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-py-1">
+            Already redeemed!
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -59,11 +73,13 @@ import timezone from "dayjs/plugin/timezone"
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { useStore } from "vuex";
 import { computed, onBeforeUnmount, reactive, ref } from "vue";
+import KProgress from 'k-progress-v3';
 
 export default {
   name: 'Tasks',
   components: {
     LoopingRhombusesSpinner,
+    KProgress,
   },
   setup() {
     const store = useStore();
@@ -148,3 +164,19 @@ export default {
   }
 }
 </script>
+
+<style>
+.k-progress-outer {
+  padding: 0;
+}
+
+.daily-task-card {
+  min-height: 200px;
+}
+
+@media (min-width: 1024px) {
+  .daily-task-card {
+    max-width: 300px;
+  }
+}
+</style>
