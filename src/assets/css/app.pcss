@@ -237,6 +237,13 @@ footer {
     background-size: cover;
   }
 
+  .social {
+    > svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
   .social:hover {
     path {
       fill: rgba(0, 0, 0, 0.7);
@@ -504,10 +511,10 @@ img {
   width: 40px !important;
 }
 
-.offerwall-card {
+.offerwall-card, .extra-points-card {
   height: 120px;
 
-  > a {
+  > a, > button {
     .offerwall-image {
       max-width: 200px;
       max-height: 120px;
@@ -579,8 +586,12 @@ img {
   @apply bg-red-200 text-red-800;
 }
 
+.badge-success {
+  @apply bg-green-600 text-white font-bold uppercase;
+}
+
 .badge-out-of-stock {
-  @apply bg-red-500 text-white tw-uppercase tw-font-bold;
+  @apply bg-red-500 text-white uppercase font-bold;
 }
 
 .social-button {
