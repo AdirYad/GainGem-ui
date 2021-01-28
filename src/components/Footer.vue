@@ -4,7 +4,7 @@
       <div class="logo" />
     </router-link>
     <div :class="{ 'tw-hidden lg:tw-flex' : $store.getters.isLoggedIn }" class="tw-mt-4 tw-flex tw-justify-center tw-flex-wrap">
-      <a v-for="(socialMedia, index) in SocialMedia" :href="socialMedia.link" :key="index"
+      <a v-for="(socialMedia, index) in SocialMedia" :key="index" :href="socialMedia.link" target="_blank"
          class="social tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold"
          v-html="socialMedia.icon"
       />
