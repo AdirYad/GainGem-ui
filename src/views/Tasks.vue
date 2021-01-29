@@ -52,7 +52,6 @@
             Already redeemed!
           </div>
         </div>
-
       </div>
     </div>
 
