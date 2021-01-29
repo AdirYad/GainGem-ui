@@ -298,6 +298,13 @@ export default createStore({
 
       return axiosInstance.post('rewards', payload);
     },
+    resendGiftCardTransactionMail({ getters }, gift_card_id) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post(`rewards/${gift_card_id}/mails`);
+    },
     getGiftCards({ getters }, { page, provider }) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;

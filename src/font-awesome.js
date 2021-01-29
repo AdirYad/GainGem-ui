@@ -26,6 +26,8 @@ import {
     faWallet,
     faPeopleArrows,
     faQuestion,
+    faEnvelope,
+    faEnvelopeOpen,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -37,6 +39,7 @@ import {
     faHandshake,
     faCopy,
     faTrashAlt,
+    faEye,
 } from "@fortawesome/free-regular-svg-icons";
 
 export default {
@@ -68,6 +71,8 @@ export default {
     faWallet,
     faPeopleArrows,
     faQuestion,
+    faEnvelope,
+    faEnvelopeOpen,
 
     // Brands
     faBuffer,
@@ -79,5 +84,6 @@ export default {
     faHandshake,
     faCopy,
     faTrashAlt,
+    faEye,
   ),
 };
