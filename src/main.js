@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import AxiosPlugin from '@/_helpers/axios';
-import titleMixin from './mixins/titleMixin'
+import titleMixin from './mixins/title'
 
 // Font Awesome
 import './font-awesome';
