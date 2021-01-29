@@ -168,14 +168,4 @@ export default {
 .k-progress-outer {
   padding: 0;
 }
-
-.daily-task-card {
-  min-height: 200px;
-}
-
-@media (min-width: 1024px) {
-  .daily-task-card {
-    max-width: 300px;
-  }
-}
 </style>
