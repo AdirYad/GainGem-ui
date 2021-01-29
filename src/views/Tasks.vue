@@ -76,6 +76,7 @@ import KProgress from 'k-progress-v3';
 
 export default {
   name: 'Tasks',
+  title: 'Tasks',
   components: {
     LoopingRhombusesSpinner,
     KProgress,

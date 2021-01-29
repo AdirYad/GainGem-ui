@@ -374,6 +374,7 @@ import UnsignedNavigation from "@/components/UnsignedNavigation";
 
 export default {
   name: 'Privacy',
+  title: 'Privacy',
   components: {
     UnsignedNavigation,
   }

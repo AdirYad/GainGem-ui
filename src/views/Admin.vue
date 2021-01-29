@@ -35,6 +35,7 @@ import Suppliers from '@/components/Admin/Suppliers';
 
 export default {
   name: 'Admin',
+  title: 'Admin',
   components: {
     Tab,
     Tabs,

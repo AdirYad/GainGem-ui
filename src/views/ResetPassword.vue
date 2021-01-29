@@ -65,6 +65,7 @@ import { reactive, ref, toRef } from "vue";
 
 export default {
   name: 'ResetPassword',
+  title: 'Reset Password',
   components: {
     LoopingRhombusesSpinner,
   },

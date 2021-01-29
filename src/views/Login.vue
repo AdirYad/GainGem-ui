@@ -72,6 +72,7 @@ import { ref, reactive, toRef } from "vue";
 
 export default {
   name: 'Login',
+  title: 'Login',
   components: {
     LoopingRhombusesSpinner,
   },

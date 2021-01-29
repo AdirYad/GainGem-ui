@@ -113,6 +113,7 @@ import { reactive, ref, toRef } from "vue";
 
 export default {
   name: 'Register',
+  title: 'Register',
   components: {
     LoopingRhombusesSpinner,
     VueHcaptcha,

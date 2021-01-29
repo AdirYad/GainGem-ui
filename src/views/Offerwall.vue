@@ -52,6 +52,12 @@ import { ref } from 'vue';
 
 export default {
   name: 'Offerwall',
+  title: () => {
+    const provider = useRoute().params.provider;
+    const offerwall = useStore().state.offerwalls.filter(offerwall => offerwall.provider === provider)[0];
+
+    return offerwall ? offerwall.name : 'Offerwall';
+  },
   components: {
     LoopingRhombusesSpinner,
   },
@@ -79,6 +85,7 @@ export default {
         setIframe();
       });
     }
+
 
     return {
       offerwall,
