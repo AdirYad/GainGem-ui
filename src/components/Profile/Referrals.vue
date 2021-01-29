@@ -25,12 +25,18 @@ import { ref } from "vue";
 
 export default {
   name: 'Profile.Referrals',
-  setup() {
+  props: {
+    user: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props) {
     const store = useStore();
 
     const referrals = ref([]);
 
-    store.dispatch('getReferrals').then((response) => {
+    store.dispatch('getReferrals', props.user.id).then((response) => {
       referrals.value = response.data.referrals;
     });
 

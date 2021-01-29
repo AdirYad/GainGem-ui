@@ -52,13 +52,16 @@
                 <fa-icon icon="cog" />
               </button>
               <template v-if="user.role !== Roles.Admin && user.role !== Roles.SuperAdmin">
-                <button v-if="! user.banned_at" @click="openBanModal(user)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full hover:tw-text-white hover:tw-bg-red-500">
+                <button v-if="! user.banned_at" @click="openBanModal(user)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full hover:tw-text-white hover:tw-bg-red-500 tw-mr-2">
                   <fa-icon icon="gavel" />
                 </button>
-                <button v-else @click="unban(user)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
+                <button v-else @click="unban(user)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500 tw-mr-2">
                   <fa-icon icon="unlock-alt" />
                 </button>
               </template>
+              <router-link :to="{ name: 'Profile', query: { tab: 'details', user: user.id, back: page } }" class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
+                <fa-icon :icon="['far', 'eye']" />
+              </router-link>
             </div>
           </td>
         </tr>
@@ -135,6 +138,7 @@ import VModal from '@/components/VModal';
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { Roles } from '@/_helpers/roles';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import { ref, reactive } from "vue";
 
 export default {
@@ -146,9 +150,10 @@ export default {
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
 
     const usersObj = ref({});
-    const page = ref(1);
+    const page = ref(route.query.page && parseInt(route.query.page) ? parseInt(route.query.page) : 1);
     const previousUsername = ref('');
     const username = ref('');
     const modal = reactive({
@@ -190,6 +195,12 @@ export default {
 
       store.dispatch('getUsers', { username: username.value, page: page.value}).then((response) => {
         usersObj.value = response.data;
+
+        if (usersObj.value.pagination.last_page < page.value) {
+          page.value = 1;
+
+          searchUsers();
+        }
       });
     }
 

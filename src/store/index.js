@@ -404,12 +404,12 @@ export default createStore({
         }
       });
     },
-    getTransactions({ getters, state }) {
+    getTransactions({ getters, state }, user_id) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
         return;
       }
 
-      return axiosInstance.get(`/users/${state.user.id}/transactions`);
+      return axiosInstance.get(`/users/${user_id}/transactions`);
     },
     getRecentActivities({ getters }) {
       if (! getters.isLoggedIn) {
@@ -418,19 +418,19 @@ export default createStore({
 
       return axiosInstance.get('/activities');
     },
-    getActivities({ getters, state }) {
+    getActivities({ getters, state }, user_id) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
         return;
       }
 
-      return axiosInstance.get(`/users/${state.user.id}/activities`);
+      return axiosInstance.get(`/users/${user_id}/activities`);
     },
-    getReferrals({ getters, state }) {
+    getReferrals({ getters, state }, user_id) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
         return;
       }
 
-      return axiosInstance.get(`/users/${state.user.id}/referrals`);
+      return axiosInstance.get(`/users/${user_id}/referrals`);
     },
     getReferralsStats({ getters, state }) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
@@ -438,6 +438,13 @@ export default createStore({
       }
 
       return axiosInstance.get(`/users/${state.user.id}/referrals/stats`);
+    },
+    getUser({ getters }, user_id) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${user_id}`);
     },
     getUsers({ getters }, payload) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {

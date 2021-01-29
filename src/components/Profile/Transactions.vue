@@ -17,9 +17,14 @@
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="transaction.points" /><td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
         <div class="tw-h-full tw-flex tw-items-center">
           <template v-if="transaction.type === 'gift_card'">
-            <button v-if="! transaction.has_emailed_in_the_last_hour" @click="resend(transaction)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
-              <fa-icon icon="envelope" />
-            </button>
+            <template v-if="! transaction.has_emailed_in_the_last_hour">
+              <button v-if="! user.not_authenticated && $store.getters.isRoleSuperAdmin" @click="resend(transaction)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
+                <fa-icon icon="envelope" />
+              </button>
+              <div v-else class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full">
+                <fa-icon icon="envelope" />
+              </div>
+            </template>
             <div v-else class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full">
               <fa-icon icon="envelope-open" />
             </div>
@@ -54,7 +59,13 @@ export default {
   components: {
     VModal,
   },
-  setup() {
+  props: {
+    user: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props) {
     const store = useStore();
 
     const transactions = ref([]);
@@ -63,7 +74,7 @@ export default {
       transaction: null,
     });
 
-    store.dispatch('getTransactions').then((response) => {
+    store.dispatch('getTransactions', props.user.id).then((response) => {
       transactions.value = response.data.transactions;
     });
 

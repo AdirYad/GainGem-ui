@@ -1,19 +1,21 @@
 <template>
   <form @submit.prevent="saveAccountDetails" class="tw-flex tw-flex-col">
     <div class="tw-flex tw-items-center">
-      <img v-if="$store.state.user && $store.state.user.profile_image"
+      <img v-if="user.profile_image"
            class="tw-mr-4 tw-rounded-full tw-w-10 tw-h-10"
-           :src="$store.state.user.profile_image === auth.profile_image || auth.profile_image === null ? $store.state.user.profile_image : URL.createObjectURL(auth.profile_image)"
-           :alt="$store.state.user.username"
+           :src="user.profile_image === auth.profile_image || auth.profile_image === null ? user.profile_image : URL.createObjectURL(auth.profile_image)"
+           :alt="user.username"
       >
-      <input class="tw-hidden" type="file" accept="image/*" ref="profilePicture" @change="handleProfilePicture">
-      <button @click="$refs.profilePicture.click()"
-              type="button"
-              class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-text-primary tw-border-2 tw-border-primary tw-tracking-wider hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-rounded-full tw-px-4 tw-py-2"
-      >
-        <fa-icon class="tw-h-4 fa-w-20 tw-mr-1" icon="file-upload" />
-        Upload a photo
-      </button>
+      <template v-if="! user.not_authenticated">
+        <input class="tw-hidden" type="file" accept="image/*" ref="profilePicture" @change="handleProfilePicture">
+        <button @click="$refs.profilePicture.click()"
+                type="button"
+                class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-text-primary tw-border-2 tw-border-primary tw-tracking-wider hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-rounded-full tw-px-4 tw-py-2"
+        >
+          <fa-icon class="tw-h-4 fa-w-20 tw-mr-1" icon="file-upload" />
+          Upload a photo
+        </button>
+      </template>
     </div>
     <div class="tw-flex tw-flex-wrap tw-mt-5">
       <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
@@ -22,7 +24,7 @@
         </label>
         <input id="username" type="text" placeholder="Username"
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
-               :value="$store.state.user.username"
+               :value="user.username"
                disabled
         >
       </div>
@@ -35,6 +37,7 @@
                v-model="auth.email"
                :class="{ 'input-invalid tw-mb-3' : v$.email.$invalid || errors.email }"
                @keydown="resetErrors('email')"
+               :disabled="user.not_authenticated"
         >
         <p v-if="v$.email.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ v$.email.$errors[0].$message }}
@@ -48,7 +51,7 @@
       <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
         <label class="tw-flex tw-justify-between tw-flex-wrap tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="password">
           Password
-          <button v-if="auth.confirmPassword === null" @click="editPassword" type="button" class="tw-rounded-full tw-px-4 tw-mr-2 tw-bg-primary tw-text-white p-2 tw-leading-none tw-flex tw-items-center">
+          <button v-if="auth.confirmPassword === null && ! user.not_authenticated" @click="editPassword" type="button" class="tw-rounded-full tw-px-4 tw-mr-2 tw-bg-primary tw-text-white p-2 tw-leading-none tw-flex tw-items-center">
             Edit
           </button>
         </label>
@@ -86,7 +89,7 @@
         </p>
       </div>
     </div>
-    <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-mt-4" type="submit">
+    <button v-if="! user.not_authenticated" class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-mt-4" type="submit">
       Save
     </button>
   </form>
@@ -101,12 +104,18 @@ import { ref, reactive, toRef } from 'vue';
 
 export default {
   name: 'Profile.Details',
-  setup() {
+  props: {
+    user: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props) {
     const store = useStore();
 
     const auth = reactive({
-      profile_image: store.state.user && store.state.user.profile_image ? store.state.user.profile_image : null,
-      email: store.state.user && store.state.user.email ? store.state.user.email : '',
+      profile_image: props.user && props.user.profile_image ? props.user.profile_image : null,
+      email: props.user && props.user.email ? props.user.email : '',
       password: '',
       confirmPassword: null,
     });
@@ -135,10 +144,12 @@ export default {
       confirmPassword: toRef(auth, 'confirmPassword'),
     });
 
-    store.dispatch('getLoggedUser').then(() => {
-      auth.profile_image = store.state.user.profile_image;
-      auth.email = store.state.user.email;
-    });
+    if (! props.user.not_authenticated) {
+      store.dispatch('getLoggedUser').then(() => {
+        auth.profile_image = store.state.user.profile_image;
+        auth.email = store.state.user.email;
+      });
+    }
 
     async function handleProfilePicture(event) {
       let profile_image;
@@ -164,7 +175,7 @@ export default {
         v$.value.confirmPassword.$reset();
       }
 
-      if (v$.value.$invalid) {
+      if (v$.value.$invalid && ! props.user.not_authenticated) {
         return;
       }
 
@@ -178,6 +189,7 @@ export default {
       }
 
       store.dispatch('updateUser', data).then(() => {
+        props.user.profile_image = store.state.user.profile_image;
         auth.profile_image = store.state.user.profile_image;
         auth.email = store.state.user.email;
         auth.password = '';
