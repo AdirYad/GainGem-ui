@@ -23,6 +23,7 @@ import Payments from '@/components/Suppliers/Payments';
 
 export default {
   name: 'Supplier',
+  title: 'Supplier',
   components: {
     Tab,
     Tabs,

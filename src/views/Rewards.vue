@@ -230,6 +230,7 @@ import { ref } from 'vue';
 
 export default {
   name: 'Rewards',
+  title: 'Rewards',
   components: {
     VModal,
     LoopingRhombusesSpinner,

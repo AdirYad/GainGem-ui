@@ -8,7 +8,7 @@
         <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="email">
           Email
         </label>
-        <input id="email" type="text" placeholder="Email"
+        <input id="email" type="text" placeholder="Email" autocomplete="off"
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.email"
                :class="{ 'input-invalid tw-mb-3' : v$.email.$invalid || errors.email }"
@@ -25,7 +25,7 @@
         <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="username">
           Username
         </label>
-        <input id="username" type="text" placeholder="Username"
+        <input id="username" type="text" placeholder="Username" autocomplete="off"
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.username"
                :class="{ 'input-invalid tw-mb-3' : v$.username.$invalid || errors.username }"
@@ -113,6 +113,7 @@ import { reactive, ref, toRef } from "vue";
 
 export default {
   name: 'Register',
+  title: 'Register',
   components: {
     LoopingRhombusesSpinner,
     VueHcaptcha,

@@ -86,6 +86,7 @@ import { ref, reactive } from "vue";
 
 export default {
   name: 'SignedHome',
+  title: 'Earn Points',
   components: {
     VModal,
   },

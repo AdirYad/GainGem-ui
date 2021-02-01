@@ -135,6 +135,7 @@ import { ref, reactive } from 'vue';
 
 export default {
   name: 'Invite',
+  title: 'Invite Friends',
   setup() {
     const store = useStore();
 

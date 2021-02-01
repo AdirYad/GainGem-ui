@@ -32,11 +32,8 @@ export default {
     margin-right: 0;
     width: 100vw;
 
-    .notifications-enter-active {
-      transform: translateX(100vw);
-    }
-
-    .notifications-enter, .notifications-leave-to {
+    .notifications-enter-from, .notifications-leave-to {
+      opacity: 0;
       transform: translateX(100vw);
     }
   }
@@ -48,19 +45,8 @@ export default {
   }
 }
 
-.notifications-leave-active, .notifications-enter-active {
+.notifications-enter-from, .notifications-leave-to {
   opacity: 0;
-}
-
-.notifications-enter-active {
-  transition: none !important;
-  transform: translateX(110%);
-}
-
-.notifications-enter {
-  transform: translateX(-110%);
-}
-.notifications-leave-to {
   transform: translateX(110%);
 }
 </style>

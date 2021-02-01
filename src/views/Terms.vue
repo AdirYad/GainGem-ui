@@ -464,6 +464,7 @@ import UnsignedNavigation from '@/components/UnsignedNavigation';
 
 export default {
   name: 'Terms',
+  title: 'Terms',
   components: {
     UnsignedNavigation,
   }

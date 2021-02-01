@@ -34,8 +34,20 @@ export default {
       tabs.value.forEach(tab => {
         tab.isActive = tab.name === name || tab.query === name;
 
+        let query = {
+          tab: tab.query,
+        }
+
+        if (route.query.user && parseInt(route.query.user)) {
+          query.user = parseInt(route.query.user);
+        }
+
+        if (route.query.back && parseInt(route.query.back)) {
+          query.back = parseInt(route.query.back);
+        }
+
         if (tab.name === name) {
-          router.push({ name: route.name, query: { tab: tab.query } });
+          router.push({ name: route.name, query });
         }
       });
     };

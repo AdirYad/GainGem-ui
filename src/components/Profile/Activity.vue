@@ -6,6 +6,11 @@
         <th class="tw-p-3 tw-text-left sm:tw-w-40">Date</th>
         <th class="tw-p-3 tw-text-left sm:tw-w-40">Type</th>
         <th class="tw-p-3 tw-text-left sm:tw-w-40">Amount</th>
+
+        <template v-if="user.not_authenticated">
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Payout</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">IP</th>
+        </template>
       </tr>
     </thead>
     <tbody class="tw-flex-1 sm:tw-flex-none">
@@ -14,6 +19,11 @@
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="activity.formatted_created_at" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="activity.formatted_type" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.formatted_points" />
+
+        <template v-if="user.not_authenticated">
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.data && activity.data.revenue ? ('$' + activity.data.revenue) : null" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.data && activity.data.user_ip ? activity.data.user_ip : null" />
+        </template>
       </tr>
     </tbody>
   </table>
@@ -25,12 +35,18 @@ import { ref } from "vue";
 
 export default {
   name: 'Profile.Activity',
-  setup() {
+  props: {
+    user: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props) {
     const store = useStore();
 
     const activities = ref([]);
 
-    store.dispatch('getActivities').then((response) => {
+    store.dispatch('getActivities', props.user.id).then((response) => {
       activities.value = response.data.activities;
     });
 

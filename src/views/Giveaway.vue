@@ -166,6 +166,7 @@ import { ref, reactive, computed, onBeforeUnmount } from 'vue';
 
 export default {
   name: 'Giveaway',
+  title: 'Giveaways',
   components: {
     LoopingRhombusesSpinner,
     VueHcaptcha,
