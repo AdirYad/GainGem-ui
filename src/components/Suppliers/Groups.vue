@@ -135,7 +135,7 @@
     />
   </div>
 
-  <Pagination v-if="groupsObj.pagination" v-model="page" :records="groupsObj.pagination.total" :per-page="groupsObj.pagination.per_page" @paginate="getRobuxGroups" :options="{ chunk: 5 }" />
+  <Pagination v-if="groupsObj.pagination" v-model="page" :records="groupsObj.pagination.total" :per-page="groupsObj.pagination.per_page" @paginate="getRobuxGroups" :options="{ chunk: 5, edgeNavigation: true }" />
 
   <template v-if="chartData.labels">
     <div class="tw-text-primary tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-my-4 tw-text-center">

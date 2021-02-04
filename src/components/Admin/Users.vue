@@ -77,7 +77,7 @@
     />
   </div>
 
-  <Pagination v-if="usersObj.pagination" v-model="page" :records="usersObj.pagination.total" :per-page="usersObj.pagination.per_page" @paginate="searchUsers" :options="{ chunk: 5 }" />
+  <Pagination v-if="usersObj.pagination" v-model="page" :records="usersObj.pagination.total" :per-page="usersObj.pagination.per_page" @paginate="searchUsers" :options="{ chunk: 5, edgeNavigation: true }" />
   <VModal v-model:visible="modal.visible">
     <form v-if="modal.type === 'edit'" @submit.prevent="edit" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">

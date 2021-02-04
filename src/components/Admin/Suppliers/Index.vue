@@ -38,7 +38,7 @@
     />
   </div>
 
-  <Pagination v-if="suppliersObj.pagination" v-model="page" :records="suppliersObj.pagination.total" :per-page="suppliersObj.pagination.per_page" @paginate="getSuppliers" :options="{ chunk: 5 }" />
+  <Pagination v-if="suppliersObj.pagination" v-model="page" :records="suppliersObj.pagination.total" :per-page="suppliersObj.pagination.per_page" @paginate="getSuppliers" :options="{ chunk: 5, edgeNavigation: true }" />
   <VModal v-model:visible="modal.visible">
     <form @submit.prevent="editRate" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
