@@ -4,6 +4,7 @@
 
 :root {
   --primary-color-rgb: 19, 160, 101;
+  --primary-color-rgb-no-commas: 19 160 101;
   --secondary-color-rgb: 244, 244, 248;
   --primary-color: rgb(var(--primary-color-rgb));
   --secondary-color: rgb(var(--secondary-color-rgb));
@@ -756,4 +757,16 @@ img {
   .daily-task-card, .feature-card {
     max-width: 300px;
   }
+}
+
+.tw-form-checkbox:hover, .tw-form-checkbox:focus {
+  box-shadow: 0 0 0 3px rgb(var(--primary-color-rgb-no-commas) / 50%);
+
+  @apply border-primary;
+}
+
+.tw-form-checkbox-invalid, .tw-form-checkbox-invalid:hover, .tw-form-checkbox-invalid:focus {
+  box-shadow: 0 0 0 3px rgb(245 101 101 / 50%);
+
+  @apply border-red-500;
 }

@@ -21,7 +21,7 @@
           {{ errors.username[0] }}
         </p>
       </div>
-      <div class="tw-mb-6">
+      <div class="tw-mb-4">
         <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="password">
           Password
         </label>
