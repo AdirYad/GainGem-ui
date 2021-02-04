@@ -38,6 +38,23 @@
           {{ errors.password[0] }}
         </p>
       </div>
+      <div v-if="auth.two_factor_code !== null" class="tw-mb-4">
+        <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="two_factor_code">
+          Two Factor Code
+        </label>
+        <input id="two_factor_code" type="text" placeholder="123456"
+               class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+               v-model="auth.two_factor_code"
+               :class="{ 'input-invalid tw-mb-3' : v$.two_factor_code.$invalid || errors.two_factor_code }"
+               @keydown="resetErrors('two_factor_code')"
+        >
+        <p v-if="v$.two_factor_code.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+          {{ v$.two_factor_code.$errors[0].$message }}
+        </p>
+        <p v-else-if="errors.two_factor_code" class="tw-text-red-500 tw-text-xs tw-italic">
+          {{ errors.two_factor_code[0] }}
+        </p>
+      </div>
       <div class="tw-flex tw-items-center tw-justify-between tw-flex-wrap">
         <button v-if="! isLogging" class="tw-w-1/3 tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 focus:tw-outline-none" type="submit">
           Login
@@ -83,6 +100,7 @@ export default {
     const auth = reactive({
       username: '',
       password: '',
+      two_factor_code: null,
     });
 
     const errors = ref({});
@@ -99,9 +117,17 @@ export default {
         minLength: minLength(6),
         maxLength: maxLength(255),
       },
+      two_factor_code: {
+        minLength: minLength(6),
+        maxLength: maxLength(6),
+      },
     };
 
-    const v$ = useVuelidate(rules, { username: toRef(auth, 'username'), password: toRef(auth, 'password') });
+    const v$ = useVuelidate(rules, {
+      username: toRef(auth, 'username'),
+      password: toRef(auth, 'password'),
+      two_factor_code: toRef(auth, 'two_factor_code'),
+    });
 
     const login = () => {
       v$.value.$touch();
@@ -122,16 +148,36 @@ export default {
         if (err.response.status === 422) {
           if (err.response.data.errors) {
             errors.value = err.response.data.errors;
+          } else if (err.response.data.message === '2FA-CODE') {
+            if (auth.two_factor_code === null) {
+              auth.two_factor_code = '';
+
+              store.dispatch('addNotification', {
+                message: 'You have received an email which contains two factor login code.',
+              });
+            } else {
+              errors.value = {
+                'two_factor_code': ['Incorrect 2FA code!'],
+              }
+            }
           } else {
             errors.value = {
               'password': [err.response.data.message],
             }
           }
         } else if (err.response.status === 403) {
-          store.dispatch('addNotification', {
-            type: 'error',
-            message: err.response.data.message,
-          });
+          if (err.response.data.message === '2FA') {
+            auth.two_factor_code = '';
+
+            store.dispatch('addNotification', {
+              message: 'You have received an email which contains two factor login code.',
+            });
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
         }
       });
     }
