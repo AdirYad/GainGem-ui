@@ -3,7 +3,7 @@
     <Navigation v-if="$store.getters.isLoggedIn" />
 
     <div :class="{ 'page-container' : $store.getters.isLoggedIn}">
-      <div :class="{ 'container' : $store.getters.isLoggedIn, 'tw-relative' : $store.getters.isLoggedIn && $route.name === 'Rewards' }">
+      <div :class="{ 'container tw-relative' : $store.getters.isLoggedIn }">
         <Announcement v-if="$store.getters.isLoggedIn" />
         <LiveActivity v-if="$store.getters.isLoggedIn" />
         <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
