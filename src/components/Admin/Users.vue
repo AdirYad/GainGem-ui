@@ -59,7 +59,7 @@
                   <fa-icon icon="unlock-alt" />
                 </button>
               </template>
-              <router-link :to="{ name: 'Profile', query: { tab: 'details', user: user.id, back: page } }" class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
+              <router-link v-if="user.role !== 'super_admin' || $store.getters.isRoleSuperAdmin" :to="{ name: 'Profile', query: { tab: 'details', user: user.id, back: page } }" class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
                 <fa-icon :icon="['far', 'eye']" />
               </router-link>
             </div>
@@ -77,7 +77,7 @@
     />
   </div>
 
-  <Pagination v-if="usersObj.pagination" v-model="page" :records="usersObj.pagination.total" :per-page="usersObj.pagination.per_page" @paginate="searchUsers" :options="{ chunk: 5 }" />
+  <Pagination v-if="usersObj.pagination" v-model="page" :records="usersObj.pagination.total" :per-page="usersObj.pagination.per_page" @paginate="searchUsers" :options="{ chunk: 5, edgeNavigation: true }" />
   <VModal v-model:visible="modal.visible">
     <form v-if="modal.type === 'edit'" @submit.prevent="edit" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">

@@ -74,6 +74,26 @@
           </template>
         </p>
       </div>
+      <div class="tw-flex tw-mb-4">
+        <label class="tw-flex tw-items-center tw-text-xs">
+            <input v-model="auth.tos_accepted"
+                   type="checkbox"
+                   class="tw-h-5 tw-w-5 tw-duration-300 tw-form-checkbox tw-text-primary"
+                   :class="{ 'tw-form-checkbox-invalid' : v$.tos_accepted.$invalid }"
+                   @change="resetErrors('tos_accepted')"
+            >
+            <span class="tw-ml-2">
+              I have read and agree to the
+              <router-link :to="{ name: 'Terms' }" class="tw-text-primary tw-underline">
+                Terms of Service
+              </router-link>
+              and
+              <router-link :to="{ name: 'Privacy' }" class="tw-text-primary tw-underline">
+                Privacy Policy
+              </router-link>
+          </span>
+        </label>
+      </div>
       <div class="tw-flex tw-flex-col">
         <button v-if="! isRegistering" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-px-4 tw-py-1 focus:tw-outline-none" type="submit">
           Register
@@ -130,6 +150,7 @@ export default {
       password: '',
       confirmPassword: '',
       referral_token: localStorage.getItem('ref_id') || null,
+      tos_accepted: false,
     });
 
     const errors = ref({});
@@ -154,6 +175,10 @@ export default {
         required,
         sameAsPassword: sameAs('', 'password'),
       },
+      tos_accepted: {
+        required,
+        checked: (value) => value === true,
+      },
     };
 
     const v$ = useVuelidate(rules, {
@@ -161,6 +186,7 @@ export default {
       email: toRef(auth, 'email'),
       password: toRef(auth, 'password'),
       confirmPassword: toRef(auth, 'confirmPassword'),
+      tos_accepted: toRef(auth, 'tos_accepted'),
     });
 
     const register = () => {
