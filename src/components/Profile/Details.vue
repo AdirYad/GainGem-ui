@@ -89,6 +89,9 @@
         </p>
       </div>
     </div>
+    <span v-if="user.two_factor_enabled_at" class="tw-text-xs tw-text-red-500">
+      * Changing an email may disable 2FA security.
+    </span>
     <button v-if="! user.not_authenticated" class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-mt-4" type="submit">
       Save
     </button>
@@ -151,6 +154,17 @@ export default {
       });
     }
 
+    return {
+      auth,
+      v$,
+      errors,
+      resetErrors,
+      editPassword,
+      handleProfilePicture,
+      saveAccountDetails,
+      URL,
+    }
+
     async function handleProfilePicture(event) {
       let profile_image;
 
@@ -168,7 +182,7 @@ export default {
       auth.profile_image = profile_image;
     }
 
-    const saveAccountDetails = () => {
+    function saveAccountDetails() {
       v$.value.$touch();
 
       if (! auth.password && auth.confirmPassword === null || v$.value.confirmPassword.sameAsPassword.$invalid && auth.password === auth.confirmPassword) {
@@ -190,6 +204,7 @@ export default {
 
       store.dispatch('updateUser', data).then(() => {
         props.user.profile_image = store.state.user.profile_image;
+        props.user.two_factor_enabled_at = store.state.user.two_factor_enabled_at;
         auth.profile_image = store.state.user.profile_image;
         auth.email = store.state.user.email;
         auth.password = '';
@@ -215,28 +230,17 @@ export default {
           }
         }
       });
-    };
-
-    const resetErrors = (key) => {
-      v$.value[key].$reset();
-      delete errors.value[key];
     }
 
-    const editPassword = () => {
+    function editPassword() {
       auth.confirmPassword = '';
       resetErrors('password');
       resetErrors('confirmPassword');
     }
 
-    return {
-      auth,
-      v$,
-      errors,
-      resetErrors,
-      editPassword,
-      handleProfilePicture,
-      saveAccountDetails,
-      URL,
+    function resetErrors(key) {
+      v$.value[key].$reset();
+      delete errors.value[key];
     }
   },
 }

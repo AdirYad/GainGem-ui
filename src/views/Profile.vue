@@ -28,14 +28,36 @@
               {{ user.created_at }}
             </div>
           </div>
-          <button v-if="! user.not_authenticated" @click="logout" class="tw-w-full tw-flex tw-justify-center tw-items-center hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-text-primary tw-border-2 tw-border-primary lg:tw-hidden tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-12">
-            <fa-icon class="tw-h-6 fa-w-40" icon="sign-out-alt" />
-            Logout
-          </button>
-          <router-link v-else :to="{ name: 'Admin', query: { tab: 'users', page: backPage } }" class="tw-w-full tw-flex tw-justify-center tw-items-center hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-text-primary tw-border-2 tw-border-primary tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-12">
-            <fa-icon class="tw-h-6 fa-w-40" icon="undo-alt" />
-            Back
-          </router-link>
+
+          <template v-if="! user.not_authenticated">
+            <button v-if="! user.two_factor_enabled_at" @click="enable2FA" class="tw-w-full tw-flex tw-justify-center tw-items-center hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-text-primary tw-border-2 tw-border-primary tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-12">
+              <fa-icon class="tw-h-6 fa-w-40" icon="lock" />
+              Enable 2FA Security
+            </button>
+            <button v-else @click="disable2FA" class="tw-w-full tw-flex tw-justify-center tw-items-center tw-text-white tw-bg-primary hover:tw-bg-white tw-duration-300 hover:tw-text-primary tw-border-2 tw-border-primary tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-12">
+              <fa-icon class="tw-h-6 fa-w-40" icon="unlock-alt" />
+              Disable 2FA Security
+            </button>
+            <button v-if="! user.not_authenticated" @click="logout" class="tw-w-full tw-flex tw-justify-center tw-items-center hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-text-primary tw-border-2 tw-border-primary lg:tw-hidden tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-3">
+              <fa-icon class="tw-h-6 fa-w-40" icon="sign-out-alt" />
+              Logout
+            </button>
+          </template>
+
+          <template v-else>
+            <div v-if="! user.two_factor_enabled_at" class="tw-w-full tw-flex tw-justify-center tw-items-center tw-duration-300 tw-text-primary tw-border-2 tw-border-primary tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-12">
+              <fa-icon class="tw-h-6 fa-w-40" icon="unlock-alt" />
+              2FA Security Disabled
+            </div>
+            <div v-else class="tw-w-full tw-flex tw-justify-center tw-items-center tw-text-white tw-bg-primary tw-duration-300 tw-border-2 tw-border-primary tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-12">
+              <fa-icon class="tw-h-6 fa-w-40" icon="lock" />
+              2FA Security Enabled
+            </div>
+            <router-link :to="{ name: 'Admin', query: { tab: 'users', page: backPage } }" class="tw-w-full tw-flex tw-justify-center tw-items-center hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-text-primary tw-border-2 tw-border-primary tw-text-sm tw-uppercase tw-tracking-wider tw-font-bold tw-rounded-full tw-py-2 tw-mb-1 tw-mt-3">
+              <fa-icon class="tw-h-6 fa-w-40" icon="undo-alt" />
+              Back
+            </router-link>
+          </template>
         </div>
       </div>
 
@@ -121,11 +143,39 @@ export default {
       backPage,
       isLoading,
       logout,
+      enable2FA,
+      disable2FA,
     }
 
     function logout() {
       store.dispatch('logout').then(() => {
         router.push({ name: 'Home' });
+      });
+    }
+
+    function enable2FA() {
+      store.dispatch('storeTwoFactor').then(() => {
+        user.value = store.state.user;
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          });
+        }
+      });
+    }
+
+    function disable2FA() {
+      store.dispatch('deleteTwoFactor').then(() => {
+        user.value = store.state.user;
+      }).catch((err) => {
+        if (err.response.status === 422) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          });
+        }
       });
     }
   },

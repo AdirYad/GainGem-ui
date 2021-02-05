@@ -138,7 +138,7 @@
     />
   </div>
 
-  <Pagination v-if="promoCodesObj.pagination" v-model="page" :records="promoCodesObj.pagination.total" :per-page="promoCodesObj.pagination.per_page" @paginate="getPromoCodes" :options="{ chunk: 5 }" />
+  <Pagination v-if="promoCodesObj.pagination" v-model="page" :records="promoCodesObj.pagination.total" :per-page="promoCodesObj.pagination.per_page" @paginate="getPromoCodes" :options="{ chunk: 5, edgeNavigation: true }" />
   <VModal v-model:visible="modal.visible">
     <form @submit.prevent="edit" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">

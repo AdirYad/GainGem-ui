@@ -574,6 +574,24 @@ export default createStore({
         commit('setUser', response.data);
       });
     },
+    storeTwoFactor({ getters, commit }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.post('/2fa').then((response) => {
+        commit('setUser', response.data);
+      });
+    },
+    deleteTwoFactor({ getters, commit }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.delete('/2fa').then((response) => {
+        commit('setUser', response.data);
+      });
+    },
   },
   modules: {
   },

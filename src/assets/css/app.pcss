@@ -4,6 +4,7 @@
 
 :root {
   --primary-color-rgb: 19, 160, 101;
+  --primary-color-rgb-no-commas: 19 160 101;
   --secondary-color-rgb: 244, 244, 248;
   --primary-color: rgb(var(--primary-color-rgb));
   --secondary-color: rgb(var(--secondary-color-rgb));
@@ -242,7 +243,7 @@ button:focus, input:focus {
 footer {
   .logo {
     width: 200px;
-    height: 55px;
+    height: 60px;
     background: url("../images/Logo.png") no-repeat 50%;
     background-size: cover;
   }
@@ -736,7 +737,7 @@ img {
           }
         }
 
-        &.disabled {
+        &.disabled, &.VuePagination__pagination-item-first-page.undefined, &.VuePagination__pagination-item-last-page.undefined {
           @apply bg-gray-500 cursor-default;
 
           > button {
@@ -756,4 +757,16 @@ img {
   .daily-task-card, .feature-card {
     max-width: 300px;
   }
+}
+
+.tw-form-checkbox:hover, .tw-form-checkbox:focus {
+  box-shadow: 0 0 0 3px rgb(var(--primary-color-rgb-no-commas) / 50%);
+
+  @apply border-primary;
+}
+
+.tw-form-checkbox-invalid, .tw-form-checkbox-invalid:hover, .tw-form-checkbox-invalid:focus {
+  box-shadow: 0 0 0 3px rgb(245 101 101 / 50%);
+
+  @apply border-red-500;
 }
