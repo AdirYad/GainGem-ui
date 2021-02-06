@@ -77,7 +77,7 @@
           </div>
           <div class="tw-w-full tw-text-center">
             <button class="tw-h-full tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
-              Create
+              Submit
             </button>
           </div>
         </div>
@@ -90,8 +90,8 @@
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
           <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Group ID</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Owner Username</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Robux Left</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Roblox Username</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Remaining Robux</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Status</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
