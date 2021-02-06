@@ -106,7 +106,7 @@
             Offer Walls
           </div>
           <div class="tw-mb-6">
-            Explore our offerwall options, and earn coins!
+            Check out our offerwalls to start earning points!
           </div>
         </div>
         <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
@@ -115,7 +115,7 @@
             Giveaways
           </div>
           <div class="tw-mb-6">
-            Enter on site, daily giveaways on our social medias!
+            Enter our hourly giveaways on the website or keep an eye on our social medias for special promo codes!
           </div>
         </div>
         <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
@@ -124,7 +124,7 @@
             Referrals
           </div>
           <div class="tw-mb-6">
-            Earn coins from your friends!
+            Invite your friends and earn 10% of their total earnings!
           </div>
         </div>
         <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
@@ -133,7 +133,7 @@
             support
           </div>
           <div class="tw-mb-6">
-            Read our support!
+            Check out our help center located on the bottom right of the page!
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@
 
   <div class="landing-section tw-bg-white tw-py-8 tw-flex tw-flex-col tw-justify-around tw-items-center">
     <div class="tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-primary tw-font-bold tw-text-center lg:tw-text-left tw-mb-6">
-      Ready To Start Earning?
+      Start Earning Today!
     </div>
     <nav class="tw-flex">
       <router-link :to="{ name: 'Login' }" class="tw-text-primary hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary hover:tw-bg-primary tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3 tw-mr-4 lg:tw-mr-8">
