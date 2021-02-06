@@ -90,7 +90,7 @@
       </div>
     </div>
     <span v-if="user.two_factor_enabled_at" class="tw-text-xs tw-text-red-500">
-      * Changing an email may disable 2FA security.
+      * Changing your email will disable 2FA security.
     </span>
     <button v-if="! user.not_authenticated" class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-mt-4" type="submit">
       Save
