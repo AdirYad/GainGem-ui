@@ -91,7 +91,7 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40 ">Expiration</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Uses</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Active?</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Status</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
       </thead>
