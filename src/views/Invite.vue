@@ -6,7 +6,7 @@
 
     <div class="tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
       <div class="tw-text-xl tw-text-primary tw-mb-6">
-        Share your referral link and earn up to 10% points from your friends earnings
+        Share your referral link with your friends and earn up to 10% of all their earnings!
       </div>
       <div class="tw-rounded-xl tw-pt-4 tw-pr-4 tw-bg-primary tw-shadow-md tw-inline-block">
         <div class="tw-flex tw-justify-center tw-flex-wrap">
@@ -43,7 +43,7 @@
           Total Users
         </div>
         <div class="tw-mb-6">
-          Number of referred users
+          Number of invited users
         </div>
         <div class="tw-flex tw-justify-center tw-items-center">
           <fa-icon class="tw-h-8 fa-w-40 tw-text-primary" icon="user" />
@@ -77,13 +77,13 @@
           1
         </div>
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mt-10 tw-mb-4">
-          SHARE IT WITH FRIENDS
+          INVITE FRIENDS
         </div>
         <div class="tw-text-sm tw-mb-2">
           Share your referral link with your friends in order to attract new users to EzRewards.
         </div>
         <div class="tw-text-sm tw-mb-2">
-          On each user you refer, you'll receive 10% on his earnings.
+          Each user you invite, you'll receive 10% of his earnings.
         </div>
       </div>
 
@@ -101,7 +101,7 @@
           Receive Points
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once someone signed up on our EzRewards using your referral link and completes an offer, you'll receive your points.
+          Once someone has signed up on EzRewards using your referral link, you'll receive points any time they complete an offer.
         </div>
       </div>
 
@@ -116,13 +116,13 @@
           3
         </div>
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mt-10 tw-mb-4">
-          GET REWARDS
+          CLAIM REWARDS
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once you've earned enough points, you can redeem them for many gifts!
+          Once you've earned enough points, you can use them to claim one of our many available rewards!
         </div>
         <div class="tw-text-sm tw-mb-2">
-          More friends means more revenue, and more generated revenue means more gifts.
+          More friends you invite means more revenue, and more generated revenue means more rewards to claim!
         </div>
       </div>
     </div>

@@ -22,9 +22,9 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40">IP</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Balance</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Total</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Withdraws</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Transactions</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-10">Referrals</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Referred</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Referred by</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Banned</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Reason</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Role</th>

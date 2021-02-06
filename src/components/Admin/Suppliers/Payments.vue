@@ -9,7 +9,7 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Destination</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Amount</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Status</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Denial Reason</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Note</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Actions</th>
         </tr>
       </thead>

@@ -82,7 +82,7 @@ export const Rewards = [
     }
   },
   {
-    name: 'Psn',
+    name: 'PSN',
     image: require('@/assets/images/rewards/psn.png'),
     provider: 'psn',
     stock: true,

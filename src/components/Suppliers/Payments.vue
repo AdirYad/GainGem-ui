@@ -56,7 +56,7 @@
                     style="height: 38px"
             >
               <option value="paypal" selected>
-                Paypal
+                PayPal
               </option>
               <option value="bitcoin">
                 Bitcoin
@@ -71,9 +71,9 @@
           </div>
           <div class="tw-w-full sm:tw-w-1/3 tw-mb-4 sm:tw-pr-2">
             <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="destination">
-              {{ payload.method === 'paypal' ? 'Paypal Email' : 'Bitcoin Address' }}
+              {{ payload.method === 'paypal' ? 'PayPal Email' : 'Bitcoin Address' }}
             </label>
-            <input id="destination" type="text" :placeholder="payload.method === 'paypal' ? 'Paypal Email' : 'Bitcoin Address'"
+            <input id="destination" type="text" :placeholder="payload.method === 'paypal' ? 'PayPal Email' : 'Bitcoin Address'"
                    class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                    v-model="payload.destination"
                    :class="{ 'input-invalid tw-mb-3' : v$.destination.$invalid || errors.destination }"
@@ -105,7 +105,7 @@
           </div>
           <div class="tw-w-full tw-text-center">
             <button class="tw-h-full tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
-              Create
+              Submit
             </button>
           </div>
         </div>
@@ -122,7 +122,7 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Destination</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Amount</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Status</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Denial Reason</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Note</th>
         </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
@@ -257,7 +257,7 @@ export default {
 
         store.dispatch('addNotification', {
           type: 'success',
-          message: 'Payment created successfully!',
+          message: 'Payment submitted successfully!',
         });
 
         isCreating.value = false;
