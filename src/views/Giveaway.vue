@@ -108,7 +108,7 @@
           In order to participate in the giveaway, you must complete at least one offer in the last hour.
         </div>
         <div class="tw-text-sm tw-mb-2">
-          After completing an offer, you'll be able to enter the giveaway by clicking the "ENTER" button above.
+          After completing an offer, you'll be able to enter the giveaway by clicking the "ENTER GIVEAWAY" button above.
         </div>
       </div>
 
@@ -126,7 +126,7 @@
           Receive Points
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once you've entered the giveaway, you have a chance to win the amount of points that is written above.
+          Once you've entered the giveaway, you have a chance to win the amount of points that is shown above.
         </div>
       </div>
 
@@ -141,10 +141,10 @@
           3
         </div>
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mt-10 tw-mb-4">
-          GET REWARDS
+          CLAIM REWARDS
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once you've earned enough points, you can redeem them for many gifts!
+          Once you've earned enough points, you can use them to claim one of our many available rewards!
         </div>
         <div class="tw-text-sm tw-mb-2">
           The more you participate in giveaways, the better chance to win!
