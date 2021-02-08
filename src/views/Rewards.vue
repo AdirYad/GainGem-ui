@@ -209,12 +209,12 @@
 
         <div class="tw-text-xs md:tw-text-sm">
           <template v-if="modal.provider === 'robux'">
-            * There are no refunds once a code is claimed so please make sure you claim the
-            correct code!
-          </template>
-          <template v-else>
             * There are no refunds once robux is claimed so please make sure you entered the
             correct username!
+          </template>
+          <template v-else>
+            * There are no refunds once a code is claimed so please make sure you claim the
+            correct code!
           </template>
         </div>
       </template>

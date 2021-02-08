@@ -13,7 +13,7 @@
         </span>
       </div>
     </div>
-    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mt-4 sm:tw-mt-0">
       <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
         Total Withdrawn
       </div>
@@ -26,7 +26,7 @@
         </span>
       </div>
     </div>
-    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4">
+    <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 tw-mt-4 sm:tw-mt-0">
       <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
         Available Earnings
       </div>
