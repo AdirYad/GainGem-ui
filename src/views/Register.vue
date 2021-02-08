@@ -84,13 +84,13 @@
             >
             <span class="tw-ml-2">
               I have read and agree to the
-              <router-link :to="{ name: 'Terms' }" class="tw-text-primary tw-underline">
+              <a href="/terms" target="_blank" class="tw-text-primary tw-underline">
                 Terms of Service
-              </router-link>
+              </a>
               and
-              <router-link :to="{ name: 'Privacy' }" class="tw-text-primary tw-underline">
+              <a href="/privacy" target="_blank" class="tw-text-primary tw-underline">
                 Privacy Policy
-              </router-link>
+              </a>
           </span>
         </label>
       </div>
