@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import AxiosPlugin from '@/_helpers/axios';
 import titleMixin from './mixins/title'
+import VueGtag from "vue-gtag-next";
 
 // Font Awesome
 import './font-awesome';
@@ -18,6 +19,11 @@ if (store.state.token !== null) {
 
 const app = createApp(App)
     .component('fa-icon', FontAwesomeIcon)
+    .use(VueGtag, {
+        property: {
+            id: process.env.VUE_APP_MIX_GOOGLE_ANALYTICS_ID,
+        },
+    })
     .use(AxiosPlugin)
     .use(store)
     .use(router)
