@@ -252,8 +252,11 @@ export default {
         payload.method = 'paypal';
         payload.destination = '';
         payload.value = null;
-        paymentsObj.value.payments.unshift(response.data);
+        paymentsObj.value.payments.unshift(response.data.payment);
         paymentsObj.value.pagination.total++;
+        paymentsObj.value.total_earnings = response.data.total_earnings;
+        paymentsObj.value.total_withdrawals = response.data.total_withdrawals;
+        paymentsObj.value.available_earnings = response.data.available_earnings;
 
         store.dispatch('addNotification', {
           type: 'success',
