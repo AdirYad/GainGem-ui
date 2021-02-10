@@ -3,10 +3,10 @@
     <div class="tw-border-2 tw-border-primary tw-text-primary tw-rounded-lg tw-w-full tw-px-4 md:tw-px-8 tw-py-4 tw-flex tw-justify-between tw-items-center tw-text-sm">
       <template v-if="! hasSentVerification">
         <div>
-          You need to verify your email address for better experience
+          You need to verify your email address for a better experience. Make sure to also check your spam folder!
         </div>
         <button @click="resendEmailVerification" class="tw-h-full tw-ml-2 md:tw-ml-4">
-          Resend
+          Resend email
         </button>
       </template>
       <template v-else>
