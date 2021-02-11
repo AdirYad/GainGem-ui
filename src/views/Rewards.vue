@@ -365,8 +365,8 @@ export default {
 
       if (! payload.value.value) {
         errorMessage = 'You must enter an amount!';
-      } else if (payload.value.value < 1) {
-        errorMessage = 'The amount has to be greater than 0.';
+      } else if (payload.value.value < 5) {
+        errorMessage = 'The amount has to be greater than 5.';
       } else if (payload.value.value > 5000) {
         errorMessage = 'The amount may not be greater than 5000.';
       } else if (payload.value.provider === 'robux') {

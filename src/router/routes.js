@@ -46,6 +46,7 @@ export default [
             authorize: [
                 Roles.SuperAdmin,
                 Roles.Admin,
+                Roles.Sponsor,
                 Roles.Supplier,
                 Roles.User,
             ],
@@ -59,6 +60,7 @@ export default [
             authorize: [
                 Roles.SuperAdmin,
                 Roles.Admin,
+                Roles.Sponsor,
                 Roles.Supplier,
                 Roles.User,
             ],
@@ -72,6 +74,7 @@ export default [
             authorize: [
                 Roles.SuperAdmin,
                 Roles.Admin,
+                Roles.Sponsor,
                 Roles.Supplier,
                 Roles.User,
             ],
@@ -85,6 +88,7 @@ export default [
             authorize: [
                 Roles.SuperAdmin,
                 Roles.Admin,
+                Roles.Sponsor,
                 Roles.Supplier,
                 Roles.User,
             ],
@@ -98,6 +102,7 @@ export default [
             authorize: [
                 Roles.SuperAdmin,
                 Roles.Admin,
+                Roles.Sponsor,
                 Roles.Supplier,
                 Roles.User,
             ],
@@ -111,6 +116,7 @@ export default [
             authorize: [
                 Roles.SuperAdmin,
                 Roles.Admin,
+                Roles.Sponsor,
                 Roles.Supplier,
                 Roles.User,
             ],

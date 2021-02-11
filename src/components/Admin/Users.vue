@@ -48,7 +48,10 @@
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.role" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
-              <button v-if="$store.getters.isRoleSuperAdmin && user.role === Roles.Admin || user.id !== $store.state.user.id && ! $store.getters.isRoleSuperAdmin && ! $store.getters.isRoleAdmin || user.role === Roles.User || user.role === Roles.Supplier" @click="openEditModal(user)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
+              <button v-if="$store.getters.isRoleSuperAdmin && user.role === Roles.Admin || user.id !== $store.state.user.id && ! $store.getters.isRoleSuperAdmin && ! $store.getters.isRoleAdmin || user.role === Roles.User || user.role === Roles.Supplier || user.role === Roles.Sponsor"
+                      @click="openEditModal(user)"
+                      class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2"
+              >
                 <fa-icon icon="cog" />
               </button>
               <template v-if="user.role !== Roles.Admin && user.role !== Roles.SuperAdmin">
@@ -103,6 +106,9 @@
             </option>
             <option :value="Roles.Supplier">
               Supplier
+            </option>
+            <option :value="Roles.Sponsor">
+              Sponsor
             </option>
             <option v-if="$store.getters.isRoleSuperAdmin" :value="Roles.Admin">
               Admin
