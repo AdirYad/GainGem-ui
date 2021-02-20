@@ -170,7 +170,9 @@ export default {
     function getSupplierPayments() {
       delete paymentsObj.value.payments;
 
-      store.dispatch('getSupplierPayments', page.value).then((response) => {
+      console.log(page.value)
+
+      store.dispatch('getSupplierPayments', { page: page.value }).then((response) => {
         paymentsObj.value = response.data;
       });
     }

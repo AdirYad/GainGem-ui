@@ -7,7 +7,7 @@
     </button>
   </div>
   <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap" :class="{ 'tw-mb-4' : chosenType }">
-    <template v-for="(type, index) in ['Suppliers', 'Groups', 'Payments']" :key="index">
+    <template v-for="(type, index) in ['Suppliers', 'Accounts', 'Payments']" :key="index">
       <button
               class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-4 tw-py-1 tw-m-2"
               :class="type === chosenType ? 'tw-bg-primary tw-text-white' : 'tw-text-primary'"
@@ -19,7 +19,7 @@
   </div>
 
   <Index v-if="chosenType === 'Suppliers'" :global-rate="supplierRate" />
-  <Groups v-else-if="chosenType === 'Groups'" />
+  <Accounts v-else-if="chosenType === 'Accounts'" />
   <Payments v-else-if="chosenType === 'Payments'" />
 
   <VModal v-model:visible="modal.visible">
@@ -47,7 +47,7 @@
 import Pagination from 'v-pagination-3';
 import Payments from '@/components/Admin/Suppliers/Payments';
 import Index from '@/components/Admin/Suppliers/Index';
-import Groups from '@/components/Admin/Suppliers/Groups';
+import Accounts from '@/components/Admin/Suppliers/Accounts';
 import VModal from '@/components/VModal';
 import { useStore } from 'vuex';
 import { ref, reactive } from 'vue';
@@ -58,7 +58,7 @@ export default {
     Pagination,
     Payments,
     Index,
-    Groups,
+    Accounts,
     VModal,
   },
   setup() {

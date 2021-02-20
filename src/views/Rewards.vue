@@ -84,7 +84,7 @@
             </button>
             <div v-else class="tw-flex">
               <div class="tw-w-1/2 tw-pr-1">
-                <button v-if="! isRedeeming" @click="redeem()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+                <button v-if="! isRedeeming" @click="expandedReward.provider !== 'robux' ? redeem() : openPlacesModal()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
                   Confirm
                 </button>
 
@@ -116,31 +116,95 @@
       </div>
     </div>
 
-    <VModal v-model:visible="modal.visible">
-      <template v-if="modal.group_id">
-        <h1>
-          Last part before claiming your robux
-        </h1>
+    <VModal v-model:visible="modal.visible" :max-width="modal.places ? '1000px' : '600px'" :overlay-close="! modal.places" class="tw-overflow-x-hidden">
+      <template v-if="modal.type && modal.type === 'robux'">
+        <div class="tw-flex tw-flex-row-reverse tw-justify-end" style="width: 200%">
+          <transition name="slide-fade-left">
+            <div v-if="modal.chosenPlace" class="tw-w-1/2">
+              <div>
+                <h1 class="tw-text-center">
+                  Sell VIP Server Access for R${{ Math.ceil(payload.value / 0.7).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}
+                </h1>
 
-        <p>
-          Please join
-          <a :href="`https://www.roblox.com/groups/${modal.group_id}`" target="_blank" class="tw-text-primary">this group</a>
-          first then hit OK button.
-        </p>
+                <video class="tw-mx-auto" style="width: 500px" loop autoplay>
+                  <source src="@/assets/SetPrivateServerPriceTutorial.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
 
-        <div class="tw-flex">
-          <div class="tw-w-1/2 tw-pr-1">
-            <button @click="modal.visible = false; redeem(modal.group_id)" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
-              Ok
-            </button>
-          </div>
+                <a :href="`https://www.roblox.com/places/${modal.chosenPlace.targetId}/update`" target="_blank"
+                   class="tw-block tw-text-center tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1 tw-px-4 tw-mt-2"
+                >
+                  Click to change price
+                </a>
 
-          <div class="tw-w-1/2 tw-pl-1">
-            <button @click="modal.visible = false" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
-              Cancel
-            </button>
-          </div>
+                <div class="tw-flex tw-mt-2">
+                  <div class="tw-w-1/2 tw-pr-1">
+                    <button @click="modal.chosenPlace = null" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
+                      Back
+                    </button>
+                  </div>
+                  <div class="tw-w-1/2 tw-pl-1">
+                    <button v-if="! isRedeeming" @click="redeem()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+                      Done
+                    </button>
+
+                    <div v-else class="tw-flex tw-justify-center tw-items-center tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full" style="padding: 11px 0">
+                      <LoopingRhombusesSpinner
+                          :animation-duration="2500"
+                          :rhombus-size="10"
+                          color="white"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition>
+          <transition name="slide-fade-right">
+            <div v-if="modal.places && ! modal.chosenPlace" class="tw-w-1/2 tw-flex tw-justify-center tw-flex-col">
+              <h1 class="tw-text-center">
+                Select one of your game(s)
+              </h1>
+
+              <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap">
+                <button v-for="(place, index) in modal.places" :key="index"
+                        class="places tw-duration-300 tw-w-1/3 md:tw-w-1/5 lg:tw-w-1/6 xl:tw-w-1/8 tw-m-2"
+                        :title="place.name"
+                        @click="modal.chosenPlace = place"
+                >
+                  <div class="tw-text-xs tw-border-t-2 tw-border-l-2 tw-border-r-2 tw-border-secondary tw-truncate tw-px-2">
+                    {{ place.name }}
+                  </div>
+                  <div class="tw-flex tw-justify-center tw-items-center">
+                    <img :src="place.imageUrl" :alt="place.name" class="tw-h-full tw-w-full">
+                  </div>
+                </button>
+              </div>
+            </div>
+          </transition>
         </div>
+        <template v-if="! modal.places">
+          <h1 class="tw-text-center">
+            Make a game public
+          </h1>
+
+          <video loop autoplay>
+            <source src="@/assets/SetGamePublicTutorial.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          <a href="https://www.roblox.com/develop?close=true" target="_blank"
+             class="tw-block tw-text-center tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1 tw-px-4 tw-mt-2"
+          >
+            Click to make a game public
+          </a>
+
+          <button @click="modal.visible = false; openPlacesModal()"
+                  class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-px-4 tw-mt-2"
+          >
+            Done
+          </button>
+        </template>
       </template>
       <template v-else-if="modal.code">
         <h1>
@@ -280,6 +344,7 @@ export default {
       expandRow,
       changedCountry,
       openModal,
+      openPlacesModal,
     }
 
     function removeDuplicates(array, prop) {
@@ -356,36 +421,12 @@ export default {
       }
     }
 
-    function redeem(group_id = null) {
+    function redeem(place_id = null) {
       if (isRedeeming.value) {
         return;
       }
 
-      let errorMessage = '';
-
-      if (! payload.value.value) {
-        errorMessage = 'You must enter an amount!';
-      } else if (payload.value.value < 5) {
-        errorMessage = 'The amount has to be greater than 5.';
-      } else if (payload.value.value > 5000) {
-        errorMessage = 'The amount may not be greater than 5000.';
-      } else if (payload.value.provider === 'robux') {
-        if (! payload.value.destination) {
-          errorMessage = 'You must enter a username!';
-        } else if (payload.value.destination.length < 2) {
-          errorMessage = 'The username must be at least 2 characters.';
-        } else if (payload.value.destination.length > 255) {
-          errorMessage = 'The username may not be greater than 255 characters.';
-        }
-      } else if (payload.value.provider === 'bitcoin') {
-        if (! payload.value.destination) {
-          errorMessage = 'You must enter a wallet!';
-        } else if (payload.value.destination.length < 2) {
-          errorMessage = 'The wallet must be at least 2 characters.';
-        } else if (payload.value.destination.length > 255) {
-          errorMessage = 'The wallet may not be greater than 255 characters.';
-        }
-      }
+      let errorMessage = getErrors();
 
       if (errorMessage) {
         store.dispatch('addNotification', {
@@ -398,16 +439,16 @@ export default {
 
       isRedeeming.value = true;
 
-      if (group_id) {
-        payload.value.group_id = group_id;
+      if (place_id) {
+        payload.value.place_id = place_id;
       }
 
       store.dispatch('redeemReward', payload.value).then((response) => {
         confirmation.value = false;
         isRedeeming.value = false;
 
-        if (payload.value.group_id) {
-          delete payload.value.group_id;
+        if (payload.value.place_id) {
+          delete payload.value.place_id;
         }
 
         getRewards();
@@ -447,8 +488,8 @@ export default {
           modal.value = err.response.data;
         }
 
-        if (payload.value.group_id) {
-          delete payload.value.group_id;
+        if (payload.value.place_id) {
+          delete payload.value.place_id;
         }
       });
     }
@@ -461,6 +502,88 @@ export default {
       reward.visible = true;
       modal.value = reward;
     }
+
+    function openPlacesModal() {
+      if (isRedeeming.value) {
+        return;
+      }
+
+      let errorMessage = getErrors();
+
+      if (errorMessage) {
+        store.dispatch('addNotification', {
+          type: 'error',
+          message: errorMessage,
+        });
+
+        return;
+      }
+
+      isRedeeming.value = true;
+
+      store.dispatch('getRobuxPlaces', payload.value).then((response) => {
+        confirmation.value = false;
+        isRedeeming.value = false;
+
+        modal.value = {
+          visible: true,
+          type: 'robux',
+          places: response.data,
+          chosenPlace: null,
+        };
+      }).catch((err) => {
+        confirmation.value = false;
+        isRedeeming.value = false;
+
+        if (err.response.status === 422) {
+          if (err.response.data.errors && err.response.data.errors.destination) {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.errors.destination[0],
+            });
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
+        } else if (err.response.status === 404) {
+          modal.value = {
+            visible: true,
+            type: 'robux',
+            places: null,
+          };
+        }
+      });
+    }
+
+    function getErrors() {
+      if (! payload.value.value) {
+        return 'You must enter an amount!';
+      } else if (payload.value.value < 0) {
+        return 'The amount has to be greater than 0.';
+      } else if (payload.value.provider === 'robux' && payload.value.value < 5) {
+        return 'The amount has to be greater than 5.';
+      } else if (payload.value.value > 5000) {
+        return 'The amount may not be greater than 5000.';
+      } else if (payload.value.provider === 'robux') {
+        if (! payload.value.destination) {
+          return 'You must enter a username!';
+        } else if (payload.value.destination.length < 2) {
+          return 'The username must be at least 2 characters.';
+        } else if (payload.value.destination.length > 255) {
+          return 'The username may not be greater than 255 characters.';
+        }
+      } else if (payload.value.provider === 'bitcoin') {
+        if (! payload.value.destination) {
+          return 'You must enter a wallet!';
+        } else if (payload.value.destination.length < 2) {
+          return 'The wallet must be at least 2 characters.';
+        } else if (payload.value.destination.length > 255) {
+          return 'The wallet may not be greater than 255 characters.';
+        }
+      }
+    }
   }
 }
 </script>
@@ -468,5 +591,43 @@ export default {
 <style scoped>
 .extend-row {
   grid-row: 1 / 3;
+}
+
+.places:hover {
+  transform: scale(1.05);
+}
+
+.slide-fade-left-enter-active, .slide-fade-right-enter-active {
+  transition: all 1s ease;
+}
+
+.slide-fade-left-enter-from {
+  transform: translateX(0%);
+}
+
+.slide-fade-left-enter-to {
+  transform: translateX(-100%);
+}
+
+.slide-fade-right-enter-from {
+  transform: translateX(-100%);
+}
+
+.slide-fade-left-leave-active, .slide-fade-right-leave-active {
+  transition: all 1s ease;
+}
+
+.slide-fade-left-leave-active {
+  transform: translateX(-100%);
+}
+
+.slide-fade-left-enter, .slide-fade-left-leave-to {
+  transform: translateX(0%);
+  opacity: 0;
+}
+
+.slide-fade-right-enter, .slide-fade-right-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
 }
 </style>

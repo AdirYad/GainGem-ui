@@ -1,10 +1,10 @@
 <template>
   <teleport to="#modal">
     <transition name="fade">
-      <div class="modal-overlay" @click="$emit('update:visible', false)" v-if="visible"></div>
+      <div class="modal-overlay" @click="overlayClose ? $emit('update:visible', false) : ''" v-if="visible" />
     </transition>
     <transition name="fade">
-      <div class="modal" v-if="visible">
+      <div class="modal" :style="'--max-width:' + maxWidth" v-if="visible">
         <button @click="$emit('update:visible', false)" class="tw-absolute tw-text-sm" style="top: 12px; right: 12px">
           <fa-icon icon="times" />
         </button>
@@ -25,12 +25,22 @@ export default {
     visible: {
       type: Boolean,
       required: true,
+    },
+    maxWidth: {
+      type: String,
+      required: false,
+      default: '600px',
+    },
+    overlayClose: {
+      type: Boolean,
+      required: false,
+      default: true,
     }
   },
   setup(props) {
     watch(() => props.visible, () => {
       document.documentElement.style.overflow = props.visible ? 'hidden' : 'auto';
-    })
+    });
   }
 }
 </script>
@@ -48,7 +58,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  max-width: 600px;
+  max-width: var(--max-width);
   border-radius: 16px;
   padding: 25px;
 

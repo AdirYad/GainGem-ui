@@ -18,7 +18,7 @@
 <script>
 import Tab from '@/components/Tab'
 import Tabs from "@/components/Tabs";
-import Groups from '@/components/Suppliers/Groups';
+import Groups from '@/components/Suppliers/Accounts';
 import Payments from '@/components/Suppliers/Payments';
 
 export default {
