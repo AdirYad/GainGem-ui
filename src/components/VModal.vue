@@ -8,7 +8,7 @@
         <button @click="$emit('update:visible', false)" class="tw-absolute tw-text-sm" style="top: 12px; right: 12px">
           <fa-icon icon="times" />
         </button>
-        <div class="tw-relative tw-overflow-scroll" style="max-height: 90vh">
+        <div class="tw-relative tw-overflow-y-scroll tw-overflow-x-hidden" style="max-height: 90vh">
           <slot />
         </div>
       </div>

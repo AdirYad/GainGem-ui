@@ -84,7 +84,7 @@
             </button>
             <div v-else class="tw-flex">
               <div class="tw-w-1/2 tw-pr-1">
-                <button v-if="! isRedeeming" @click="expandedReward.provider !== 'robux' ? redeem() : openPlacesModal()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+                <button v-if="! isRedeeming" @click="expandedReward.provider !== 'robux' ? redeem() : openGamesModal()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
                   Confirm
                 </button>
 
@@ -116,11 +116,11 @@
       </div>
     </div>
 
-    <VModal v-model:visible="modal.visible" :max-width="modal.places ? '1000px' : '600px'" :overlay-close="! modal.places" class="tw-overflow-x-hidden">
+    <VModal v-model:visible="modal.visible" :max-width="modal.games ? '1000px' : '600px'" :overlay-close="! modal.games">
       <template v-if="modal.type && modal.type === 'robux'">
         <div class="tw-flex tw-flex-row-reverse tw-justify-end" style="width: 200%">
           <transition name="slide-fade-left">
-            <div v-if="modal.chosenPlace" class="tw-w-1/2">
+            <div v-if="modal.chosenGame" class="tw-w-1/2">
               <div>
                 <h1 class="tw-text-center">
                   Sell VIP Server Access for R${{ Math.ceil(payload.value / 0.7).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}
@@ -131,7 +131,7 @@
                   Your browser does not support the video tag.
                 </video>
 
-                <a :href="`https://www.roblox.com/places/${modal.chosenPlace.targetId}/update`" target="_blank"
+                <a :href="`https://www.roblox.com/places/${modal.chosenGame.rootPlace.id}/update`" target="_blank"
                    class="tw-block tw-text-center tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1 tw-px-4 tw-mt-2"
                 >
                   Click to change price
@@ -139,12 +139,12 @@
 
                 <div class="tw-flex tw-mt-2">
                   <div class="tw-w-1/2 tw-pr-1">
-                    <button @click="modal.chosenPlace = null" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
+                    <button @click="modal.chosenGame = null" class="tw-text-white tw-uppercase tw-border tw-border-red-500 tw-bg-red-500 tw-rounded-full tw-w-full tw-py-1" type="button">
                       Back
                     </button>
                   </div>
                   <div class="tw-w-1/2 tw-pl-1">
-                    <button v-if="! isRedeeming" @click="redeem()" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
+                    <button v-if="! isRedeeming" @click="redeem(modal.chosenGame.id)" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
                       Done
                     </button>
 
@@ -161,29 +161,29 @@
             </div>
           </transition>
           <transition name="slide-fade-right">
-            <div v-if="modal.places && ! modal.chosenPlace" class="tw-w-1/2 tw-flex tw-justify-center tw-flex-col">
+            <div v-if="modal.games && ! modal.chosenGame" class="tw-w-1/2 tw-flex tw-justify-center tw-flex-col">
               <h1 class="tw-text-center">
                 Select one of your game(s)
               </h1>
 
               <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap">
-                <button v-for="(place, index) in modal.places" :key="index"
-                        class="places tw-duration-300 tw-w-1/3 md:tw-w-1/5 lg:tw-w-1/6 xl:tw-w-1/8 tw-m-2"
-                        :title="place.name"
-                        @click="modal.chosenPlace = place"
+                <button v-for="(game, index) in modal.games" :key="index"
+                        class="games tw-duration-300 tw-w-1/3 md:tw-w-1/5 lg:tw-w-1/6 xl:tw-w-1/8 tw-m-2"
+                        :title="game.name"
+                        @click="modal.chosenGame = game"
                 >
                   <div class="tw-text-xs tw-border-t-2 tw-border-l-2 tw-border-r-2 tw-border-secondary tw-truncate tw-px-2">
-                    {{ place.name }}
+                    {{ game.name }}
                   </div>
                   <div class="tw-flex tw-justify-center tw-items-center">
-                    <img :src="place.imageUrl" :alt="place.name" class="tw-h-full tw-w-full">
+                    <img :src="game.rootPlace.imageUrl" :alt="game.name" class="tw-h-full tw-w-full">
                   </div>
                 </button>
               </div>
             </div>
           </transition>
         </div>
-        <template v-if="! modal.places">
+        <template v-if="! modal.games">
           <h1 class="tw-text-center">
             Make a game public
           </h1>
@@ -199,7 +199,7 @@
             Click to make a game public
           </a>
 
-          <button @click="modal.visible = false; openPlacesModal()"
+          <button @click="modal.visible = false; openGamesModal()"
                   class="tw-w-full tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1 tw-px-4 tw-mt-2"
           >
             Done
@@ -344,7 +344,7 @@ export default {
       expandRow,
       changedCountry,
       openModal,
-      openPlacesModal,
+      openGamesModal,
     }
 
     function removeDuplicates(array, prop) {
@@ -421,7 +421,7 @@ export default {
       }
     }
 
-    function redeem(place_id = null) {
+    function redeem(game_id = null) {
       if (isRedeeming.value) {
         return;
       }
@@ -439,16 +439,18 @@ export default {
 
       isRedeeming.value = true;
 
-      if (place_id) {
-        payload.value.place_id = place_id;
+      if (game_id) {
+        payload.value.game_id = game_id;
       }
 
       store.dispatch('redeemReward', payload.value).then((response) => {
         confirmation.value = false;
         isRedeeming.value = false;
 
-        if (payload.value.place_id) {
-          delete payload.value.place_id;
+        if (payload.value.game_id) {
+          delete payload.value.game_id;
+
+          modal.value.visible = false;
         }
 
         getRewards();
@@ -488,8 +490,8 @@ export default {
           modal.value = err.response.data;
         }
 
-        if (payload.value.place_id) {
-          delete payload.value.place_id;
+        if (payload.value.game_id) {
+          delete payload.value.game_id;
         }
       });
     }
@@ -503,7 +505,7 @@ export default {
       modal.value = reward;
     }
 
-    function openPlacesModal() {
+    function openGamesModal() {
       if (isRedeeming.value) {
         return;
       }
@@ -521,15 +523,15 @@ export default {
 
       isRedeeming.value = true;
 
-      store.dispatch('getRobuxPlaces', payload.value).then((response) => {
+      store.dispatch('getRobuxGames', payload.value).then((response) => {
         confirmation.value = false;
         isRedeeming.value = false;
 
         modal.value = {
           visible: true,
           type: 'robux',
-          places: response.data,
-          chosenPlace: null,
+          games: response.data,
+          chosenGame: null,
         };
       }).catch((err) => {
         confirmation.value = false;
@@ -551,7 +553,7 @@ export default {
           modal.value = {
             visible: true,
             type: 'robux',
-            places: null,
+            games: null,
           };
         }
       });
@@ -560,10 +562,10 @@ export default {
     function getErrors() {
       if (! payload.value.value) {
         return 'You must enter an amount!';
-      } else if (payload.value.value < 0) {
+      } else if (payload.value.value < 1) {
         return 'The amount has to be greater than 0.';
-      } else if (payload.value.provider === 'robux' && payload.value.value < 5) {
-        return 'The amount has to be greater than 5.';
+      } else if (payload.value.provider === 'robux' && payload.value.value < 7) {
+        return 'The amount has to be greater than 6.';
       } else if (payload.value.value > 5000) {
         return 'The amount may not be greater than 5000.';
       } else if (payload.value.provider === 'robux') {
@@ -593,7 +595,7 @@ export default {
   grid-row: 1 / 3;
 }
 
-.places:hover {
+.games:hover {
   transform: scale(1.05);
 }
 

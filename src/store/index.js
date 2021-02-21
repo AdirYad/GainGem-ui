@@ -592,12 +592,12 @@ export default createStore({
         commit('setUser', response.data);
       });
     },
-    getRobuxPlaces({ getters }, payload) {
+    getRobuxGames({ getters }, payload) {
       if (! getters.isLoggedIn || ! payload.destination || ! payload.value) {
         return;
       }
 
-      return axiosInstance.get(`/robux-places?username=${payload.destination}&value=${payload.value}`, payload);
+      return axiosInstance.get(`/robux-games?username=${payload.destination}&value=${payload.value}`, payload);
     }
   },
   modules: {
