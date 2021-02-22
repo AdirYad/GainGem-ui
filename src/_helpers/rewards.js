@@ -138,7 +138,7 @@ export const Rewards = [
     }
   },
   {
-    name: 'Discord',
+    name: 'Discord Nitro',
     image: require('@/assets/images/rewards/discord.png'),
     provider: 'discord',
     stock: true,
