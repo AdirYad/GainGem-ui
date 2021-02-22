@@ -11,7 +11,7 @@
         </span>
       </div>
       <div class="tw-flex tw-items-center">
-        <router-link v-if="$store.getters.isRoleSupplier || $store.getters.isRoleSuperAdmin" :to="{ name: 'Supplier', query: { tab: 'groups' } }" class="tw-flex tw-justify-center tw-items-center tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10 tw-mr-2">
+        <router-link v-if="$store.getters.isRoleSupplier || $store.getters.isRoleSuperAdmin" :to="{ name: 'Supplier', query: { tab: 'accounts' } }" class="tw-flex tw-justify-center tw-items-center tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10 tw-mr-2">
           <fa-icon class="tw-h-5 fa-w-40" icon="box" />
         </router-link>
         <router-link v-if="$store.getters.isRoleAdmin || $store.getters.isRoleSuperAdmin" :to="{ name: 'Admin', query: { tab: 'stock' } }" class="tw-flex tw-justify-center tw-items-center tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10 tw-mr-2">
