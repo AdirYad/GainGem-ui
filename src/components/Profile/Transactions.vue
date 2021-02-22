@@ -41,7 +41,7 @@
 
   <VModal v-model:visible="modal.visible">
     <p style="margin: 0">
-      {{ modal.transaction.type === 'robux' ? modal.transaction.robux_amount + ' robux'
+      {{ modal.transaction.type === 'robux' ? modal.transaction.points + ' robux'
         : modal.transaction.bitcoin_amount + ' bitcoin' }}
       was sent to
       <strong class="tw-text-primary">{{ modal.transaction.destination }}</strong>.

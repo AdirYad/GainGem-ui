@@ -122,8 +122,8 @@ export default {
     const paymentsObj = ref({});
     const page = ref(1);
     const modal = reactive({
-      group: null,
       visible: false,
+      account: null,
       status: 'paid',
       denial_reason: null,
     });
@@ -177,11 +177,11 @@ export default {
       });
     }
 
-    function openEditModal(group) {
-      modal.group = group;
+    function openEditModal(account) {
+      modal.account = account;
       modal.visible = true;
-      modal.status = group.status;
-      modal.denial_reason = group.denial_reason;
+      modal.status = account.status;
+      modal.denial_reason = account.denial_reason;
     }
 
     function editStatus() {
@@ -194,16 +194,16 @@ export default {
       errors.value = {};
 
       const payload = {
-        supplier_payment_id: modal.group.id,
+        supplier_payment_id: modal.account.id,
         status: modal.status,
         denial_reason: modal.denial_reason,
       };
 
       store.dispatch('updateSupplierPaymentStatus', payload).then((response) => {
         modal.visible = false;
-        modal.group.status = response.data.status;
-        modal.group.formatted_status = response.data.formatted_status;
-        modal.group.denial_reason = response.data.denial_reason;
+        modal.account.status = response.data.status;
+        modal.account.formatted_status = response.data.formatted_status;
+        modal.account.denial_reason = response.data.denial_reason;
 
         store.dispatch('addNotification', {
           type: 'success',
