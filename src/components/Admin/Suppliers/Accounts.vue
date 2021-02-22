@@ -4,6 +4,8 @@
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
           <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Supplier</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Roblox Username</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Withdrawn</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Robux</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Cookie</th>
@@ -14,6 +16,8 @@
       <tbody class="tw-flex-1 sm:tw-flex-none">
         <tr v-if="accountsObj.accounts" v-for="(account, index) in accountsObj.accounts" :key="index" class="tw-table-row">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="account.id" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="account.supplier_user.username" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="account.robux_account_username" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="account.formatted_total_withdrawn" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="account.formatted_robux_amount" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="account.cookie" />
@@ -26,6 +30,12 @@
           </td>
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
+              <button @click="refreshRobuxAccount(account)"
+                      class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2"
+                      :class="{ 'rotating' : account.isRefreshing }"
+              >
+                <fa-icon icon="sync-alt" />
+              </button>
               <button v-if="! account.disabled_at" @click="disableRobuxAccount(account)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full hover:tw-text-white hover:tw-bg-red-500">
                 <fa-icon icon="lock" />
               </button>
@@ -76,6 +86,7 @@ export default {
       getRobuxAccounts,
       disableRobuxAccount,
       enableRobuxAccount,
+      refreshRobuxAccount,
     };
 
     function getRobuxAccounts() {
@@ -97,6 +108,35 @@ export default {
       store.dispatch('enableRobuxAccount', account.id).then((response) => {
         account.disabled_at = response.data.disabled_at;
         account.formatted_disabled_at = response.data.formatted_disabled_at;
+      });
+    }
+
+    function refreshRobuxAccount(account) {
+      if (account.isRefreshing) {
+        return;
+      }
+
+      account.isRefreshing = true;
+
+      store.dispatch('refreshRobuxAccount', account.id).then((response) => {
+        account.robux_account_username = response.data.robux_account_username;
+        account.robux_amount = response.data.robux_amount;
+        account.formatted_robux_amount = response.data.formatted_robux_amount;
+        account.disabled_at = response.data.disabled_at;
+
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: 'Account refreshed successfully!',
+        });
+
+        account.isRefreshing = false;
+      }).catch((err) => {
+        store.dispatch('addNotification', {
+          type: 'error',
+          message: err.response.data.message,
+        });
+
+        account.isRefreshing = false;
       });
     }
   },
