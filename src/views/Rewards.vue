@@ -447,10 +447,13 @@ export default {
         confirmation.value = false;
         isRedeeming.value = false;
 
+        let message = "You've successfully claimed your reward!";
+
         if (payload.value.game_id) {
           delete payload.value.game_id;
 
           modal.value.visible = false;
+          message = "You've successfully claimed your robux! It will take 5-7 days for the Robux to show on your Roblox account.";
         }
 
         getRewards();
@@ -464,7 +467,7 @@ export default {
         } else {
           store.dispatch('addNotification', {
             type: 'success',
-            message: "You've successfully claimed your reward!"
+            message: message,
           });
         }
 
