@@ -453,7 +453,7 @@ export default {
           delete payload.value.game_id;
 
           modal.value.visible = false;
-          message = "You've successfully claimed your robux! It will take 4-7 days for the Robux to show on your Roblox account.";
+          message = "You've successfully claimed your robux! It will take 5-7 days for the Robux to show on your Roblox account.";
         }
 
         getRewards();
