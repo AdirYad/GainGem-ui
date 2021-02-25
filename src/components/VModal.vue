@@ -8,7 +8,7 @@
         <button @click="$emit('update:visible', false)" class="tw-absolute tw-text-sm" style="top: 12px; right: 12px">
           <fa-icon icon="times" />
         </button>
-        <div class="tw-relative tw-overflow-y-scroll tw-overflow-x-hidden" style="max-height: 90vh">
+        <div class="inner-modal tw-relative tw-overflow-y-scroll-auto tw-overflow-x-hidden" style="max-height: 90vh">
           <slot />
         </div>
       </div>
@@ -87,5 +87,30 @@ export default {
 
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
+}
+
+.inner-modal::-webkit-scrollbar {
+  display: block;
+  width: 14px;
+  height: 18px;
+}
+
+.inner-modal::-webkit-scrollbar-thumb {
+  height: 6px;
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  -webkit-border-radius: 7px;
+  background-color: rgba(19, 160, 101, 0.95);
+  -webkit-box-shadow: inset -1px -1px 0 rgba(19, 160, 101, 0.95), inset 1px 1px 0 rgba(19, 160, 101, 0.95);
+}
+
+.inner-modal::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.inner-modal::-webkit-scrollbar-corner {
+  background-color: transparent;
 }
 </style>

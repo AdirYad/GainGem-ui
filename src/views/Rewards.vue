@@ -120,22 +120,102 @@
       <template v-if="modal.type && modal.type === 'robux'">
         <div class="tw-flex tw-flex-row-reverse tw-justify-end" style="width: 200%">
           <transition name="slide-fade-left">
-            <div v-if="modal.chosenGame" class="tw-w-1/2">
+            <div v-if="modal.transaction" class="tw-w-1/2 tw-flex tw-justify-center tw-flex-col">
+              <h1 class="tw-text-center">
+                Your Robux will be in your Roblox account within 5-7 days!
+              </h1>
+
+              <img src="@/assets/robux/ShowTransactions.png" alt="show-transactions" class="tw-mx-auto tw-mt-2">
+
+              <a href="https://www.roblox.com/transactions" target="_blank"
+                 class="tw-block tw-text-center tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1 tw-px-4 tw-mt-2"
+              >
+                Check my pending Robux!
+              </a>
+            </div>
+          </transition>
+          <transition :name="! modal.transaction ? 'slide-fade-left' : 'slide-fade-right'">
+            <div v-if="modal.chosenGame && ! modal.transaction" class="tw-w-1/2 tw-flex tw-justify-center tw-flex-col">
               <div>
                 <h1 class="tw-text-center">
                   Sell VIP Server Access for R${{ Math.ceil(payload.value / 0.7).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}
                 </h1>
 
-                <video class="tw-mx-auto" style="width: 500px" loop autoplay>
-                  <source src="@/assets/SetPrivateServerPriceTutorial.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
+                <div class="md:tw-w-4/5 lg:tw-w-3/5 tw-mx-auto">
+                  <div class="tw-flex tw-items-center tw-mt-2">
+                    <div class="tw-flex tw-justify-center tw-items-center tw-w-12 tw-h-12 tw-border-2 tw-border-primary tw-rounded-full tw-text-2xl tw-mr-2">
+                      1
+                    </div>
+                    <div style="width: calc(100% - 48px)">
+                      Configure Game:
+                      <a :href="`https://www.roblox.com/places/${modal.chosenGame.rootPlace.id}/update`" target="_blank"
+                         class="tw-duration-300 tw-text-primary tw-border-b tw-border-transparent hover:tw-border-primary tw-p-b-2"
+                      >click here</a>.
+                    </div>
+                  </div>
 
-                <a :href="`https://www.roblox.com/places/${modal.chosenGame.rootPlace.id}/update`" target="_blank"
-                   class="tw-block tw-text-center tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1 tw-px-4 tw-mt-2"
-                >
-                  Click to change price
-                </a>
+                  <div class="tw-flex tw-flex-wrap sm:tw-flex-nowrap tw-mt-2">
+                    <div class="tw-flex tw-items-center">
+                      <div class="tw-flex tw-justify-center tw-items-center tw-w-12 tw-h-12 tw-border-2 tw-border-primary tw-rounded-full tw-text-2xl tw-mr-2">
+                        2
+                      </div>
+                      <div style="width: calc(100% - 48px)">
+                        Click "Access" Tab On Left Menu.
+                      </div>
+                    </div>
+                    <div class="tw-flex-1 tw-ml-2" style="min-width: 250px;">
+                      <img src="@/assets/robux/ClickAccess.png" alt="click-access" class="tw-w-3/4 tw-mx-auto sm:tw-ml-auto tw-mt-1 sm:tw-mt-0">
+                    </div>
+                  </div>
+
+                  <div class="tw-flex tw-flex-wrap sm:tw-flex-nowrap tw-mt-2">
+                    <div class="tw-flex tw-items-center">
+                      <div class="tw-flex tw-justify-center tw-items-center tw-w-12 tw-h-12 tw-border-2 tw-border-primary tw-rounded-full tw-text-2xl tw-mr-2">
+                        3
+                      </div>
+                      <div style="width: calc(100% - 48px)">
+                        Check "Allow Private Servers"
+                      </div>
+                    </div>
+                    <div class=" tw-flex-1 tw-ml-2" style="min-width: 250px;">
+                      <img src="@/assets/robux/AllowPrivateServers.png" alt="click-access" class="tw-w-3/4 tw-mx-auto sm:tw-ml-auto tw-mt-1 sm:tw-mt-0">
+                    </div>
+                  </div>
+
+                  <div class="tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap tw-mt-2">
+                    <div class="tw-flex tw-items-center">
+                      <div class="tw-flex tw-justify-center tw-items-center tw-w-12 tw-h-12 tw-border-2 tw-border-primary tw-rounded-full tw-text-2xl tw-mr-2">
+                        4
+                      </div>
+                      <div style="width: calc(100% - 48px)">
+                        Set Price To:
+                      </div>
+                    </div>
+                    <div class="tw-shadow tw-px-4 tw-py-2 tw-mx-auto sm:tw-mx-0 tw-mt-1 sm:tw-mt-0">
+                      <div class="pricinglabel">
+                        Price:
+                      </div>
+                      <div class="toppricingfield">
+                        <span class="icon-robux-16x16" />
+                        <input class="priceinput" type="text" disabled :value="Math.ceil(payload.value / 0.7).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="tw-flex tw-flex-wrap sm:tw-flex-nowrap tw-mt-2">
+                    <div class="tw-flex tw-items-center">
+                      <div class="tw-flex tw-justify-center tw-items-center tw-w-12 tw-h-12 tw-border-2 tw-border-primary tw-rounded-full tw-text-2xl tw-mr-2">
+                        5
+                      </div>
+                      <div style="width: calc(100% - 48px)">
+                        Click Save Button.
+                      </div>
+                    </div>
+                    <div class="tw-flex-1 tw-ml-2" style="min-width: 250px;">
+                      <img src="@/assets/robux/ClickSaveButton.png" alt="click-access" class="tw-w-3/4 sm:tw-ml-auto tw-mt-1 sm:tw-mt-0">
+                    </div>
+                  </div>
+                </div>
 
                 <div class="tw-flex tw-mt-2">
                   <div class="tw-w-1/2 tw-pr-1">
@@ -161,7 +241,7 @@
             </div>
           </transition>
           <transition name="slide-fade-right">
-            <div v-if="modal.games && ! modal.chosenGame" class="tw-w-1/2 tw-flex tw-justify-center tw-flex-col">
+            <div v-if="modal.games && ! modal.chosenGame && ! modal.transaction" class="tw-w-1/2 tw-flex tw-justify-center tw-flex-col">
               <h1 class="tw-text-center">
                 Select one of your game(s)
               </h1>
@@ -189,7 +269,7 @@
           </h1>
 
           <video loop autoplay>
-            <source src="@/assets/SetGamePublicTutorial.mp4" type="video/mp4">
+            <source src="@/assets/robux/SetGamePublicTutorial.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video>
 
@@ -447,15 +527,6 @@ export default {
         confirmation.value = false;
         isRedeeming.value = false;
 
-        let message = "You've successfully claimed your reward!";
-
-        if (payload.value.game_id) {
-          delete payload.value.game_id;
-
-          modal.value.visible = false;
-          message = "You've successfully claimed your robux! It will take 5-7 days for the Robux to show on your Roblox account.";
-        }
-
         getRewards();
 
         store.commit('setUser', response.data);
@@ -464,10 +535,15 @@ export default {
           response.data.gift_card.visible = true;
           response.data.gift_card.formatted_provider = expandedReward.value.name.toString();
           modal.value = response.data.gift_card;
+        } else if (payload.value.game_id) {
+          delete payload.value.game_id;
+          modal.value.visible = true;
+          modal.value.transaction = true;
+          modal.value.type = 'robux';
         } else {
           store.dispatch('addNotification', {
             type: 'success',
-            message: message,
+            message: "You've successfully claimed your reward!",
           });
         }
 
@@ -634,5 +710,38 @@ export default {
 .slide-fade-right-enter, .slide-fade-right-leave-to {
   transform: translateX(-100%);
   opacity: 0;
+}
+
+.pricinglabel {
+  float: left;
+  line-height: 24px;
+  text-align: right;
+  width: 40px;
+}
+
+.toppricingfield {
+  float: left;
+  height: 24px;
+  margin-left: 5px;
+  margin-right: 5px;
+  text-align: left;
+}
+
+.priceinput {
+  width: 75px;
+  border: 1px solid #ccc;
+}
+
+.icon-robux-16x16 {
+  background-position: -20px -20px;
+  background-image: url(../assets/robux/RobuxIcons.svg);
+  background-repeat: no-repeat;
+  background-size: auto auto;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+  margin-bottom: 4px;
 }
 </style>
