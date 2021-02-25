@@ -48,7 +48,7 @@ export default {
 <style>
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 999;
+  z-index: 998;
 
   @apply fixed top-0 left-0 right-0 bottom-0 overflow-auto;
 }
@@ -57,7 +57,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 999;
   max-width: var(--max-width);
   border-radius: 16px;
   padding: 25px;
