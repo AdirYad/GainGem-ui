@@ -6,6 +6,7 @@
       <div :class="{ 'container tw-relative' : $store.getters.isLoggedIn }">
         <Announcement v-if="$store.getters.isLoggedIn" />
         <LiveActivity v-if="$store.getters.isLoggedIn" />
+        <Freeze v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.froze_at" />
         <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
 
         <router-view :key="$route.name !== 'Profile' && $route.name !== 'Admin' && $route.name !== 'Supplier' ? $route.fullPath : $route.name"
@@ -25,6 +26,7 @@ import Navigation from "@/components/Navigation";
 import LiveActivity from "@/components/LiveActivity";
 import Announcement from "@/components/AnnouncementBanner";
 import EmailVerification from "@/components/EmailVerification";
+import Freeze from "@/components/Freeze";
 import Footer from "@/components/Footer";
 import NotificationsList from "@/components/Notifications/NotificationsList";
 
@@ -35,6 +37,7 @@ export default {
     Announcement,
     LiveActivity,
     EmailVerification,
+    Freeze,
     Footer,
     NotificationsList,
   },
