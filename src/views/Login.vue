@@ -12,7 +12,7 @@
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.username"
                :class="{ 'input-invalid tw-mb-3' : v$.username.$invalid || errors.username }"
-               @keydown="resetErrors('username')"
+               @keydown.space.prevent="resetErrors('username')"
         >
         <p v-if="v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters and numbers.' : v$.username.$errors[0].$message }}

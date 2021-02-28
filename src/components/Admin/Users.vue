@@ -24,9 +24,10 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Total</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Transactions</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-10">Referrals</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Referred by</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Banned</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Referred by</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Banned at</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Reason</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Froze at</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Role</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
@@ -36,15 +37,16 @@
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.username" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.email" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_email_verified_at" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_email_verified_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.ip" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_available_points" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_total_points" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.withdraws" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referrals" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referred_by ? user.referred_by.username : ''" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_banned_at" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_banned_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.banned_at ? user.ban_reason : ''" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_froze_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.role" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
@@ -115,6 +117,17 @@
             </option>
           </select>
         </div>
+      </div>
+      <div v-if="! modal.user.banned_at" class="tw-flex tw-mb-4">
+        <label class="tw-flex tw-items-center">
+          <input v-model="modal.is_frozen"
+                 type="checkbox"
+                 class="tw-h-5 tw-w-5 tw-duration-300 tw-form-checkbox tw-text-primary"
+          >
+          <span class="tw-ml-2">
+            Freeze account
+          </span>
+        </label>
       </div>
       <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
         Save
@@ -215,6 +228,7 @@ export default {
       modal.visible = true;
       modal.role = user.role;
       modal.points = null;
+      modal.is_frozen = !! user.froze_at;
       modal.type = 'edit';
     }
 
@@ -227,9 +241,11 @@ export default {
 
     function unban(user) {
       store.dispatch('unbanUser', user.id).then((response) => {
-        user.banned_at = response.data.user.banned_at;
-        user.ban_reason = response.data.user.ban_reason;
-        user.formatted_banned_at = response.data.user.formatted_banned_at;
+        user.banned_at = null;
+        user.ban_reason = null;
+        user.froze_at = null;
+        user.formatted_banned_at = null;
+        user.formatted_froze_at = null;
       });
     }
 
@@ -238,6 +254,7 @@ export default {
         user_id: modal.user.id,
         points: modal.points,
         role: modal.role,
+        is_frozen: modal.is_frozen,
       };
 
       store.dispatch('updateUser', payload).then((response) => {
@@ -245,6 +262,8 @@ export default {
         modal.user.formatted_available_points = response.data.user.points;
         modal.user.formatted_total_points = response.data.user.total_points;
         modal.user.role = response.data.user.role;
+        modal.user.froze_at = response.data.user.froze_at;
+        modal.user.formatted_froze_at = response.data.user.froze_at;
 
         if (! response.data.user.banned_at) {
           modal.user.banned_at = null;
@@ -292,7 +311,9 @@ export default {
         modal.visible = false;
         modal.user.banned_at = response.data.user.banned_at;
         modal.user.ban_reason = response.data.user.ban_reason;
+        modal.user.froze_at = null;
         modal.user.formatted_banned_at = response.data.user.formatted_banned_at;
+        modal.user.formatted_froze_at = null;
 
         store.dispatch('addNotification', {
           type: 'success',
