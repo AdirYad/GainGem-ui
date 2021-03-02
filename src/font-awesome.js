@@ -29,6 +29,7 @@ import {
     faEnvelope,
     faEnvelopeOpen,
     faUndoAlt,
+    faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -75,6 +76,7 @@ export default {
     faEnvelope,
     faEnvelopeOpen,
     faUndoAlt,
+    faAngleUp,
 
     // Brands
     faBuffer,

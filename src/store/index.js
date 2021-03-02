@@ -451,7 +451,7 @@ export default createStore({
         return;
       }
 
-      return axiosInstance.get(`/users?page=${payload.page}` + (payload.username ? `&username=${payload.username}` : ''));
+      return axiosInstance.get(`/users?page=${payload.page}` + (payload.username ? `&username=${payload.username}` : '') + (payload.filter ? `&filter=${payload.filter}` : '') + (payload.filter_direction ? `&filter_direction=${payload.filter_direction}` : ''));
     },
     banUser({ getters }, payload) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {

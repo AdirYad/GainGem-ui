@@ -18,16 +18,43 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Username</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Email</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Confirmation</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
+            <button @click="filter('email_verified_at')" class="tw-font-bold">
+              Confirmed at
+              <fa-icon icon="angle-up" class="tw-duration-500"
+                       :class="{ 'upside-down' : filterArr.filter === 'email_verified_at' && filterArr.filter_direction === 'ASC',
+                                 'tw-text-gray-400' : filterArr.filter !== 'email_verified_at'
+                       }"
+              />
+            </button>
+          </th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">IP</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Balance</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Total</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Transactions</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-10">Referrals</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Referred by</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Banned at</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
+            <button @click="filter('banned_at')" class="tw-font-bold">
+              Banned at
+              <fa-icon icon="angle-up" class="tw-duration-500"
+                       :class="{ 'upside-down' : filterArr.filter === 'banned_at' && filterArr.filter_direction === 'ASC',
+                                 'tw-text-gray-400' : filterArr.filter !== 'banned_at'
+                       }"
+              />
+            </button>
+          </th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Reason</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Froze at</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
+            <button @click="filter('froze_at')" class="tw-font-bold">
+              Froze at
+              <fa-icon icon="angle-up" class="tw-duration-500"
+                       :class="{ 'upside-down' : filterArr.filter === 'froze_at' && filterArr.filter_direction === 'ASC',
+                                 'tw-text-gray-400' : filterArr.filter !== 'froze_at'
+                       }"
+              />
+            </button>
+          </th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Role</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
@@ -82,7 +109,7 @@
     />
   </div>
 
-  <Pagination v-if="usersObj.pagination" v-model="page" :records="usersObj.pagination.total" :per-page="usersObj.pagination.per_page" @paginate="searchUsers" :options="{ chunk: 5, edgeNavigation: true }" />
+  <Pagination v-if="usersObj.pagination" v-model="page" :records="usersObj.pagination.total" :per-page="usersObj.pagination.per_page" @paginate="getUsers" :options="{ chunk: 5, edgeNavigation: true }" />
   <VModal v-model:visible="modal.visible">
     <form v-if="modal.type === 'edit'" @submit.prevent="edit" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
@@ -118,7 +145,7 @@
           </select>
         </div>
       </div>
-      <div v-if="! modal.user.banned_at" class="tw-flex tw-mb-4">
+      <div v-if="! modal.user.banned_at && $store.getters.isRoleSuperAdmin" class="tw-flex tw-mb-4">
         <label class="tw-flex tw-items-center">
           <input v-model="modal.is_frozen"
                  type="checkbox"
@@ -175,6 +202,10 @@ export default {
     const page = ref(route.query.page && parseInt(route.query.page) ? parseInt(route.query.page) : 1);
     const previousUsername = ref('');
     const username = ref('');
+    const filterArr = reactive({
+      filter: '',
+      filter_direction: '',
+    });
     const modal = reactive({
       user: null,
       visible: false,
@@ -183,27 +214,29 @@ export default {
 
     const debounceSearchUsers = debounce( () => {
       page.value = 1;
-      searchUsers();
+      getUsers();
     }, 200);
 
-    searchUsers();
+    getUsers();
 
     return {
       Roles,
       usersObj,
       page,
       username,
+      filterArr,
       modal,
       debounceSearchUsers,
-      searchUsers,
+      getUsers,
       openEditModal,
       openBanModal,
       unban,
       edit,
       ban,
+      filter,
     };
 
-    function searchUsers() {
+    function getUsers() {
       if (previousUsername.value !== username.value) {
         usersObj.value = {};
       } else {
@@ -212,13 +245,13 @@ export default {
 
       previousUsername.value = username.value;
 
-      store.dispatch('getUsers', { username: username.value, page: page.value}).then((response) => {
+      store.dispatch('getUsers', { username: username.value, page: page.value, filter: filterArr.filter, filter_direction: filterArr.filter_direction }).then((response) => {
         usersObj.value = response.data;
 
         if (usersObj.value.pagination.last_page < page.value) {
           page.value = 1;
 
-          searchUsers();
+          getUsers();
         }
       });
     }
@@ -328,6 +361,27 @@ export default {
         }
       });
     }
+
+    function filter(filter) {
+      if (filterArr.filter !== filter) {
+        filterArr.filter_direction = 'DESC';
+      } else if (filterArr.filter_direction === 'ASC') {
+        filter = '';
+        filterArr.filter_direction = '';
+      } else {
+        filterArr.filter_direction = 'ASC';
+      }
+
+      filterArr.filter = filter;
+
+      getUsers();
+    }
   },
 }
 </script>
+
+<style scoped>
+.upside-down {
+  transform: rotate(180deg)
+}
+</style>
