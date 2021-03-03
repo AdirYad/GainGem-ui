@@ -309,6 +309,23 @@ export default {
 
         account.isRefreshing = false;
       }).catch((err) => {
+        if (err.response.status === 404) {
+          accountsObj.value.accounts.splice(accountsObj.value.accounts.indexOf(account), 1);
+          accountsObj.value.pagination.total--;
+
+          if (page.value > 1 && accountsObj.value.pagination.total <= 10) {
+            page.value = 1;
+
+            getRobuxAccounts();
+          }
+        } else if (err.response.status === 422) {
+          if (err.response.data.account) {
+            account.robux_amount = err.response.data.account.robux_amount;
+            account.formatted_robux_amount = err.response.data.account.formatted_robux_amount;
+            account.disabled_at = err.response.data.account.disabled_at;
+          }
+        }
+
         store.dispatch('addNotification', {
           type: 'error',
           message: err.response.data.message,

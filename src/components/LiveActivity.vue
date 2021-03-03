@@ -38,7 +38,7 @@ export default {
     const pusher = new Pusher(process.env.VUE_APP_PUSHER_APP_KEY, {
       cluster: process.env.VUE_APP_PUSHER_APP_CLUSTER,
       encrypted: true,
-      authEndpoint: process.env.VUE_APP_WEBSOCKET_URL,
+      authEndpoint: 'process.env.VUE_APP_WEBSOCKET_URL',
       auth: {
         headers: {
           Authorization: `Bearer ${store.state.token}`,

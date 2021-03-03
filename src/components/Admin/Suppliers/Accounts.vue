@@ -42,6 +42,9 @@
               <button v-else @click="enableRobuxAccount(account)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
                 <fa-icon icon="unlock-alt" />
               </button>
+              <button @click="destroyRobuxAccount(account)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-red-500 tw-rounded-full hover:tw-text-white hover:tw-bg-red-500 tw-ml-2">
+                <fa-icon :icon="['far', 'trash-alt']" />
+              </button>
             </div>
           </td>
         </tr>
@@ -87,6 +90,7 @@ export default {
       disableRobuxAccount,
       enableRobuxAccount,
       refreshRobuxAccount,
+      destroyRobuxAccount,
     };
 
     function getRobuxAccounts() {
@@ -131,12 +135,47 @@ export default {
 
         account.isRefreshing = false;
       }).catch((err) => {
+        if (err.response.status === 404) {
+          accountsObj.value.accounts.splice(accountsObj.value.accounts.indexOf(account), 1);
+          accountsObj.value.pagination.total--;
+
+          if (page.value > 1 && accountsObj.value.pagination.total <= 10) {
+            page.value = 1;
+
+            getRobuxAccounts();
+          }
+        } else if (err.response.status === 422) {
+          if (err.response.data.account) {
+            account.robux_amount = err.response.data.account.robux_amount;
+            account.formatted_robux_amount = err.response.data.account.formatted_robux_amount;
+            account.disabled_at = err.response.data.account.disabled_at;
+          }
+        }
+
         store.dispatch('addNotification', {
           type: 'error',
           message: err.response.data.message,
         });
 
         account.isRefreshing = false;
+      });
+    }
+
+    function destroyRobuxAccount(account) {
+      store.dispatch('deleteRobuxAccount', account.id).then(() => {
+        accountsObj.value.accounts.splice(accountsObj.value.accounts.indexOf(account), 1);
+        accountsObj.value.pagination.total--;
+
+        store.dispatch('addNotification', {
+          type: 'success',
+          message: 'Account removed successfully!',
+        });
+
+        if (page.value > 1 && accountsObj.value.pagination.total <= 10) {
+          page.value = 1;
+
+          getRobuxAccounts();
+        }
       });
     }
   },
