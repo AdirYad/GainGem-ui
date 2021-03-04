@@ -6,6 +6,9 @@
         <th class="tw-p-3 tw-text-left sm:tw-w-40">Date</th>
         <th class="tw-p-3 tw-text-left sm:tw-w-40">IP</th>
         <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Previous IP</th>
+        <th class="tw-p-3 tw-text-left sm:tw-w-40">Location</th>
+        <th class="tw-p-3 tw-text-left sm:tw-w-40">Device</th>
+        <th class="tw-p-3 tw-text-left sm:tw-w-40">Browser</th>
       </tr>
     </thead>
     <tbody class="tw-flex-1 sm:tw-flex-none">
@@ -13,7 +16,10 @@
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="login.id" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="login.formatted_created_at" />
         <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="login.ip" />
-        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="login.previous_ip" />
+        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="login.previous_ip" />
+        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="login.location" />
+        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="login.device" />
+        <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="login.browser" />
       </tr>
     </tbody>
   </table>
