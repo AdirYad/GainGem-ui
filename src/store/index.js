@@ -404,8 +404,15 @@ export default createStore({
         }
       });
     },
+    getLoginLogs({ getters, state }, user_id) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${user_id}/login-logs`);
+    },
     getTransactions({ getters, state }, user_id) {
-      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+      if (! getters.isLoggedIn) {
         return;
       }
 
@@ -426,7 +433,7 @@ export default createStore({
       return axiosInstance.get(`/users/${user_id}/activities`);
     },
     getReferrals({ getters, state }, user_id) {
-      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
+      if (! getters.isLoggedIn) {
         return;
       }
 

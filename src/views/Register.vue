@@ -209,6 +209,11 @@ export default {
               'password': [err.response.data.message],
             }
           }
+        } else if (err.response.status === 403) {
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          })
         }
       });
     }

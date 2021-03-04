@@ -75,6 +75,9 @@
           <Tab name="Referrals" query="referrals">
             <Referrals :user="user" />
           </Tab>
+          <Tab v-if="$store.getters.isRoleAdmin || $store.getters.isRoleSuperAdmin" name="Logins" query="logins">
+            <Logins :user="user" />
+          </Tab>
         </Tabs>
       </div>
     </div>
@@ -97,6 +100,7 @@ import Details from '@/components/Profile/Details';
 import Transactions from '@/components/Profile/Transactions';
 import Activity from '@/components/Profile/Activity';
 import Referrals from '@/components/Profile/Referrals';
+import Logins from '@/components/Profile/Logins';
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -113,6 +117,7 @@ export default {
     Transactions,
     Activity,
     Referrals,
+    Logins,
     LoopingRhombusesSpinner,
   },
   setup() {
