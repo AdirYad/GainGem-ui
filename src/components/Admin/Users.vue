@@ -11,7 +11,7 @@
       >
     </div>
   </div>
-  <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-4">
+  <div v-if="headers" class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-4">
     <button v-for="(header, index) in headers" :key="index"
         class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-4 tw-py-1 tw-m-2"
         :class="header.visibility ? 'tw-bg-primary tw-text-white' : 'tw-text-primary'"
@@ -20,7 +20,7 @@
       {{ header.name }}
     </button>
   </div>
-  <div class="full-size-table tw-rounded-lg sm:tw-shadow-lg tw-overflow-scroll tw-mb-4">
+  <div v-if="headers" class="full-size-table tw-rounded-lg sm:tw-shadow-lg tw-overflow-scroll tw-mb-4">
     <table class="unresponsive-table tw-w-full tw-flex sm:tw-bg-white tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
@@ -215,23 +215,7 @@ export default {
       filter: '',
       filter_direction: '',
     });
-    const headers = reactive({
-      id: { visibility: true, name: '#' },
-      username: { visibility: true, name: 'Username' },
-      email: { visibility: true, name: 'Email' },
-      confirmed_at: { visibility: true, name: 'Confirmed At' },
-      ip: { visibility: true, name: 'IP' },
-      balance: { visibility: true, name: 'Balance' },
-      total: { visibility: true, name: 'total' },
-      transactions: { visibility: true, name: 'Transactions' },
-      referrals: { visibility: true, name: 'Referrals' },
-      referred_by: { visibility: true, name: 'Referred By' },
-      banned_at: { visibility: true, name: 'Banned At' },
-      reason: { visibility: true, name: 'Reason' },
-      froze_at: { visibility: true, name: 'Froze At' },
-      role: { visibility: true, name: 'Role' },
-      actions: { visibility: true, name: 'Actions' },
-    });
+    const headers = ref(null);
     const modal = reactive({
       user: null,
       visible: false,
@@ -244,6 +228,8 @@ export default {
     }, 200);
 
     getUsers();
+
+    store.dispatch('getUserHeaders').then((data) => headers.value = data);
 
     return {
       Roles,
@@ -406,9 +392,11 @@ export default {
     }
 
     function headerVisibility(header) {
-      if (! header.visibility || Object.values(headers).filter((head) => head.visibility).length > 1) {
+      if (! header.visibility || Object.values(headers.value).filter((head) => head.visibility).length > 1) {
         header.visibility = !header.visibility;
       }
+
+      store.dispatch('saveUserHeaders', headers.value);
     }
   },
 }

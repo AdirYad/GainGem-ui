@@ -95,6 +95,10 @@ export default createStore({
       state.user.email_verified_at = 1;
       localStorage.setItem('user', JSON.stringify(state.user));
     },
+
+    setUserHeaders(state, userHeaders) {
+      localStorage.setItem('user_headers', JSON.stringify(userHeaders));
+    },
   },
   actions: {
     addNotification({ commit }, notification) {
@@ -605,7 +609,65 @@ export default createStore({
       }
 
       return axiosInstance.get(`/robux-games?username=${payload.destination}&value=${payload.value}`, payload);
-    }
+    },
+    saveUserHeaders({ commit, getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      commit('setUserHeaders', payload);
+    },
+    getUserHeaders({ getters, dispatch }) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      const headers = {
+        id: '#',
+        username: 'Username' ,
+        email: 'Email',
+        confirmed_at: 'Confirmed At',
+        ip: 'IP',
+        balance: 'Balance',
+        total: 'Total',
+        transactions: 'Transactions',
+        referrals: 'Referrals',
+        referred_by: 'Referred By',
+        banned_at: 'Banned At',
+        reason: 'Reason',
+        froze_at: 'Froze At',
+        role: 'Role',
+        actions: 'Actions',
+      };
+
+      let userHeaders = localStorage.getItem("user_headers") ? JSON.parse(localStorage.getItem("user_headers")) : {};
+      const userHeadersArr = Object.entries(userHeaders);
+      const headersArr = Object.entries(headers);
+
+      if (userHeadersArr.length !== headersArr.length) {
+        userHeaders = {};
+      } else {
+        for (const [header, value] of userHeadersArr) {
+          if (! headers[header] || ! ('visibility' in value) || ! ('name' in value)) {
+            userHeaders = {};
+            break;
+          }
+        }
+      }
+
+      if (Object.keys(userHeaders).length === 0) {
+        for (const [header, name] of headersArr) {
+          userHeaders[header] = {
+            visibility: true,
+            name,
+          }
+        }
+
+        dispatch('saveUserHeaders', userHeaders);
+      }
+
+      return userHeaders;
+    },
   },
   modules: {
   },
