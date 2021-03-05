@@ -84,7 +84,7 @@
       </form>
     </div>
   </div>
-  <div class="full-size-table tw-rounded-lg tw-overflow-scroll tw-mb-4">
+  <div class="full-size-table tw-rounded-lg sm:tw-shadow-lg tw-overflow-scroll tw-mb-4">
     <table class="unresponsive-table tw-w-full tw-flex sm:tw-bg-white tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">

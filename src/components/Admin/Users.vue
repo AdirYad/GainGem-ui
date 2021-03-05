@@ -11,14 +11,23 @@
       >
     </div>
   </div>
-  <div class="full-size-table tw-rounded-lg tw-overflow-scroll tw-mb-4">
+  <div class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-4">
+    <button v-for="(header, index) in headers" :key="index"
+        class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-4 tw-py-1 tw-m-2"
+        :class="header.visibility ? 'tw-bg-primary tw-text-white' : 'tw-text-primary'"
+        @click="headerVisibility(header)"
+    >
+      {{ header.name }}
+    </button>
+  </div>
+  <div class="full-size-table tw-rounded-lg sm:tw-shadow-lg tw-overflow-scroll tw-mb-4">
     <table class="unresponsive-table tw-w-full tw-flex sm:tw-bg-white tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
-          <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Username</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Email</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
+          <th v-if="headers.id.visibility" class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
+          <th v-if="headers.username.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Username</th>
+          <th v-if="headers.email.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Email</th>
+          <th v-if="headers.confirmed_at.visibility" class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
             <button @click="filter('email_verified_at')" class="tw-font-bold">
               Confirmed at
               <fa-icon icon="angle-up" class="tw-duration-500"
@@ -28,13 +37,13 @@
               />
             </button>
           </th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">IP</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Balance</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Total</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Transactions</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-10">Referrals</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Referred by</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
+          <th v-if="headers.ip.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">IP</th>
+          <th v-if="headers.balance.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Balance</th>
+          <th v-if="headers.total.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Total</th>
+          <th v-if="headers.transactions.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Transactions</th>
+          <th v-if="headers.referrals.visibility" class="tw-p-3 tw-text-left sm:tw-w-10">Referrals</th>
+          <th v-if="headers.referred_by.visibility" class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Referred by</th>
+          <th v-if="headers.banned_at.visibility" class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
             <button @click="filter('banned_at')" class="tw-font-bold">
               Banned at
               <fa-icon icon="angle-up" class="tw-duration-500"
@@ -44,8 +53,8 @@
               />
             </button>
           </th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Reason</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
+          <th v-if="headers.reason.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Reason</th>
+          <th v-if="headers.froze_at.visibility" class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">
             <button @click="filter('froze_at')" class="tw-font-bold">
               Froze at
               <fa-icon icon="angle-up" class="tw-duration-500"
@@ -55,27 +64,27 @@
               />
             </button>
           </th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Role</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
+          <th v-if="headers.role.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Role</th>
+          <th v-if="headers.actions.visibility" class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
-        <tr v-if="usersObj.users" v-for="(user, index) in usersObj.users" :key="index"  class="tw-table-row">
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.id" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.username" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.email" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_email_verified_at" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.ip" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_available_points" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_total_points" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.withdraws" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referrals" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referred_by ? user.referred_by.username : ''" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_banned_at" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.banned_at ? user.ban_reason : ''" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_froze_at" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.role" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
+        <tr v-if="usersObj.users" v-for="(user, index) in usersObj.users" :key="index">
+          <td v-if="headers.id.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.id" />
+          <td v-if="headers.username.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.username" />
+          <td v-if="headers.email.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.email" />
+          <td v-if="headers.confirmed_at.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_email_verified_at" />
+          <td v-if="headers.ip.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.ip" />
+          <td v-if="headers.balance.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_available_points" />
+          <td v-if="headers.total.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.formatted_total_points" />
+          <td v-if="headers.transactions.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.withdraws" />
+          <td v-if="headers.referrals.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referrals" />
+          <td v-if="headers.referred_by.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.referred_by ? user.referred_by.username : ''" />
+          <td v-if="headers.banned_at.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_banned_at" />
+          <td v-if="headers.reason.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.banned_at ? user.ban_reason : ''" />
+          <td v-if="headers.froze_at.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" style="white-space: nowrap" v-text="user.formatted_froze_at" />
+          <td v-if="headers.role.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="user.role" />
+          <td v-if="headers.actions.visibility" class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
               <button v-if="$store.getters.isRoleSuperAdmin && user.role === Roles.Admin || user.id !== $store.state.user.id && ! $store.getters.isRoleSuperAdmin && ! $store.getters.isRoleAdmin || user.role === Roles.User || user.role === Roles.Supplier || user.role === Roles.Sponsor"
                       @click="openEditModal(user)"
@@ -206,6 +215,23 @@ export default {
       filter: '',
       filter_direction: '',
     });
+    const headers = reactive({
+      id: { visibility: true, name: '#' },
+      username: { visibility: true, name: 'Username' },
+      email: { visibility: true, name: 'Email' },
+      confirmed_at: { visibility: true, name: 'Confirmed At' },
+      ip: { visibility: true, name: 'IP' },
+      balance: { visibility: true, name: 'Balance' },
+      total: { visibility: true, name: 'total' },
+      transactions: { visibility: true, name: 'Transactions' },
+      referrals: { visibility: true, name: 'Referrals' },
+      referred_by: { visibility: true, name: 'Referred By' },
+      banned_at: { visibility: true, name: 'Banned At' },
+      reason: { visibility: true, name: 'Reason' },
+      froze_at: { visibility: true, name: 'Froze At' },
+      role: { visibility: true, name: 'Role' },
+      actions: { visibility: true, name: 'Actions' },
+    });
     const modal = reactive({
       user: null,
       visible: false,
@@ -225,6 +251,7 @@ export default {
       page,
       username,
       filterArr,
+      headers,
       modal,
       debounceSearchUsers,
       getUsers,
@@ -234,6 +261,7 @@ export default {
       edit,
       ban,
       filter,
+      headerVisibility,
     };
 
     function getUsers() {
@@ -375,6 +403,12 @@ export default {
       filterArr.filter = filter;
 
       getUsers();
+    }
+
+    function headerVisibility(header) {
+      if (! header.visibility || Object.values(headers).filter((head) => head.visibility).length > 1) {
+        header.visibility = !header.visibility;
+      }
     }
   },
 }

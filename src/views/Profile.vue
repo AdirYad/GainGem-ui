@@ -61,7 +61,7 @@
         </div>
       </div>
 
-      <div class="tw-flex tw-flex-1 tw-bg-white tw-shadow-md tw-mt-8 lg:tw-mt-0 lg:tw-ml-3 xl:tw-ml-6">
+      <div class="tw-flex lg:tw-w-2/3 tw-bg-white tw-shadow-md tw-mt-8 lg:tw-mt-0 lg:tw-ml-3 xl:tw-ml-6">
         <Tabs class="tw-min-h-12 tw-w-full">
           <Tab name="Account Details" query="details">
             <Details :user="user" />
