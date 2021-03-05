@@ -10,6 +10,8 @@
 
         <template v-if="user.not_authenticated">
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Payout</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Offer Name</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Offer ID</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">IP</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Location</th>
         </template>
@@ -24,6 +26,8 @@
 
         <template v-if="user.not_authenticated">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.data && activity.data.revenue ? ('$' + activity.data.revenue) : null" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="activity.data && activity.data.offer_name ? activity.data.offer_name : null" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.data && activity.data.offer_id ? activity.data.offer_id : null" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="activity.data && activity.data.user_ip ? activity.data.user_ip : null" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="activity.data && activity.data.location ? activity.data.location : null" />
         </template>
