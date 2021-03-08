@@ -12,13 +12,21 @@
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.username"
                :class="{ 'input-invalid tw-mb-3' : v$.username.$invalid || errors.username }"
-               @keydown.space.prevent="resetErrors('username')"
+               @keydown="resetErrors('username')"
+               @keydown.space.prevent
         >
         <p v-if="v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-          {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters and numbers.' : v$.username.$errors[0].$message }}
+          {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters, numbers, and at most one underscore.' : v$.username.$errors[0].$message }}
         </p>
         <p v-else-if="errors.username" class="tw-text-red-500 tw-text-xs tw-italic">
-          {{ errors.username[0] }}
+          <template v-if="errors.username[0] === 'The selected username is invalid.'">
+            This username doesn't exist on EzRewards!
+            <router-link :to="{ name: 'Register' }" class="tw-text-primary tw-underline">Click here</router-link>
+            to create an account.
+          </template>
+          <template v-else>
+            {{ errors.username[0] }}
+          </template>
         </p>
       </div>
       <div class="tw-mb-4">
@@ -131,6 +139,10 @@ export default {
 
     const login = () => {
       v$.value.$touch();
+
+      if ((auth.username.match(/_/g) || []).length <= 1) {
+        v$.value.username.$reset();
+      }
 
       if (v$.value.$invalid) {
         return;

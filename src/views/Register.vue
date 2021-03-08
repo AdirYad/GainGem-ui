@@ -12,7 +12,8 @@
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.email"
                :class="{ 'input-invalid tw-mb-3' : v$.email.$invalid || errors.email }"
-               @keydown.space.prevent="resetErrors('email')"
+               @keydown="resetErrors('email')"
+               @keydown.space.prevent
         >
         <p v-if="v$.email.$error" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ v$.email.$errors[0].$message }}
@@ -29,10 +30,11 @@
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.username"
                :class="{ 'input-invalid tw-mb-3' : v$.username.$invalid || errors.username }"
-               @keydown.space.prevent="resetErrors('username')"
+               @keydown="resetErrors('username')"
+               @keydown.space.prevent
         >
         <p v-if="v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-          {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters and numbers.' : v$.username.$errors[0].$message }}
+          {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters, numbers, and at most one underscore.' : v$.username.$errors[0].$message }}
         </p>
         <p v-else-if="errors.username" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ errors.username[0] }}
@@ -223,6 +225,10 @@ export default {
 
       if (v$.value.confirmPassword.sameAsPassword.$invalid && auth.password === auth.confirmPassword) {
         v$.value.confirmPassword.$reset();
+      }
+
+      if ((auth.username.match(/_/g) || []).length <= 1) {
+        v$.value.username.$reset();
       }
 
       if (v$.value.$invalid) {
