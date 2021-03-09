@@ -11,12 +11,12 @@
         <input id="username" type="text" placeholder="Username"
                class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.username"
-               :class="{ 'input-invalid tw-mb-3' : v$.username.$invalid || errors.username }"
-               @keydown="resetErrors('username')"
+               :class="{ 'input-invalid tw-mb-3' : isInvalidUsername || v$.username.$invalid || errors.username }"
+               @keydown="resetErrors('username'); isInvalidUsername = false"
                @keydown.space.prevent
         >
-        <p v-if="v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
-          {{ v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters, numbers, and at most one underscore.' : v$.username.$errors[0].$message }}
+        <p v-if="isInvalidUsername || v$.username.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+          {{ isInvalidUsername || v$.username.$errors[0].$validator === 'valid' ? 'Usernames may only contain letters, numbers, and at most one underscore.' : v$.username.$errors[0].$message }}
         </p>
         <p v-else-if="errors.username" class="tw-text-red-500 tw-text-xs tw-italic">
           <template v-if="errors.username[0] === 'The selected username is invalid.'">
@@ -105,6 +105,7 @@ export default {
     const store = useStore();
 
     const isLogging = ref(false)
+    const isInvalidUsername = ref(false)
     const auth = reactive({
       username: '',
       password: '',
@@ -118,7 +119,7 @@ export default {
         required,
         minLength: minLength(6),
         maxLength: maxLength(20),
-        valid: helpers.regex(/^[a-zA-Z0-9]+$/u),
+        valid: helpers.regex(/^\w+$/u),
       },
       password: {
         required,
@@ -140,8 +141,9 @@ export default {
     const login = () => {
       v$.value.$touch();
 
-      if ((auth.username.match(/_/g) || []).length <= 1) {
-        v$.value.username.$reset();
+      if (! v$.value.username.$invalid && (auth.username.match(/_/g) || []).length > 1) {
+        isInvalidUsername.value = true;
+        return;
       }
 
       if (v$.value.$invalid) {
@@ -202,6 +204,7 @@ export default {
     return {
       v$,
       isLogging,
+      isInvalidUsername,
       auth,
       errors,
       login,
