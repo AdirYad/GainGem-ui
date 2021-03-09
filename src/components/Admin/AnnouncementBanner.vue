@@ -1,4 +1,10 @@
 <template>
+  <div class="tw-w-full tw-relative tw-flex tw-justify-center tw-shadow-md tw-text-white tw-items-center tw-bg-primary tw-px-8 tw-py-4 tw-mb-4" style="min-height: 56px">
+    <div v-html="payload.text" />
+    <button class="tw-absolute tw-text-sm" style="top: 50%; right: 12px; transform: translateY(-50%)">
+      <fa-icon icon="times" />
+    </button>
+  </div>
   <form @submit.prevent="saveAnnouncementBanner" class="tw-flex tw-flex-col">
     <div class="tw-flex tw-flex-wrap">
       <div class="tw-w-full tw-mb-4">
@@ -69,6 +75,11 @@ export default {
 
     const v$ = useVuelidate(rules, {
       text: toRef(payload, 'text'),
+    });
+
+    store.dispatch('getAnnouncementBanner').then(() => {
+      payload.text = store.state.announcement_banner.text;
+      payload.is_enabled = !! store.state.announcement_banner.is_enabled;
     });
 
     return {
