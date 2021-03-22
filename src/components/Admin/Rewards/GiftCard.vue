@@ -374,6 +374,7 @@ export default {
       payload.codes = [];
       payload.code = '';
       payload.country = null;
+      payload.currency_id = props.currencies && props.currencies.find((currency) => currency.currency === 'USD') ? props.currencies.find((currency) => currency.currency === 'USD').id : null;
       payload.value = null;
 
       getGiftCards();
