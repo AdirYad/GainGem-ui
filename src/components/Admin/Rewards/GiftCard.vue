@@ -3,7 +3,7 @@
     <div class="tw-w-full tw-mb-4">
       <form @submit.prevent="create">
         <div class="tw-flex tw-flex-wrap">
-          <div class="tw-w-full sm:tw-w-1/3 tw-mb-4 sm:tw-pr-2">
+          <div class="tw-w-full sm:tw-w-1/4 tw-mb-4 sm:tw-pr-2">
             <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="code">
               Code
             </label>
@@ -22,7 +22,7 @@
               {{ errors.code[0] }}
             </p>
           </div>
-          <div class="tw-w-full sm:tw-w-1/3 tw-mb-4 sm:tw-pr-2">
+          <div class="tw-w-full sm:tw-w-1/4 tw-mb-4 sm:tw-pr-2">
             <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="country">
               Country
             </label>
@@ -43,7 +43,25 @@
               {{ errors.country[0] }}
             </p>
           </div>
-          <div class="tw-w-full sm:tw-w-1/3 tw-mb-4 sm:tw-pl-2">
+          <div class="tw-w-full sm:tw-w-1/4 tw-mb-4 sm:tw-pr-2">
+            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="currency">
+              Currency
+            </label>
+            <select v-model="payload.currency_id" id="currency"
+                    class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
+                    style="height: 38px"
+                    :class="{ 'input-invalid tw-mb-3' : ! modal.visible && errors.currency_id }"
+                    @keydown="resetErrors('currency_id')"
+            >
+              <option v-for="(currency, index) in currencies.filter((curr) => curr.currency_value)" :key="index" :value="currency.id" :selected="currency.currency === 'USD'">
+                {{ currency.currency }}
+              </option>
+            </select>
+            <p v-if="! modal.visible && errors.currency_id" class="tw-text-red-500 tw-text-xs tw-italic">
+              {{ errors.currency_id[0] }}
+            </p>
+          </div>
+          <div class="tw-w-full sm:tw-w-1/4 tw-mb-4 sm:tw-pl-2">
             <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="value">
               Value
             </label>
@@ -92,6 +110,7 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Country</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Value</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Currency</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Taken By</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
         </tr>
@@ -101,7 +120,8 @@
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.code" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.country ? giftCard.country : 'International'" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + (giftCard.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.value * pointsValue).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(calcPointsByGiftCard(giftCard)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.currency_id ? currencies.find((currency) => currency.id === giftCard.currency_id).currency : null" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.transaction ? giftCard.transaction.user.username : ''" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
             <div class="tw-flex">
@@ -143,9 +163,9 @@
           <p v-if="v2$.code.$error" class="tw-text-red-500 tw-text-xs tw-italic">
             {{ v2$.code.$errors[0].$message }}
           </p>
-          <p v-else-if="errors.code" class="tw-text-red-500 tw-text-xs tw-italic">
+          <span v-else-if="errors.code" class="tw-text-red-500 tw-text-xs tw-italic">
             {{ errors.code[0] }}
-          </p>
+          </span>
         </div>
         <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pl-2">
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_country">
@@ -164,13 +184,31 @@
               {{ country.country }}
             </option>
           </select>
-          <p v-if="errors.country" class="tw-text-red-500 tw-text-xs tw-italic">
+          <span v-if="errors.country" class="tw-text-red-500 tw-text-xs tw-italic">
             {{ errors.country[0] }}
-          </p>
+          </span>
         </div>
       </div>
       <div class="tw-flex tw-flex-wrap">
-        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4">
+        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_currency">
+            Currency
+          </label>
+          <select v-model="modal.currency_id" id="edit_currency"
+                  class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
+                  style="height: 38px"
+                  :class="{ 'input-invalid tw-mb-3' : errors.currency_id }"
+                  @keydown="resetErrors('currency_id')"
+          >
+            <option v-for="(currency, index) in currencies.filter((curr) => curr.currency_value)" :key="index" :value="currency.id" :selected="currency.currency === 'USD'">
+              {{ currency.currency }}
+            </option>
+          </select>
+          <span v-if="errors.currency_id" class="tw-text-red-500 tw-text-xs tw-italic">
+            {{ errors.currency_id[0] }}
+          </span>
+        </div>
+        <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pl-2">
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_value">
             Value
           </label>
@@ -181,12 +219,12 @@
                  :class="{ 'input-invalid tw-mb-3' : v2$.value.$invalid || errors.value }"
                  @keydown="resetErrors('value')"
           >
-          <p v-if="v2$.value.$error" class="tw-text-red-500 tw-text-xs tw-italic">
+          <span v-if="v2$.value.$error" class="tw-text-red-500 tw-text-xs tw-italic">
             {{ v2$.value.$errors[0].$message }}
-          </p>
-          <p v-else-if="errors.value" class="tw-text-red-500 tw-text-xs tw-italic">
+          </span>
+          <span v-else-if="errors.value" class="tw-text-red-500 tw-text-xs tw-italic">
             {{ errors.value[0] }}
-          </p>
+          </span>
         </div>
       </div>
       <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
@@ -217,8 +255,8 @@ export default {
           type: String,
           required: true,
       },
-      pointsValue: {
-          type: Number,
+      currencies: {
+          type: Object,
           required: true,
       },
   },
@@ -234,12 +272,14 @@ export default {
       codes: [],
       code: '',
       country: null,
+      currency_id: props.currencies && props.currencies.find((currency) => currency.currency === 'USD') ? props.currencies.find((currency) => currency.currency === 'USD').id : null,
       value: null,
     });
     const modal = reactive({
       gift_card: null,
       visible: false,
       country: null,
+      currency_id: null,
       code: '',
       value: null,
     });
@@ -309,6 +349,7 @@ export default {
       create,
       edit,
       deleteCode,
+      calcPointsByGiftCard,
       resetErrors,
     };
 
@@ -395,6 +436,7 @@ export default {
       modal.gift_card = giftCard;
       modal.visible = true;
       modal.country = giftCard.country;
+      modal.currency_id = giftCard.currency_id;
       modal.code = giftCard.code;
       modal.value = giftCard.value;
     }
@@ -453,6 +495,7 @@ export default {
           payload.codes = [];
           payload.code = '';
           payload.country = null;
+          payload.currency_id = props.currencies && props.currencies.find((currency) => currency.currency === 'USD') ? props.currencies.find((currency) => currency.currency === 'USD').id : null;
           payload.value = null;
           rewardStockObj.value.gift_cards.unshift(...response.data);
           rewardStockObj.value.pagination.total += response.data.length;
@@ -505,6 +548,7 @@ export default {
         gift_card_id: modal.gift_card.id,
         code: modal.code,
         country: modal.country,
+        currency_id: modal.currency_id,
         provider: payload.provider,
         value: modal.value,
       };
@@ -513,6 +557,7 @@ export default {
         modal.visible = false;
         modal.gift_card.code = response.data.code;
         modal.gift_card.country = response.data.country;
+        modal.gift_card.currency_id = response.data.currency_id;
         modal.gift_card.value = response.data.value;
 
         store.dispatch('addNotification', {
@@ -524,6 +569,20 @@ export default {
           errors.value = err.response.data.errors;
         }
       });
+    }
+
+    function calcPointsByGiftCard(giftCard) {
+      if (! giftCard.currency_id) {
+        return 0;
+      }
+
+      const currency = props.currencies.find((currency) => currency.id === giftCard.currency_id);
+
+      if (! currency.currency_value) {
+        return 0;
+      }
+
+      return giftCard.value * currency.currency_value[props.provider];
     }
 
     function resetErrors(key) {

@@ -4,7 +4,7 @@
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
           <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Username</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Supplier</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Method</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Destination</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Amount</th>

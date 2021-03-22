@@ -1,9 +1,9 @@
 <template>
   <div v-if="$store.getters.isRoleSuperAdmin" class="tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-2 tw--m-1">
     <button class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-primary tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-8 tw-py-2 tw-m-1"
-            @click="openEditPointsValueModal"
+            @click="openEditCurrencyValueModal"
     >
-      Change Points Value
+      Change Currency Values
     </button>
     <button class="tw-duration-300 tw-border-2 tw-border-primary tw-rounded-xl tw-text-primary tw-text-xs hover:tw-bg-primary hover:tw-text-white tw-font-bold tw-text-center tw-inline-block tw-px-8 tw-py-2 tw-m-1"
             @click="openEditPostbackValueModal"
@@ -30,27 +30,45 @@
   </div>
 
   <Bitcoin v-if="provider === 'bitcoin' && $store.getters.isRoleSuperAdmin" />
-  <GiftCard v-else-if="provider" :provider="provider" :points-value="pointsValue" />
+  <GiftCard v-else-if="provider" :provider="provider" :currencies="currencies" />
 
   <VModal v-model:visible="modal.visible">
-    <form v-if="modal.type === 'points'" @submit.prevent="updatePointsValue" class="tw-px-2">
+    <form v-if="modal.type === 'currencies'" @submit.prevent="updateCurrencyValue" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
         <div class="tw-w-full tw-mb-4">
-          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_points">
-            Points Value
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_currency">
+            Currency
           </label>
-          <input id="edit_points" type="number" min="1" max="10000" placeholder="Value"
-                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                 class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
-                 v-model="modal.points"
+          <select v-model="modal.currencies.currency" id="edit_currency"
+                  class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
+                  style="height: 38px"
+                  @change="changeCurrency"
           >
+            <option v-for="(currency, index) in currencies" :key="index" :value="currency">
+              {{ currency.currency }}
+            </option>
+          </select>
         </div>
+      </div>
+      <div class="tw-flex tw-flex-wrap tw--mx-1">
+        <template v-for="(reward, index) in $store.state.rewards" :key="index">
+          <div v-if="reward.provider !== 'robux' && reward.provider !== 'bitcoin'" class="tw-w-1/2 sm:tw-w-1/3 lg:tw-w-1/4 tw-mb-4 tw-px-1">
+            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" :for="`edit_${reward.provider}`">
+              {{ reward.name }}
+            </label>
+            <input :id="`edit_${reward.provider}`" type="number" min="1" max="255" placeholder="Value"
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                   class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
+                   v-model="modal.currencies.currency_value[reward.provider]"
+            >
+          </div>
+        </template>
       </div>
       <button class="tw-w-full sm:tw-w-40 tw-text-white tw-text-xl tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-py-1" type="submit">
         Save
       </button>
     </form>
-    <form v-if="modal.type === 'postback'" @submit.prevent="updatePostbackValue" class="tw-px-2">
+    <form v-else-if="modal.type === 'postback'" @submit.prevent="updatePostbackValue" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
         <div class="tw-w-full tw-mb-4">
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_postback">
@@ -67,7 +85,7 @@
         Save
       </button>
     </form>
-    <form v-if="modal.type === 'bitcoin'" @submit.prevent="updateBitcoinValue" class="tw-px-2">
+    <form v-else-if="modal.type === 'bitcoin'" @submit.prevent="updateBitcoinValue" class="tw-px-2">
       <div class="tw-flex tw-flex-wrap">
         <div class="tw-w-full tw-mb-4">
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_bitcoin">
@@ -108,20 +126,22 @@ export default {
 
     const provider = ref(null);
 
-    const pointsValue = ref(80);
+    const currencies = ref([]);
     const postbackValue = ref(40);
     const bitcoinValue = ref(100);
     const modal = reactive({
       visible: false,
-      points: null,
+      currencies: {
+        currency: null,
+        currency_value: {},
+      },
       postback: null,
       bitcoin: null,
       type: '',
     });
 
-    store.dispatch('getPointsValue').then((response) => {
-      pointsValue.value = response.data;
-      modal.points = response.data;
+    store.dispatch('getAllCurrencies').then((response) => {
+      currencies.value = response.data;
     });
 
     if (store.getters.isRoleSuperAdmin) {
@@ -138,22 +158,32 @@ export default {
 
     return {
       provider,
-      pointsValue,
+      currencies,
       postbackValue,
       bitcoinValue,
       modal,
-      openEditPointsValueModal,
+      openEditCurrencyValueModal,
       openEditPostbackValueModal,
       openEditBitcoinValueModal,
-      updatePointsValue,
+      updateCurrencyValue,
       updatePostbackValue,
       updateBitcoinValue,
+      changeCurrency,
     };
 
-    function openEditPointsValueModal() {
+    function openEditCurrencyValueModal() {
+      if (! currencies.value) {
+        return;
+      }
+
+      modal.currencies = {
+        currency: currencies.value[0],
+        currency_value: {},
+      }
+
+      changeCurrency();
+      modal.type = 'currencies';
       modal.visible = true;
-      modal.points = pointsValue.value;
-      modal.type = 'points';
     }
 
     function openEditPostbackValueModal() {
@@ -168,28 +198,27 @@ export default {
       modal.type = 'bitcoin';
     }
 
-    function updatePointsValue() {
-      store.dispatch('updatePointsValue', modal.points).then((response) => {
+    function updateCurrencyValue() {
+      const payload = {
+        currency_id: modal.currencies.currency.id,
+        ...modal.currencies.currency_value
+      }
+
+      store.dispatch('updateCurrencyValue', payload).then((response) => {
         modal.visible = false;
-        pointsValue.value = response.data;
+        currencies.value.find((currency) => currency.id === response.data.currency_id).currency_value = response.data;
 
         store.dispatch('addNotification', {
           type: 'success',
-          message: 'Points value saved successfully!',
+          message: 'Currency value saved successfully!',
         });
       }).catch((err) => {
         if (err.response.status === 422) {
-          if (err.response.data.errors && err.response.data.errors.points)
-            store.dispatch('addNotification', {
-              type: 'error',
-              message: err.response.data.errors.points[0],
-            });
-          } else {
-            store.dispatch('addNotification', {
-              type: 'error',
-              message: err.response.data.message,
-            });
-          }
+          store.dispatch('addNotification', {
+            type: 'error',
+            message: err.response.data.message,
+          });
+        }
       });
     }
 
@@ -240,6 +269,14 @@ export default {
               message: err.response.data.message,
             });
           }
+      });
+    }
+
+    function changeCurrency() {
+      store.state.rewards.forEach((reward) => {
+        if (reward.provider !== 'robux' && reward.provider !== 'bitcoin') {
+          modal.currencies.currency_value[reward.provider] = modal.currencies.currency.currency_value ? modal.currencies.currency.currency_value[reward.provider] : 0;
+        }
       });
     }
   },

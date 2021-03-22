@@ -15,6 +15,9 @@
           <Tab name="Announcement Banner" query="announcement-banner">
             <AnnouncementBanner />
           </Tab>
+          <Tab v-if="$store.getters.isRoleSuperAdmin" name="Currencies" query="currencies">
+            <Currencies />
+          </Tab>
           <Tab v-if="$store.getters.isRoleSuperAdmin" name="Supplier Panel" query="suppliers">
             <Suppliers />
           </Tab>
@@ -31,6 +34,7 @@ import RewardStock from '@/components/Admin/RewardStock';
 import PromoCodes from '@/components/Admin/PromoCodes';
 import Users from '@/components/Admin/Users';
 import AnnouncementBanner from '@/components/Admin/AnnouncementBanner';
+import Currencies from '@/components/Admin/Currencies';
 import Suppliers from '@/components/Admin/Suppliers';
 
 export default {
@@ -43,6 +47,7 @@ export default {
     PromoCodes,
     Users,
     AnnouncementBanner,
+    Currencies,
     Suppliers,
   },
 }

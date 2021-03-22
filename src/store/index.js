@@ -157,20 +157,6 @@ export default createStore({
 
       return axiosInstance.post('/forgot-password/reset', payload);
     },
-    getPointsValue({ getters }) {
-      if (! getters.isLoggedIn) {
-        return;
-      }
-
-      return axiosInstance.get('points');
-    },
-    updatePointsValue({ getters }, points) {
-      if (! getters.isRoleSuperAdmin) {
-        return;
-      }
-
-      return axiosInstance.put('points', { 'points': points });
-    },
     getPostbackValue({ getters }) {
       if (! getters.isRoleSuperAdmin) {
         return;
@@ -667,6 +653,55 @@ export default createStore({
       }
 
       return userHeaders;
+    },
+    getAllCurrencies({ getters }) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get('/currencies?no_pagination=1');
+    },
+    getCurrencies({ getters }, page) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/currencies?page=${page}`);
+    },
+    storeCurrency({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.post('/currencies', payload);
+    },
+    updateCurrency({ getters }, payload) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put(`/currencies/${payload.currency_id}`, payload);
+    },
+    deleteCurrency({ getters }, currency_id) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.delete(`/currencies/${currency_id}`);
+    },
+    getCurrencyValues({ getters }) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get('/currencies/values');
+    },
+    updateCurrencyValue({ getters }, payload) {
+      if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.put(`/currencies/${payload.currency_id}/values`, payload);
     },
   },
   modules: {

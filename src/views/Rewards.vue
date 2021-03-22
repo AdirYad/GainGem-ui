@@ -25,7 +25,7 @@
             </button>
           </div>
           <div v-if="expandedReward === reward" class="tw-flex tw-flex-col tw-justify-end tw-px-3 tw-pb-3" style="height: 220px;">
-            <span v-if="expandedReward.provider !== 'bitcoin' && pointsValue || expandedReward.provider === 'bitcoin' && bitcoinValue || expandedReward.provider === 'robux'" class="tw-flex tw-mb-1 tw-text-xs">
+            <span v-if="expandedReward.provider !== 'bitcoin' && currencies.find((currency) => currency.id === payload.currency_id) || expandedReward.provider === 'bitcoin' && bitcoinValue || expandedReward.provider === 'robux'" class="tw-flex tw-mb-1 tw-text-xs">
               Cost
               <span class="tw-truncate tw-inline-block tw-mx-1" style="max-width: 90px">
                 <template v-if="expandedReward.provider === 'robux'">
@@ -35,7 +35,7 @@
                   {{ payload.value * bitcoinValue }}
                 </template>
                 <template v-else>
-                  {{ payload.value * pointsValue }}
+                  {{ payload.value * currencies.find((currency) => currency.id === payload.currency_id).currency_value[payload.provider] }}
                 </template>
               </span>
               points
@@ -52,10 +52,10 @@
                 <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="value">
                   Select Amount
                 </label>
-                <select v-model="payload.value" id="value" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
+                <select v-model="payload.option" @change="" id="value" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
                   <template v-for="(option, index) in expandedReward.options" :key="option.country + index">
-                    <option v-if="option.country === payload.country" :value="option.value" :selected="index === 0">
-                      ${{ option.value }}
+                    <option v-if="option.country === payload.country" :value="option" :selected="index === 0">
+                      {{ option.currency_id ? currencies.find((currency) => currency.id === option.currency_id).symbol : '$' }}{{ option.value }}
                     </option>
                   </template>
                 </select>
@@ -370,7 +370,7 @@
 import VModal from "@/components/VModal";
 import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { useStore } from "vuex";
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 export default {
   name: 'Rewards',
@@ -385,7 +385,7 @@ export default {
     const link = ref(window.location.origin);
     const confirmation = ref(false);
     const isRedeeming = ref(false);
-    const pointsValue = ref(null);
+    const currencies = ref([]);
     const bitcoinValue = ref(null);
     const rewards = ref(null);
     const expandedReward = ref({});
@@ -394,14 +394,16 @@ export default {
     });
 
     const payload = ref({
+      option: null,
       country: null,
+      currency_id: null,
       provider: null,
       value: null,
       destination: null,
     });
 
-    store.dispatch('getPointsValue').then((response) => {
-      pointsValue.value = response.data;
+    store.dispatch('getCurrencyValues').then((response) => {
+      currencies.value = response.data;
     });
 
     store.dispatch('getBitcoinValue').then((response) => {
@@ -410,11 +412,16 @@ export default {
 
     getRewards();
 
+    watch(() => payload.value.option, () => {
+      payload.value.value = payload.value.option ? payload.value.option.value : null;
+      payload.value.currency_id = payload.value.option ?  payload.value.option.currency_id : null;
+    });
+
     return {
       link,
       confirmation,
       isRedeeming,
-      pointsValue,
+      currencies,
       bitcoinValue,
       rewards,
       expandedReward,
@@ -489,12 +496,12 @@ export default {
       el.style.paddingTop = '';
 
       expandedReward.value = reward;
-
       confirmation.value = false;
+
       payload.value.destination = null;
       payload.value.provider = expandedReward.value.provider;
       payload.value.country = expandedReward.value.countries ? expandedReward.value.countries[0] : null;
-      payload.value.value = expandedReward.value.options ? expandedReward.value.options[0].value : null;
+      payload.value.option = expandedReward.value.options ? expandedReward.value.options[0] : null;
 
       if (expandedReward.value.options && expandedReward.value.provider !== 'bitcoin') {
         changedCountry();
@@ -576,7 +583,7 @@ export default {
     }
 
     function changedCountry() {
-      payload.value.value = expandedReward.value.stock.find((item) => item.country === payload.value.country).value;
+      payload.value.option = expandedReward.value.stock.find((item) => item.country === payload.value.country);
     }
 
     function openModal(reward) {
