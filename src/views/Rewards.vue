@@ -292,7 +292,7 @@
         </h1>
 
         <p>
-          Thank you for claiming a ${{ modal.value }} {{ modal.formatted_provider }} Gift Card. Please click on the button below to unleash your code.
+          Thank you for claiming a {{ modal.currency_id ? currencies.find((currency) => currency.id === modal.currency_id).symbol : '$' }}{{ modal.value }} {{ modal.formatted_provider }} Gift Card. Please click on the button below to unleash your code.
         </p>
 
         <p v-if="modal.codeVisibility" class="tw-text-primary tw-font-bold tw-text-center tw-break-all tw-text-xl md:tw-text-2xl">

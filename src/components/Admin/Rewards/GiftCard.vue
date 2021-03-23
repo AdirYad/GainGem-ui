@@ -106,6 +106,7 @@
     <table class="unresponsive-table tw-w-full tw-flex sm:tw-bg-white tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Date</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Code</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Country</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Value</th>
@@ -117,10 +118,11 @@
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
         <tr v-if="rewardStockObj.gift_cards" v-for="(giftCard, index) in rewardStockObj.gift_cards" :key="index"  class="tw-table-row">
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.formatted_created_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.code" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.country ? giftCard.country : 'International'" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="'$' + (giftCard.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(calcPointsByGiftCard(giftCard)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.currency_id ? currencies.find((currency) => currency.id === giftCard.currency_id).symbol : '$') + (giftCard.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.transaction ? giftCard.transaction.points : calcPointsByGiftCard(giftCard)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.currency_id ? currencies.find((currency) => currency.id === giftCard.currency_id).currency : null" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.transaction ? giftCard.transaction.user.username : ''" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-px-3 tw-py-1">
