@@ -118,7 +118,7 @@
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
         <tr v-if="rewardStockObj.gift_cards" v-for="(giftCard, index) in rewardStockObj.gift_cards" :key="index"  class="tw-table-row">
-          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.formatted_created_at" />
+          <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="giftCard.formatted_created_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.code" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="giftCard.country ? giftCard.country : 'International'" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="(giftCard.currency_id ? currencies.find((currency) => currency.id === giftCard.currency_id).symbol : '$') + (giftCard.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')" />
