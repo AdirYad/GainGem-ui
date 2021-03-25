@@ -48,19 +48,7 @@
                      class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full tw-py-1 tw-px-4 focus:tw-outline-none">
             </div>
             <div class="tw-w-full tw-mb-4">
-              <template v-if="expandedReward.options">
-                <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="value">
-                  Select Amount
-                </label>
-                <select v-model="payload.option" @change="" id="value" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
-                  <template v-for="(option, index) in expandedReward.options" :key="option.country + index">
-                    <option v-if="option.country === payload.country" :value="option" :selected="index === 0">
-                      {{ option.currency_id ? currencies.find((currency) => currency.id === option.currency_id).symbol : '$' }}{{ option.value }}
-                    </option>
-                  </template>
-                </select>
-              </template>
-              <template v-else>
+              <template v-if="! expandedReward.options">
                 <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="amount">
                   Robux Amount
                 </label>
@@ -68,16 +56,32 @@
                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                        class="input tw-duration-300 tw-shadow tw-border tw-rounded-md tw-w-full tw-py-1 tw-px-4 focus:tw-outline-none">
               </template>
+              <template v-else-if="payload.country !== ''">
+                <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="value">
+                  Select Amount
+                </label>
+                <select v-model="payload.option" id="value" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
+                  <template v-for="(option, index) in expandedReward.options" :key="option.country + index">
+                    <option v-if="option.country === payload.country" :value="option">
+                      {{ option.currency_id ? currencies.find((currency) => currency.id === option.currency_id).symbol : '$' }}{{ option.value }}
+                    </option>
+                  </template>
+                </select>
+              </template>
+
             </div>
             <div v-if="expandedReward.countries && (expandedReward.countries.length > 1 || expandedReward.countries.length === 1 && expandedReward.countries[0] !== null)" class="tw-w-full tw-mb-4">
-                <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="country">
-                  Select Country
-                </label>
-                <select v-model="payload.country" @change="changedCountry" id="country" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
-                  <option v-for="(country, index) in expandedReward.countries" :key="index" :value="country" :selected="index === 0">
-                    {{ country === null ? 'International' : country }}
-                  </option>
-                </select>
+              <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="region">
+                Select Region
+              </label>
+              <select v-model="payload.country" @change="changedCountry" id="region" class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none" style="height: 34px">
+                <option value="" disabled>
+                  Select Region
+                </option>
+                <option v-for="(region, index) in expandedReward.countries" :key="index" :value="region">
+                  {{ region === null ? 'International' : region }}
+                </option>
+              </select>
             </div>
             <button v-if="! confirmation" @click="confirmation = true" class="tw-text-white tw-uppercase tw-border tw-border-primary tw-bg-primary tw-rounded-full tw-w-full tw-py-1" type="button">
               Redeem Reward
@@ -500,8 +504,11 @@ export default {
 
       payload.value.destination = null;
       payload.value.provider = expandedReward.value.provider;
-      payload.value.country = expandedReward.value.countries ? expandedReward.value.countries[0] : null;
-      payload.value.option = expandedReward.value.options ? expandedReward.value.options[0] : null;
+      if (expandedReward.value.countries) {
+        payload.value.country = expandedReward.value.countries.length === 1 ? expandedReward.value.countries[0] : '';
+      } else {
+        payload.value.country = null;
+      }
 
       if (expandedReward.value.options && expandedReward.value.provider !== 'bitcoin') {
         changedCountry();
@@ -646,7 +653,9 @@ export default {
     }
 
     function getErrors() {
-      if (! payload.value.value) {
+      if (payload.value.country === '') {
+        return 'You must select a region!';
+      } else if (! payload.value.value) {
         return 'You must enter an amount!';
       } else if (payload.value.value < 1) {
         return 'The amount has to be greater than 0.';

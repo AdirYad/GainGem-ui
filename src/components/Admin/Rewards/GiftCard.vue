@@ -23,10 +23,10 @@
             </p>
           </div>
           <div class="tw-w-full sm:tw-w-1/4 tw-mb-4 sm:tw-pr-2">
-            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="country">
-              Country
+            <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="region">
+              Region
             </label>
-            <select v-model="payload.country" id="country"
+            <select v-model="payload.country" id="region"
                     class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
                     style="height: 38px"
                     :class="{ 'input-invalid tw-mb-3' : ! modal.visible && errors.country }"
@@ -35,7 +35,7 @@
               <option :value="null" selected>
                 International
               </option>
-              <option v-for="(country, index) in countries" :key="index" :value="country.country">
+              <option v-for="(country, index) in regions" :key="index" :value="country.country">
                 {{ country.country }}
               </option>
             </select>
@@ -170,10 +170,10 @@
           </span>
         </div>
         <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pl-2">
-          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_country">
-            Country
+          <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_region">
+            Region
           </label>
-          <select v-model="modal.country" id="edit_country"
+          <select v-model="modal.country" id="edit_region"
                   class="select tw-duration-300 tw-shadow tw-border tw-w-full tw-rounded-md tw-py-1 tw-px-4 tw-text-gray-500 focus:tw-outline-none"
                   style="height: 38px"
                   :class="{ 'input-invalid tw-mb-3' : errors.country }"
@@ -182,7 +182,7 @@
             <option :value="null" selected>
               International
             </option>
-            <option v-for="(country, index) in countries" :key="index" :value="country.country">
+            <option v-for="(country, index) in regions" :key="index" :value="country.country">
               {{ country.country }}
             </option>
           </select>
@@ -266,6 +266,8 @@ export default {
     const store = useStore();
 
     const countries = require('country-json/src/country-by-name.json');
+    const continents = [{country: 'Asia'}, {country: 'Antarctica'}, {country: 'Africa'}, {country: 'Europe'}, {country: 'Oceania'}, {country: 'North America'}, {country: 'South America'}];
+    const regions = continents.concat(countries);
     const rewardStockObj = ref({});
     const provider = ref(props.provider);
     const page = ref(1);
@@ -335,7 +337,7 @@ export default {
     getGiftCards();
 
     return {
-      countries,
+      regions,
       rewardStockObj,
       page,
       payload,
