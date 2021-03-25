@@ -16,7 +16,7 @@
           </div>
           <div class="tw-truncate" v-if="$store.state.user && $store.state.user.points !== null">
             <fa-icon class="tw-h-4 fa-w-20" icon="coins" />
-            {{ $store.state.user.points }}
+            <AnimatedNumber :number="$store.state.user.points" />
           </div>
         </div>
       </router-link>
@@ -91,11 +91,15 @@
 </template>
 
 <script>
+import AnimatedNumber from '@/components/AnimatedNumber';
 import { useStore } from 'vuex';
 import router from '@/router';
 
 export default {
   name: 'SidebarMenu',
+  components: {
+    AnimatedNumber,
+  },
   setup() {
     const store = useStore();
 
