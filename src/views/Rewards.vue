@@ -508,6 +508,7 @@ export default {
         payload.value.country = expandedReward.value.countries.length === 1 ? expandedReward.value.countries[0] : '';
       } else {
         payload.value.country = null;
+        payload.value.value = null;
       }
 
       if (expandedReward.value.options && expandedReward.value.provider !== 'bitcoin') {
