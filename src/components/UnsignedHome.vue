@@ -29,7 +29,7 @@
     <div class="tw-flex tw-justify-around tw-items-center tw-text-center tw-py-4">
       <div class="tw-mr-2 lg:tw-mr-0 tw-w-1/2 lg:tw-w-1/4">
         <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
-          {{ $store.state.stats.total_points_earned }}
+          <AnimatedNumber :number="$store.state.stats.total_points_earned" />
         </div>
         <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
           <fa-icon class="tw-h-6 fa-w-20" icon="coins" />
@@ -40,7 +40,7 @@
       </div>
       <div class="tw-w-1/2 lg:tw-w-1/4">
         <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
-          {{ $store.state.stats.total_offers_completed }}
+          <AnimatedNumber :number="$store.state.stats.total_offers_completed" />
         </div>
         <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
           <fa-icon class="tw-h-6 fa-w-20" :icon="['fab', 'buffer']" />
@@ -172,6 +172,7 @@
 </template>
 
 <script>
+import AnimatedNumber from '@/components/AnimatedNumber';
 import UnsignedNavigation from '@/components/UnsignedNavigation';
 import Footer from '@/components/Footer.vue';
 import { useStore } from "vuex";
@@ -183,6 +184,7 @@ export default {
   components: {
     Footer,
     UnsignedNavigation,
+    AnimatedNumber,
   },
   setup() {
     const store = useStore();

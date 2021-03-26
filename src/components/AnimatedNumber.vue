@@ -22,6 +22,10 @@ export default {
     watch(() => props.number, () => {
       clearInterval(interval.value);
 
+      if (isNaN(displayNumber.value)) {
+        displayNumber.value = 0;
+      }
+
       animate();
     });
 

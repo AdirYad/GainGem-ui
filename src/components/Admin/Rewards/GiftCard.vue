@@ -35,8 +35,8 @@
               <option :value="null" selected>
                 International
               </option>
-              <option v-for="(country, index) in regions" :key="index" :value="country.country">
-                {{ country.country }}
+              <option v-for="(region, index) in regions" :key="index" :value="region.country">
+                {{ region.country }}
               </option>
             </select>
             <p v-if="! modal.visible && errors.country" class="tw-text-red-500 tw-text-xs tw-italic">
@@ -108,7 +108,7 @@
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Date</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Code</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Country</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Region</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Value</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Currency</th>
@@ -182,8 +182,8 @@
             <option :value="null" selected>
               International
             </option>
-            <option v-for="(country, index) in regions" :key="index" :value="country.country">
-              {{ country.country }}
+            <option v-for="(region, index) in regions" :key="index" :value="region.country">
+              {{ region.country }}
             </option>
           </select>
           <span v-if="errors.country" class="tw-text-red-500 tw-text-xs tw-italic">
