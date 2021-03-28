@@ -3,5 +3,5 @@ module.exports = {
     devServer: {
         host: 'ezrewards.test',
         disableHostCheck: true
-    }
+    },
 }

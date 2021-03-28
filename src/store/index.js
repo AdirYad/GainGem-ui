@@ -4,6 +4,7 @@ import { createStore } from 'vuex'
 import { axiosInstance } from '@/_helpers/axios';
 import { Roles } from '@/_helpers/roles';
 import router from "@/router";
+import * as Sentry from "@sentry/vue";
 
 export default createStore({
   state: {
@@ -116,7 +117,7 @@ export default createStore({
         commit('setStats', response.data);
       });
     },
-    login({ commit, getters }, payload) {
+    login({ commit, getters, state }, payload) {
       if (getters.isLoggedIn) {
         return;
       }
@@ -124,9 +125,11 @@ export default createStore({
       return axiosInstance.post('/auth/login', payload).then(response => {
         commit('setUser', response.data);
         commit('setToken', response.data);
+
+        Sentry.setUser(state.user);
       });
     },
-    register({ commit, getters }, payload) {
+    register({ commit, getters, state }, payload) {
       if (getters.isLoggedIn) {
         return;
       }
@@ -134,6 +137,8 @@ export default createStore({
       return axiosInstance.post('/auth/register', payload).then(response => {
         commit('setUser', response.data);
         commit('setToken', response.data);
+
+        Sentry.setUser(state.user);
       });
     },
     forgotPassword({ commit, getters }, payload) {
@@ -189,6 +194,8 @@ export default createStore({
       commit('removeUser');
       commit('removeToken');
       commit('removeDailyTasks');
+
+      Sentry.configureScope(scope => scope.setUser(null));
     },
     getLoggedUser({ commit, getters, state }) {
       if (! getters.isLoggedIn) {
