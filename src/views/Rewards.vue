@@ -505,7 +505,7 @@ export default {
       payload.value.destination = null;
       payload.value.provider = expandedReward.value.provider;
       if (expandedReward.value.countries) {
-        payload.value.country = expandedReward.value.countries.length === 1 ? expandedReward.value.countries[0] : '';
+        payload.value.country = expandedReward.value.countries.length === 1 && expandedReward.value.countries[0] === null ? null : '';
       } else {
         payload.value.country = null;
         payload.value.value = null;
