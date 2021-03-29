@@ -1,9 +1,10 @@
+
 <template>
   <div class="activity-items tw-flex tw-items-end">
     <transition-group name="activity" tag="div" class="tw-w-full tw-relative tw-flex tw-px-3 lg:tw-pl-4 tw-overflow-hidden">
       <div v-for="activity in activities" :key="activity.id" class="activity-item tw-h-full tw-flex tw-justify-center tw-items-center tw-flex-no tw-bg-white tw-text-xs tw-font-light tw-text-primary tw-rounded-md tw-border-b-2 tw-border-primary tw-mx-2 tw-px-4" style="white-space: nowrap">
         <span class="tw-w-6 tw-inline-block tw-mr-2">
-          <img class="tw-bg-secondary tw-rounded-full tw-h-6" :src="activity.user.profile_image_url" :alt="activity.user.username">
+          <img class="tw-bg-secondary tw-rounded-full tw-w-6 tw-h-6" :src="activity.user.profile_image_url" :alt="activity.user.username">
         </span>
           <span class="user-activity tw-text-sm tw-font-medium tw-inline-block tw-truncate tw-mr-1">
           {{ activity.user.username }}

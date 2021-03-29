@@ -16,7 +16,7 @@
           </div>
           <div class="tw-truncate" v-if="$store.state.user && $store.state.user.points !== null">
             <fa-icon class="tw-h-4 fa-w-20" icon="coins" />
-            <AnimatedNumber :number="$store.state.user.points" />
+            <AnimatedNumber :number="$store.state.user.points" :duration="3" />
           </div>
         </div>
       </router-link>

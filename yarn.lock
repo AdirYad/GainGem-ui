@@ -1965,6 +1965,11 @@ country-json@^1.1.0:
   resolved "https://registry.yarnpkg.com/country-json/-/country-json-1.1.0.tgz#5a683d3590febd70a1512dd8778eaa9ead40f680"
   integrity sha512-iJV8zuaB30mD6uOSbYg0UViDrkg1KRf4d113JffNTC7n/RSsvMF4XlxOcnJuL24JQFVYRJvRShAmi2n7WygU9A==
 
+countup.js@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/countup.js/-/countup.js-2.0.7.tgz#56b72a87fc0ee3cadb38356c246ccac88fb0a8cc"
+  integrity sha512-FO0nQdvG1iQwHp28wdvkErxnNUSbdkzztqZ6YNHKLHydngD2tdiKEW8dFrqpahF3tj+Ma70h0vyYrCBzxlVWdg==
+
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.4.tgz#d6e7f4bffa66736085a0762fd3a632684dabcc4e"

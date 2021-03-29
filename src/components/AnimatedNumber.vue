@@ -1,9 +1,10 @@
 <template>
-  {{ displayNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') }}
+  <span :id="id" />
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { CountUp } from 'countup.js';
+import { ref, reactive, watch, nextTick } from 'vue';
 
 export default {
   name: 'AnimatedNumber',
@@ -11,41 +12,49 @@ export default {
     number: {
       type: Number,
       required: true,
-    }
+    },
+    duration: {
+      type: Number,
+      required: false,
+      default: 2,
+    },
+    decimals: {
+      type: Number,
+      required: false,
+      default: 2,
+    },
   },
-  setup: function (props) {
-    const displayNumber = ref(0);
-    const interval = ref(null);
+  setup(props) {
+    const id = ref((Math.random().toString(36) + Date.now().toString(36)).substr(2));
+    const counter = ref(null);
+    const options = reactive({
+      useEasing: false,
+      useGrouping: true,
+      decimalPlaces: props.decimals > 0 ? countDecimals(props.number) : 0,
+      duration: props.duration,
+      startVal: 0,
+    });
 
-    animate();
+    nextTick(() => {
+      counter.value = new CountUp(id.value, props.number, options).start();
+    });
 
-    watch(() => props.number, () => {
-      clearInterval(interval.value);
-
-      if (isNaN(displayNumber.value)) {
-        displayNumber.value = 0;
-      }
-
-      animate();
+    watch(() => props.number, (newNumber, previousNumber) => {
+      options.startVal = previousNumber;
+      options.decimalPlaces = props.decimals > 0 ? countDecimals(props.number) : 0;
+      counter.value = new CountUp(id.value, props.number, options).start();
     });
 
     return {
-      displayNumber,
+      id,
     }
 
-    function animate() {
-      interval.value = setInterval(() => {
-        if (Math.floor(displayNumber.value) === Math.floor(props.number)) {
-          displayNumber.value = props.number;
-          clearInterval(interval.value);
-          return;
-        }
+    function countDecimals(value) {
+      if (Math.floor(value) === value) {
+        return 0
+      }
 
-        let change = (props.number - displayNumber.value) / 10;
-        change = change >= 0 ? Math.ceil(change) : Math.floor(change);
-
-        displayNumber.value = displayNumber.value + change;
-      }, 35);
+      return value.toString().split(".")[1].length || 0;
     }
   }
 }

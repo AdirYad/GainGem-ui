@@ -40,7 +40,7 @@
       </div>
       <div class="tw-w-1/2 lg:tw-w-1/4">
         <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
-          <AnimatedNumber :number="parseFloat($store.state.stats.total_offers_completed)" />
+          <AnimatedNumber :number="parseInt($store.state.stats.total_offers_completed)" />
         </div>
         <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
           <fa-icon class="tw-h-6 fa-w-20" :icon="['fab', 'buffer']" />

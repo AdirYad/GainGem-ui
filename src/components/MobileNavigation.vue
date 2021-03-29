@@ -7,7 +7,7 @@
       <div class="tw-border-2 tw-border-primary tw-rounded-full tw-px-2 sm:tw-px-4 tw tw-text-primary tw-font-medium tw-flex tw-justify-center tw-items-center">
         <fa-icon class="tw-h-4 fa-w-20 tw-mr-2" icon="coins" />
         <span class="tw-text-xl" v-if="$store.state.user && $store.state.user.points !== null">
-          <AnimatedNumber :number="$store.state.user.points" />
+          <AnimatedNumber :number="$store.state.user.points" :duration="3" />
         </span>
       </div>
       <div class="tw-flex tw-items-center">
