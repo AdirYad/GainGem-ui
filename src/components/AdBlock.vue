@@ -1,7 +1,7 @@
 <template>
   <div class="tw-px-4 md:tw-px-8 lg:tw-px-10 tw-pt-8 lg:tw-pt-10">
     <div class="tw-font-bold tw-border-2 tw-border-red-500 tw-bg-red-500 tw-text-white tw-rounded-lg tw-w-full tw-px-4 md:tw-px-8 tw-py-4 tw-flex tw-items-center tw-text-sm">
-      <fa-icon icon="exclamation-triangle" class="fa-w-40 tw-h-10 tw-mr-2" />
+      <fa-icon icon="exclamation-triangle" class="tw-hidden sm:tw-block tw-mr-2" style="width: 30px; height: 30px" />
       <article>
         <div class="tw-text-xl">
           AdBlocker Detected!
