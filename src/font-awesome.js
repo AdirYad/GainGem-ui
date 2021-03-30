@@ -30,6 +30,8 @@ import {
     faEnvelopeOpen,
     faUndoAlt,
     faAngleUp,
+    faExclamationTriangle,
+    faSnowflake,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -77,6 +79,8 @@ export default {
     faEnvelopeOpen,
     faUndoAlt,
     faAngleUp,
+    faExclamationTriangle,
+    faSnowflake,
 
     // Brands
     faBuffer,

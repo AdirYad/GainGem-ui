@@ -8,6 +8,7 @@
         <LiveActivity v-if="$store.getters.isLoggedIn" />
         <Freeze v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.froze_at" />
         <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
+        <AdBlock v-if="isAdBlock" />
 
         <router-view :key="$route.name !== 'Profile' && $route.name !== 'Admin' && $route.name !== 'Supplier' ? $route.fullPath : $route.name"
                      :class="{ 'tw-p-4 md:tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn }"
@@ -27,8 +28,11 @@ import LiveActivity from "@/components/LiveActivity";
 import Announcement from "@/components/AnnouncementBanner";
 import EmailVerification from "@/components/EmailVerification";
 import Freeze from "@/components/Freeze";
+import AdBlock from "@/components/AdBlock";
 import Footer from "@/components/Footer";
 import NotificationsList from "@/components/Notifications/NotificationsList";
+import { detectAnyAdblocker } from 'just-detect-adblock'
+import { ref } from 'vue';
 
 export default {
   name: 'App',
@@ -38,9 +42,21 @@ export default {
     LiveActivity,
     EmailVerification,
     Freeze,
+    AdBlock,
     Footer,
     NotificationsList,
   },
+  setup() {
+    const isAdBlock = ref(false);
+
+    detectAnyAdblocker().then((detected) => {
+      isAdBlock.value = process.env.NODE_ENV === 'production' && detected;
+    });
+
+    return {
+      isAdBlock,
+    }
+  }
 }
 </script>
 

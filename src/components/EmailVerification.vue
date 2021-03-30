@@ -1,22 +1,28 @@
 <template>
   <div class="tw-px-4 md:tw-px-8 lg:tw-px-10 tw-pt-8 lg:tw-pt-10">
     <div class="tw-border-2 tw-border-primary tw-text-primary tw-rounded-lg tw-w-full tw-px-4 md:tw-px-8 tw-py-4 tw-flex tw-justify-between tw-items-center tw-text-sm">
-      <template v-if="! hasSentVerification">
-        <div>
-          You need to verify your email address for a better experience. Make sure to also check your spam folder!
-        </div>
-        <button @click="resendEmailVerification" class="tw-h-full tw-ml-2 md:tw-ml-4">
-          Resend email
-        </button>
-      </template>
-      <template v-else>
-        <div>
-          We have successfully sent an email to {{ $store.state.user.email }}
-        </div>
-        <button @click="$store.commit('tempEmailVerification')" class="tw-h-full tw-ml-2 md:tw-ml-4">
-          Close
-        </button>
-      </template>
+      <div class="tw-flex tw-items-center">
+        <fa-icon v-if="! hasSentVerification" icon="envelope" class="fa-w-40 tw-h-10 tw-mr-2" />
+        <fa-icon v-else icon="envelope-open" class="fa-w-40 tw-h-10 tw-mr-2" />
+        <article>
+          <div class="tw-text-xl">
+            Email Verification
+          </div>
+
+          <div>
+            {{ ! hasSentVerification ?
+              'You need to verify your email address for a better experience. Make sure to also check your spam folder!' :
+              'We have successfully sent an email to ' + $store.state.user.email
+            }}
+          </div>
+        </article>
+      </div>
+      <button v-if="! hasSentVerification" @click="resendEmailVerification" class="tw-h-full tw-ml-2 md:tw-ml-4">
+        Resend email
+      </button>
+      <button v-else @click="$store.commit('tempEmailVerification')" class="tw-h-full tw-ml-2 md:tw-ml-4">
+        Close
+      </button>
     </div>
   </div>
 </template>

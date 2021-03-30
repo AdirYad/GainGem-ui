@@ -4100,6 +4100,11 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+just-detect-adblock@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/just-detect-adblock/-/just-detect-adblock-1.1.0.tgz#01910678247394b8d8b146afc869055eda2edd2e"
+  integrity sha512-xtgnwBBZaLtKspGo6jDX/H0FDsHrn41mQVWhNHge7pZe6Nj2gU2izfC09O0rPU/i97iMcJFVjbecFiTAvmNhLQ==
+
 k-progress-v3@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/k-progress-v3/-/k-progress-v3-1.0.0.tgz#a21bb985af6d5ea7e42c3f45f8b7c08c0450d1c8"

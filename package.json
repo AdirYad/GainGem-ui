@@ -26,6 +26,7 @@
     "dayjs": "^1.9.6",
     "debounce": "^1.2.0",
     "epic-spinners": "^1.1.0",
+    "just-detect-adblock": "^1.1.0",
     "k-progress-v3": "^1.0.0",
     "pusher-js": "^7.0.2",
     "tailwindcss": "^1.9.6",
