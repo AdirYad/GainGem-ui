@@ -213,7 +213,7 @@ button:focus, input:focus {
   height: var(--header-unsigned-height);
 }
 
-.header-unsigned, .unsigned-nav {
+.header-unsigned, .unsigned-nav, .maintenance {
   .logo {
     height: calc(var(--header-unsigned-height) - 40px);
     width: calc(var(--header-unsigned-height) - 40px);
@@ -253,11 +253,11 @@ footer {
       width: 24px;
       height: 24px;
     }
-  }
 
-  .social:hover {
-    path {
-      fill: rgba(0, 0, 0, 0.7);
+    &:hover {
+      path {
+        fill: rgba(0, 0, 0, 0.7);
+      }
     }
   }
 }

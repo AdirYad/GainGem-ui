@@ -22,7 +22,7 @@ if (store.state.token !== null) {
 
 const app = createApp(App);
 
-if (process.env.VUE_APP_SENTRY_AUTH_TOKEN && process.env.NODE_ENV === 'production') {
+if (! process.env.VUE_APP_MAINTENANCE_MODE && process.env.VUE_APP_SENTRY_AUTH_TOKEN && process.env.NODE_ENV === 'production') {
     Sentry.init({
         dsn: process.env.VUE_APP_SENTRY_AUTH_TOKEN,
         integrations: [

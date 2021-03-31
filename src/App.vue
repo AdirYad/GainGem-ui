@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'lg:tw-flex ' : $store.getters.isLoggedIn }">
+  <div v-if="! isMaintenance" :class="{ 'lg:tw-flex ' : $store.getters.isLoggedIn }">
     <Navigation v-if="$store.getters.isLoggedIn" />
 
     <div :class="{ 'page-container' : $store.getters.isLoggedIn}">
@@ -19,6 +19,8 @@
     </div>
   </div>
 
+  <Maintenance v-else />
+
   <NotificationsList />
 </template>
 
@@ -30,6 +32,7 @@ import EmailVerification from "@/components/EmailVerification";
 import Freeze from "@/components/Freeze";
 import AdBlock from "@/components/AdBlock";
 import Footer from "@/components/Footer";
+import Maintenance from "@/views/Maintenance";
 import NotificationsList from "@/components/Notifications/NotificationsList";
 import { detectAnyAdblocker } from 'just-detect-adblock'
 import { ref } from 'vue';
@@ -44,16 +47,21 @@ export default {
     Freeze,
     AdBlock,
     Footer,
+    Maintenance,
     NotificationsList,
   },
   setup() {
+    const isMaintenance = ref(process.env.VUE_APP_MAINTENANCE_MODE);
     const isAdBlock = ref(false);
 
-    detectAnyAdblocker().then((detected) => {
-      isAdBlock.value = process.env.NODE_ENV === 'production' && detected;
-    });
+    if (! process.env.VUE_APP_MAINTENANCE_MODE) {
+      detectAnyAdblocker().then((detected) => {
+        isAdBlock.value = process.env.NODE_ENV === 'production' && detected;
+      });
+    }
 
     return {
+      isMaintenance,
       isAdBlock,
     }
   }
