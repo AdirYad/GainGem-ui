@@ -8,7 +8,7 @@
         <LiveActivity v-if="$store.getters.isLoggedIn" />
         <Freeze v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.froze_at" />
         <EmailVerification v-if="$store.getters.isLoggedIn && $store.state.user && $store.state.user.email_verified_at === null" />
-        <AdBlock v-if="isAdBlock" />
+        <AdBlock v-if="$store.getters.isLoggedIn && isAdBlock" />
 
         <router-view :key="$route.name !== 'Profile' && $route.name !== 'Admin' && $route.name !== 'Supplier' ? $route.fullPath : $route.name"
                      :class="{ 'tw-p-4 md:tw-p-8 lg:tw-p-10' : $store.getters.isLoggedIn }"
