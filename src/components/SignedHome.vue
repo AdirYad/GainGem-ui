@@ -21,7 +21,7 @@
     </div>
     <div class="tw-flex tw-flex-wrap md:tw--mx-4">
       <div v-for="(socialMedia, index) in socialMediaTasksOptions" :key="index" class="extra-points-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-6 md:tw-px-4 tw-my-2">
-        <button @click="socialMedia.text !== 'Redeemed' ? storeSocialMediaTask(socialMedia) : ''" class="tw-h-full tw-w-full tw-flex tw-justify-center tw-items-center tw-rounded-2xl tw-shadow tw-duration-300 tw-overflow-hidden">
+        <button @click="socialMedia.text !== 'Redeemed' || socialMedia.is_redeeming ? storeSocialMediaTask(socialMedia) : ''" class="tw-h-full tw-w-full tw-flex tw-justify-center tw-items-center tw-rounded-2xl tw-shadow tw-duration-300 tw-overflow-hidden">
           <div class="tw-flex tw-justify-around tw-items-center tw-flex-col tw-relative tw-w-full tw-h-full tw-py-4 tw-text-center tw-px-2"
                :class="{ 'tw-opacity-50 tw-cursor-default' : socialMedia.text === 'Redeemed' }"
                :style="`background: url('${socialMedia.thumbnail}'); background-size: cover`"
@@ -147,17 +147,26 @@ export default {
     }
 
     function storeSocialMediaTask(media) {
+      if (media.is_redeeming) {
+        return;
+      }
+
+      media.is_redeeming = true;
+
       store.dispatch('storeSocialMediaTasks', media.provider).then(() => {
         window.open(media.link, "_blank");
 
         modal.visible = true;
         modal.social_media = media;
         media.text = 'Redeemed';
+        media.is_redeeming = false;
 
         const filteredSocialMediaTasks = Object.entries(socialMediaTasksOptions.value).filter(([key, socialMedia]) => socialMedia.text !== 'Redeemed');
 
         localStorage.setItem('social_media_task_options', JSON.stringify(Object.fromEntries(filteredSocialMediaTasks)));
       }).catch((err) => {
+        media.is_redeeming = false;
+
         if (err.response.status === 422) {
           store.dispatch('addNotification', {
             type: 'error',
