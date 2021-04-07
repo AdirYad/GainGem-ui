@@ -45,9 +45,9 @@
           Password
         </label>
         <input id="password" type="password" placeholder="******************"
-               class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none tw-mb-3"
+               class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                v-model="auth.password"
-               :class="{ 'input-invalid' : v$.password.$invalid || errors.password }"
+               :class="{ 'input-invalid tw-mb-3' : v$.password.$invalid || errors.password }"
                @keydown="resetErrors('password')"
         >
         <p v-if="v$.password.$error" class="tw-text-red-500 tw-text-xs tw-italic">
@@ -56,7 +56,7 @@
         <p v-else-if="errors.password" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ errors.password[0] }}
         </p>
-        <p v-else class="tw-text-xs tw-italic">
+        <p v-else class="tw-duration-300 tw-text-xs tw-italic tw-mt-3">
           We recommend using a unique password for your EzRewards account
         </p>
       </div>
