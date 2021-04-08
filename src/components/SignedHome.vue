@@ -4,7 +4,7 @@
       Offerwalls
     </div>
     <div class="tw-flex tw-flex-wrap md:tw--mx-4">
-      <div v-for="(offerwall, index) in $store.state.offerwalls" :key="index" class="offerwall-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-6 md:tw-px-4 tw-my-2">
+      <div v-for="(offerwall, index) in $store.state.offerwalls" :key="index" class="offerwall-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-3 md:tw-px-4 tw-my-2">
         <router-link :to="{ name: 'Offerwall', params: { provider: offerwall.provider } }"
                      class="tw-h-full tw-flex tw-justify-center tw-items-center tw-rounded-2xl tw-shadow tw-duration-300 tw-overflow-hidden"
                      :class="`offerwall-${offerwall.provider}`"
@@ -20,7 +20,7 @@
       Extra Points
     </div>
     <div class="tw-flex tw-flex-wrap md:tw--mx-4">
-      <div v-for="(socialMedia, index) in socialMediaTasksOptions" :key="index" class="extra-points-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-6 md:tw-px-4 tw-my-2">
+      <div v-for="(socialMedia, index) in socialMediaTasksOptions" :key="index" class="extra-points-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-3 md:tw-px-4 tw-my-2">
         <button @click="socialMedia.text !== 'Redeemed' || socialMedia.is_redeeming ? storeSocialMediaTask(socialMedia) : ''" class="tw-h-full tw-w-full tw-flex tw-justify-center tw-items-center tw-rounded-2xl tw-shadow tw-duration-300 tw-overflow-hidden">
           <div class="tw-flex tw-justify-around tw-items-center tw-flex-col tw-relative tw-w-full tw-h-full tw-py-4 tw-text-center tw-px-2"
                :class="{ 'tw-opacity-50 tw-cursor-default' : socialMedia.text === 'Redeemed' }"
