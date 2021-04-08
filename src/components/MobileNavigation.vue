@@ -18,7 +18,7 @@
           <fa-icon class="tw-h-5 fa-w-40" icon="users-cog" />
         </router-link>
         <router-link :to="{ name: 'Profile', query: { tab: 'details' } }" class="tw-rounded-full tw-h-10 tw-w-10">
-          <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
+          <img v-if="$store.state.user && $store.state.user.profile_image" class="tw-object-cover tw-bg-secondary tw-rounded-full tw-h-10 tw-w-10" :src="$store.state.user.profile_image" :alt="$store.state.user.username">
         </router-link>
       </div>
     </div>

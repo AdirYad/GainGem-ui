@@ -56,6 +56,9 @@
         <p v-else-if="errors.password" class="tw-text-red-500 tw-text-xs tw-italic">
           {{ errors.password[0] }}
         </p>
+        <p v-else class="tw-duration-300 tw-text-xs tw-italic tw-mt-3">
+          We recommend using a unique password for your EzRewards account
+        </p>
       </div>
       <div class="tw-mb-4">
         <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="confirmPassword">

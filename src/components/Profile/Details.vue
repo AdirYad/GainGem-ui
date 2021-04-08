@@ -1,21 +1,27 @@
 <template>
   <form @submit.prevent="saveAccountDetails" class="tw-flex tw-flex-col">
-    <div class="tw-flex tw-items-center">
-      <img v-if="user.profile_image"
-           class="tw-mr-4 tw-rounded-full tw-w-10 tw-h-10"
-           :src="user.profile_image === auth.profile_image || auth.profile_image === null ? user.profile_image : URL.createObjectURL(auth.profile_image)"
-           :alt="user.username"
-      >
-      <template v-if="! user.not_authenticated">
-        <input class="tw-hidden" type="file" accept="image/*" ref="profilePicture" @change="handleProfilePicture">
-        <button @click="$refs.profilePicture.click()"
-                type="button"
-                class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-text-primary tw-border-2 tw-border-primary tw-tracking-wider hover:tw-text-white hover:tw-bg-primary tw-duration-300 tw-rounded-full tw-px-4 tw-py-2"
+    <div>
+      <div class="tw-flex tw-items-center tw-duration-300" :class="{ 'tw-mb-3' : errors.profile_image }">
+        <img v-if="user.profile_image"
+             class="tw-object-cover tw-mr-4 tw-rounded-full tw-w-10 tw-h-10"
+             :src="user.profile_image === auth.profile_image || auth.profile_image === null ? user.profile_image : URL.createObjectURL(auth.profile_image)"
+             :alt="user.username"
         >
-          <fa-icon class="tw-h-4 fa-w-20 tw-mr-1" icon="file-upload" />
-          Upload a photo
-        </button>
-      </template>
+        <template v-if="! user.not_authenticated">
+          <input class="tw-hidden" type="file" accept="image/*" ref="profilePicture" @change="handleProfilePicture">
+          <button @click="$refs.profilePicture.click()"
+                  type="button"
+                  class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-border-2 tw-tracking-wider tw-duration-300 tw-rounded-full tw-px-4 tw-py-2"
+                  :class="! errors.profile_image ? 'tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary' : 'tw-border-red-500 tw-text-red-500 hover:tw-text-white hover:tw-bg-red-500'"
+          >
+            <fa-icon class="tw-h-4 fa-w-20 tw-mr-1" icon="file-upload" />
+            Upload a photo
+          </button>
+        </template>
+      </div>
+      <p v-if="errors.profile_image" class="tw-text-red-500 tw-text-xs tw-italic">
+        {{ errors.profile_image[0] }}
+      </p>
     </div>
     <div class="tw-flex tw-flex-wrap tw-mt-5">
       <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pr-2">
@@ -166,20 +172,24 @@ export default {
     }
 
     async function handleProfilePicture(event) {
-      let profile_image;
+      resetErrors('profile_image')
 
       await new Promise((resolve, reject) => {
         new Compressor(event.target.files[0], {
           quality: 0.6,
+          width: 255,
+          height: 255,
           success(file) {
-            profile_image = file;
+            auth.profile_image = file;
             resolve();
           },
           error: reject,
         });
       });
 
-      auth.profile_image = profile_image;
+      if (auth.profile_image.size / 1024 > 5120) {
+        errors.value.profile_image = ['The profile image must be smaller than 5MB.'];
+      }
     }
 
     function saveAccountDetails() {
@@ -189,7 +199,7 @@ export default {
         v$.value.confirmPassword.$reset();
       }
 
-      if (v$.value.$invalid && ! props.user.not_authenticated) {
+      if (v$.value.$invalid && ! props.user.not_authenticated || errors.value.profile_image) {
         return;
       }
 
@@ -228,6 +238,8 @@ export default {
               'password': [err.response.data.message],
             }
           }
+        } else if (err.response.status === 413) {
+          errors.value.profile_image = ['The profile image must be smaller than 5MB.'];
         }
       });
     }
@@ -239,7 +251,9 @@ export default {
     }
 
     function resetErrors(key) {
-      v$.value[key].$reset();
+      if (v$.value[key]) {
+        v$.value[key].$reset();
+      }
       delete errors.value[key];
     }
   },
