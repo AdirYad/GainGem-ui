@@ -54,6 +54,11 @@ export default {
         if (route.query.back && parseInt(route.query.back)) {
           query.back = parseInt(route.query.back).toString();
         }
+
+        if (route.query.page && parseInt(route.query.page)) {
+          query.page = parseInt(route.query.page).toString();
+        }
+
         if (tab.name === name || tab.query === name) {
           oldQueries.value = query;
           router.push({ name: route.name, query });

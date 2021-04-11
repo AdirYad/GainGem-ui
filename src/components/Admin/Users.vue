@@ -194,6 +194,7 @@ import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { Roles } from '@/_helpers/roles';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import router from '@/router';
 import { ref, reactive } from "vue";
 
 export default {
@@ -226,6 +227,10 @@ export default {
       page.value = 1;
       getUsers();
     }, 200);
+
+    if (route.query.page) {
+      router.replace({ ...router.currentRoute, query: { tab: 'users' }});
+    }
 
     getUsers();
 

@@ -50,6 +50,7 @@ import Index from '@/components/Admin/Suppliers/Index';
 import Accounts from '@/components/Admin/Suppliers/Accounts';
 import VModal from '@/components/VModal';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import { ref, reactive } from 'vue';
 
 export default {
@@ -63,9 +64,9 @@ export default {
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
 
-    const chosenType = ref(null);
-
+    const chosenType = ref(route.query.page && parseInt(route.query.page) ? 'Suppliers' : null);
     const supplierRate = ref(6);
     const modal = reactive({
       visible: false,
