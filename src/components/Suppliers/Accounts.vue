@@ -31,12 +31,12 @@
         </svg>
         <span class="similar-integers tw-text-2xl tw-ml-2">
             {{ accountsObj.daily_robux_earnings }}
-          </span>
+        </span>
       </div>
     </div>
   </div>
 
-  <div class="tw-flex tw-flex-wrap">
+  <div v-if="! supplier.not_authenticated" class="tw-flex tw-flex-wrap">
     <div class="tw-w-full tw-mb-4">
       <form @submit.prevent="create">
         <div class="tw-flex tw-flex-wrap">
@@ -162,7 +162,13 @@ export default {
     LoopingRhombusesSpinner,
     LineChart,
   },
-  setup() {
+  props: {
+    supplier: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props) {
     const store = useStore();
 
     const isCreating = ref(false);
@@ -252,7 +258,7 @@ export default {
 
       const payload = {
         page: page.value,
-        user_id: store.state.user.id
+        user_id: props.supplier.id
       }
 
       store.dispatch('getRobuxAccounts', payload).then((response) => {

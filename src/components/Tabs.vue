@@ -20,17 +20,22 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRoute } from "vue-router";
-import router from "@/router";
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import router from '@/router';
 
 export default {
   name: 'Tabs',
-  setup() {
+  emits: ['changedRoute'],
+  setup(props, { emit }) {
     const route = useRoute();
     const tabs = ref([]);
+    const oldRouteName = ref({});
+    const oldQueries = ref({});
 
     const selectTab = ({ name }) => {
+      oldRouteName.value = route.name;
+
       tabs.value.forEach(tab => {
         tab.isActive = tab.name === name || tab.query === name;
 
@@ -39,14 +44,18 @@ export default {
         }
 
         if (route.query.user && parseInt(route.query.user)) {
-          query.user = parseInt(route.query.user);
+          query.user = parseInt(route.query.user).toString();
+        }
+
+        if (route.query.supplier && parseInt(route.query.supplier)) {
+          query.supplier = parseInt(route.query.supplier).toString();
         }
 
         if (route.query.back && parseInt(route.query.back)) {
-          query.back = parseInt(route.query.back);
+          query.back = parseInt(route.query.back).toString();
         }
-
-        if (tab.name === name) {
+        if (tab.name === name || tab.query === name) {
+          oldQueries.value = query;
           router.push({ name: route.name, query });
         }
       });
@@ -55,6 +64,13 @@ export default {
     setTimeout(() => {
       selectTab({ name: route.query.tab ? route.query.tab : tabs.value[0].name });
     }, 0);
+
+    watch(() => route.fullPath, async () => {
+      if (route.name === oldRouteName.value && JSON.stringify(route.query) !== JSON.stringify(oldQueries.value)) {
+        selectTab({ name: route.query.tab })
+        emit('changedRoute');
+      }
+    });
 
     return {
       tabs,

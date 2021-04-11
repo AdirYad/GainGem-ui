@@ -62,7 +62,7 @@
       </div>
 
       <div class="tw-flex lg:tw-w-2/3 tw-bg-white tw-shadow-md tw-mt-8 lg:tw-mt-0 lg:tw-ml-3 xl:tw-ml-6">
-        <Tabs class="tw-min-h-12 tw-w-full">
+        <Tabs @changedRoute="getUser" class="tw-min-h-12 tw-w-full">
           <Tab name="Account Details" query="details">
             <Details :user="user" />
           </Tab>
@@ -128,7 +128,34 @@ export default {
     const backPage = ref(route.query.back && parseInt(route.query.back) ? parseInt(route.query.back) : 1);
     const isLoading = ref(false);
 
-    if (route.query.user && parseInt(route.query.user) && (store.getters.isRoleSuperAdmin || store.getters.isRoleAdmin) && parseInt(route.query.user) !== store.state.user.id) {
+    getUser();
+
+    return {
+      user,
+      backPage,
+      isLoading,
+      getUser,
+      logout,
+      enable2FA,
+      disable2FA,
+    }
+
+    function getUser() {
+      if (! store.getters.isRoleSuperAdmin && ! store.getters.isRoleAdmin || user.value.id === parseInt(route.query.user)) {
+        return;
+      }
+
+      if (! (route.query.user && parseInt(route.query.user) && parseInt(route.query.user) !== store.state.user.id)) {
+        isLoading.value = true;
+
+        setTimeout(() => {
+          user.value = store.state.user;
+          isLoading.value = false;
+        }, 0);
+
+        return;
+      }
+
       isLoading.value = true;
 
       store.dispatch('getUser', parseInt(route.query.user)).then((response) => {
@@ -138,18 +165,7 @@ export default {
         isLoading.value = false;
       }).catch(() => {
         router.push({ name: 'Admin', query: { tab: 'users', page: backPage.value } })
-
-        isLoading.value = false;
       });
-    }
-
-    return {
-      user,
-      backPage,
-      isLoading,
-      logout,
-      enable2FA,
-      disable2FA,
     }
 
     function logout() {

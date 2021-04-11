@@ -23,6 +23,9 @@
               <button @click="openEditModal(supplier)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
                 <fa-icon icon="cog" />
               </button>
+              <router-link :to="{ name: 'Supplier', query: { tab: 'accounts', supplier: supplier.id } }" class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
+                <fa-icon :icon="['far', 'eye']" />
+              </router-link>
             </div>
           </td>
         </tr>

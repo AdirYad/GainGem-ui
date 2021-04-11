@@ -485,6 +485,13 @@ export default createStore({
 
       return axiosInstance.put('supplier-rate', { 'rate': rate });
     },
+    getSupplier({ getters }, supplier_id) {
+      if (! getters.isRoleSuperAdmin) {
+        return;
+      }
+
+      return axiosInstance.get(`/suppliers/${supplier_id}`);
+    },
     getSuppliers({ getters }, page) {
       if (! getters.isRoleSuperAdmin) {
         return;
