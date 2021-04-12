@@ -75,11 +75,11 @@ export default {
     }
 
     function getSupplier() {
-      if (! store.getters.isRoleSuperAdmin || supplier.value.id === parseInt(route.query.supplier)) {
+      if (supplier.value.robux_rate && supplier.value.id === parseInt(route.query.supplier)) {
         return;
       }
 
-      if (! (route.query.supplier && parseInt(route.query.supplier) && parseInt(route.query.supplier) !== store.state.user.id)) {
+      if (store.getters.isRoleSuperAdmin && ! (route.query.supplier && parseInt(route.query.supplier) && parseInt(route.query.supplier) !== store.state.user.id)) {
         isLoading.value = true;
 
         setTimeout(() => {
@@ -90,16 +90,16 @@ export default {
         return;
       }
 
-      isLoading.value = true;
+      isLoading.value = store.getters.isRoleSuperAdmin;
 
-      store.dispatch('getSupplier', parseInt(route.query.supplier)).then((response) => {
-        response.data.not_authenticated = true;
+      store.dispatch('getSupplier', route.query.supplier ? parseInt(route.query.supplier) : store.state.user.id).then((response) => {
+        response.data.not_authenticated = store.getters.isRoleSuperAdmin;
         supplier.value = response.data;
 
         isLoading.value = false;
       }).catch(() => {
         router.push({ name: 'Admin', query: { tab: 'suppliers', page: backPage.value } })
-      });
+      })
     }
   }
 }
