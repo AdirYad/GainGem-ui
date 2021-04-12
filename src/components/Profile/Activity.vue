@@ -2,7 +2,7 @@
   <div class="half-size-table tw-rounded-lg sm:tw-shadow-lg tw-overflow-scroll tw-mb-4">
     <table class="table tw-w-full tw-flex sm:tw-bg-white tw-rounded-lg tw-overflow-hidden">
       <thead class="tw-text-white">
-      <tr v-for="index in activitiesObj.activities ? activitiesObj.activities.length : 1" :key="index" class="tw-bg-primary tw-flex tw-flex-col tw-flex-no tw-wrap sm:tw-table-row tw-rounded-l-lg sm:tw-rounded-none tw-mb-2 sm:tw-mb-0">
+      <tr v-for="index in activitiesObj.activities && activitiesObj.activities.length ? activitiesObj.activities.length : 1" :key="index" class="tw-bg-primary tw-flex tw-flex-col tw-flex-no tw-wrap sm:tw-table-row tw-rounded-l-lg sm:tw-rounded-none tw-mb-2 sm:tw-mb-0">
         <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
         <th class="tw-p-3 tw-text-left sm:tw-w-40">Date</th>
         <th class="tw-p-3 tw-text-left sm:tw-w-40">Type</th>
