@@ -374,6 +374,7 @@ export default {
     function changeProvider() {
       v$.value.$reset();
 
+      page.value = 1;
       payload.provider = props.provider;
       payload.codes = [];
       payload.code = '';
