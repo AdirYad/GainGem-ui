@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="tw-flex tw-flex-wrap">
+  <div v-if="! supplier.not_authenticated" class="tw-flex tw-flex-wrap">
     <div class="tw-w-full tw-mb-4">
       <form @submit.prevent="create">
         <div class="tw-flex tw-flex-wrap">
@@ -174,7 +174,13 @@ export default {
     Pagination,
     LoopingRhombusesSpinner,
   },
-  setup() {
+  props: {
+    supplier: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props) {
     const store = useStore();
 
     const isCreating = ref(false);
@@ -228,7 +234,7 @@ export default {
 
       const payload = {
         page: page.value,
-        user_id: store.state.user.id
+        user_id: props.supplier.id
       }
 
       store.dispatch('getSupplierPayments', payload).then((response) => {
@@ -288,7 +294,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .stats-card {
   min-height: 150px;
 }

@@ -1,8 +1,8 @@
 <template>
-  <div class="half-size-table tw-rounded-lg sm:tw-shadow-lg tw-overflow-scroll">
+  <div class="half-size-table tw-rounded-lg sm:tw-shadow-lg tw-overflow-scroll tw-mb-4">
     <table class="table tw-w-full tw-flex sm:tw-bg-white tw-rounded-lg sm:tw-shadow-lg tw-overflow-hidden">
       <thead class="tw-text-white">
-        <tr v-for="index in transactions.length || 1" :key="index" class="tw-bg-primary tw-flex tw-flex-col tw-flex-no tw-wrap sm:tw-table-row tw-rounded-l-lg sm:tw-rounded-none tw-mb-2 sm:tw-mb-0">
+        <tr v-for="index in transactionsObj.transactions && transactionsObj.transactions.length ? transactionsObj.transactions.length : 1" :key="index" class="tw-bg-primary tw-flex tw-flex-col tw-flex-no tw-wrap sm:tw-table-row tw-rounded-l-lg sm:tw-rounded-none tw-mb-2 sm:tw-mb-0">
           <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Date</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Reward</th>
@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">
-        <tr v-for="(transaction, index) in transactions" :key="index"  class="tw-flex tw-flex-col tw-flex-no tw-wrap sm:tw-table-row tw-mb-2 sm:tw-mb-0">
+        <tr v-if="transactionsObj.transactions" v-for="(transaction, index) in transactionsObj.transactions" :key="index"  class="tw-flex tw-flex-col tw-flex-no tw-wrap sm:tw-table-row tw-mb-2 sm:tw-mb-0">
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3" v-text="transaction.id" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="transaction.formatted_created_at" />
           <td class="tw-border-grey-light tw-border hover:tw-bg-gray-100 tw-p-3 tw-truncate" v-text="transaction.formatted_provider" />
@@ -41,6 +41,16 @@
     </table>
   </div>
 
+  <div v-if="! transactionsObj.transactions" class="tw-flex tw-justify-center tw-items-center tw-w-full tw-my-6">
+    <LoopingRhombusesSpinner
+        :animation-duration="2500"
+        :rhombus-size="25"
+        color="var(--primary-color)"
+    />
+  </div>
+
+  <Pagination v-if="transactionsObj.pagination" v-model="page" :records="transactionsObj.pagination.total" :per-page="transactionsObj.pagination.per_page" @paginate="getTransactions" :options="{ chunk: 5, edgeNavigation: true }" />
+
   <VModal v-model:visible="modal.visible">
     <p style="margin: 0">
       {{ modal.transaction.type === 'robux' ? modal.transaction.points + ' robux'
@@ -52,14 +62,18 @@
 </template>
 
 <script>
+import Pagination from 'v-pagination-3';
 import VModal from '@/components/VModal';
+import { LoopingRhombusesSpinner } from 'epic-spinners';
 import { useStore } from 'vuex';
 import { ref, reactive } from 'vue';
 
 export default {
   name: 'Profile.Transactions',
   components: {
+    Pagination,
     VModal,
+    LoopingRhombusesSpinner,
   },
   props: {
     user: {
@@ -70,21 +84,30 @@ export default {
   setup(props) {
     const store = useStore();
 
-    const transactions = ref([]);
+    const transactionsObj = ref({});
+    const page = ref(1);
     const modal = reactive({
       visible: false,
       transaction: null,
     });
 
-    store.dispatch('getTransactions', props.user.id).then((response) => {
-      transactions.value = response.data.transactions;
-    });
+    getTransactions();
 
     return {
-      transactions,
+      transactionsObj,
+      page,
       modal,
+      getTransactions,
       resend,
       openModal,
+    }
+
+    function getTransactions() {
+      delete transactionsObj.value.transactions;
+
+      store.dispatch('getTransactions', { user_id: props.user.id, page: page.value }).then((response) => {
+        transactionsObj.value = response.data;
+      });
     }
 
     function resend(transaction) {

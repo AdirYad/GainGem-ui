@@ -32,6 +32,7 @@ import {
     faAngleUp,
     faExclamationTriangle,
     faSnowflake,
+    faDollarSign,
 } from "@fortawesome/free-solid-svg-icons";
 import {
     faBuffer,
@@ -81,6 +82,7 @@ export default {
     faAngleUp,
     faExclamationTriangle,
     faSnowflake,
+    faDollarSign,
 
     // Brands
     faBuffer,

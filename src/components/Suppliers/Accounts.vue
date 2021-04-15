@@ -1,5 +1,5 @@
 <template>
-  <div v-if="accountsObj.hasOwnProperty('total_robux_earnings') && accountsObj.hasOwnProperty('daily_robux_earnings')" class="tw-text-center tw-flex tw-justify-center tw-items-center tw-flex-wrap tw-mb-4">
+  <div v-if="accountsObj.hasOwnProperty('total_robux_earnings') && accountsObj.hasOwnProperty('daily_robux_earnings')" class="tw-text-center tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-mb-4">
     <div class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4">
       <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
         Total Sold Lifetime
@@ -31,12 +31,23 @@
         </svg>
         <span class="similar-integers tw-text-2xl tw-ml-2">
             {{ accountsObj.daily_robux_earnings }}
-          </span>
+        </span>
+      </div>
+    </div>
+    <div v-if="$store.getters.isRoleSupplier || supplier.not_authenticated" class="stats-card tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 tw-mt-4 sm:tw-mt-0">
+      <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-6">
+        Rate
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center">
+        <fa-icon icon="dollar-sign" class="tw-text-primary" style="width: 28px; height: 26px" />
+        <span class="similar-integers tw-text-2xl tw-ml-2">
+            {{ supplier.robux_rate ? supplier.robux_rate : 0 }}
+        </span>
       </div>
     </div>
   </div>
 
-  <div class="tw-flex tw-flex-wrap">
+  <div v-if="! supplier.not_authenticated" class="tw-flex tw-flex-wrap">
     <div class="tw-w-full tw-mb-4">
       <form @submit.prevent="create">
         <div class="tw-flex tw-flex-wrap">
@@ -162,7 +173,13 @@ export default {
     LoopingRhombusesSpinner,
     LineChart,
   },
-  setup() {
+  props: {
+    supplier: {
+      type: Object,
+      required: false,
+    },
+  },
+  setup(props) {
     const store = useStore();
 
     const isCreating = ref(false);
@@ -252,7 +269,7 @@ export default {
 
       const payload = {
         page: page.value,
-        user_id: store.state.user.id
+        user_id: props.supplier.id
       }
 
       store.dispatch('getRobuxAccounts', payload).then((response) => {

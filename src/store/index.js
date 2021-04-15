@@ -401,19 +401,19 @@ export default createStore({
         }
       });
     },
-    getLoginLogs({ getters, state }, user_id) {
+    getLoginLogs({ getters, state }, payload) {
       if (! getters.isRoleAdmin && ! getters.isRoleSuperAdmin) {
         return;
       }
 
-      return axiosInstance.get(`/users/${user_id}/login-logs`);
+      return axiosInstance.get(`/users/${payload.user_id}/login-logs?page=${payload.page}`);
     },
-    getTransactions({ getters, state }, user_id) {
+    getTransactions({ getters, state }, payload) {
       if (! getters.isLoggedIn) {
         return;
       }
 
-      return axiosInstance.get(`/users/${user_id}/transactions`);
+      return axiosInstance.get(`/users/${payload.user_id}/transactions?page=${payload.page}`);
     },
     getRecentActivities({ getters }) {
       if (! getters.isLoggedIn) {
@@ -422,19 +422,19 @@ export default createStore({
 
       return axiosInstance.get('/activities');
     },
-    getActivities({ getters, state }, user_id) {
-      if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
-        return;
-      }
-
-      return axiosInstance.get(`/users/${user_id}/activities`);
-    },
-    getReferrals({ getters, state }, user_id) {
+    getActivities({ getters, state }, payload) {
       if (! getters.isLoggedIn) {
         return;
       }
 
-      return axiosInstance.get(`/users/${user_id}/referrals`);
+      return axiosInstance.get(`/users/${payload.user_id}/activities?page=${payload.page}`);
+    },
+    getReferrals({ getters, state }, payload) {
+      if (! getters.isLoggedIn) {
+        return;
+      }
+
+      return axiosInstance.get(`/users/${payload.user_id}/referrals?page=${payload.page}`);
     },
     getReferralsStats({ getters, state }) {
       if (! getters.isLoggedIn && ! state.user && ! state.user.id) {
@@ -484,6 +484,13 @@ export default createStore({
       }
 
       return axiosInstance.put('supplier-rate', { 'rate': rate });
+    },
+    getSupplier({ getters }, supplier_id) {
+      if (! getters.isRoleSuperAdmin && ! getters.isRoleSupplier) {
+        return;
+      }
+
+      return axiosInstance.get(`/suppliers/${supplier_id}`);
     },
     getSuppliers({ getters }, page) {
       if (! getters.isRoleSuperAdmin) {

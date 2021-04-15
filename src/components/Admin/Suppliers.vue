@@ -29,8 +29,7 @@
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_rate">
             Global Rate
           </label>
-          <input id="edit_rate" type="number" min="1" max="100" placeholder="Rate"
-                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+          <input id="edit_rate" type="number" min="1" max="100" step=".01" placeholder="Rate"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.rate"
           >
@@ -50,6 +49,7 @@ import Index from '@/components/Admin/Suppliers/Index';
 import Accounts from '@/components/Admin/Suppliers/Accounts';
 import VModal from '@/components/VModal';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import { ref, reactive } from 'vue';
 
 export default {
@@ -63,9 +63,9 @@ export default {
   },
   setup() {
     const store = useStore();
+    const route = useRoute();
 
-    const chosenType = ref(null);
-
+    const chosenType = ref(route.query.page && parseInt(route.query.page) ? 'Suppliers' : null);
     const supplierRate = ref(6);
     const modal = reactive({
       visible: false,

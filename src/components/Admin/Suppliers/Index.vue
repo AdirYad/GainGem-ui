@@ -23,6 +23,9 @@
               <button @click="openEditModal(supplier)" class="tw-w-8 tw-h-8 tw-inline tw-duration-300 tw-bg-gray-300 tw-text-blue-500 tw-rounded-full hover:tw-bg-blue-500 hover:tw-text-white tw-mr-2">
                 <fa-icon icon="cog" />
               </button>
+              <router-link :to="{ name: 'Supplier', query: { tab: 'accounts', supplier: supplier.id, back: page } }" class="tw-w-8 tw-h-8 tw-flex tw-justify-center tw-items-center tw-duration-300 tw-bg-gray-300 tw-text-green-500 tw-rounded-full hover:tw-text-white hover:tw-bg-green-500">
+                <fa-icon :icon="['far', 'eye']" />
+              </router-link>
             </div>
           </td>
         </tr>
@@ -62,8 +65,7 @@
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_rate">
             Rate
           </label>
-          <input id="edit_rate" type="number" min="1" placeholder="Rate"
-                 onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+          <input id="edit_rate" type="number" min="1" max="100" step=".01" placeholder="Rate"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.robux_rate"
                  :class="{ 'input-invalid tw-mb-3' : v$.robux_rate.$invalid || errors.robux_rate }"
@@ -91,6 +93,8 @@ import { LoopingRhombusesSpinner } from 'epic-spinners';
 import useVuelidate from '@vuelidate/core';
 import { requiredIf, minValue, maxValue } from '@vuelidate/validators';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import router from '@/router';
 import { ref, reactive, toRef, watch } from 'vue';
 
 export default {
@@ -108,9 +112,15 @@ export default {
   },
   setup(props) {
     const store = useStore();
+    const route = useRoute();
 
     const suppliersObj = ref({});
-    const page = ref(1);
+    const page = ref(route.query.page && parseInt(route.query.page) ? parseInt(route.query.page) : 1);
+
+    if (route.query.page) {
+      router.replace({ ...router.currentRoute, query: { tab: 'suppliers' }});
+    }
+
     const modal = reactive({
       supplier: null,
       visible: false,
@@ -166,6 +176,12 @@ export default {
 
       store.dispatch('getSuppliers', page.value).then((response) => {
         suppliersObj.value = response.data;
+
+        if (suppliersObj.value.pagination.last_page < page.value) {
+          page.value = 1;
+
+          getSuppliers();
+        }
       });
     }
 
