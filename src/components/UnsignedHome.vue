@@ -64,10 +64,6 @@
         </div>
       </SplideSlide>
     </Splide>
-
-    <div class="tw-text-sm tw-text-center tw-mt-2">
-      And many more!
-    </div>
   </div>
 
   <div class="tw-bg-white tw-text-secondary">
@@ -188,6 +184,10 @@ export default {
 </script>
 
 <style>
+.splide {
+  margin-top: -3em;
+}
+
 .splide__arrow--prev {
   left: 0.75em
 }
