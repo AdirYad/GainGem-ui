@@ -188,6 +188,10 @@ export default {
   margin-top: -3em;
 }
 
+.splide__track {
+  cursor: grabbing;
+}
+
 .splide__arrow--prev {
   left: 0.75em
 }
