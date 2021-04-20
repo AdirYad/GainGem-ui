@@ -4,7 +4,7 @@ export const Offerwalls = [
     image: require('@/assets/images/offerwalls/adgatemedia.png'),
     provider: 'adgatemedia',
     name: 'AdGate Media',
-    iframe: 'https://wall.adgaterewards.com/n6mcsA/{user_id}',
+    iframe: 'https://wall.adgaterewards.com/n6yarg/{user_id}',
   },
   {
     background: '#fff',
