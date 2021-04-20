@@ -1,6 +1,6 @@
 <template>
   <div class="tw-block lg:tw-hidden">
-    <div class="navigation-top navigation tw-z-10 tw-fixed tw-left-0 tw-right-0 tw-top-0 tw-bg-white tw-flex tw-justify-between tw-items-center tw-px-6 sm:tw-px-12">
+    <div class="navigation-top navigation tw-z-50 tw-fixed tw-left-0 tw-right-0 tw-top-0 tw-bg-white tw-flex tw-justify-between tw-items-center tw-px-6 sm:tw-px-12">
       <router-link :to="{ name: 'Home' }">
         <div class="logo" />
       </router-link>
@@ -22,7 +22,7 @@
         </router-link>
       </div>
     </div>
-    <div class="navigation-bottom navigation tw-z-10 tw-fixed tw-right-0 tw-left-0 tw-bottom-0 tw-bg-primary tw-flex tw-justify-around sm:tw-justify-center tw-items-center tw-px-2 sm:tw-px-6 sm:tw-px-12">
+    <div class="navigation-bottom navigation tw-z-50 tw-fixed tw-right-0 tw-left-0 tw-bottom-0 tw-bg-primary tw-flex tw-justify-around sm:tw-justify-center tw-items-center tw-px-2 sm:tw-px-6 sm:tw-px-12">
       <BottomNavigationRoute to="Rewards">
         <fa-icon class="tw-h-6 fa-w-40 tw-mb-1" icon="money-check-alt" />
         <div class="tw-font-light">

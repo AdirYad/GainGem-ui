@@ -350,14 +350,11 @@ img {
   min-height: 200px;
 
   .reward-gap {
-    padding: 10px;
-
     .reward {
       background-color: black;
       height: 150px;
       width: 250px;
       border-radius: 4px;
-      box-shadow: 0 6px 16px black;
       overflow: hidden;
 
       img {
@@ -387,61 +384,89 @@ img {
           max-height: 25px !important;
         }
       }
+
+      .reward-valorant {
+        img {
+          max-height: 20px !important;
+        }
+      }
+    }
+
+    @media (max-width: 324px) {
+      .reward {
+        max-width: 120px;
+
+        img {
+          max-height: 30px;
+        }
+      }
+
+      .reward-valorant {
+        img {
+          max-height: 15px !important;
+        }
+      }
     }
   }
 
   .reward-roblox {
     background: linear-gradient(60deg, #ef311b -4.4%, #e2250f 96.69%) !important;
-    box-shadow: 0 6px 16px rgba(216, 31, 10, 0.4) !important;
   }
 
   .reward-discord {
     background: linear-gradient(60deg, #6176e7 -4.4%, #8c9eff 96.69%) !important;
-    box-shadow: 0 6px 16px rgba(140, 158, 255, 0.4) !important;
   }
 
   .reward-psn {
     background: linear-gradient(60deg, #0083ca -4.4%, #09b9ee 96.69%) !important;
-    box-shadow: 0 6px 16px rgba(9, 185, 238, 0.4) !important;
   }
 
   .reward-xbox {
     background: linear-gradient(238.78deg, #3ccd10 -20.87%, #2b9a14 156.16%) !important;
-    box-shadow: 0 6px 16px rgba(60, 205, 16, 0.25) !important;
   }
 
   .reward-netflix {
     background: linear-gradient(60deg, #b1060f -4.4%, #e50913 96.69%) !important;
-    box-shadow: 0 6px 16px rgba(229, 9, 19, 0.4) !important;
   }
 
   .reward-robux {
     background: linear-gradient(210deg, rgb(0, 181, 110) 3%, rgb(10, 193, 92) 108%) !important;
-    box-shadow: 0 6px 16px rgba(63, 194, 23, 0.4) !important;
   }
 
   .reward-bitcoin {
     background: linear-gradient(100deg, rgb(246, 146, 20) 4.44%, rgb(260, 100, 0) 160%) !important;
-    box-shadow: 0 6px 16px rgba(247, 148, 29, 0.4) !important;
   }
 
   .reward-google_play {
     background: linear-gradient(330deg, rgb(64, 64, 64) 1.38%, rgb(22, 30, 32) 70%) !important;
-    box-shadow: 0 6px 16px rgba(64, 64, 64, 0.4) !important;
   }
 
   .reward-apple {
     background: linear-gradient(208.25deg, rgb(14, 199, 251) 1.58%, rgb(12, 96, 240) 76.76%) !important;
-    box-shadow: 0 6px 16px rgba(14, 199, 251, 0.4) !important;
   }
 
   .reward-spotify {
     background: rgb(30, 215, 96) !important;
-    box-shadow: 0 6px 16px rgba(60, 205, 16, 0.25) !important;
+  }
+
+  .reward-steam {
+    background: linear-gradient(180deg, rgba(236, 234, 234, 0.6) 2.53%, rgba(226, 223, 223, 0.85) 70%) !important;
+  }
+
+  .reward-fortnite {
+    background: linear-gradient(90deg, rgb(0, 118, 222), rgb(0, 182, 245), rgb(0, 122, 226)) !important;
+  }
+
+  .reward-valorant {
+    background: linear-gradient(90deg, rgb(244, 42, 84), rgb(244, 42, 84)) !important;
+
+    > img {
+      max-width: 200px;
+    }
   }
 
   .reward-item {
-    @apply bg-white shadow rounded-md ;
+    @apply bg-white shadow rounded-md;
 
     .reward {
       height: 250px;

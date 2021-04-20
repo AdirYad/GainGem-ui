@@ -202,7 +202,7 @@
                   :class="{ 'input-invalid tw-mb-3' : errors.currency_id }"
                   @keydown="resetErrors('currency_id')"
           >
-            <option v-for="(currency, index) in currencies.filter((curr) => curr.currency_value)" :key="index" :value="currency.id" :selected="currency.currency === 'USD'">
+            <option v-for="(currency, index) in currencies.filter((curr) => curr.currency_value && curr.currency_value[provider])" :key="index" :value="currency.id" :selected="currency.currency === 'USD'">
               {{ currency.currency }}
             </option>
           </select>
@@ -511,29 +511,36 @@ export default {
             message: 'Reward' + (response.data.length > 1 ? 's ' : ' ') + 'created successfully!',
           });
         }).catch((err) => {
-          if (err.response.status === 422 && err.response.data.errors) {
-            errors.value = err.response.data.errors;
+          if (err.response.status === 422) {
+            if (err.response.data.errors) {
+              errors.value = err.response.data.errors;
 
-            let error = false;
+              let error = false;
 
-            for (let i = 0; i < payload.codes.length; i++) {
-              if (! errors.value['codes.' + i + '.code']) {
-                continue;
+              for (let i = 0; i < payload.codes.length; i++) {
+                if (! errors.value['codes.' + i + '.code']) {
+                  continue;
+                }
+
+                errors.value[payload.codes[i].id] = errors.value['codes.' + i + '.code'];
+                delete errors.value['codes.' + i + '.code'];
+
+                if (error) {
+                  continue;
+                }
+
+                store.dispatch('addNotification', {
+                  type: 'error',
+                  message: payload.codes.length > 1 ? 'Some codes have already been taken' : 'The code has already been taken',
+                });
+
+                error = true;
               }
-
-              errors.value[payload.codes[i].id] = errors.value['codes.' + i + '.code'];
-              delete errors.value['codes.' + i + '.code'];
-
-              if (error) {
-                continue;
-              }
-
+            } else {
               store.dispatch('addNotification', {
                 type: 'error',
-                message: payload.codes.length > 1 ? 'Some codes have already been taken' : 'The code has already been taken',
+                message: err.response.data.message,
               });
-
-              error = true;
             }
           }
         });
@@ -571,8 +578,15 @@ export default {
           message: 'Reward saved successfully!',
         });
       }).catch((err) => {
-        if (err.response.status === 422 && err.response.data.errors) {
-          errors.value = err.response.data.errors;
+        if (err.response.status === 422) {
+          if (err.response.data.errors) {
+            errors.value = err.response.data.errors;
+          } else {
+            store.dispatch('addNotification', {
+              type: 'error',
+              message: err.response.data.message,
+            });
+          }
         }
       });
     }

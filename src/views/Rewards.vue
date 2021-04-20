@@ -12,7 +12,7 @@
             <button v-if="expandedReward === reward" @click="expandRow(reward)" class="tw-absolute badge badge-failed">
               Close
             </button>
-            <div v-else-if="! reward.stock" class="tw-absolute badge badge-out-of-stock">
+            <div v-else-if="! reward.stock" class="tw-absolute badge badge-out-of-stock tw-z-10">
               Out of stock
             </div>
             <img :src="reward.image" :alt="reward.name">

@@ -54,33 +54,17 @@
       <fa-icon icon="medal" />
       Our Rewards
     </div>
-    <div class="rewards-list tw-flex tw-justify-center tw-items-center tw-flex-wrap">
-      <div class="reward-gap">
-        <div class="reward reward-discord tw-flex tw-justify-center tw-items-center">
-          <img src="../assets/images/rewards/discord.png" alt="discord">
+
+    <Splide :options="{ type: 'loop', rewind : true, gap: '20px', autoWidth: true, focus: 'center', autoplay: true }" class="rewards-list">
+      <SplideSlide v-for="(reward, index) in $store.state.rewards" :key="index">
+        <div class="reward-gap">
+          <div class="reward tw-flex tw-justify-center tw-items-center" :class="`reward-${reward.provider}`">
+            <img :src="reward.image" :alt="reward.name">
+          </div>
         </div>
-      </div>
-      <div class="reward-gap">
-        <div class="reward reward-netflix tw-flex tw-justify-center tw-items-center">
-          <img src="../assets/images/rewards/netflix.png" alt="netflix">
-        </div>
-      </div>
-      <div class="reward-gap">
-        <div class="reward reward-xbox tw-flex tw-justify-center tw-items-center">
-          <img src="../assets/images/rewards/xbox.png" alt="xbox">
-        </div>
-      </div>
-      <div class="reward-gap">
-        <div class="reward reward-psn tw-flex tw-justify-center tw-items-center">
-          <img src="../assets/images/rewards/psn.png" alt="psn">
-        </div>
-      </div>
-      <div class="reward-gap">
-        <div class="reward reward-roblox tw-flex tw-justify-center tw-items-center">
-          <img src="../assets/images/rewards/roblox.png" alt="roblox">
-        </div>
-      </div>
-    </div>
+      </SplideSlide>
+    </Splide>
+
     <div class="tw-text-sm tw-text-center tw-mt-2">
       And many more!
     </div>
@@ -175,6 +159,8 @@
 import AnimatedNumber from '@/components/AnimatedNumber';
 import UnsignedNavigation from '@/components/UnsignedNavigation';
 import Footer from '@/components/Footer.vue';
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import '@splidejs/splide/dist/css/themes/splide-sea-green.min.css';
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 
@@ -185,6 +171,8 @@ export default {
     Footer,
     UnsignedNavigation,
     AnimatedNumber,
+    Splide,
+    SplideSlide,
   },
   setup() {
     const store = useStore();
@@ -198,3 +186,29 @@ export default {
   }
 }
 </script>
+
+<style>
+.splide__arrow--prev {
+  left: 0.75em
+}
+
+.splide__arrow--next {
+  right: 0.75em
+}
+
+.splide__arrow > svg {
+  fill: rgba(var(--primary-color-rgb), 0.75);
+}
+
+.splide__arrow:hover > svg {
+  fill: var(--primary-color);
+}
+
+.splide__pagination__page.is-active {
+  background: rgba(var(--primary-color-rgb), 0.75);
+}
+
+.splide__pagination__page:hover {
+  background: var(--primary-color);
+}
+</style>

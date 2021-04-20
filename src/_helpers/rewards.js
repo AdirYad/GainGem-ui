@@ -152,4 +152,49 @@ export const Rewards = [
       ],
     }
   },
+  {
+    name: 'Steam',
+    image: require('@/assets/images/rewards/steam.png'),
+    provider: 'steam',
+    stock: true,
+    modal: {
+      name: 'Steam',
+      ul: [
+        'Navigate to <a class="tw-text-primary" href="https://discord.com/app" target="_blank">discord.com/app</a> and open your user settings.',
+        'Click on ‘Gift Inventory’',
+        'Enter your code in the \'Redeem Codes\' section.',
+        'Tap Redeem.',
+      ],
+    }
+  },
+  {
+    name: 'Fortnite',
+    image: require('@/assets/images/rewards/fortnite.png'),
+    provider: 'fortnite',
+    stock: true,
+    modal: {
+      name: 'Fortnite',
+      ul: [
+        'Navigate to <a class="tw-text-primary" href="https://discord.com/app" target="_blank">discord.com/app</a> and open your user settings.',
+        'Click on ‘Gift Inventory’',
+        'Enter your code in the \'Redeem Codes\' section.',
+        'Tap Redeem.',
+      ],
+    }
+  },
+  {
+    name: 'Valorant',
+    image: require('@/assets/images/rewards/valorant2.png'),
+    provider: 'valorant',
+    stock: true,
+    modal: {
+      name: 'Valorant',
+      ul: [
+        'Navigate to <a class="tw-text-primary" href="https://discord.com/app" target="_blank">discord.com/app</a> and open your user settings.',
+        'Click on ‘Gift Inventory’',
+        'Enter your code in the \'Redeem Codes\' section.',
+        'Tap Redeem.',
+      ],
+    }
+  },
 ];
