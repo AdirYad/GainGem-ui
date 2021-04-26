@@ -184,7 +184,7 @@ export const Rewards = [
   },
   {
     name: 'Valorant',
-    image: require('@/assets/images/rewards/valorant2.png'),
+    image: require('@/assets/images/rewards/valorant.png'),
     provider: 'valorant',
     stock: true,
     modal: {
