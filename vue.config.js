@@ -1,7 +1,7 @@
 module.exports = {
     productionSourceMap: false,
     devServer: {
-        host: 'ezrewards.test',
+       // host: 'ezrewards.test',
         disableHostCheck: true,
         clientLogLevel: 'silent',
     },

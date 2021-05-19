@@ -1,31 +1,30 @@
 <template>
-  <UnsignedNavigation class="lg:tw-px-4">
-    <main class="tw-flex tw-items-center tw-py-5 lg:tw-py-10">
-      <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
-        <h1 class="tw-font-bold tw-text-2xl md:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
-          Earn Points & Redeem Rewards
-        </h1>
-        <p class="tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
-          Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
-        </p>
-        <router-link :to="{ name: 'Register' }" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
-          <fa-icon icon="sign-in-alt" />
-          Get Started
-        </router-link>
-      </div>
-      <div class="tw-z-0 tw-pt-4 tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden xl:tw-block">
-        <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/survey.png">
-      </div>
-    </main>
+  <UnsignedNavigation class="">
+    <div class="tw-container tw-w-full tw-m-auto">
+      <main class="tw-flex tw-items-center tw-py-5 lg:tw-py-10">
+        <div class="left-sidebar tw-w-1/5 tw-h-full tw-absolute tw-left-0 tw-bottom0 tw-top-0 tw-bg-primary">
+
+        </div>
+        <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
+          <h1 class="tw-font-bold tw-text-2xl md:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
+            Earn Points & Redeem Rewards
+          </h1>
+          <p class="tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
+            Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
+          </p>
+          <router-link :to="{ name: 'Register' }" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+            <fa-icon icon="sign-in-alt" />
+            Get Started
+          </router-link>
+        </div>
+        <div class="tw-z-0 tw-pt-4 tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden xl:tw-block">
+          <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/survey.png">
+        </div>
+      </main>
+    </div>
   </UnsignedNavigation>
 
-  <div class="tw-bg-white tw-text-primary">
-    <svg class="tw-block xl:tw--mt-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 240">
-      <path fill="var(--primary-color)" d="M0,224L48,202.7C96,181,192,139,288,112C384,85,480,75,576,85.3C672,96,768,128,864,154.7C960,181,1056,203,1152,186.7C1248,171,1344,117,1392,90.7L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
-    </svg>
-  </div>
-
-  <div class="landing-section tw-py-8 tw-bg-white tw--mt-8 sm:tw--mt-12 md:tw--mt-16 lg:tw--mt-20 xl:tw--mt-24">
+  <div class="landing-section tw-py-8 tw-bg-white tw-mt-8 sm:tw-mt-12 md:tw-mt-16 lg:tw-mt-20 xl:tw-mt-24">
     <div class="tw-flex tw-justify-around tw-items-center tw-text-center tw-py-4">
       <div class="tw-mr-2 lg:tw-mr-0 tw-w-1/2 lg:tw-w-1/4">
         <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
@@ -64,12 +63,6 @@
         </div>
       </SplideSlide>
     </Splide>
-  </div>
-
-  <div class="tw-bg-white tw-text-secondary">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
-      <path d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z" fill="currentColor"></path>
-    </svg>
   </div>
 
   <div class="landing-section tw-text-center tw-bg-secondary tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-pt-4 tw-pb-8">
@@ -120,12 +113,6 @@
     </div>
   </div>
 
-  <div class="tw-bg-secondary tw-text-white">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
-      <path d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z" fill="currentColor"></path>
-    </svg>
-  </div>
-
   <div class="landing-section tw-bg-white tw-py-8 tw-flex tw-flex-col tw-justify-around tw-items-center">
     <div class="tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-primary tw-font-bold tw-text-center lg:tw-text-left tw-mb-6">
       Start Earning Today!
@@ -140,12 +127,6 @@
         Register
       </router-link>
     </nav>
-  </div>
-
-  <div class="tw-bg-white tw-text-primary">
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
-      <path d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z" fill="currentColor"></path>
-    </svg>
   </div>
 
   <Footer />
