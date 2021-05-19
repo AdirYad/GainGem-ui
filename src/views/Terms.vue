@@ -26,7 +26,7 @@
         </div>
 
         <div class="tw-mb-3 tw-text-sm">
-          These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and EzRewards ("Company", “we”, “us”, or “our”), concerning your access to and use of the https://ezrewards.gg website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the “Site”). You agree that by accessing the Site, you have read, understood, and agreed to be bound by all of these Terms of Use. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF USE, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU MUST DISCONTINUE USE IMMEDIATELY.
+          These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and GainGem ("Company", “we”, “us”, or “our”), concerning your access to and use of the https://gaingem.com website as well as any other media form, media channel, mobile website or mobile application related, linked, or otherwise connected thereto (collectively, the “Site”). You agree that by accessing the Site, you have read, understood, and agreed to be bound by all of these Terms of Use. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF USE, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SITE AND YOU MUST DISCONTINUE USE IMMEDIATELY.
         </div>
 
         <div class="tw-mb-3 tw-text-sm">
@@ -322,7 +322,7 @@
         </div>
 
         <div class="tw-mb-3 tw-text-sm">
-          These conditions are governed by and interpreted following the laws of Belgium, and the use of the United Nations Convention of Contracts for the International Sale of Goods is expressly excluded. If your habitual residence is in the EU, and you are a consumer, you additionally possess the protection provided to you by obligatory provisions of the law of your country of residence. EzRewards and yourself both agree to submit to the non-exclusive jurisdiction of the courts of Antwerp, which means that you may make a claim to defend your consumer protection rights in regards to these Conditions of Use in Belgium, or in the EU country in which you reside.
+          These conditions are governed by and interpreted following the laws of Belgium, and the use of the United Nations Convention of Contracts for the International Sale of Goods is expressly excluded. If your habitual residence is in the EU, and you are a consumer, you additionally possess the protection provided to you by obligatory provisions of the law of your country of residence. GainGem and yourself both agree to submit to the non-exclusive jurisdiction of the courts of Antwerp, which means that you may make a claim to defend your consumer protection rights in regards to these Conditions of Use in Belgium, or in the EU country in which you reside.
         </div>
       </div>
 
@@ -444,15 +444,11 @@
         </div>
 
         <div class="tw-font-medium tw-text-sm">
-          EzRewards
+          GainGem
         </div>
 
         <div class="tw-font-medium tw-text-sm">
-          Belgium
-        </div>
-
-        <div class="tw-font-medium tw-text-sm">
-          ezrewardsgg@gmail.com
+          business.gaingem@gmail.com
         </div>
       </div>
     </div>

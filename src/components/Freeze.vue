@@ -13,7 +13,7 @@
           </div>
         </article>
       </div>
-      <a href="https://ezrewards.reamaze.com/kb/my-account/why-is-my-account-frozen" target="_blank" class="tw-h-full tw-ml-2 md:tw-ml-4">
+      <a href="https://gaingem.reamaze.com/kb/my-account/why-is-my-account-frozen" target="_blank" class="tw-h-full tw-ml-2 md:tw-ml-4">
         Contact Support
       </a>
     </div>

@@ -20,7 +20,7 @@
         </p>
         <p v-else-if="errors.username" class="tw-text-red-500 tw-text-xs tw-italic">
           <template v-if="errors.username[0] === 'The selected username is invalid.'">
-            This username doesn't exist on EzRewards!
+            This username doesn't exist on GainGem!
             <router-link :to="{ name: 'Register' }" class="tw-text-primary tw-underline">Click here</router-link>
             to create an account.
           </template>

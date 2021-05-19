@@ -162,7 +162,7 @@ import { useRoute } from "vue-router";
 
 export default {
   name: 'UnsignedHome',
-  title: 'EzRewards',
+  title: 'GainGem',
   components: {
     Footer,
     UnsignedNavigation,
