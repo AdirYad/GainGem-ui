@@ -1,27 +1,22 @@
 <template>
-  <UnsignedNavigation class="">
-    <div class="tw-container tw-w-full tw-m-auto">
-      <main class="tw-flex tw-items-center tw-py-5 lg:tw-py-10">
-        <div class="left-sidebar tw-w-1/5 tw-h-full tw-absolute tw-left-0 tw-bottom0 tw-top-0 tw-bg-primary">
-
-        </div>
-        <div class="tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
-          <h1 class="tw-font-bold tw-text-2xl md:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
-            Earn Points & Redeem Rewards
-          </h1>
-          <p class="tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
-            Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
-          </p>
-          <router-link :to="{ name: 'Register' }" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
-            <fa-icon icon="sign-in-alt" />
-            Get Started
-          </router-link>
-        </div>
-        <div class="tw-z-0 tw-pt-4 tw-w-full lg:tw-w-4/12 tw-text-center xl:tw-text-right tw-hidden xl:tw-block">
-          <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/survey.png">
-        </div>
-      </main>
-    </div>
+  <UnsignedNavigation class="bg-home tw-min-h-screen">
+    <main class="header-unsigned tw-flex tw-h-screen tw-items-end tw-relative tw-justify-between">
+      <div class="left-unsigned tw-text-right tw-hidden xl:tw-block">
+        <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/bg.png">
+      </div>
+      <div class="right-unsigned tw-z-50 tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
+        <h1 class="tw-font-bold tw-text-2xl md:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
+          Earn Points & Redeem Rewards
+        </h1>
+        <p class="tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
+          Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
+        </p>
+        <router-link :to="{ name: 'Register' }" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
+          <fa-icon icon="sign-in-alt" />
+          Get Started
+        </router-link>
+      </div>
+    </main>
   </UnsignedNavigation>
 
   <div class="landing-section tw-py-8 tw-bg-white tw-mt-8 sm:tw-mt-12 md:tw-mt-16 lg:tw-mt-20 xl:tw-mt-24">
@@ -165,6 +160,11 @@ export default {
 </script>
 
 <style>
+
+.bg-home {
+  background: linear-gradient(90deg, var(--primary-color) 20%, 20%, var(--secondary-color));
+}
+
 .splide {
   margin-top: -3em;
 }
