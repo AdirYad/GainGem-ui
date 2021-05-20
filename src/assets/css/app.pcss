@@ -2,15 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
 :root {
-  --primary-color-rgb: 255, 22, 22;
-  --primary-color-rgb-no-commas: 19 160 101;
-  --secondary-color-rgb: 0, 0, 0;
+  --primary-color-rgb: 233, 33, 39;
+  --primary-color-rgb-no-commas: 233 33 39;
+  --secondary-color-rgb: 43, 43, 43;
   --primary-color: rgb(var(--primary-color-rgb));
   --secondary-color: rgb(var(--secondary-color-rgb));
   --sidebar-width: 250px;
   --navigation-height: 60px;
-  --header-unsigned-height: 100px;
+  --header-unsigned-height: 80px;
 }
 
 html {
@@ -22,7 +24,7 @@ html {
 }
 
 .wall {
- color: rgb(29, 93, 77);
+  color: rgb(29, 93, 77);
   background-color: var(--primary-color);
   height: 330px;
   border-radius: 4px;box-shadow: 0 6px 6px var(--primary-color);
@@ -221,10 +223,6 @@ button:focus, input:focus {
   width: 80%;
 }
 
-.header-unsigned {
-  position: relative;
-}
-
 .center-sidebar {
   left: 50%;
   bottom: 0;
@@ -232,32 +230,41 @@ button:focus, input:focus {
 }
 
 .unsigned-nav-right {
+  height: var(--header-unsigned-height);
+
   padding-right: 300px;
   padding-left: 50px;
+
   @media (max-width: 1024px) {
     padding-right: 100px;
   }
+
   @media (max-width: 768px) {
     padding-right: 50px;
     padding-left: 10px;
   }
-  @media (max-width: 400px) {
+
+  @media (max-width: 640px) {
     padding-right: 10px;
-    padding-left: 0px;
+    padding-left: 0;
   }
 }
 
-.header-unsigned, .unsigned-nav, .maintenance {
+.unsigned-nav, .maintenance {
+  .nav-height {
+    height: var(--header-unsigned-height);
+  }
+
   .logo {
-    height: calc(var(--header-unsigned-height) - 40px);
-    width: calc(var(--header-unsigned-height) - 40px);
+    height: calc(var(--header-unsigned-height) - 20px);
+    width: calc(var(--header-unsigned-height) - 20px);
     background: url("../images/Icon.png") no-repeat 50%;
     background-size: cover;
   }
 
   @media (min-width: 768px) {
     .logo {
-      height: calc(var(--header-unsigned-height) - 20px);
+      height: calc(var(--header-unsigned-height));
       width: 200px;
       background: url("../images/Logo.png") no-repeat 50%;
       background-size: cover;
@@ -266,8 +273,8 @@ button:focus, input:focus {
 
   @media (max-width: 640px) {
     .logo {
-      height: calc(var(--header-unsigned-height) - 60px);
-      width: calc(var(--header-unsigned-height) - 60px);
+      height: calc(var(--header-unsigned-height) - 40px);
+      width: calc(var(--header-unsigned-height) - 40px);
       background: url("../images/Icon.png") no-repeat 50%;
       background-size: cover;
     }
