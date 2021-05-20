@@ -1,12 +1,13 @@
 <template>
   <UnsignedNavigation class="bg-home tw-min-h-screen">
-    <main class="header-unsigned tw-flex tw-h-screen tw-items-end tw-relative tw-justify-between">
-      <div class="left-unsigned tw-text-right tw-hidden xl:tw-block">
-        <img alt="survey" class="md:tw-w-1/2 lg:tw-w-full tw-inline-block" src="@/assets/images/bg.png">
+    <main class="header-unsigned tw-relative tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-justify-center md:tw-justify-between tw-py-5 lg:tw-py-10 md:tw-px-10 lg:tw-px-20">
+      <div class="tw-relative tw-w-3/5 sm:tw-w-1/2 md:tw-w-full left-unsigned tw-text-right tw-mb-10 md:tw-mb-0">
+        <img alt="man" src="@/assets/images/man.png">
+        <img alt="elements" class="elements tw-absolute tw-top-0 tw-right-0" src="@/assets/images/elements.png">
       </div>
-      <div class="right-unsigned tw-z-50 tw-w-full xl:tw-w-8/12 tw-text-center xl:tw-text-left">
-        <h1 class="tw-font-bold tw-text-2xl md:tw-text-4xl tw-text-white tw-uppercase tw-tracking-wider">
-          Earn Points & Redeem Rewards
+      <div class="right-unsigned tw-z-50 tw-w-full xl:tw-w-8/12 tw-text-center md:tw-text-left">
+        <h1 class="tw-font-bold tw-text-3xl md:tw-text-4xl lg:tw-text-5xl xl:tw-text-6xl tw-text-white tw-uppercase tw-tracking-wider">
+          Gain <span class="tw-text-primary">Gems</span> & <br> Redeem Prizes
         </h1>
         <p class="tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
           Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!

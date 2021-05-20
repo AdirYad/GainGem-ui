@@ -219,10 +219,6 @@ button:focus, input:focus {
   flex-basis: 55%;
 }
 
-.left-unsigned img {
-  width: 80%;
-}
-
 .center-sidebar {
   left: 50%;
   bottom: 0;
@@ -255,6 +251,14 @@ button:focus, input:focus {
     height: var(--header-unsigned-height);
   }
 
+  .header-unsigned {
+    min-height: calc(100vh - var(--header-unsigned-height));
+  }
+
+  .elements {
+    animation: elements 2.5s linear infinite;
+  }
+
   .logo {
     height: calc(var(--header-unsigned-height) - 20px);
     width: calc(var(--header-unsigned-height) - 20px);
@@ -272,12 +276,26 @@ button:focus, input:focus {
   }
 
   @media (max-width: 640px) {
+    --header-unsigned-height: 60px;
+
     .logo {
-      height: calc(var(--header-unsigned-height) - 40px);
-      width: calc(var(--header-unsigned-height) - 40px);
       background: url("../images/Icon.png") no-repeat 50%;
       background-size: cover;
     }
+  }
+}
+
+@keyframes elements {
+  0% {
+    transform: translate(-15px, 0);
+  }
+
+  50% {
+    transform: translate(0, -15px);
+  }
+
+  100% {
+    transform: translate(-15px, 0);
   }
 }
 
