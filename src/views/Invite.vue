@@ -26,11 +26,11 @@
           <fa-icon class="social-icon" :icon="['fab', 'facebook-f']" />
           Share on facebook
         </a>
-        <a :href="`https://twitter.com/intent/tweet?text=Hey everyone! You can claim free Giftcards, ROBUX and Crypto by watching videos, filling out surveys and installing apps at EzRewards!&url=${inviteLink}`" target="_blank" class="social-button bg-twitter tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
+        <a :href="`https://twitter.com/intent/tweet?text=Hey everyone! You can claim free Giftcards, ROBUX and Crypto by watching videos, filling out surveys and installing apps at GainGem!&url=${inviteLink}`" target="_blank" class="social-button bg-twitter tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
           <fa-icon class="social-icon" :icon="['fab', 'twitter']" />
           Share on Twitter
         </a>
-        <a :href="`https://reddit.com/submit?url=${inviteLink}&title=Hey everyone! You can claim free Giftcards, ROBUX and Crypto by watching videos, filling out surveys and installing apps at EzRewards!`" target="_blank" class="social-button bg-reddit tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
+        <a :href="`https://reddit.com/submit?url=${inviteLink}&title=Hey everyone! You can claim free Giftcards, ROBUX and Crypto by watching videos, filling out surveys and installing apps at GainGem!`" target="_blank" class="social-button bg-reddit tw-relative tw-text-sm md:tw-text-base tw-text-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-1 tw-mx-2 tw-mt-2">
           <fa-icon class="social-icon" :icon="['fab', 'reddit-alien']" />
           Share on Reddit
         </a>
@@ -80,7 +80,7 @@
           INVITE FRIENDS
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Share your referral link with your friends in order to attract new users to EzRewards.
+          Share your referral link with your friends in order to attract new users to GainGem.
         </div>
         <div class="tw-text-sm tw-mb-2">
           Each user you invite, you'll receive 10% of his earnings.
@@ -101,7 +101,7 @@
           Receive Points
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once someone has signed up on EzRewards using your referral link, you'll receive points any time they complete an offer.
+          Once someone has signed up on GainGem using your referral link, you'll receive points any time they complete an offer.
         </div>
       </div>
 

@@ -22,7 +22,7 @@
     </div>
     <div class="md:tw-w-2/4 tw-pt-4">
       <div class="tw-text-secondary tw-font-light tw-text-transparent-60 tw-text-base md:tw-text-sm tw-text-center">
-        © EzRewards {{ new Date().getFullYear() }}. All rights reserved.
+        © GainGem {{ new Date().getFullYear() }}. All rights reserved.
       </div>
     </div>
   </footer>

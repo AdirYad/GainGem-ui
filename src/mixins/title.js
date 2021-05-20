@@ -5,14 +5,15 @@ function getTitle (vm) {
         return typeof title === 'function' ? title.call(vm) : title;
     }
 }
+
 export default {
     created () {
         const title = getTitle(this)
 
-        if (title === 'EzRewards') {
-            document.title = 'EzRewards';
+        if (title === 'GainGem') {
+            document.title = 'GainGem';
         } else if (title) {
-            document.title = title + ' - EzRewards';
+            document.title = title + ' - GainGem';
         }
     }
 }

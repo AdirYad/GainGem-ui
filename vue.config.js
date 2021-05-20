@@ -1,7 +1,7 @@
 module.exports = {
     productionSourceMap: false,
     devServer: {
-       // host: 'ezrewards.test',
+        host: process.env.VUE_APP_HOST,
         disableHostCheck: true,
         clientLogLevel: 'silent',
     },

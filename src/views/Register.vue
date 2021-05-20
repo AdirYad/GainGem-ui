@@ -57,7 +57,7 @@
           {{ errors.password[0] }}
         </p>
         <p v-else class="tw-duration-300 tw-text-xs tw-italic tw-mt-3">
-          We recommend using a unique password for your EzRewards account
+          We recommend using a unique password for your GainGem account
         </p>
       </div>
       <div class="tw-mb-4">
