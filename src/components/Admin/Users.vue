@@ -126,9 +126,9 @@
              :class="{ 'sm:tw-w-1/2 xl:tw-w-64 sm:tw-pr-2' : modal.user.role !== Roles.SuperAdmin && ($store.getters.isRoleSuperAdmin || modal.user.role !== Roles.Admin) }"
         >
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="points">
-            Add Points
+            Add Gems
           </label>
-          <input id="points" type="number" min="1" max="999999" placeholder="Points"
+          <input id="points" type="number" min="1" max="999999" placeholder="Gems"
                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.points"

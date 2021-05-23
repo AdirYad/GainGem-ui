@@ -38,7 +38,7 @@
                   {{ payload.value * currencies.find((currency) => currency.id === payload.currency_id).currency_value[payload.provider] }}
                 </template>
               </span>
-              points
+              gems
             </span>
             <div v-if="expandedReward.provider === 'bitcoin' || expandedReward.provider === 'robux'" class="tw-w-full tw-mb-4">
               <label class="tw-text-primary tw-block tw-text-gray-700 tw-text-sm tw-font-bold tw-mb-2" for="destination">

@@ -13,10 +13,10 @@
         <div class="tw-p-2">
           <div class="tw-flex tw-justify-between tw-items-center tw-flex-wrap tw-border-b-2 tw-border-primary tw-rounded-md tw-px-3 tw-mb-3" style="min-height: 2.5rem">
             <div class="lg:tw-w-full xl:tw-flex-1 tw-text-left lg:tw-text-center xl:tw-text-left tw-text-sm tw-uppercase tw-font-light">
-              Lifetime points
+              Lifetime gems
             </div>
             <div v-if="user && user.total_points !== null" class="tw-truncate tw-w-1/2 md:tw-w-1/3 lg:tw-w-full xl:tw-w-1/3 tw-text-right lg:tw-text-center xl:tw-text-right">
-              <fa-icon class="tw-h-4 fa-w-20" icon="coins" />
+              <fa-icon class="tw-h-4 fa-w-20" icon="gem" />
               {{ user.total_points }}
             </div>
           </div>

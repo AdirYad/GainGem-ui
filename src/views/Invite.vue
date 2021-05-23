@@ -60,7 +60,7 @@
           Your affiliate earnings
         </div>
         <div class="tw-flex tw-justify-center tw-items-center">
-          <fa-icon class="tw-h-8 fa-w-40 tw-text-primary" icon="coins" />
+          <fa-icon class="tw-h-8 fa-w-40 tw-text-primary" icon="gem" />
           <span class="similar-integers tw-text-2xl tw-ml-2">
             {{ stats.total_revenue }}
           </span>
@@ -98,10 +98,10 @@
           2
         </div>
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mt-10 tw-mb-4">
-          Receive Points
+          Receive Gems
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once someone has signed up on GainGem using your referral link, you'll receive points any time they complete an offer.
+          Once someone has signed up on GainGem using your referral link, you'll receive gems any time they complete an offer.
         </div>
       </div>
 
@@ -119,7 +119,7 @@
           CLAIM REWARDS
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once you've earned enough points, you can use them to claim one of our many available rewards!
+          Once you've earned enough gems, you can use them to claim one of our many available rewards!
         </div>
         <div class="tw-text-sm tw-mb-2">
           More friends you invite means more revenue, and more generated revenue means more rewards to claim!

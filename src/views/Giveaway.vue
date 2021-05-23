@@ -8,7 +8,7 @@
       <div class="tw-w-full xl:tw-w-3/4 tw-text-xl tw-text-primary tw-flex tw-justify-between xl:tw-justify-around tw-flex-row-reverse tw-items-center tw-flex-wrap">
         <div class="tw-w-1/2 sm:tw-w-1/3">
           <div class="tw-text-2xl tw-font-bold">
-            <fa-icon class="tw-text-primary" icon="coins" />
+            <fa-icon class="tw-text-primary" icon="gem" />
             {{ giveaway.current_giveaway ? giveaway.current_giveaway.points : 0 }}
           </div>
           <div class="tw-text-black tw-text-xs tw-uppercase tw-tracking-wider">
@@ -75,7 +75,7 @@
             {{ winner.user.username }}
           </div>
           <div class="tw-flex tw-justify-end tw-items-center tw-mr-1 tw-mr-2 tw-text-xs sm:tw-text-base">
-            <fa-icon class="tw-mx-2 tw-text-primary" icon="coins" />
+            <fa-icon class="tw-mx-2 tw-text-primary" icon="gem" />
             {{ winner.points }}
           </div>
           <div class="similar-integers tw-flex tw-justify-end tw-items-center tw-w-12 sm:tw-w-16 tw-text-right tw-text-xs sm:tw-text-base">
@@ -123,10 +123,10 @@
           2
         </div>
         <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mt-10 tw-mb-4">
-          Receive Points
+          Receive gems
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once you've entered the giveaway, you have a chance to win the amount of points that is shown above.
+          Once you've entered the giveaway, you have a chance to win the amount of gems that is shown above.
         </div>
       </div>
 
@@ -144,7 +144,7 @@
           CLAIM REWARDS
         </div>
         <div class="tw-text-sm tw-mb-2">
-          Once you've earned enough points, you can use them to claim one of our many available rewards!
+          Once you've earned enough gems, you can use them to claim one of our many available rewards!
         </div>
         <div class="tw-text-sm tw-mb-2">
           The more you participate in giveaways, the better chance to win!

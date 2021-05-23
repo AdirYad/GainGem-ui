@@ -17,7 +17,7 @@
   </div>
   <div v-if="! Array.isArray(socialMediaTasksOptions) && socialMediaTasksOptions" class="tw-mb-6">
     <div class="tw-text-center lg:tw-text-left tw-font-medium tw-text-2xl lg:tw-text-3xl tw-uppercase tw-tracking-wider tw-mb-3">
-      Extra Points
+      Extra Gems
     </div>
     <div class="tw-flex tw-flex-wrap md:tw--mx-4">
       <div v-for="(socialMedia, index) in socialMediaTasksOptions" :key="index" class="extra-points-card tw-w-full sm:tw-w-1/2 md:tw-w-1/3 lg:tw-w-1/3 xl:tw-w-1/4 tw-px-3 md:tw-px-4 tw-my-2">
@@ -27,7 +27,7 @@
                :style="`background: url('${socialMedia.thumbnail}'); background-size: cover`"
           >
             <div class="tw-absolute badge badge-success">
-              <fa-icon class="tw-mr-1" icon="coins" />{{ socialMedia.points }}
+              <fa-icon class="tw-mr-1" icon="gem" />{{ socialMedia.points }}
             </div>
             <div class="social-icon" v-html="socialMedia.icon" />
             <div class="tw-text-white tw-text-xl sm:tw-text-lg md:tw-text-base xl:tw-text-xl" v-text="socialMedia.text" />
@@ -43,7 +43,7 @@
     <div class="tw-flex tw-flex-wrap tw-p-6 tw-bg-white tw-rounded-sm tw-shadow">
       <div class="tw-w-full md:tw-w-1/2 xl:tw-w-3/5 tw-mb-3 sm:tw-mb-6 md:tw-m-0">
         <div class="tw-text-lg xl:tw-text-xl tw-font-medium tw-mb-3">
-          Redeem a promo code for free points
+          Redeem a promo code for free gems
         </div>
         <div class="tw-text-sm">
           You can find promo codes in videos from our sponsors! <br> We also often post promo codes on our social media so make sure to follow our accounts and turn your notifications on!
@@ -71,7 +71,7 @@
     <p style="margin: 0">
       You got
       <strong>
-        <fa-icon class="tw-mr-1" icon="coins" />{{ modal.social_media.points }}
+        <fa-icon class="tw-mr-1" icon="gem" />{{ modal.social_media.points }}
       </strong>
       for {{ modal.social_media.congrats }}
     </p>
@@ -86,7 +86,7 @@ import { ref, reactive } from "vue";
 
 export default {
   name: 'SignedHome',
-  title: 'Earn Points',
+  title: 'Earn Gems',
   components: {
     VModal,
   },

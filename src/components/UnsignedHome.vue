@@ -1,15 +1,15 @@
 <template>
-  <UnsignedNavigation class="bg-home tw-min-h-screen">
-    <main class="header-unsigned tw-relative tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-justify-center md:tw-justify-between tw-py-5 lg:tw-py-10 md:tw-px-10 lg:tw-px-20">
-      <div class="tw-relative tw-w-3/5 sm:tw-w-1/2 md:tw-w-full left-unsigned tw-text-right tw-mb-10 md:tw-mb-0">
+  <UnsignedNavigation class="tw-min-h-screen bg-home">
+    <main class="unsigned-header tw-relative tw-flex tw-flex-col md:tw-flex-row tw-items-center tw-justify-center md:tw-justify-between tw-py-5 lg:tw-py-10 md:tw-px-10 lg:tw-px-20">
+      <div class="left-unsigned tw-relative tw-w-3/5 sm:tw-w-1/2 md:tw-w-full tw-mb-10 md:tw-mb-0">
         <img alt="man" src="@/assets/images/man.png">
-        <img alt="elements" class="elements tw-absolute tw-top-0 tw-right-0" src="@/assets/images/elements.png">
+        <img alt="elements" class="elements tw-absolute tw-top-0 tw-left-0" src="@/assets/images/elements.png">
       </div>
       <div class="right-unsigned tw-z-50 tw-w-full xl:tw-w-8/12 tw-text-center md:tw-text-left">
         <h1 class="tw-font-bold tw-text-3xl md:tw-text-4xl lg:tw-text-5xl xl:tw-text-6xl tw-text-white tw-uppercase tw-tracking-wider">
           Gain <span class="tw-text-primary">Gems</span> & <br> Redeem Prizes
         </h1>
-        <p class="tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8">
+        <p class="sm:tw-w-1/2 md:tw-w-full tw-text-sm sm:tw-text-lg lg:tw-text-xl tw-text-white tw-mt-4 tw-mb-6 md:tw-mb-8 tw-mx-auto">
           Earn digital rewards by completing simple tasks, watching videos and testing apps on the appstore. It's that easy!
         </p>
         <router-link :to="{ name: 'Register' }" class="home-unsigned tw-duration-300 tw-text-primary tw-uppercase tw-tracking-wider tw-font-bold tw-border-2 tw-border-white tw-bg-white tw-rounded-full tw-px-4 md:tw-px-6 tw-py-2 md:tw-py-3">
@@ -20,17 +20,17 @@
     </main>
   </UnsignedNavigation>
 
-  <div class="landing-section tw-py-8 tw-bg-white tw-mt-8 sm:tw-mt-12 md:tw-mt-16 lg:tw-mt-20 xl:tw-mt-24">
+  <div class="landing-section tw-py-8 tw-bg-white">
     <div class="tw-flex tw-justify-around tw-items-center tw-text-center tw-py-4">
       <div class="tw-mr-2 lg:tw-mr-0 tw-w-1/2 lg:tw-w-1/4">
         <div class="tw-text-primary tw-text-2xl sm:tw-text-4xl lg:tw-text-5xl tw-font-bold">
           <AnimatedNumber :number="parseFloat($store.state.stats.total_points_earned)" :duration="4" />
         </div>
         <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
-          <fa-icon class="tw-h-6 fa-w-20" icon="coins" />
+          <fa-icon class="tw-h-6 fa-w-20" icon="gem" />
           <span class="tw-ml-2">
-              Points Earned
-            </span>
+            Gems Earned
+          </span>
         </div>
       </div>
       <div class="tw-w-1/2 lg:tw-w-1/4">
@@ -40,8 +40,8 @@
         <div class="tw-flex tw-justify-center tw-items-center tw-text-xs md:tw-text-sm tw-font-light tw-uppercase sm:tw-tracking-wider">
           <fa-icon class="tw-h-6 fa-w-20" :icon="['fab', 'buffer']" />
           <span class="tw-ml-2">
-              Offers Completed
-            </span>
+            Offers Completed
+          </span>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
             Offer Walls
           </div>
           <div class="tw-mb-6">
-            Check out our offerwalls to start earning points!
+            Check out our offerwalls to start earning gems!
           </div>
         </div>
         <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
@@ -161,9 +161,8 @@ export default {
 </script>
 
 <style>
-
 .bg-home {
-  background: linear-gradient(90deg, var(--primary-color) 20%, 20%, var(--secondary-color));
+  background: var(--secondary-color) url(../assets/images/triangles.png) repeat fixed;
 }
 
 .splide {

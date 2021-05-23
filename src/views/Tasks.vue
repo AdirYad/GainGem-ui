@@ -9,7 +9,7 @@
           {{ countdown.displayHours }}h {{ countdown.displayMinutes }}m {{ countdown.displaySeconds }}s
       </div>
       <div class="tw-text-black md:tw-text-lg tw-tracking-wider">
-          Complete daily tasks for extra points, these tasks reset every 24 hours.
+          Complete daily tasks for extra gems, these tasks reset every 24 hours.
       </div>
     </div>
     <div v-if="$store.state.daily_tasks && $store.state.daily_tasks.daily_tasks_options" class="tw-flex tw-justify-center tw-flex-wrap xl:tw-flex-no-wrap tw-mt-8 tw--mb-4 lg:tw-pl-4">
@@ -45,7 +45,7 @@
                   @click="completeTask(offers_count)"
                   class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-primary hover:tw-text-white hover:tw-bg-primary tw-rounded-full tw-py-1">
             Redeem
-            <fa-icon icon="coins" />
+            <fa-icon icon="gem" />
             {{ taskOption }}
           </button>
           <div v-else class="tw-w-full tw-uppercase tw-text-sm tw-tracking-wider tw-font-bold tw-duration-300 tw-border-2 tw-border-primary tw-text-white tw-bg-primary tw-rounded-full tw-py-1">

@@ -6,7 +6,7 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-10">#</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Signup Date</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Username</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Total Points</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Total Gems</th>
         </tr>
       </thead>
       <tbody class="tw-flex-1 sm:tw-flex-none">

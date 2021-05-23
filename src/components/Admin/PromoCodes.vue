@@ -22,9 +22,9 @@
           </div>
           <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-1/4 tw-mb-4 sm:tw-px-2">
             <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="points">
-              Points
+              Gems
             </label>
-            <input id="points" type="number" min="1" placeholder="Points"
+            <input id="points" type="number" min="1" placeholder="Gems"
                    onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                    class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                    v-model="payload.points"
@@ -88,7 +88,7 @@
       <thead class="tw-text-white">
         <tr class="tw-bg-primary tw-table-row tw-rounded-l-lg sm:tw-rounded-none">
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Code</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Gems</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40 ">Expiration</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Uses</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Status</th>
@@ -161,9 +161,9 @@
         </div>
         <div class="tw-w-full sm:tw-w-1/2 xl:tw-w-64 tw-mb-4 sm:tw-pl-2">
           <label class="tw-flex-1 tw-text-primary tw-block tw-text-sm tw-font-bold tw-mb-2" for="edit_points">
-            Points
+            Gems
           </label>
-          <input id="edit_points" type="number" min="1" max="999999" placeholder="Points"
+          <input id="edit_Gems" type="number" min="1" max="999999" placeholder="Gems"
                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                  class="input tw-duration-300 tw-shadow tw-appearance-none tw-border tw-rounded tw-w-full tw-py-2 tw-px-3 tw-text-gray-500 tw-leading-tight focus:tw-outline-none"
                  v-model="modal.points"
