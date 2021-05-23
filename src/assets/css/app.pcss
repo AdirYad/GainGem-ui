@@ -36,7 +36,7 @@ html {
 }
 
 .home-unsigned:hover {
-  box-shadow: 0 12px 15px rgba(255, 255, 255, 0.2);
+  box-shadow: 2px 12px 15px rgba(var(--primary-color-rgb), 0.3);
 }
 
 @media (max-width: 1023px) {
@@ -219,6 +219,11 @@ button:focus, input:focus {
 
 .right-unsigned {
   flex-basis: 50%;
+
+  @media (max-height: 400px) {
+    flex-basis: 100%;
+    text-align: center !important;
+  }
 }
 
 .unsigned-nav-right {
@@ -258,7 +263,7 @@ button:focus, input:focus {
   .logo {
     height: calc(var(--header-unsigned-height));
     width: calc(var(--header-unsigned-height));
-    background: url("../images/brand/White Icon.png") no-repeat 50%;
+    background: url("../images/brand/Icon.png") no-repeat 50%;
     background-size: cover;
   }
 
@@ -266,7 +271,7 @@ button:focus, input:focus {
     .logo {
       height: calc(var(--header-unsigned-height) * 2);
       width: 200px;
-      background: url("../images/brand/White Logo.png") no-repeat 50%;
+      background: url("../images/brand/Logo.png") no-repeat 50%;
       background-size: cover;
     }
   }
@@ -275,7 +280,7 @@ button:focus, input:focus {
     --header-unsigned-height: 60px;
 
     .logo {
-      background: url("../images/brand/White Icon.png") no-repeat 50%;
+      background: url("../images/brand/Icon.png") no-repeat 50%;
       background-size: cover;
     }
   }
@@ -299,7 +304,7 @@ footer {
   .logo {
     width: 200px;
     height: 60px;
-    background: url("../images/brand/Logo.png") no-repeat 50%;
+    background: url("../images/brand/White Logo.png") no-repeat 50%;
     background-size: cover;
   }
 
@@ -419,7 +424,7 @@ img {
 
       &:hover {
         img {
-          transform: scale(1.1);
+          transform: scale(1.2);
         }
       }
     }

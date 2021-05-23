@@ -5,7 +5,7 @@
     </router-link>
     <div class="tw-mt-4 tw-flex tw-justify-center tw-flex-wrap">
       <a v-for="(socialMedia, index) in SocialMedia" :key="index" :href="socialMedia.link" target="_blank"
-         class="social tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold"
+         class="social tw-transform hover:tw-scale-90 hover:tw-opacity-30 tw-duration-300 tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold"
          v-html="socialMedia.icon"
       />
     </div>
