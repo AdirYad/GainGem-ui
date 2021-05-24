@@ -64,7 +64,7 @@
     </Splide>
   </div>
 
-  <div class="landing-section tw-text-center tw-bg-secondary tw-flex tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-pt-4 tw-pb-8">
+  <div class="landing-section tw-text-center tw-flex tw-bg-secondary tw-flex-wrap tw-justify-center sm:tw-flex-no-wrap tw-pt-4 tw-pb-8">
     <div class="tw-text-center tw-w-full">
       <div class="tw-text-primary tw-mb-4 md:tw-mb-2 tw-text-3xl md:tw-text-5xl tw-font-bold tw-text-center tw-uppercase tw-tracking-wider">
         <fa-icon icon="star" />
@@ -72,7 +72,7 @@
       </div>
 
       <div class="tw-flex tw-justify-center tw-flex-wrap lg:tw-flex-no-wrap tw--mb-4 lg:tw-pl-4">
-        <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+        <div class="feature-card tw-transform hover:tw-scale-105 sm:hover:tw-scale-100 lg:hover:tw-scale-105 hover:tw-bg-primary tw-text-white tw-duration-300 tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary hover:tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
           <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="wallet" />
           <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
             Offer Walls
@@ -81,7 +81,7 @@
             Check out our offerwalls to start earning gems!
           </div>
         </div>
-        <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+        <div class="feature-card tw-transform hover:tw-scale-105 sm:hover:tw-scale-100 lg:hover:tw-scale-105 hover:tw-bg-primary tw-text-white tw-duration-300 tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary hover:tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
           <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="gift" />
           <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
             Giveaways
@@ -90,7 +90,7 @@
             Enter our hourly giveaways on the website or keep an eye on our social medias for special promo codes!
           </div>
         </div>
-        <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+        <div class="feature-card tw-transform hover:tw-scale-105 sm:hover:tw-scale-100 lg:hover:tw-scale-105 hover:tw-bg-primary tw-text-white tw-duration-300 tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary hover:tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
           <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="people-arrows" />
           <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
             Referrals
@@ -99,7 +99,7 @@
             Invite your friends and earn 10% of their total earnings!
           </div>
         </div>
-        <div class="feature-card tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
+        <div class="feature-card tw-transform hover:tw-scale-105 sm:hover:tw-scale-100 lg:hover:tw-scale-105 hover:tw-bg-primary tw-text-white tw-duration-300 tw-w-full sm:tw-w-1/2 lg:tw-w-1/4 tw-bg-secondary tw-border-t-2 tw-border-primary hover:tw-shadow-md tw-p-4 lg:tw-mr-4 tw-mb-4">
           <fa-icon class="tw-text-primary fa-w-40 tw-h-20" icon="question" />
           <div class="tw-font-medium tw-text-xl tw-uppercase tw-tracking-wider tw-mb-1">
             support
@@ -110,7 +110,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>J
 
   <div class="landing-section tw-bg-white tw-py-8 tw-flex tw-flex-col tw-justify-around tw-items-center">
     <div class="tw-text-2xl md:tw-text-3xl lg:tw-text-4xl tw-text-primary tw-font-bold tw-text-center lg:tw-text-left tw-mb-6">

@@ -5,17 +5,17 @@
     </router-link>
     <div class="tw-mt-4 tw-flex tw-justify-center tw-flex-wrap">
       <a v-for="(socialMedia, index) in SocialMedia" :key="index" :href="socialMedia.link" target="_blank"
-         class="social tw-transform hover:tw-scale-90 hover:tw-opacity-30 tw-duration-300 tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold"
+         class="social tw-transform hover:tw-scale-90 hover:tw-opacity-30 tw-duration-300 tw-px-2 hover:tw-text-white tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold"
          v-html="socialMedia.icon"
       />
     </div>
 
     <div class="md:tw-w-2/4 tw-border-t tw-border-solid tw-border-transparent-50 tw-py-4 tw-mt-4">
       <div class="tw-text-center">
-        <router-link :to="{ name: 'Terms' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-300">
+        <router-link :to="{ name: 'Terms' }" class="tw-px-2 tw-text-white tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-300">
           Terms
         </router-link>
-        <router-link :to="{ name: 'Privacy' }" class="tw-px-2 tw-text-secondary tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-300">
+        <router-link :to="{ name: 'Privacy' }" class="tw-px-2 tw-text-white tw-uppercase tw-tracking-wider tw-font-light hover:tw-font-bold tw-duration-300">
           Privacy
         </router-link>
       </div>
