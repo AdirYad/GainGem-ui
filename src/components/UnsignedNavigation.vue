@@ -1,5 +1,5 @@
 <template>
-  <div class="unsigned-nav tw-bg-primary">
+  <div class="unsigned-nav bg-rectangles">
     <div class="tw-m-auto tw-px-4">
       <div class="nav-height tw-flex tw-items-center">
         <div class="tw-flex-1 xl:tw-ml-40">
