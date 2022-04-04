@@ -10,7 +10,7 @@
         </span>
           earned
           <span class="tw-flex tw-text-sm tw-font-medium tw-ml-1">
-          <fa-icon class="tw-h-4 fa-w-20" icon="coins" />
+          <fa-icon class="tw-h-4 fa-w-20" icon="gem" />
           {{ activity.formatted_points }}
         </span>
         <span class="tw-ml-1">

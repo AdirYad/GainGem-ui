@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --primary-color-rgb: 19, 160, 101;
-  --primary-color-rgb-no-commas: 19 160 101;
-  --secondary-color-rgb: 244, 244, 248;
+  --primary-color-rgb: 233, 33, 39;
+  --primary-color-rgb-no-commas: 233 33 39;
+  --secondary-color-rgb: 43, 43, 43;
   --primary-color: rgb(var(--primary-color-rgb));
   --secondary-color: rgb(var(--secondary-color-rgb));
   --sidebar-width: 250px;
   --navigation-height: 60px;
-  --header-unsigned-height: 100px;
+  --header-unsigned-height: 80px;
 }
 
 html {
@@ -22,7 +22,7 @@ html {
 }
 
 .wall {
- color: rgb(29, 93, 77);
+  color: rgb(29, 93, 77);
   background-color: var(--primary-color);
   height: 330px;
   border-radius: 4px;box-shadow: 0 6px 6px var(--primary-color);
@@ -35,8 +35,38 @@ html {
   }
 }
 
+.triangle1 {
+  position: absolute;
+  left: -50px;
+  top: 80%;
+  transform: translateY(-50%);
+  width: 450px;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.triangle2 {
+  position: absolute;
+  left: 50%;
+  top: -200px;
+  transform: translateX(-70%);
+  width: 600px;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.gem {
+  position: absolute;
+  right: -200px;
+  top: 30%;
+  transform: translateX(-20%);
+  width: 700px;
+  z-index: -1;
+  opacity: 0.5;
+}
+
 .home-unsigned:hover {
-  box-shadow: 0 12px 15px rgba(255, 255, 255, 0.2);
+  box-shadow: 2px 12px 15px rgba(var(--primary-color-rgb), 0.3);
 }
 
 @media (max-width: 1023px) {
@@ -120,7 +150,7 @@ button:focus, input:focus {
     .logo {
       height: 95px;
       width: 200px;
-      background: url("../images/Logo.png") no-repeat 50%;
+      background: url("../images/brand/Logo.png") no-repeat 50%;
       background-size: cover;
     }
   }
@@ -158,7 +188,7 @@ button:focus, input:focus {
   .logo {
     height: calc(var(--navigation-height) - 25px);
     width: calc(var(--navigation-height) - 25px);
-    background: url("../images/Icon.png") no-repeat 50%;
+    background: url("../images/brand/Icon.png") no-repeat 50%;
     background-size: cover;
   }
 
@@ -209,34 +239,94 @@ button:focus, input:focus {
   }
 }
 
-.header-unsigned {
-  height: var(--header-unsigned-height);
+.left-unsigned {
+  flex-basis: 45%;
+
+  @media (max-height: 400px) {
+    display: none;
+  }
 }
 
-.header-unsigned, .unsigned-nav, .maintenance {
+.right-unsigned {
+  flex-basis: 50%;
+
+  @media (max-height: 400px) {
+    flex-basis: 100%;
+    text-align: center !important;
+  }
+}
+
+.unsigned-nav-right {
+  height: var(--header-unsigned-height);
+
+  padding-right: 300px;
+  padding-left: 50px;
+
+  @media (max-width: 1024px) {
+    padding-right: 100px;
+  }
+
+  @media (max-width: 768px) {
+    padding-right: 50px;
+    padding-left: 10px;
+  }
+
+  @media (max-width: 640px) {
+    padding-right: 10px;
+    padding-left: 0;
+  }
+}
+
+.unsigned-nav, .maintenance {
+  .nav-height {
+    height: var(--header-unsigned-height);
+  }
+
+  .unsigned-header {
+    min-height: calc(100vh - var(--header-unsigned-height));
+  }
+
+  .elements {
+    animation: elements 2.5s linear infinite;
+  }
+
   .logo {
-    height: calc(var(--header-unsigned-height) - 40px);
-    width: calc(var(--header-unsigned-height) - 40px);
-    background: url("../images/Icon.png") no-repeat 50%;
+    height: calc(var(--header-unsigned-height));
+    width: calc(var(--header-unsigned-height));
+    background: url("../images/brand/Icon.png") no-repeat 50%;
     background-size: cover;
   }
 
   @media (min-width: 768px) {
     .logo {
-      height: calc(var(--header-unsigned-height) - 20px);
+      height: calc(var(--header-unsigned-height) * 2);
       width: 200px;
-      background: url("../images/Logo.png") no-repeat 50%;
+      background: url("../images/brand/Logo.png") no-repeat 50%;
       background-size: cover;
     }
   }
 
   @media (max-width: 640px) {
+    --header-unsigned-height: 60px;
+
     .logo {
-      height: calc(var(--header-unsigned-height) - 60px);
-      width: calc(var(--header-unsigned-height) - 60px);
-      background: url("../images/Icon.png") no-repeat 50%;
+      background: url("../images/brand/Icon.png") no-repeat 50%;
       background-size: cover;
     }
+  }
+}
+
+@keyframes elements {
+  0% {
+    transform: translate(-15px, 0);
+  }
+
+  50% {
+    transform: translate(0, -15px);
+  }
+
+  100% {
+    transform: translate(-15px, 0);
   }
 }
 
@@ -244,7 +334,7 @@ footer {
   .logo {
     width: 200px;
     height: 60px;
-    background: url("../images/Logo.png") no-repeat 50%;
+    background: url("../images/brand/White Logo.png") no-repeat 50%;
     background-size: cover;
   }
 
@@ -295,6 +385,11 @@ img {
 
 .input:disabled::placeholder {
   @apply text-gray-400;
+}
+
+.bg-rectangles {
+  background: url(../images/bg.png) no-repeat fixed center;
+  background-size: cover;
 }
 
 .authentication-form {
@@ -364,7 +459,7 @@ img {
 
       &:hover {
         img {
-          transform: scale(1.1);
+          transform: scale(1.2);
         }
       }
     }
@@ -791,6 +886,11 @@ img {
       }
     }
   }
+}
+
+.feature-card:hover > svg {
+  color: white;
+  transition-duration: 300ms;
 }
 
 .daily-task-card, .feature-card {

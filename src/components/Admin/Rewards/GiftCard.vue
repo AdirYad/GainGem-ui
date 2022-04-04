@@ -110,7 +110,7 @@
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Code</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Region</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Value</th>
-          <th class="tw-p-3 tw-text-left sm:tw-w-40">Points</th>
+          <th class="tw-p-3 tw-text-left sm:tw-w-40">Gems</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Currency</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40" style="white-space: nowrap">Taken By</th>
           <th class="tw-p-3 tw-text-left sm:tw-w-40">Actions</th>
